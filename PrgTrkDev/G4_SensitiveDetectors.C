@@ -1,4 +1,12 @@
-#include <string>
+#pragma once
+#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <g4detectors/PHG4BlockSubsystem.h>
+#include <TSQLServer.h>
+#include <TSQLResult.h>
+#include <TSQLRow.h>
+class SubsysReco;
+R__LOAD_LIBRARY(libg4detectors)
+#endif
 
 #define LogDebug(exp)   std::cout<<"DEBUG: "  <<__FILE__<<": "<<__LINE__<<": "<< exp << std::endl
 
@@ -112,7 +120,7 @@ void SetupSensitiveDetectors(
   if(!server->Exec(query))
   {
     std::cout << "MySQLSvc: working schema does not exist! Will exit..." << std::endl;
-    return Fun4AllReturnCodes::ABORTRUN;
+    return;
   }
 
   vector<string> chamber_names;

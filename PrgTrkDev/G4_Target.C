@@ -1,3 +1,14 @@
+#pragma once
+#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <g4detectors/PHG4E1039InsensSubsystem.h>
+#include <g4detectors/PHG4TargetCoilSubsystem.h>
+#include <g4detectors/PHG4CollimatorSubsystem.h>
+#include <g4detectors/PHG4CylinderSubsystem.h>
+#include <g4detectors/PHG4BlockSubsystem.h>
+class SubsysReco;
+R__LOAD_LIBRARY(libg4detectors)
+#endif
+
 using namespace std;
 
 void SetupTarget(

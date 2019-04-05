@@ -1,5 +1,44 @@
+#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <phool/recoConsts.h>
+#include <fun4all/SubsysReco.h>
+#include <fun4all/Fun4AllServer.h>
+#include <fun4all/Fun4AllInputManager.h>
+#include <fun4all/Fun4AllDummyInputManager.h>
+#include <fun4all/Fun4AllOutputManager.h>
+#include <fun4all/Fun4AllDstInputManager.h>
+#include <fun4all/Fun4AllNoSyncDstInputManager.h>
+#include <fun4all/Fun4AllDstOutputManager.h>
+#include <g4main/PHG4Reco.h>
+#include <g4main/PHG4ParticleGeneratorBase.h>
+#include <g4main/PHG4ParticleGenerator.h>
+#include <g4main/PHG4SimpleEventGenerator.h>
+#include <g4main/PHG4ParticleGun.h>
+#include <g4main/HepMCNodeReader.h>
+#include <g4main/PHG4TruthSubsystem.h>
+#include <g4detectors/PHG4DetectorSubsystem.h>
+#include <g4detectors/DPDigitizer.h>
+//#include <phpythia6/PHPythia6.h>
+#include <phpythia8/PHPythia8.h>
+//#include <phhepmc/Fun4AllHepMCInputManager.h>
+#include <g4eval/PHG4DSTReader.h>
+#include <jobopts_svc/JobOptsSvc.h>
+#include <geom_svc/GeomSvc.h>
+#include <module_example/TrkEval.h>
 
-#include <iostream>
+#include <TSystem.h>
+
+#include "G4_SensitiveDetectors.C"
+#include "G4_Target.C"
+
+R__LOAD_LIBRARY(libfun4all)
+R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libg4testbench)
+R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libktracker)
+R__LOAD_LIBRARY(libPHPythia8)
+//R__LOAD_LIBRARY(libembedding)
+R__LOAD_LIBRARY(libmodule_example)
+#endif
 
 using namespace std;
 
@@ -10,7 +49,7 @@ int Fun4TrkDev(
     )
 {
   const double target_coil_pos_z = -300;
-	int embedding_opt = 1;
+	int embedding_opt = 0;
 
   const bool do_collimator = false;
   const bool do_target = false;
@@ -27,6 +66,7 @@ int Fun4TrkDev(
   gSystem->Load("libg4detectors");
   gSystem->Load("libg4testbench");
   gSystem->Load("libg4eval");
+	gSystem->Load("libktracker.so");
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
   jobopt_svc->init("default.opts");
@@ -148,7 +188,7 @@ int Fun4TrkDev(
       jobopt_svc->m_fMagFile+" "+
       jobopt_svc->m_kMagFile+" "+
       "1.0 1.0 0.0",
-      4);
+      PHFieldConfig::RegionalConst);
   // size of the world - every detector has to fit in here
   g4Reco->SetWorldSizeX(1000);
   g4Reco->SetWorldSizeY(1000);
@@ -180,6 +220,7 @@ int Fun4TrkDev(
 
 	gSystem->Load("libembedding.so");
 
+#if ROOT_VERSION_CODE < ROOT_VERSION(6,00,0)
 	if(embedding_opt == 1) {
 		SRawEventEmbed *embed = new SRawEventEmbed("SRawEventEmbed");
 		embed->set_in_name("digit_016070_R007.root");
@@ -220,12 +261,13 @@ int Fun4TrkDev(
 
 		se->registerSubsystem(embed);
 	}
+#endif
 
 
 	gSystem->Load("libktracker.so");
 	KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
 	ktracker->Verbosity(10);
-	ktracker->set_DS_level(2);
+	ktracker->set_DS_level(0);
 	se->registerSubsystem(ktracker);
 
 	gSystem->Load("libmodule_example.so");
@@ -277,7 +319,7 @@ int Fun4TrkDev(
 		delete se;
 		gSystem->Exit(0);
 	}
-	return;
+	return 0;
 }
 
 PHG4ParticleGun *get_gun(const char *name = "PGUN")
