@@ -93,13 +93,13 @@ HodoscopeMasking 1
 
 # when set to 1, only the hodo paddles on a trigger road will be used
 # for hodoscope masking
-TriggerMask_enable 1
+TriggerMask_enable 0
 
 # when set to 1, tracker will update the alignment/calibration info
 # before real tracking, it should only be used when there is a need
 # to update the alignment and/or calibration
 # DO NOT toggle when OnlineAlignment_enable is 1
-UpdateAlignment 1
+UpdateAlignment 0
 
 # offset in TDC time, this is intended to correct for the timing shifts
 # that happened from time to time, this number will be added to tdc time
@@ -108,7 +108,7 @@ TimingOffset 0
 TimingRejWin 80
 
 # when set to 1, tracker will enable the sagitta hit reducer
-SagittaReducer 1
+SagittaReducer 0
 
 # when set to 0, only the SRecEvent will be saved to the output file,
 # and SRawEvent will be missing to save space.
