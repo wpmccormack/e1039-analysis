@@ -31,4 +31,8 @@ void displaycmd()
   cout << " g4->ApplyCommand(\"/vis/ogl/printEPS\")" << endl;
   cout << "set background color:" << endl;
   cout << " g4->ApplyCommand(\"/vis/viewer/set/background white\")" << endl;
+
+	//g4->ApplyCommand("/material/g4/printMaterial G4_Ar")
+  cout << "print material:" << endl;
+  cout << " g4->ApplyCommand(\"/material/g4/printMaterial G4_Ar\")" << endl;
 }

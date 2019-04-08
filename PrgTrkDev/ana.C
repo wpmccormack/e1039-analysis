@@ -94,13 +94,11 @@ void drawTimeAna(
     ) {
 
   int n = 2;
-  //char* inputs [] = {
-  //  "T1_2_res222_ds0_200/ktracker_ana.root",
-  //  "T1_2_res222_ds2_200/ktracker_ana.root"
-  //};
   char* inputs [] = {
-    "T7_2_res222_ds0_200/ktracker_ana.root",
-    "T7_2_res222_ds2_200/ktracker_ana.root"
+		"no_event_reducer/T7_2_res222_ds0_200/ktracker_ana.root",
+		"no_event_reducer/T7_2_res222_ds2_200/ktracker_ana.root"
+    //"T1_1_res222_ds0_100_b2/ktracker_ana.root",
+    //"T1_1_res222_ds2_100_b2/ktracker_ana.root"
   };
   float x[]       = { 0, 2};
 
@@ -209,17 +207,15 @@ void drawEffDSLevel(
 
     ) {
 
-  int n = 2;
-  //char* inputs [] = {
-  //  "T1_2_res222_ds0_200/trk_eval.root",
-  //  "T1_2_res222_ds2_200/trk_eval.root"
-  //};
+  int n = 4;
   char* inputs [] = {
-    "T7_2_res222_ds0_200/trk_eval.root",
-    "T7_2_res222_ds2_200/trk_eval.root"
+    "emb0_ds0_er1.root",
+    "emb0_ds2_er1.root",
+    "emb1_ds0_er1/trk_eval.root",
+    "emb1_ds2_er1/trk_eval.root"
   };
 
-  float x[]       = { 0, 2};
+  float x[]       = { 1, 2, 3, 4};
 
   float x_error[] = { 0, 0, 0, 0, 0, 0};
   float y[]       = { 0, 0, 0, 0, 0, 0};
@@ -237,15 +233,15 @@ void drawEffDSLevel(
     y_error[i] = h->GetMeanError()/ref_mean;
   }
 
-  TCanvas *c0 = new TCanvas("drawEffDSLevel", "drawEffDSLevel");
+  TCanvas *c0 = new TCanvas("EffDSLevel", "EffDSLevel");
   c0->SetGridy();
   TGraphErrors* gr = new TGraphErrors(n, x, y, x_error, y_error);
-  gr->SetTitle("; DS level; Eff.");
+  gr->SetTitle("; Category; Eff.");
   gr->SetMarkerStyle(20);
   gr->Draw("ap");
   gr->SetMaximum(1.1);
   gr->SetMinimum(0);
-  gr->GetXaxis()->SetRangeUser(-1,4);
+  gr->GetXaxis()->SetRangeUser(-1,6);
   gr->Print();
 }
 
@@ -288,8 +284,8 @@ void ana() {
   gStyle->SetOptFit();
 
   //drawTimeAna("TEvent","NSt2>=1");
-  //drawEffDSLevel("T", "px<500", "krecstat!=-1&&gndc>=18");
-  drawEffDSLevel("Reco", "gpx<500", "");
+  drawEffDSLevel("Truth", "px<500", "krecstat!=-1&&gndc>17");
+  //drawEffDSLevel("Truth", "px<500", "Sum$(hodo_mask>0&&detectorID<31&&truth_z<5000)>17");
 
   //drawTimeNumber();
 

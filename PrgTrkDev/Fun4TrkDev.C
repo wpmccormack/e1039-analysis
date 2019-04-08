@@ -155,8 +155,12 @@ int Fun4TrkDev(
     //gen->set_phi_range(-1.0 * TMath::Pi(), 1.0 * TMath::Pi());
     //gen->set_eta_range(2, 4);
 
+    gen->set_pxpypz_range(-0.2,-0.2, 0.4,0.4, 51,51);
+    gen->set_vertex_distribution_mean(25, 8, 615);
+
+    //gen->set_pxpypz_range(3,3, 0.5,0.5, 60,60);
     //gen->set_pxpypz_range(1,4, -1,1, 30,60);
-    gen->set_pxpypz_range(0,6, -6,6, 10,100);
+    //gen->set_pxpypz_range(0,6, -6,6, 10,100);
 
     gen->Verbosity(0);
     se->registerSubsystem(gen);

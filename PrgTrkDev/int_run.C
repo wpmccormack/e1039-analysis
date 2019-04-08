@@ -1,5 +1,5 @@
 void int_run() {
-	gROOT->ProcessLine(".x Fun4HodoAccGap.C\(-1\)");
+	gROOT->ProcessLine(".x Fun4Test.C\(-1\)");
 	gROOT->ProcessLine(".L DisplayOn.C");
 	PHG4Reco* g4 = DisplayOn();
 	Fun4AllServer *se = Fun4AllServer::instance();
