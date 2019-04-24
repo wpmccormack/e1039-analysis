@@ -68,6 +68,10 @@ int Fun4Sim(
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
 
+  recoConsts *rc = recoConsts::instance();
+  rc->set_DoubleFlag("KMAGSTR", -0.951);
+  rc->Print();
+
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
   jobopt_svc->init("default.opts");
 
@@ -203,6 +207,7 @@ int Fun4Sim(
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(0);
+  ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
