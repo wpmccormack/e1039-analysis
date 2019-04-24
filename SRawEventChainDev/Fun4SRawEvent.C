@@ -1,14 +1,5 @@
-/** Fun4CODA.C:  Fun4all macro to run full reconstruction chain from CODA files. 
+/** Fun4SRawEvent.C:  Fun4all macro to run full reconstruction chain from SRawEvent files. 
  * 
- * To run this macro on a local computer, you need copy Coda file and also
- *  mapping files.  You can use the following commands;
-     RUN=28700
-     WORK_DIR=<some-working-dir>
-     
-     mkdir -p $WORK_DIR/runs
-     RUN6=$(printf '%06i' $RUN)
-     scp -p  e906-gat6.fnal.gov:/data3/data/mainDAQ/run_$RUN6.dat $WORK_DIR
-     scp -pr e906-gat6.fnal.gov:/data2/production/runs/run_$RUN6  $WORK_DIR/runs
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 R__LOAD_LIBRARY(libinterface_main)
@@ -18,17 +9,22 @@ R__LOAD_LIBRARY(libdecoder_maindaq)
 
 int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
 {
-	const char* fn_in  = "./input/digit_016070_R007.root";
-	const char* fn_out = "./SRawEvent-DST.root";
-
-  gSystem->Load("libdecoder_maindaq.so");
-  gSystem->Load("libonlmonserver.so");
+  const char* fn_in  = "./input/digit_016070_R007.root";
+  const char* fn_out = "./SRawEvent-DST.root";
 
   gSystem->Load("libfun4all");
   gSystem->Load("libg4detectors");
   gSystem->Load("libg4testbench");
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
+
+  const double FMAGSTR = -1.054;
+  const double KMAGSTR = -0.951;
+
+  recoConsts *rc = recoConsts::instance();
+  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
+  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->Print();
 
   Fun4AllServer* se = 0;
   se = Fun4AllServer::instance();
@@ -46,7 +42,9 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
   g4Reco->set_field_map(
       jobopt_svc->m_fMagFile+" "+
       jobopt_svc->m_kMagFile+" "+
-      "1.0 1.0 5.0",
+      Form("%f",FMAGSTR) + " " +
+      Form("%f",KMAGSTR) + " " +
+      "5.0",
       PHFieldConfig::RegionalConst);
   // size of the world - every detector has to fit in here
   g4Reco->SetWorldSizeX(1000);
@@ -83,8 +81,8 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
 
   Fun4AllSRawEventInputManager *in = new Fun4AllSRawEventInputManager("SRawEventIM");
   in->Verbosity(100);
-	in->set_tree_name("save");
-	in->set_branch_name("rawEvent");
+  in->set_tree_name("save");
+  in->set_branch_name("rawEvent");
   in->fileopen(fn_in);
   se->registerInputManager(in);
 
@@ -93,10 +91,12 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
 
   se->run(nevent);
   se->End();
-  
+
+  std::cout << KMAGSTR << std::endl;
+
   delete se;
   cout << "Fun4SRawEvent Done!" << endl;
 
-	gSystem->Exit(0);
+  gSystem->Exit(0);
   return 0;
 }
