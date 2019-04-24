@@ -58,6 +58,9 @@ int Fun4Sim(
   const double target_z = (7.9-target_l)/2.; //cm
   const int use_g4steps = 1;
 
+  const double FMAGSTR = -1.054;
+  const double KMAGSTR = -0.951;
+
   const bool gen_pythia8 = true;
   const bool gen_gun = false;
   const bool gen_particle = false;
@@ -69,7 +72,8 @@ int Fun4Sim(
   gSystem->Load("libktracker.so");
 
   recoConsts *rc = recoConsts::instance();
-  rc->set_DoubleFlag("KMAGSTR", -0.951);
+  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
+  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
@@ -153,7 +157,9 @@ int Fun4Sim(
   g4Reco->set_field_map(
       jobopt_svc->m_fMagFile+" "+
       jobopt_svc->m_kMagFile+" "+
-      "1.0 1.0 5.0",
+      Form("%f",FMAGSTR) + " " +
+      Form("%f",KMAGSTR) + " " +
+      "5.0",
       PHFieldConfig::RegionalConst);
   // size of the world - every detector has to fit in here
   g4Reco->SetWorldSizeX(1000);
