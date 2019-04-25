@@ -8,7 +8,7 @@
      mkdir -p $WORK_DIR/runs
      RUN6=$(printf '%06i' $RUN)
      scp -p  e906-gat6.fnal.gov:/data3/data/mainDAQ/run_$RUN6.dat $WORK_DIR
-     scp -pr e906-gat6.fnal.gov:/data2/production/runs/run_$RUN6  $WORK_DIR/runs
+     scp -pr e906-gat6.fnal.gov:/seaquest/production/runs/run_$RUN6  $WORK_DIR/runs
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 R__LOAD_LIBRARY(libinterface_main)
@@ -16,7 +16,7 @@ R__LOAD_LIBRARY(libonlmonserver)
 R__LOAD_LIBRARY(libdecoder_maindaq)
 #endif
 
-int Fun4CODA(const int nevent = 0, const int run = 28700)
+int Fun4CODA(const int nevent = 0, const int run = 24172)
 {
   gSystem->Load("libdecoder_maindaq.so");
   gSystem->Load("libonlmonserver.so");
@@ -28,8 +28,9 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
   gSystem->Load("libktracker.so");
 
   //const char* dir_in  = "/data/e906",
-  //const char* dir_in  = "/data2/analysis/kenichi/e1039";
-  const char* dir_in  = "./";
+  //const char* dir_in  = "/seaquest/analysis/kenichi/e1039";
+  const char* dir_in  = "/data3/data/mainDAQ/";
+  //const char* dir_in  = "./";
   const char* dir_out = "./";
   const bool is_online = false;
 
@@ -44,10 +45,18 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
   Fun4AllServer* se = 0;
   if(is_online) se = OnlMonServer::instance();
   else se = Fun4AllServer::instance();
-  //se->Verbosity(1);
+  //se->Verbosity(0);
+
+  const double FMAGSTR = -1.054;
+  const double KMAGSTR = -0.951;
+
+  recoConsts *rc = recoConsts::instance();
+  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
+  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("default.opts");
+  jobopt_svc->init("e906_data.opts");
 
   GeomSvc *geom_svc = GeomSvc::instance();
 
@@ -58,7 +67,9 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
   g4Reco->set_field_map(
       jobopt_svc->m_fMagFile+" "+
       jobopt_svc->m_kMagFile+" "+
-      "1.0 1.0 5.0",
+      Form("%f",FMAGSTR) + " " +
+      Form("%f",KMAGSTR) + " " +
+      "5.0",
       PHFieldConfig::RegionalConst);
   // size of the world - every detector has to fit in here
   g4Reco->SetWorldSizeX(1000);
@@ -85,6 +96,9 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
 
   se->registerSubsystem(g4Reco);
 
+  se->registerSubsystem(new CalibInTime());
+  se->registerSubsystem(new CalibXT());
+
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
@@ -99,8 +113,8 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
   if (is_online) {
     in->PretendSpillInterval(55);
   }
-  in->DirParam("./runs");
-  //in->DirParam("/data2/production/runs");
+  //in->DirParam("./runs");
+  in->DirParam("/seaquest/production/runs");
   //in->DirParam("/data/e906/runs");
   in->fileopen(fn_in);
   se->registerInputManager(in);
@@ -117,6 +131,8 @@ int Fun4CODA(const int nevent = 0, const int run = 28700)
 
   se->run(nevent);
   se->End();
+
+  se->PrintTimer();
   
   delete se;
   cout << "Fun4CODA Done!" << endl;
