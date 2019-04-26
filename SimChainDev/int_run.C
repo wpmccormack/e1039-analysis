@@ -1,5 +1,5 @@
 void int_run() {
-	gROOT->ProcessLine(".x Fun4Test.C\(-1\)");
+	gROOT->ProcessLine(".x Fun4Sim.C\(-1\)");
 	gROOT->ProcessLine(".L DisplayOn.C");
 	PHG4Reco* g4 = DisplayOn();
 	Fun4AllServer *se = Fun4AllServer::instance();
@@ -7,7 +7,7 @@ void int_run() {
 	se->run(1);
 
   g4->ApplyCommand("/vis/viewer/panTo 2000 0 cm");
-  g4->ApplyCommand("/vis/viewer/zoom 4");
+  g4->ApplyCommand("/vis/viewer/zoom 2");
 
 	//g4->ApplyCommand("/vis/viewer/zoom 0.5");
 	//g4->ApplyCommand("/vis/viewer/set/background white");
