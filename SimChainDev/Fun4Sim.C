@@ -46,7 +46,7 @@ int Fun4Sim(
     const int nEvents = 1
     )
 {
-  const double target_coil_pos_z = -300;
+  const double target_coil_pos_z = -130;
   const int nmu = 1;
   const double x0_shift = 0.0; //cm 
   int embedding_opt = 0;
@@ -208,6 +208,14 @@ int Fun4Sim(
     embed->Verbosity(0);
     se->registerSubsystem(embed);
   }
+
+  // Trigger Emulator
+  gSystem->Load("libdptrigger.so");
+  DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
+  dptrigger->set_hit_container_choice("Vector");
+  dptrigger->set_road_set_file_name("trigger_67.txt");
+  dptrigger->Verbosity(100);
+  se->registerSubsystem(dptrigger);
 
   // trakcing module
   gSystem->Load("libktracker.so");
