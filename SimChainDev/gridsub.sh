@@ -33,7 +33,7 @@ mkdir -p $work
 chmod -R 01755 $work
 
 cd $macros
-tar -czvf $work/input.tar.gz *.C *.cfg *.opts
+tar -czvf $work/input.tar.gz *.C *.cfg *.opts trigger_*.txt
 cd -
 
 for (( id=1; id<=$njobs; id++ ))

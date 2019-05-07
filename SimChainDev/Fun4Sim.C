@@ -214,7 +214,7 @@ int Fun4Sim(
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
   dptrigger->set_road_set_file_name("trigger_67.txt");
-  dptrigger->Verbosity(100);
+  dptrigger->Verbosity(0);
   se->registerSubsystem(dptrigger);
 
   // trakcing module
