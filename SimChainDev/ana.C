@@ -39,8 +39,12 @@ TH1D * getEffHist(
   for(int ibin=1; ibin<=nbin; ++ibin) {
     double a = h1->GetBinContent(ibin);
     double b = h2->GetBinContent(ibin);
-    double r = a/b;
-    double e = binom_error(a, b);
+    double r = 0;
+    double e = 0;
+    if(b>0) {
+      r = a/b;
+      e = binom_error(a, b);
+    }
     h->SetBinContent(ibin, r);
     h->SetBinError(ibin, e);
   }
@@ -48,7 +52,13 @@ TH1D * getEffHist(
   return h;
 }
 
-void ana() {
+void ana_eval(
+    const char* var_name = "dimu_gphi",
+    const char* title = ";dimu gphi;",
+    const int nbin = 16,
+    const double xmin = -3.14,
+    const double xmax = 3.14
+    ) {
   gStyle->SetOptFit();
 
   TFile *f = TFile::Open("test-trig-emu.root","read");
@@ -60,19 +70,21 @@ void ana() {
       11, -0.5, 10.5
       );
 
-  TH1D *h1_dimu_gphi_all = new TH1D("h1_dimu_gphi_all",";dim gphi;",16, -3.14, 3.14);
-  TH1D *h1_dimu_gphi_geo = new TH1D("h1_dimu_gphi_geo",";dim gphi;",16, -3.14, 3.14);
-  TH1D *h1_dimu_gphi_tri = new TH1D("h1_dimu_gphi_tri",";dim gphi;",16, -3.14, 3.14);
+  TH1D *h1_eval_all = new TH1D("h1_eval_all",title, nbin, xmin, xmax);
+  TH1D *h1_eval_geo = new TH1D("h1_eval_geo",title, nbin, xmin, xmax);
+  TH1D *h1_eval_tri = new TH1D("h1_eval_tri",title, nbin, xmin, xmax);
 
   unsigned short emu_trigger = 0;
   int n_tracks = 0;
   int gnhodo[100];
   float dimu_gphi[100];
+  float eval_var[100];
 
   T->SetBranchAddress("emu_trigger", &emu_trigger);
   T->SetBranchAddress("n_tracks",    &n_tracks);
   T->SetBranchAddress("gnhodo",      &gnhodo);
   T->SetBranchAddress("dimu_gphi",   &dimu_gphi);
+  T->SetBranchAddress(var_name,      &eval_var);
 
 
   for(int ientry=0; ientry<T->GetEntries(); ++ientry) {
@@ -90,11 +102,11 @@ void ana() {
       }
     }
 
-    h1_dimu_gphi_all->Fill(dimu_gphi[0]);
+    h1_eval_all->Fill(eval_var[0]);
     if(ntrack_hodo>1)
-      h1_dimu_gphi_geo->Fill(dimu_gphi[0]);
+      h1_eval_geo->Fill(eval_var[0]);
     if((emu_trigger&(1<<5)) > 0)
-      h1_dimu_gphi_tri->Fill(dimu_gphi[0]);
+      h1_eval_tri->Fill(eval_var[0]);
   }
 
   TCanvas *c1 = new TCanvas("c1","c1"); c1->SetGrid();
@@ -102,32 +114,38 @@ void ana() {
   h2_trig_hodo->Draw("colz,text");
 
   TCanvas *c2 = new TCanvas("c2","c2"); c2->SetGrid();
-  h1_dimu_gphi_all->SetStats(0);
-  h1_dimu_gphi_all->SetLineColor(kBlack);
-  h1_dimu_gphi_all->Draw("e");
-  //h1_dimu_gphi_all->SetMinimum(0.1);
-  //h1_dimu_gphi_geo->SetLineColor(kBlue);
-  //h1_dimu_gphi_geo->Draw("same");
-  //h1_dimu_gphi_tri->SetLineColor(kRed);
-  //h1_dimu_gphi_tri->Draw("same");
+  h1_eval_all->SetStats(0);
+  h1_eval_all->SetLineColor(kBlack);
+  h1_eval_all->Draw("e");
+  //h1_eval_all->SetMinimum(0.1);
+  //h1_eval_geo->SetLineColor(kBlue);
+  //h1_eval_geo->Draw("same");
+  //h1_eval_tri->SetLineColor(kRed);
+  //h1_eval_tri->Draw("same");
 
   TF1 *fcos = new TF1("fcos","[0]*([1]*cos(2*x)+1)");
 
-  TH1D *h1_dimu_gphi_geo_eff = getEffHist("h1_dimu_gphi_geo_eff",
-      h1_dimu_gphi_geo,
-      h1_dimu_gphi_all
+  TH1D *h1_eval_geo_eff = getEffHist("h1_eval_geo_eff",
+      h1_eval_geo,
+      h1_eval_all
       );
   TCanvas *c3 = new TCanvas("c3","c3"); c3->SetGrid();
-  h1_dimu_gphi_geo_eff->Draw("e");
-  h1_dimu_gphi_geo_eff->Fit(fcos);
+  h1_eval_geo_eff->Draw("e");
+  if(var_name=="dimu_gphi")
+    h1_eval_geo_eff->Fit(fcos);
+  else
+    h1_eval_geo_eff->SetStats(0);
 
-  TH1D *h1_dimu_gphi_tri_eff = getEffHist("h1_dimu_gphi_tri_eff",
-      h1_dimu_gphi_tri,
-      h1_dimu_gphi_geo
+  TH1D *h1_eval_tri_eff = getEffHist("h1_eval_tri_eff",
+      h1_eval_tri,
+      h1_eval_geo
       );
   TCanvas *c4 = new TCanvas("c4","c4"); c4->SetGrid();
-  h1_dimu_gphi_tri_eff->Draw("e");
-  h1_dimu_gphi_tri_eff->Fit(fcos);
+  h1_eval_tri_eff->Draw("e");
+  if(var_name=="dimu_gphi")
+    h1_eval_tri_eff->Fit(fcos);
+  else
+    h1_eval_tri_eff->SetStats(0);
 
 }
 
@@ -135,7 +153,11 @@ void ana() {
 
 
 
-
+void ana(){
+  //ana_eval();
+  //ana_eval("dimu_gmass", ";dimu gmass;", 8, 2, 10);
+  ana_eval("dimu_gpt", ";dimu gpt;", 8, 0, 4);
+}
 
 
 
