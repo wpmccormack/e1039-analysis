@@ -45,10 +45,10 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   Fun4AllServer* se = 0;
   if(is_online) se = OnlMonServer::instance();
   else se = Fun4AllServer::instance();
-  //se->Verbosity(0);
+  se->Verbosity(99);
 
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
+  const double FMAGSTR = -1.044;//-1.054;
+  const double KMAGSTR = -1.025;//-0.951;
 
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -102,14 +102,14 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(100);
+  //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
-  in->EventSamplingFactor(100);
+  in->EventSamplingFactor(20);
   if (is_online) {
     in->PretendSpillInterval(55);
   }
