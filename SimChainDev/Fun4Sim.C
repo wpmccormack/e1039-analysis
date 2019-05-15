@@ -213,7 +213,8 @@ int Fun4Sim(
   gSystem->Load("libdptrigger.so");
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
-  dptrigger->set_road_set_file_name("trigger_67.txt");
+  //dptrigger->set_road_set_file_name("trigger_67.txt");
+  dptrigger->set_road_set_file_name("/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/resource/trigger/trigger_67.txt");
   dptrigger->Verbosity(0);
   se->registerSubsystem(dptrigger);
 
