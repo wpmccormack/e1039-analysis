@@ -11,9 +11,43 @@
      scp -pr e906-gat6.fnal.gov:/seaquest/production/runs/run_$RUN6  $WORK_DIR/runs
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <phool/recoConsts.h>
+#include <fun4all/SubsysReco.h>
+#include <fun4all/Fun4AllServer.h>
+#include <fun4all/Fun4AllInputManager.h>
+#include <fun4all/Fun4AllDummyInputManager.h>
+#include <fun4all/Fun4AllOutputManager.h>
+#include <fun4all/Fun4AllDstInputManager.h>
+#include <fun4all/Fun4AllNoSyncDstInputManager.h>
+#include <fun4all/Fun4AllDstOutputManager.h>
+#include <g4main/PHG4Reco.h>
+#include <g4main/PHG4ParticleGeneratorBase.h>
+#include <g4main/PHG4ParticleGenerator.h>
+#include <g4main/PHG4SimpleEventGenerator.h>
+#include <g4main/PHG4ParticleGun.h>
+#include <g4main/HepMCNodeReader.h>
+#include <g4main/PHG4TruthSubsystem.h>
+#include <g4detectors/PHG4DetectorSubsystem.h>
+#include <g4detectors/DPDigitizer.h>
+#include <phpythia8/PHPythia8.h>
+#include <g4eval/PHG4DSTReader.h>
+#include <jobopts_svc/JobOptsSvc.h>
+#include <geom_svc/GeomSvc.h>
+#include <module_example/TrkEval.h>
+
+#include <TSystem.h>
+
+#include "G4_SensitiveDetectors.C"
+#include "G4_Target.C"
+
 R__LOAD_LIBRARY(libinterface_main)
 R__LOAD_LIBRARY(libonlmonserver)
 R__LOAD_LIBRARY(libdecoder_maindaq)
+R__LOAD_LIBRARY(libfun4all)
+R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libg4testbench)
+R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libktracker)
 #endif
 
 int Fun4CODA(const int nevent = 0, const int run = 24172)
@@ -27,12 +61,8 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
 
-  //const char* dir_in  = "/data/e906",
-  //const char* dir_in  = "/seaquest/analysis/kenichi/e1039";
   const char* dir_in  = "/data3/data/mainDAQ/";
-  //const char* dir_in  = "./";
   const char* dir_out = "./";
-  const bool is_online = false;
 
   ostringstream oss;
   oss << setfill('0') 
@@ -42,9 +72,7 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   oss << dir_out << "/run_" << setw(6) << run << ".root";
   string fn_out = oss.str();
 
-  Fun4AllServer* se = 0;
-  if(is_online) se = OnlMonServer::instance();
-  else se = Fun4AllServer::instance();
+  Fun4AllServer* se = Fun4AllServer::instance();
   se->Verbosity(99);
 
   const double FMAGSTR = -1.044;//-1.054;
@@ -110,24 +138,12 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   in->EventSamplingFactor(20);
-  if (is_online) {
-    in->PretendSpillInterval(55);
-  }
-  //in->DirParam("./runs");
   in->DirParam("/seaquest/production/runs");
-  //in->DirParam("/data/e906/runs");
   in->fileopen(fn_in);
   se->registerInputManager(in);
 
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_out);
   se->registerOutputManager(out);
-
-  if (is_online) { // Register the online-monitoring clients
-    se->StartServer();
-
-    OnlMonClient* ana = new OnlMonCODA();
-    se->registerSubsystem(ana);
-  }
 
   se->run(nevent);
   se->End();
