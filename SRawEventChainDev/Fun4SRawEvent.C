@@ -9,7 +9,7 @@ R__LOAD_LIBRARY(libdecoder_maindaq)
 
 int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
 {
-  const char* fn_in  = "./input/digit_016070_R007.root";
+  const char* fn_in  = "/data3/analysis/production/02/41/digit_024172_009.root";
   const char* fn_out = "./SRawEvent-DST.root";
 
   gSystem->Load("libfun4all");
