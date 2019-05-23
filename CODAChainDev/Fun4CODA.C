@@ -61,16 +61,21 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
 
-  const char* dir_in  = "/data3/data/mainDAQ/";
-  const char* dir_out = "./";
+  //const char* coda_dir  = "/data3/data/mainDAQ/";
+  //const char* para_dir  = "/seaquest/production/runs/";
+
+  const char* coda_dir  = "./";
+  //const char* para_dir  = "./";
+
+  const char* out_dir   = "./";
 
   ostringstream oss;
   oss << setfill('0') 
-      << dir_in << "/run_" << setw(6) << run << ".dat";
-  string fn_in = oss.str();
+      << coda_dir << "/run_" << setw(6) << run << ".dat";
+  string coda_file = oss.str();
   oss.str("");
-  oss << dir_out << "/run_" << setw(6) << run << ".root";
-  string fn_out = oss.str();
+  oss << out_dir << "/run_" << setw(6) << run << ".root";
+  string out_dst = oss.str();
 
   Fun4AllServer* se = Fun4AllServer::instance();
   se->Verbosity(99);
@@ -138,11 +143,11 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   in->EventSamplingFactor(20);
-  in->DirParam("/seaquest/production/runs");
-  in->fileopen(fn_in);
+  //in->DirParam(para_dir);
+  in->fileopen(coda_file);
   se->registerInputManager(in);
 
-  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_out);
+  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
 
   se->run(nevent);
@@ -152,5 +157,7 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   
   delete se;
   cout << "Fun4CODA Done!" << endl;
+
+  gSystem->Exit(0);
   return 0;
 }
