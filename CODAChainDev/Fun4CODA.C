@@ -65,7 +65,7 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   //const char* para_dir  = "/seaquest/production/runs/";
 
   const char* coda_dir  = "./";
-  //const char* para_dir  = "./";
+  const char* para_dir  = "./";
 
   const char* out_dir   = "./";
 
@@ -135,7 +135,7 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  //ktracker->Verbosity(99);
+  ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
@@ -143,7 +143,7 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   in->EventSamplingFactor(20);
-  //in->DirParam(para_dir);
+  in->DirParam(para_dir);
   in->fileopen(coda_file);
   se->registerInputManager(in);
 

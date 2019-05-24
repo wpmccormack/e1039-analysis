@@ -24,7 +24,8 @@ echo "hello, grid." | tee out.txt $CONDOR_DIR_OUTPUT/out.txt
 pwd | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
 tar -xzf $CONDOR_DIR_INPUT/input.tar.gz
-ln -s $CONDOR_DIR_INPUT/*.dat .
+tar -xzf $CONDOR_DIR_INPUT/para.tar.gz
+ln -sf $CONDOR_DIR_INPUT/*.dat .
 ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
 source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh

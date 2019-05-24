@@ -37,13 +37,13 @@ OutputSchema "run_014075_R007_yuhw_test"
 #Alginment files (only used when OnlineAlignment_enable is set to 0)
 OnlineAlignment_enable 0
 UseIdealGeom 0
-AlignmentFile_Hodo    $KTRACKER_ROOT/alignment/run5e/alignment_hodo.txt
-AlignmentFile_Chamber $KTRACKER_ROOT/alignment/run5e/alignment_chamber.txt
-AlignmentFile_Prop    $KTRACKER_ROOT/alignment/run5e/alignment_prop.txt
-AlignmentFile_Mille   $KTRACKER_ROOT/alignment/run5e/align_mille.txt
+AlignmentFile_Hodo    $KTRACKER_ROOT/alignment/run6/alignment_hodo.txt
+AlignmentFile_Chamber $KTRACKER_ROOT/alignment/run6/alignment_chamber.txt
+AlignmentFile_Prop    $KTRACKER_ROOT/alignment/run6/alignment_prop.txt
+AlignmentFile_Mille   $KTRACKER_ROOT/alignment/run6/align_mille.txt
 
 #Calibration, not used if OnlineAlignment_enable is set to 1
-CalibrationsFile $KTRACKER_ROOT/alignment/run5e/calibration.txt
+CalibrationsFile $KTRACKER_ROOT/alignment/run6/calibration.txt
 
 #Trigger roads, only effective if TriggerMask_enable is set to 1
 Trigger_Repository      $TRIGGER_ROOT
