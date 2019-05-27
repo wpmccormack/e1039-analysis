@@ -134,13 +134,16 @@ const std::string e1030_resource = "/e906/app/software/osg/users/yuhw/e1039/reso
 
   se->registerSubsystem(g4Reco);
 
+  // prepare clib DB config. for calib modules
   std:string cali_db_conf = e1030_resource + "/db_conf/my.cnf";
   std::cout << "ClibConf: " << cali_db_conf << std::endl;
 
+  // calib: in time
   CalibInTime* cali_intime = new CalibInTime();
   cali_intime->SetDBConf(cali_db_conf);
   se->registerSubsystem(cali_intime);
 
+  // calib: TDC to drift time
   CalibXT* cali_xt = new CalibXT();
   cali_xt->SetDBConf(cali_db_conf);
   se->registerSubsystem(cali_xt);
@@ -153,6 +156,7 @@ const std::string e1030_resource = "/e906/app/software/osg/users/yuhw/e1039/reso
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
+  // input manager for CODA files
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   in->EventSamplingFactor(20);
@@ -160,6 +164,7 @@ const std::string e1030_resource = "/e906/app/software/osg/users/yuhw/e1039/reso
   in->fileopen(coda_file);
   se->registerInputManager(in);
 
+  // output manager for CODA files
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
 
