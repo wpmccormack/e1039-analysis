@@ -29,6 +29,8 @@
 #include <g4main/PHG4TruthSubsystem.h>
 #include <g4detectors/PHG4DetectorSubsystem.h>
 #include <g4detectors/DPDigitizer.h>
+#include <decoder_maindaq/CalibXT.h>
+#include <decoder_maindaq/CalibInTime.h>
 #include <phpythia8/PHPythia8.h>
 #include <g4eval/PHG4DSTReader.h>
 #include <jobopts_svc/JobOptsSvc.h>
@@ -50,7 +52,10 @@ R__LOAD_LIBRARY(libg4eval)
 R__LOAD_LIBRARY(libktracker)
 #endif
 
-int Fun4CODA(const int nevent = 0, const int run = 24172)
+int Fun4CODA(
+const int nevent = 0,
+const int run = 24172,
+const std::string e1030_resource = "/e906/app/software/osg/users/yuhw/e1039/resource/")
 {
   gSystem->Load("libdecoder_maindaq.so");
   gSystem->Load("libonlmonserver.so");
@@ -129,8 +134,16 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
 
   se->registerSubsystem(g4Reco);
 
-  se->registerSubsystem(new CalibInTime());
-  se->registerSubsystem(new CalibXT());
+  std:string cali_db_conf = e1030_resource + "/db_conf/my.cnf";
+  std::cout << "ClibConf: " << cali_db_conf << std::endl;
+
+  CalibInTime* cali_intime = new CalibInTime();
+  cali_intime->SetDBConf(cali_db_conf);
+  se->registerSubsystem(cali_intime);
+
+  CalibXT* cali_xt = new CalibXT();
+  cali_xt->SetDBConf(cali_db_conf);
+  se->registerSubsystem(cali_xt);
 
   // trakcing module
   gSystem->Load("libktracker.so");

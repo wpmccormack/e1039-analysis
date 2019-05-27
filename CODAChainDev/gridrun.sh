@@ -3,6 +3,9 @@
 nevents=$1
 run_num=$2
 
+e1030_resource=$E1039_RESOURCE
+echo "e1030_resource=$e1030_resource"
+
 if [ -z ${CONDOR_DIR_INPUT+x} ];
   then
     CONDOR_DIR_INPUT=./input;
@@ -28,16 +31,15 @@ tar -xzf $CONDOR_DIR_INPUT/para.tar.gz
 ln -sf $CONDOR_DIR_INPUT/*.dat .
 ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
-source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
-#source /e906/app/software/osg/users/yuhw/e1039/setup.sh
-#export LD_LIBRARY_PATH=/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/install/lib:$LD_LIBRARY_PATH
-echo `which root`
+#source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
+source /e906/app/software/osg/users/yuhw/e1039/setup.sh
 
+echo `which root`
 ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libktracker.so
 ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libg4detectors.so
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
-time root -b -q Fun4CODA.C\($nevents,$run_num\)
+time root -b -q Fun4CODA.C\($nevents,$run_num,\"${e1030_resource}\"\)
 
 mv *.root $CONDOR_DIR_OUTPUT/
 
