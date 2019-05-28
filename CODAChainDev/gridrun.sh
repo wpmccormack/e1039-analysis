@@ -49,7 +49,7 @@ ldd $E1039_CORE/lib/libktracker.so
 ldd $E1039_CORE/lib/libg4detectors.so
 
 # run
-time root -b -q Fun4CODA.C\($nevents,$run_num,\"${E1039_RESOURCE}\"\)
+time root -b -q Fun4CODA.C\($nevents,$run_num\)
 
 # mv output ROOT files to $CONDOR_DIR_OUTPUT
 mv *.root $CONDOR_DIR_OUTPUT/
