@@ -59,7 +59,7 @@ do
 
   if [ $do_sub == 1 ]; then
     cmd="jobsub_submit"
-    cmd="$cmd -g --OS=SL6 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='short'"
+    cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='short'"
     cmd="$cmd --mail_never"
     cmd="$cmd -L $local_work_dir/log/log.txt"
     cmd="$cmd -f $local_work_dir/input.tar.gz"

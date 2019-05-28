@@ -34,6 +34,7 @@ ln -sf $CONDOR_DIR_INPUT/*.dat .
 ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
 # setup enviroment
+#is_grid=1
 if [ $is_grid == 1 ]; then
   echo "source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh"
   source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
@@ -45,8 +46,12 @@ fi
 # test enviroment
 echo `which root`
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+echo "ldd $E1039_CORE/lib/libktracker.so"
 ldd $E1039_CORE/lib/libktracker.so
+echo "ldd $E1039_CORE/lib/libg4detectors.so"
 ldd $E1039_CORE/lib/libg4detectors.so
+echo "ldd $E1039_CORE/lib/libdecoder_maindaq.so"
+ldd $E1039_CORE/lib/libdecoder_maindaq.so
 
 # run
 time root -b -q Fun4CODA.C\($nevents,$run_num\)
