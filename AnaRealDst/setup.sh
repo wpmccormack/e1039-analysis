@@ -1,15 +1,3 @@
-## e1039-analysis/AnaRealDst
-##
-## A compact program to analyze the "DST" file, which is created
-## by the Main DAQ decoder.
-##
-## Basic usage:
-##   source setup.sh
-##   cd work
-##   cmake-e1039-ana
-##   make install
-##   root -b ../macro/Fun4RealDst.C
-
 DIR_TOP=$(dirname $(readlink -f $BASH_SOURCE))
 
 if [ $HOSTNAME = 'seaquestdaq01.fnal.gov' ] ; then
