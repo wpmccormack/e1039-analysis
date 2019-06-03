@@ -5,6 +5,7 @@
 #include <g4detectors/PHG4CollimatorSubsystem.h>
 #include <g4detectors/PHG4CylinderSubsystem.h>
 #include <g4detectors/PHG4BlockSubsystem.h>
+#include <g4detectors/PHG4SquareTubeSubsystem.h>
 class SubsysReco;
 R__LOAD_LIBRARY(libg4detectors)
 #endif

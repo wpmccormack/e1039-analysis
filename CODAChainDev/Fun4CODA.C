@@ -12,15 +12,29 @@
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 #include <phool/recoConsts.h>
-#include <fun4all/SubsysReco.h>
+#include <jobopts_svc/JobOptsSvc.h>
+#include <geom_svc/GeomSvc.h>
 #include <fun4all/Fun4AllServer.h>
+#include <g4main/PHG4Reco.h>
+#include <g4detectors/PHG4E1039InsensSubsystem.h>
+#include <decoder_maindaq/CalibInTime.h>
+#include <decoder_maindaq/CalibXT.h>
+#include <ktracker/KalmanFastTrackingWrapper.h>
+#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
+#include <fun4all/Fun4AllDstOutputManager.h>
+#include <phfield/PHFieldConfig.h>
+
+#include <pdbcalbase/PdbApplication.h>
+#include <pdbcalbase/PHGenericFactoryT.h>
+#include <pdbcalbase/PdbBankManager.h>
+#include <onlmonserver/OnlMonClient.h>
+
+#include <fun4all/SubsysReco.h>
 #include <fun4all/Fun4AllInputManager.h>
 #include <fun4all/Fun4AllDummyInputManager.h>
 #include <fun4all/Fun4AllOutputManager.h>
 #include <fun4all/Fun4AllDstInputManager.h>
 #include <fun4all/Fun4AllNoSyncDstInputManager.h>
-#include <fun4all/Fun4AllDstOutputManager.h>
-#include <g4main/PHG4Reco.h>
 #include <g4main/PHG4ParticleGeneratorBase.h>
 #include <g4main/PHG4ParticleGenerator.h>
 #include <g4main/PHG4SimpleEventGenerator.h>
@@ -29,12 +43,8 @@
 #include <g4main/PHG4TruthSubsystem.h>
 #include <g4detectors/PHG4DetectorSubsystem.h>
 #include <g4detectors/DPDigitizer.h>
-#include <decoder_maindaq/CalibXT.h>
-#include <decoder_maindaq/CalibInTime.h>
 #include <phpythia8/PHPythia8.h>
 #include <g4eval/PHG4DSTReader.h>
-#include <jobopts_svc/JobOptsSvc.h>
-#include <geom_svc/GeomSvc.h>
 #include <module_example/TrkEval.h>
 
 #include <TSystem.h>
@@ -43,13 +53,13 @@
 #include "G4_Target.C"
 
 R__LOAD_LIBRARY(libinterface_main)
-R__LOAD_LIBRARY(libonlmonserver)
-R__LOAD_LIBRARY(libdecoder_maindaq)
 R__LOAD_LIBRARY(libfun4all)
-R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libdecoder_maindaq)
 R__LOAD_LIBRARY(libg4testbench)
+R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4eval)
 R__LOAD_LIBRARY(libktracker)
+R__LOAD_LIBRARY(libonlmonserver)
 #endif
 
 int Fun4CODA(
@@ -57,14 +67,14 @@ const int nevent = 0,
 const int run = 24172
 )
 {
-  gSystem->Load("libdecoder_maindaq.so");
-  gSystem->Load("libonlmonserver.so");
-
+  gSystem->Load("libinterface_main.so");
   gSystem->Load("libfun4all");
-  gSystem->Load("libg4detectors");
+  gSystem->Load("libdecoder_maindaq");
   gSystem->Load("libg4testbench");
+  gSystem->Load("libg4detectors");
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
+  gSystem->Load("libonlmonserver.so");
 
   //const char* coda_dir  = "/data3/data/mainDAQ/";
   //const char* para_dir  = "/seaquest/production/runs/";
@@ -143,7 +153,6 @@ const int run = 24172
   se->registerSubsystem(cali_xt);
 
   // trakcing module
-  gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
@@ -153,7 +162,7 @@ const int run = 24172
   // input manager for CODA files
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
-  in->EventSamplingFactor(20);
+  in->EventSamplingFactor(200);
   in->DirParam(para_dir);
   in->fileopen(coda_file);
   se->registerInputManager(in);
@@ -168,6 +177,7 @@ const int run = 24172
   se->PrintTimer();
   
   delete se;
+
   cout << "Fun4CODA Done!" << endl;
 
   gSystem->Exit(0);

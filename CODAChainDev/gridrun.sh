@@ -46,6 +46,7 @@ fi
 # test enviroment
 echo `which root`
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+echo "ROOT_INCLUDE_PATH=$ROOT_INCLUDE_PATH"
 echo "ldd $E1039_CORE/lib/libktracker.so"
 ldd $E1039_CORE/lib/libktracker.so
 echo "ldd $E1039_CORE/lib/libg4detectors.so"
