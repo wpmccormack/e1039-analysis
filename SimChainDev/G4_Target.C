@@ -5,6 +5,7 @@
 #include <g4detectors/PHG4CollimatorSubsystem.h>
 #include <g4detectors/PHG4CylinderSubsystem.h>
 #include <g4detectors/PHG4BlockSubsystem.h>
+#include <g4detectors/PHG4SquareTubeSubsystem.h>
 class SubsysReco;
 R__LOAD_LIBRARY(libg4detectors)
 #endif
@@ -16,7 +17,7 @@ void SetupTarget(
   const bool do_collimator = true,
   const bool do_target = true,
   const bool do_e1039_shielding = true,
-  const double target_coil_pos_z = -130,
+  const double target_coil_pos_z = -300,
 	const double target_l = 7.9,
 	const double target_z = 0.,
 	const int use_g4steps = 1

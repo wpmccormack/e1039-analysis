@@ -11,44 +11,92 @@
      scp -pr e906-gat6.fnal.gov:/seaquest/production/runs/run_$RUN6  $WORK_DIR/runs
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <phool/recoConsts.h>
+#include <jobopts_svc/JobOptsSvc.h>
+#include <geom_svc/GeomSvc.h>
+#include <fun4all/Fun4AllServer.h>
+#include <g4main/PHG4Reco.h>
+#include <g4detectors/PHG4E1039InsensSubsystem.h>
+#include <decoder_maindaq/CalibInTime.h>
+#include <decoder_maindaq/CalibXT.h>
+#include <ktracker/KalmanFastTrackingWrapper.h>
+#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
+#include <fun4all/Fun4AllDstOutputManager.h>
+#include <phfield/PHFieldConfig.h>
+
+#include <pdbcalbase/PdbApplication.h>
+#include <pdbcalbase/PHGenericFactoryT.h>
+#include <pdbcalbase/PdbBankManager.h>
+#include <onlmonserver/OnlMonClient.h>
+
+#include <fun4all/SubsysReco.h>
+#include <fun4all/Fun4AllInputManager.h>
+#include <fun4all/Fun4AllDummyInputManager.h>
+#include <fun4all/Fun4AllOutputManager.h>
+#include <fun4all/Fun4AllDstInputManager.h>
+#include <fun4all/Fun4AllNoSyncDstInputManager.h>
+#include <g4main/PHG4ParticleGeneratorBase.h>
+#include <g4main/PHG4ParticleGenerator.h>
+#include <g4main/PHG4SimpleEventGenerator.h>
+#include <g4main/PHG4ParticleGun.h>
+#include <g4main/HepMCNodeReader.h>
+#include <g4main/PHG4TruthSubsystem.h>
+#include <g4detectors/PHG4DetectorSubsystem.h>
+#include <g4detectors/DPDigitizer.h>
+#include <phpythia8/PHPythia8.h>
+#include <g4eval/PHG4DSTReader.h>
+#include <module_example/TrkEval.h>
+
+#include <TSystem.h>
+
+#include "G4_SensitiveDetectors.C"
+#include "G4_Target.C"
+
 R__LOAD_LIBRARY(libinterface_main)
-R__LOAD_LIBRARY(libonlmonserver)
+R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libdecoder_maindaq)
+R__LOAD_LIBRARY(libg4testbench)
+R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libktracker)
+R__LOAD_LIBRARY(libonlmonserver)
 #endif
 
-int Fun4CODA(const int nevent = 0, const int run = 24172)
+int Fun4CODA(
+const int nevent = 0,
+const int run = 24172
+)
 {
-  gSystem->Load("libdecoder_maindaq.so");
-  gSystem->Load("libonlmonserver.so");
-
+  gSystem->Load("libinterface_main.so");
   gSystem->Load("libfun4all");
-  gSystem->Load("libg4detectors");
+  gSystem->Load("libdecoder_maindaq");
   gSystem->Load("libg4testbench");
+  gSystem->Load("libg4detectors");
   gSystem->Load("libg4eval");
   gSystem->Load("libktracker.so");
+  gSystem->Load("libonlmonserver.so");
 
-  //const char* dir_in  = "/data/e906",
-  //const char* dir_in  = "/seaquest/analysis/kenichi/e1039";
-  const char* dir_in  = "/data3/data/mainDAQ/";
-  //const char* dir_in  = "./";
-  const char* dir_out = "./";
-  const bool is_online = false;
+  //const char* coda_dir  = "/data3/data/mainDAQ/";
+  //const char* para_dir  = "/seaquest/production/runs/";
+
+  const char* coda_dir  = "./";
+  const char* para_dir  = "./";
+
+  const char* out_dir   = "./";
 
   ostringstream oss;
   oss << setfill('0') 
-      << dir_in << "/run_" << setw(6) << run << ".dat";
-  string fn_in = oss.str();
+      << coda_dir << "/run_" << setw(6) << run << ".dat";
+  string coda_file = oss.str();
   oss.str("");
-  oss << dir_out << "/run_" << setw(6) << run << ".root";
-  string fn_out = oss.str();
+  oss << out_dir << "/run_" << setw(6) << run << ".root";
+  string out_dst = oss.str();
 
-  Fun4AllServer* se = 0;
-  if(is_online) se = OnlMonServer::instance();
-  else se = Fun4AllServer::instance();
-  //se->Verbosity(0);
+  Fun4AllServer* se = Fun4AllServer::instance();
+  se->Verbosity(99);
 
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
+  const double FMAGSTR = -1.044;//-1.054;
+  const double KMAGSTR = -1.025;//-0.951;
 
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -96,38 +144,32 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
 
   se->registerSubsystem(g4Reco);
 
-  se->registerSubsystem(new CalibInTime());
-  se->registerSubsystem(new CalibXT());
+  // calib: in time
+  CalibInTime* cali_intime = new CalibInTime();
+  se->registerSubsystem(cali_intime);
+
+  // calib: TDC to drift time
+  CalibXT* cali_xt = new CalibXT();
+  se->registerSubsystem(cali_xt);
 
   // trakcing module
-  gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(100);
+  ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
+  // input manager for CODA files
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
-  in->EventSamplingFactor(100);
-  if (is_online) {
-    in->PretendSpillInterval(55);
-  }
-  //in->DirParam("./runs");
-  in->DirParam("/seaquest/production/runs");
-  //in->DirParam("/data/e906/runs");
-  in->fileopen(fn_in);
+  in->EventSamplingFactor(200);
+  in->DirParam(para_dir);
+  in->fileopen(coda_file);
   se->registerInputManager(in);
 
-  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_out);
+  // output manager for CODA files
+  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
-
-  if (is_online) { // Register the online-monitoring clients
-    se->StartServer();
-
-    OnlMonClient* ana = new OnlMonCODA();
-    se->registerSubsystem(ana);
-  }
 
   se->run(nevent);
   se->End();
@@ -135,6 +177,9 @@ int Fun4CODA(const int nevent = 0, const int run = 24172)
   se->PrintTimer();
   
   delete se;
+
   cout << "Fun4CODA Done!" << endl;
+
+  gSystem->Exit(0);
   return 0;
 }

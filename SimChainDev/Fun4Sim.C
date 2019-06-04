@@ -1,5 +1,21 @@
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 #include <phool/recoConsts.h>
+#include <jobopts_svc/JobOptsSvc.h>
+#include <geom_svc/GeomSvc.h>
+#include <fun4all/Fun4AllServer.h>
+#include <g4main/PHG4Reco.h>
+#include <g4detectors/PHG4E1039InsensSubsystem.h>
+#include <decoder_maindaq/CalibInTime.h>
+#include <decoder_maindaq/CalibXT.h>
+#include <ktracker/KalmanFastTrackingWrapper.h>
+#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
+#include <fun4all/Fun4AllDstOutputManager.h>
+#include <phfield/PHFieldConfig.h>
+
+#include <phpythia8/PHPy8GenTrigger.h>
+#include <phpythia8/PHPy8ParticleTrigger.h>
+
+#include <phool/recoConsts.h>
 #include <fun4all/SubsysReco.h>
 #include <fun4all/Fun4AllServer.h>
 #include <fun4all/Fun4AllInputManager.h>
@@ -17,9 +33,7 @@
 #include <g4main/PHG4TruthSubsystem.h>
 #include <g4detectors/PHG4DetectorSubsystem.h>
 #include <g4detectors/DPDigitizer.h>
-//#include <phpythia6/PHPythia6.h>
 #include <phpythia8/PHPythia8.h>
-//#include <phhepmc/Fun4AllHepMCInputManager.h>
 #include <g4eval/PHG4DSTReader.h>
 #include <jobopts_svc/JobOptsSvc.h>
 #include <geom_svc/GeomSvc.h>
@@ -31,12 +45,13 @@
 #include "G4_Target.C"
 
 R__LOAD_LIBRARY(libfun4all)
+R__LOAD_LIBRARY(libPHPythia8)
 R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4testbench)
 R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libdptrigger)
+R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libktracker)
-R__LOAD_LIBRARY(libPHPythia8)
-//R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libmodule_example)
 #endif
 
@@ -213,7 +228,8 @@ int Fun4Sim(
   gSystem->Load("libdptrigger.so");
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
-  dptrigger->set_road_set_file_name("trigger_67.txt");
+  //dptrigger->set_road_set_file_name("trigger_67.txt");
+  dptrigger->set_road_set_file_name("/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/resource/trigger/trigger_67.txt");
   dptrigger->Verbosity(0);
   se->registerSubsystem(dptrigger);
 
