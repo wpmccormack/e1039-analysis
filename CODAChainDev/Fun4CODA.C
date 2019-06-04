@@ -51,6 +51,7 @@
 
 #include "G4_SensitiveDetectors.C"
 #include "G4_Target.C"
+#include "EventDisplay.C"
 
 R__LOAD_LIBRARY(libinterface_main)
 R__LOAD_LIBRARY(libfun4all)
@@ -171,11 +172,22 @@ const int run = 24172
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
 
-  se->run(nevent);
+
+  // Event diplay
+  bool run_eve_disp=true;
+  if(run_eve_disp) {
+    gROOT->LoadMacro("EventDisplay.C");
+    EventDisplay(nevent);
+    se->run(nevent);
+    cin.get();
+  } else {
+    se->run(nevent);
+  }
+
   se->End();
 
   se->PrintTimer();
-  
+
   delete se;
 
   cout << "Fun4CODA Done!" << endl;
