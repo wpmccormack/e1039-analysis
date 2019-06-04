@@ -105,7 +105,9 @@ void ana_eval(
     h1_eval_all->Fill(eval_var[0]);
     if(ntrack_hodo>1)
       h1_eval_geo->Fill(eval_var[0]);
-    if((emu_trigger&(1<<5)) > 0)
+    if(  (emu_trigger&(1<<5))>0
+      || (emu_trigger&(1<<6))>0
+      )
       h1_eval_tri->Fill(eval_var[0]);
   }
 
