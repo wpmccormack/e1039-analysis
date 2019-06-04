@@ -74,13 +74,13 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(100);
+  ktracker->Verbosity(0);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
   Fun4AllSRawEventInputManager *in = new Fun4AllSRawEventInputManager("SRawEventIM");
-  in->Verbosity(100);
+  in->Verbosity(0);
   in->set_tree_name("save");
   in->set_branch_name("rawEvent");
   in->fileopen(fn_in);
