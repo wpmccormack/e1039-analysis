@@ -11,9 +11,15 @@
 #include <decoder_maindaq/Fun4AllEVIOInputManager.h>
 #include <fun4all/Fun4AllDstOutputManager.h>
 #include <phfield/PHFieldConfig.h>
+#include <phgeom/PHGeomUtility.h>
 
 #include <phpythia8/PHPy8GenTrigger.h>
 #include <phpythia8/PHPy8ParticleTrigger.h>
+
+#include <pdbcalbase/PdbApplication.h>
+#include <pdbcalbase/PHGenericFactoryT.h>
+#include <pdbcalbase/PdbBankManager.h>
+#include <onlmonserver/OnlMonClient.h>
 
 #include <phool/recoConsts.h>
 #include <fun4all/SubsysReco.h>
@@ -43,6 +49,7 @@
 
 #include "G4_SensitiveDetectors.C"
 #include "G4_Target.C"
+#include "EventDisplay.C"
 
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libPHPythia8)
@@ -58,10 +65,10 @@ R__LOAD_LIBRARY(libmodule_example)
 using namespace std;
 
 int Fun4Sim(
-    const int nEvents = 1
+    const int nevent = 1
     )
 {
-  const double target_coil_pos_z = -130;
+  const double target_coil_pos_z = -300;
   const int nmu = 1;
   const double x0_shift = 0.0; //cm 
   int embedding_opt = 0;
@@ -76,8 +83,8 @@ int Fun4Sim(
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8 = true;
-  const bool gen_gun = false;
+  const bool gen_pythia8 = false;
+  const bool gen_gun = true;
   const bool gen_particle = false;
 
   gSystem->Load("libfun4all");
@@ -92,6 +99,7 @@ int Fun4Sim(
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
+  //jobopt_svc->init("e906_data.opts");
   jobopt_svc->init("default.opts");
 
   GeomSvc *geom_svc = GeomSvc::instance();
@@ -140,9 +148,9 @@ int Fun4Sim(
   // single gun
   if(gen_gun) {
     PHG4ParticleGun *gun = new PHG4ParticleGun("GUN");
-    gun->set_name("mu+");
+    gun->set_name("mu-");
     gun->set_vtx(0, 0, target_coil_pos_z);
-    gun->set_mom(3, 0, 40);
+    gun->set_mom(3, 0, 50);
     se->registerSubsystem(gun);
   }
 
@@ -262,9 +270,20 @@ int Fun4Sim(
 
   // a quick evaluator to inspect on hit/particle/tower level
 
-  if (nEvents > 0)
+  if (nevent > 0)
   {
-    se->run(nEvents);
+    // Event diplay
+    bool run_eve_disp=true;
+    if(run_eve_disp) {
+      gROOT->LoadMacro("EventDisplay.C");
+      EventDisplay(nevent);
+      for(int ievent=0; ievent<nevent; ++ievent) {
+        se->run(1);
+        cin.get();
+      }
+    } else {
+      se->run(nevent);
+    }
 
     PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
 
