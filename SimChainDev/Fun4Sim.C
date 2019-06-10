@@ -149,8 +149,10 @@ int Fun4Sim(
   if(gen_gun) {
     PHG4ParticleGun *gun = new PHG4ParticleGun("GUN");
     gun->set_name("mu-");
-    gun->set_vtx(0, 0, target_coil_pos_z);
-    gun->set_mom(3, 0, 50);
+    //gun->set_vtx(0, 0, target_coil_pos_z);
+    //gun->set_mom(3, 3, 50);
+    gun->set_vtx(30, 10, 590);
+    gun->set_mom(-0.3, 2, 50);
     se->registerSubsystem(gun);
   }
 
@@ -268,22 +270,9 @@ int Fun4Sim(
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   //se->registerOutputManager(out);
 
-  // a quick evaluator to inspect on hit/particle/tower level
-
   if (nevent > 0)
   {
-    // Event diplay
-    bool run_eve_disp=true;
-    if(run_eve_disp) {
-      gROOT->LoadMacro("EventDisplay.C");
-      EventDisplay(nevent);
-      for(int ievent=0; ievent<nevent; ++ievent) {
-        se->run(1);
-        cin.get();
-      }
-    } else {
-      se->run(nevent);
-    }
+    se->run(nevent);
 
     PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
 
@@ -295,7 +284,11 @@ int Fun4Sim(
     // cleanup - delete the server and exit
     delete se;
     gSystem->Exit(0);
-  }
+  } else { // TEve event display
+    gROOT->LoadMacro("EventDisplay.C");
+    EventDisplay(nevent);
+  } 
+
   return 0;
 }
 
