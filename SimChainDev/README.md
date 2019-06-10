@@ -1,8 +1,9 @@
 
-on a seaquest gpvm machine:
+on a spinquest gpvm machine:
 
 Setup enviroment
 ```
+
 source /e906/app/users/yuhw/setup.sh
 ```
 
@@ -19,10 +20,17 @@ root -l -q Fun4Sim.C
 ```
 
 
-More information, refer to [Start up guide with an example](https://github.com/E1039-Collaboration/e1039-wiki/wiki/Start-up-guide-with-an-example)
+More information, refer to [E1039-simulation-tutorial---Apr.-19](https://github.com/E1039-Collaboration/e1039-wiki/wiki/E1039-simulation-tutorial---Apr.-19)
 
 
-Below is an eample how to interactively run the event display
+# Event display
+Below is an example how to interactively run the event display.
+
+Open a ROOT session
+```bash
+root -l
+```
+
 ```C++
 
 gROOT->ProcessLine(".x Fun4Sim.C(-1)");
