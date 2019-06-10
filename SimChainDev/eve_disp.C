@@ -12,13 +12,6 @@ eve->InitRun(se->topNode());
 se->run(1);
 
 
-gEve->FullRedraw3D(kTRUE);
 TGLViewer*  v = gEve->GetDefaultGLViewer();
-v->RefreshPadEditor(v);
-
-v->CurrentCamera().RotateRad(-3.14/2,0);
-v->CurrentCamera().Zoom(400, 0, 0);
-v->CurrentCamera().Truck(3000,0);
-
-
+v->CurrentCamera().RotateRad(0, -3.14/2.0); // beam view
 v->DoDraw();
