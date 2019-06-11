@@ -65,7 +65,7 @@ R__LOAD_LIBRARY(libonlmonserver)
 
 int Fun4CODA(
 const int nevent = 0,
-const int run = 24172
+const int run = 28692
 )
 {
   gSystem->Load("libinterface_main.so");
@@ -133,7 +133,7 @@ const int run = 24172
 
   // insensitive elements of the spectrometer
   PHG4E1039InsensSubsystem* insens = new PHG4E1039InsensSubsystem("Insens");
-  g4Reco->registerSubsystem(insens);
+  //g4Reco->registerSubsystem(insens);
 
   // collimator, targer and shielding between target and FMag
   gROOT->LoadMacro("G4_Target.C");
@@ -172,26 +172,25 @@ const int run = 24172
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
 
+  if (nevent > 0)
+  {
+    se->run(nevent);
 
-  // Event diplay
-  bool run_eve_disp=true;
-  if(run_eve_disp) {
+    // finish job - close and save output files
+    se->End();
+    se->PrintTimer();
+    std::cout << "All done" << std::endl;
+
+    // cleanup - delete the server and exit
+    delete se;
+
+    gSystem->Exit(0);
+  } else { // TEve event display
     gROOT->LoadMacro("EventDisplay.C");
     EventDisplay(nevent);
-    se->run(nevent);
-    cin.get();
-  } else {
-    se->run(nevent);
   }
-
-  se->End();
-
-  se->PrintTimer();
-
-  delete se;
 
   cout << "Fun4CODA Done!" << endl;
 
-  gSystem->Exit(0);
   return 0;
 }

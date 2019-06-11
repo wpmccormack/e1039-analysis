@@ -20,7 +20,7 @@ int EventDisplay(const int nevent = 0)
 
   PHEventDisplay* event_display
     = new PHEventDisplay(
-    1920, 860, // width height
+    1800, 800, // width height
     false, // use_fieldmap
     false, // use_geofile
     "", // field-map name
@@ -37,7 +37,7 @@ int EventDisplay(const int nevent = 0)
   event_display->set_hcalout_on(false);
   event_display->set_jet_on(false);
   event_display->set_truth_on(false);
-  event_display->set_verbosity(2);
+  event_display->set_verbosity(3);
 
   se->registerSubsystem(event_display);
   //event_display->start_rotation();
