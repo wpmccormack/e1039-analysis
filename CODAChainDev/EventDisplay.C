@@ -28,16 +28,7 @@ int EventDisplay(const int nevent = 0)
     );
 
   // location of geometry file : /gpfs/mnt/gpfs02/sphenix/user/shlee/svtx/stage1_jobs
-  event_display->set_jet_pt_threshold(10.);//GeV/c
-  event_display->set_jet_e_scale(30.);//GeV
-  event_display->set_calo_e_threshold(0.0009);//GeV
-  event_display->set_svtx_on(true);
-  event_display->set_cemc_on(true);
-  event_display->set_hcalin_on(false);
-  event_display->set_hcalout_on(false);
-  event_display->set_jet_on(false);
-  event_display->set_truth_on(false);
-  event_display->set_verbosity(3);
+  event_display->set_verbosity(0);
 
   se->registerSubsystem(event_display);
   //event_display->start_rotation();

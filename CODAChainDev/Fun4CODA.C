@@ -94,7 +94,7 @@ const int run = 28692
   string out_dst = oss.str();
 
   Fun4AllServer* se = Fun4AllServer::instance();
-  se->Verbosity(99);
+  se->Verbosity(0);
 
   const double FMAGSTR = -1.044;//-1.054;
   const double KMAGSTR = -1.025;//-0.951;
@@ -106,6 +106,7 @@ const int run = 28692
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
   jobopt_svc->init("e906_data.opts");
+  //jobopt_svc->init("default.opts");
 
   GeomSvc *geom_svc = GeomSvc::instance();
 
@@ -133,7 +134,7 @@ const int run = 28692
 
   // insensitive elements of the spectrometer
   PHG4E1039InsensSubsystem* insens = new PHG4E1039InsensSubsystem("Insens");
-  //g4Reco->registerSubsystem(insens);
+  g4Reco->registerSubsystem(insens);
 
   // collimator, targer and shielding between target and FMag
   gROOT->LoadMacro("G4_Target.C");
@@ -169,12 +170,14 @@ const int run = 28692
   se->registerInputManager(in);
 
   // output manager for CODA files
-  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
-  se->registerOutputManager(out);
+  //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
+  //se->registerOutputManager(out);
 
   if (nevent > 0)
   {
     se->run(nevent);
+
+    PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
 
     // finish job - close and save output files
     se->End();
@@ -183,14 +186,11 @@ const int run = 28692
 
     // cleanup - delete the server and exit
     delete se;
-
     gSystem->Exit(0);
   } else { // TEve event display
     gROOT->LoadMacro("EventDisplay.C");
     EventDisplay(nevent);
   }
-
-  cout << "Fun4CODA Done!" << endl;
 
   return 0;
 }
