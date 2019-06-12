@@ -20,7 +20,7 @@ int EventDisplay(const int nevent = 0)
 
   PHEventDisplay* event_display
     = new PHEventDisplay(
-    1800, 800, // width height
+    1920, 1080, // width height
     false, // use_fieldmap
     false, // use_geofile
     "", // field-map name
@@ -28,7 +28,7 @@ int EventDisplay(const int nevent = 0)
     );
 
   // location of geometry file : /gpfs/mnt/gpfs02/sphenix/user/shlee/svtx/stage1_jobs
-  event_display->set_verbosity(0);
+  event_display->set_verbosity(3);
 
   se->registerSubsystem(event_display);
   //event_display->start_rotation();

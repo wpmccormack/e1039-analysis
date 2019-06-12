@@ -20,7 +20,7 @@ int EventDisplay(const int nevent = 0)
 
   PHEventDisplay* event_display
     = new PHEventDisplay(
-    1800, 800, // width height
+    1920, 1080, // width height
     false, // use_fieldmap
     false, // use_geofile
     "", // field-map name
