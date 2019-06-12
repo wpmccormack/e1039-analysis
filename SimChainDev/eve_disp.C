@@ -18,6 +18,10 @@ TGLViewer*  v = gEve->GetDefaultGLViewer();
 v->CurrentCamera().RotateRad(0, -3.14/2.0); // beam view
 v->DoDraw();
 
+// top view
+v->CurrentCamera().RotateRad(-3.14/2.0, 0);
+v->CurrentCamera().Zoom(400, 0, 0);
+v->CurrentCamera().Truck(3000,0);
 
 //3D view
 v->CurrentCamera().RotateRad(-3.14/4., -3.14/4.);
