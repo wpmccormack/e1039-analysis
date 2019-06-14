@@ -1,50 +1,4 @@
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
-//#include <phool/recoConsts.h>
-//#include <jobopts_svc/JobOptsSvc.h>
-//#include <geom_svc/GeomSvc.h>
-//#include <fun4all/Fun4AllServer.h>
-//#include <g4main/PHG4Reco.h>
-//#include <g4detectors/PHG4E1039InsensSubsystem.h>
-//#include <decoder_maindaq/CalibInTime.h>
-//#include <decoder_maindaq/CalibXT.h>
-//#include <ktracker/KalmanFastTrackingWrapper.h>
-//#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
-//#include <fun4all/Fun4AllDstOutputManager.h>
-//#include <phfield/PHFieldConfig.h>
-//#include <phgeom/PHGeomUtility.h>
-//
-//#include <phpythia8/PHPy8GenTrigger.h>
-//#include <phpythia8/PHPy8ParticleTrigger.h>
-//
-//#include <pdbcalbase/PdbApplication.h>
-//#include <pdbcalbase/PHGenericFactoryT.h>
-//#include <pdbcalbase/PdbBankManager.h>
-//#include <onlmonserver/OnlMonClient.h>
-//
-//#include <phool/recoConsts.h>
-//#include <fun4all/SubsysReco.h>
-//#include <fun4all/Fun4AllServer.h>
-//#include <fun4all/Fun4AllInputManager.h>
-//#include <fun4all/Fun4AllDummyInputManager.h>
-//#include <fun4all/Fun4AllOutputManager.h>
-//#include <fun4all/Fun4AllDstInputManager.h>
-//#include <fun4all/Fun4AllNoSyncDstInputManager.h>
-//#include <fun4all/Fun4AllDstOutputManager.h>
-//#include <g4main/PHG4Reco.h>
-//#include <g4main/PHG4ParticleGeneratorBase.h>
-//#include <g4main/PHG4ParticleGenerator.h>
-//#include <g4main/PHG4SimpleEventGenerator.h>
-//#include <g4main/PHG4ParticleGun.h>
-//#include <g4main/HepMCNodeReader.h>
-//#include <g4main/PHG4TruthSubsystem.h>
-//#include <g4detectors/PHG4DetectorSubsystem.h>
-//#include <g4detectors/DPDigitizer.h>
-//#include <phpythia8/PHPythia8.h>
-//#include <g4eval/PHG4DSTReader.h>
-//#include <jobopts_svc/JobOptsSvc.h>
-//#include <geom_svc/GeomSvc.h>
-//#include <module_example/TrkEval.h>
-
 #include <TSystem.h>
 
 #include "G4_SensitiveDetectors.C"
@@ -83,9 +37,10 @@ int Fun4Sim(
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8  = true;
+  const bool gen_pythia8  = false;
   const bool gen_gun      = false;
   const bool gen_particle = false;
+  const bool read_hepmc   = true;
 
   gSystem->Load("libfun4all");
   gSystem->Load("libg4detectors");
@@ -111,7 +66,7 @@ int Fun4Sim(
   // Make the Server
   //////////////////////////////////////////
   Fun4AllServer *se = Fun4AllServer::instance();
-  se->Verbosity(0);
+  se->Verbosity(10);
 
   // pythia8
   if(gen_pythia8) {
@@ -120,6 +75,7 @@ int Fun4Sim(
     PHPythia8 *pythia8 = new PHPythia8();
     pythia8->set_config_file("phpythia8_DY.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
+    pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
 
     pythia8->set_trigger_AND();
@@ -137,7 +93,9 @@ int Fun4Sim(
     //trigger_mum->SetPyHighLow(6, -6);
     trigger_mum->SetPzHighLow(120, 10);
     pythia8->register_trigger(trigger_mum);
-
+  }
+  
+  if(gen_pythia8 || read_hepmc) {
     HepMCNodeReader *hr = new HepMCNodeReader();
     hr->set_particle_filter_on(true);
     hr->insert_particle_filter_pid(13);
@@ -264,16 +222,27 @@ int Fun4Sim(
   ///////////////////////////////////////////
 
   // input - we need a dummy to drive the event loop
-  Fun4AllInputManager *in = new Fun4AllDummyInputManager("JADE");
-  se->registerInputManager(in);
+  if(read_hepmc) {
+    Fun4AllHepMCInputManager *in = new Fun4AllHepMCInputManager("HEPMCIN");
+    in->Verbosity(10);
+    in->set_vertex_distribution_mean(0,0,target_coil_pos_z,0);
+    se->registerInputManager(in);
+    in->fileopen("hepmcout.txt");
+  } else {
+    Fun4AllInputManager *in = new Fun4AllDummyInputManager("DUMMY");
+    se->registerInputManager(in);
+  }
 
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   //se->registerOutputManager(out);
 
-  Fun4AllOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
-  se->registerOutputManager(out);
+  if(gen_pythia8 && !read_hepmc) {
+    Fun4AllHepMCOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
+    out->set_embedding_id(1);
+    se->registerOutputManager(out);
+  }
 
-  if (nevent > 0)
+  if (nevent >= 0)
   {
     se->run(nevent);
 
