@@ -1,49 +1,49 @@
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
-#include <phool/recoConsts.h>
-#include <jobopts_svc/JobOptsSvc.h>
-#include <geom_svc/GeomSvc.h>
-#include <fun4all/Fun4AllServer.h>
-#include <g4main/PHG4Reco.h>
-#include <g4detectors/PHG4E1039InsensSubsystem.h>
-#include <decoder_maindaq/CalibInTime.h>
-#include <decoder_maindaq/CalibXT.h>
-#include <ktracker/KalmanFastTrackingWrapper.h>
-#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
-#include <fun4all/Fun4AllDstOutputManager.h>
-#include <phfield/PHFieldConfig.h>
-#include <phgeom/PHGeomUtility.h>
-
-#include <phpythia8/PHPy8GenTrigger.h>
-#include <phpythia8/PHPy8ParticleTrigger.h>
-
-#include <pdbcalbase/PdbApplication.h>
-#include <pdbcalbase/PHGenericFactoryT.h>
-#include <pdbcalbase/PdbBankManager.h>
-#include <onlmonserver/OnlMonClient.h>
-
-#include <phool/recoConsts.h>
-#include <fun4all/SubsysReco.h>
-#include <fun4all/Fun4AllServer.h>
-#include <fun4all/Fun4AllInputManager.h>
-#include <fun4all/Fun4AllDummyInputManager.h>
-#include <fun4all/Fun4AllOutputManager.h>
-#include <fun4all/Fun4AllDstInputManager.h>
-#include <fun4all/Fun4AllNoSyncDstInputManager.h>
-#include <fun4all/Fun4AllDstOutputManager.h>
-#include <g4main/PHG4Reco.h>
-#include <g4main/PHG4ParticleGeneratorBase.h>
-#include <g4main/PHG4ParticleGenerator.h>
-#include <g4main/PHG4SimpleEventGenerator.h>
-#include <g4main/PHG4ParticleGun.h>
-#include <g4main/HepMCNodeReader.h>
-#include <g4main/PHG4TruthSubsystem.h>
-#include <g4detectors/PHG4DetectorSubsystem.h>
-#include <g4detectors/DPDigitizer.h>
-#include <phpythia8/PHPythia8.h>
-#include <g4eval/PHG4DSTReader.h>
-#include <jobopts_svc/JobOptsSvc.h>
-#include <geom_svc/GeomSvc.h>
-#include <module_example/TrkEval.h>
+//#include <phool/recoConsts.h>
+//#include <jobopts_svc/JobOptsSvc.h>
+//#include <geom_svc/GeomSvc.h>
+//#include <fun4all/Fun4AllServer.h>
+//#include <g4main/PHG4Reco.h>
+//#include <g4detectors/PHG4E1039InsensSubsystem.h>
+//#include <decoder_maindaq/CalibInTime.h>
+//#include <decoder_maindaq/CalibXT.h>
+//#include <ktracker/KalmanFastTrackingWrapper.h>
+//#include <decoder_maindaq/Fun4AllEVIOInputManager.h>
+//#include <fun4all/Fun4AllDstOutputManager.h>
+//#include <phfield/PHFieldConfig.h>
+//#include <phgeom/PHGeomUtility.h>
+//
+//#include <phpythia8/PHPy8GenTrigger.h>
+//#include <phpythia8/PHPy8ParticleTrigger.h>
+//
+//#include <pdbcalbase/PdbApplication.h>
+//#include <pdbcalbase/PHGenericFactoryT.h>
+//#include <pdbcalbase/PdbBankManager.h>
+//#include <onlmonserver/OnlMonClient.h>
+//
+//#include <phool/recoConsts.h>
+//#include <fun4all/SubsysReco.h>
+//#include <fun4all/Fun4AllServer.h>
+//#include <fun4all/Fun4AllInputManager.h>
+//#include <fun4all/Fun4AllDummyInputManager.h>
+//#include <fun4all/Fun4AllOutputManager.h>
+//#include <fun4all/Fun4AllDstInputManager.h>
+//#include <fun4all/Fun4AllNoSyncDstInputManager.h>
+//#include <fun4all/Fun4AllDstOutputManager.h>
+//#include <g4main/PHG4Reco.h>
+//#include <g4main/PHG4ParticleGeneratorBase.h>
+//#include <g4main/PHG4ParticleGenerator.h>
+//#include <g4main/PHG4SimpleEventGenerator.h>
+//#include <g4main/PHG4ParticleGun.h>
+//#include <g4main/HepMCNodeReader.h>
+//#include <g4main/PHG4TruthSubsystem.h>
+//#include <g4detectors/PHG4DetectorSubsystem.h>
+//#include <g4detectors/DPDigitizer.h>
+//#include <phpythia8/PHPythia8.h>
+//#include <g4eval/PHG4DSTReader.h>
+//#include <jobopts_svc/JobOptsSvc.h>
+//#include <geom_svc/GeomSvc.h>
+//#include <module_example/TrkEval.h>
 
 #include <TSystem.h>
 
@@ -269,6 +269,9 @@ int Fun4Sim(
 
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   //se->registerOutputManager(out);
+
+  Fun4AllOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
+  se->registerOutputManager(out);
 
   if (nevent > 0)
   {
