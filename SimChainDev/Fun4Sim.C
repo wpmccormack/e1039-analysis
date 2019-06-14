@@ -37,10 +37,10 @@ int Fun4Sim(
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8  = false;
+  const bool gen_pythia8  = true;
   const bool gen_gun      = false;
   const bool gen_particle = false;
-  const bool read_hepmc   = true;
+  const bool read_hepmc   = false;
 
   gSystem->Load("libfun4all");
   gSystem->Load("libg4detectors");
