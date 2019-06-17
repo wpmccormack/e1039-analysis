@@ -20,41 +20,29 @@
 #  bool - use 0 for false, 1 for true
 #  string - assumes no whitespace for now
 
-
-#--------------------------
-# Input/Output selection
-#must define input file usually
-InputFile "digit_014075_R007.root"
-#if not set, output file name is derived from input for most programs
-OutputFile "ktracker.root"
-
-# MySQL input/output schema
-InputSchema "run_014075_R007"
-OutputSchema "run_014075_R007_yuhw_test"
-
 #------------------------------
 #Calibrations
 #Alginment files (only used when OnlineAlignment_enable is set to 0)
 OnlineAlignment_enable 0
 UseIdealGeom 0
-AlignmentFile_Hodo    $E1039_RESOURCE/alignment/run6/alignment_hodo.txt
-AlignmentFile_Chamber $E1039_RESOURCE/alignment/run6/alignment_chamber.txt
-AlignmentFile_Prop    $E1039_RESOURCE/alignment/run6/alignment_prop.txt
-AlignmentFile_Mille   $E1039_RESOURCE/alignment/run6/align_mille.txt
+AlignmentFile_Hodo    $E1039_RESOURCE/alignment/run3/alignment_hodo.txt
+AlignmentFile_Chamber $E1039_RESOURCE/alignment/run3/alignment_chamber.txt
+AlignmentFile_Prop    $E1039_RESOURCE/alignment/run3/alignment_prop.txt
+AlignmentFile_Mille   $E1039_RESOURCE/alignment/run3/align_mille.txt
 
 #Calibration, not used if OnlineAlignment_enable is set to 1
-CalibrationsFile      $E1039_RESOURCE/alignment/run6/calibration.txt
+CalibrationsFile      $E1039_RESOURCE/alignment/run3/calibration.txt
 
 #Trigger roads, only effective if TriggerMask_enable is set to 1
-Trigger_Repository      $TRIGGER_ROOT
-Trigger_L1              67
+Trigger_Repository    $TRIGGER_ROOT
+Trigger_L1            67
 
 #Magnet field maps
-fMagFile  $GEOMETRY_ROOT/magnetic_fields/tab.Fmag
-kMagFile  $GEOMETRY_ROOT/magnetic_fields/tab.Kmag
+fMagFile              $GEOMETRY_ROOT/magnetic_fields/tab.Fmag
+kMagFile              $GEOMETRY_ROOT/magnetic_fields/tab.Kmag
 
 #Geometry schema
-Geometry_Version user_liuk_geometry_G9_run5_2
+Geometry_Version      geometry_G17_run3 
 
 #-----------------------
 # MySQL connection
@@ -65,15 +53,6 @@ MySQL_OutputServer e906-db1.fnal.gov
 #choices are 3306 (e906-db1), 3283 (seaquel)
 MySQL_InputPort 3306
 MySQL_OutputPort 3306
-
-#------------------
-#Event selection
-#number of events to process (-1 for all)
-N_Events 20
-
-#first of events to process
-FirstEvent 0
-
 
 #------------------- Tracker mode switches (useful ones) -------------------
 # intended for normal user to change according to different analysis needs
@@ -99,7 +78,7 @@ TriggerMask_enable 0
 # before real tracking, it should only be used when there is a need
 # to update the alignment and/or calibration
 # DO NOT toggle when OnlineAlignment_enable is 1
-UpdateAlignment 1
+UpdateAlignment 0
 
 # offset in TDC time, this is intended to correct for the timing shifts
 # that happened from time to time, this number will be added to tdc time

@@ -24,7 +24,6 @@ int Fun4Sim(
 {
   const double target_coil_pos_z = -300;
   const int nmu = 1;
-  const double x0_shift = 0.0; //cm 
   int embedding_opt = 0;
 
   const bool do_collimator = true;
@@ -54,13 +53,13 @@ int Fun4Sim(
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  //jobopt_svc->init("e906_data.opts");
-  jobopt_svc->init("default.opts");
+  jobopt_svc->init("run6_sim.opts");
 
   GeomSvc *geom_svc = GeomSvc::instance();
-  std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
-  geom_svc->setDetectorX0("D2X", geom_svc->getDetectorX0("D2X")+x0_shift);
-  std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
+  //const double x0_shift = 0.0; //cm 
+  //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
+  //geom_svc->setDetectorX0("D2X", geom_svc->getDetectorX0("D2X")+x0_shift);
+  //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
 
   ///////////////////////////////////////////
   // Make the Server

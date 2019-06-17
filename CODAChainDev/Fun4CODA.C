@@ -105,8 +105,7 @@ const int run = 28692
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("e906_data.opts");
-  //jobopt_svc->init("default.opts");
+  jobopt_svc->init("run6_data.opts");
 
   GeomSvc *geom_svc = GeomSvc::instance();
 
@@ -156,7 +155,7 @@ const int run = 28692
 
   // trakcing module
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(99);
+  ktracker->Verbosity(0);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
