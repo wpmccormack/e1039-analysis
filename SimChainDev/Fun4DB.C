@@ -207,20 +207,20 @@ int Fun4DB(
   se->registerSubsystem(dbgen);
 
   // trakcing module
-  gSystem->Load("libktracker.so");
-  KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(0);
-  ktracker->set_enable_event_reducer(true);
-  ktracker->set_DS_level(0);
-  se->registerSubsystem(ktracker);
+  //gSystem->Load("libktracker.so");
+  //KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
+  //ktracker->Verbosity(0);
+  //ktracker->set_enable_event_reducer(true);
+  //ktracker->set_DS_level(0);
+  //se->registerSubsystem(ktracker);
 
   // evaluation module
-  gSystem->Load("libmodule_example.so");
-  TrkEval *trk_eval = new TrkEval();
-  trk_eval->Verbosity(0);
-  trk_eval->set_hit_container_choice("Vector");
-  trk_eval->set_out_name("trk_eval.root");
-  se->registerSubsystem(trk_eval);
+  //gSystem->Load("libmodule_example.so");
+  //TrkEval *trk_eval = new TrkEval();
+  //trk_eval->Verbosity(0);
+  //trk_eval->set_hit_container_choice("Vector");
+  //trk_eval->set_out_name("trk_eval.root");
+  //se->registerSubsystem(trk_eval);
 
   ///////////////////////////////////////////
   // Output

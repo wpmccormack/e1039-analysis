@@ -205,7 +205,7 @@ int Fun4Sim(
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(0);
   ktracker->set_enable_event_reducer(true);
-  ktracker->set_DS_level(0);
+  ktracker->set_DS_level(2);
   se->registerSubsystem(ktracker);
 
   // evaluation module
