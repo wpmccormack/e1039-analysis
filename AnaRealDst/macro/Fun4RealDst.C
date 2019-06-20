@@ -7,7 +7,7 @@ int Fun4RealDst(const int run=46, const int nevent=0)
 {
   gSystem->Load("libana_real_dst.so");
 
-  const char* dir_in  = "/data2/analysis/kenichi/e1039/codadata";
+  const char* dir_in  = "/data2/e1039/dst";
   ostringstream oss;
   oss << setfill('0') << dir_in << "/run_" << setw(6) << run << "_spin.root";
   string fn_in = oss.str();

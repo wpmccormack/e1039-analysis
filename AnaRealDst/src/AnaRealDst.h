@@ -13,6 +13,10 @@ class AnaRealDst: public SubsysReco {
   TH1* h1_nhit_h1y;
   TH1* h1_nhit_h2x;
   TH1* h1_nhit_h2y;
+  TH1* h1_nhit_h3x;
+  TH1* h1_nhit_h4x;
+  TH1* h1_nhit_h4y1;
+  TH1* h1_nhit_h4y2;
 
  public:
   AnaRealDst() {;}
