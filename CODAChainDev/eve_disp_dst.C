@@ -1,4 +1,4 @@
-#include "Fun4CODA.C"
+#include "Fun4DST.C"
 
 Fun4AllServer *se;
 TGLViewer*  v;
@@ -85,9 +85,9 @@ void make_gui()
 }
 
 
-void eve_disp(const int run=46) {
-  gROOT->LoadMacro("Fun4CODA.C");
-  Fun4CODA(-1, run);
+void eve_disp_dst(const int run=195) {
+  gROOT->LoadMacro("Fun4DST.C");
+  Fun4DST(-1, run);
 
   se = Fun4AllServer::instance();
 

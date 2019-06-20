@@ -28,9 +28,9 @@ R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libonlmonserver)
 #endif
 
-int Fun4CODA(
+int Fun4DST(
 const int nevent = 0,
-const int run = 28692
+const int run = 195
 )
 {
   gSystem->Load("libinterface_main.so");
@@ -52,8 +52,8 @@ const int run = 28692
 
   ostringstream oss;
   oss << setfill('0') 
-      << coda_dir << "/run_" << setw(6) << run << ".dat";
-  string coda_file = oss.str();
+      << coda_dir << "/run_" << setw(6) << run << "_spin.root";
+  string in_file = oss.str();
   oss.str("");
   oss << out_dir << "/run_" << setw(6) << run << ".root";
   string out_dst = oss.str();
@@ -125,14 +125,11 @@ const int run = 28692
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
-  // input manager for CODA files
-  Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
-  in->Verbosity(1);
-  //in->SetOnline(true);
-  //in->EventSamplingFactor(200);
-  in->DirParam(para_dir);
-  in->fileopen(coda_file);
+  // input manager for DST file
+  Fun4AllInputManager *in = new Fun4AllDstInputManager("RealDst");
+  in->fileopen(in_file);
   se->registerInputManager(in);
+
 
   // output manager for CODA files
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
