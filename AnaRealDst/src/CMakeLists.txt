@@ -34,7 +34,7 @@ execute_process(COMMAND root-config --libs   OUTPUT_VARIABLE ROOT_LINK    OUTPUT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -I$ENV{OFFLINE_MAIN}/include/ ${ROOT_CFLAGS}")
 
 add_library(ana_real_dst SHARED ${sources} ana_real_dst_Dict.cc)
-target_link_libraries(ana_real_dst -L$ENV{OFFLINE_MAIN}/lib fun4all interface_main geom_svc)
+target_link_libraries(ana_real_dst -L$ENV{OFFLINE_MAIN}/lib fun4all interface_main geom_svc decoder_maindaq)
 install(TARGETS ana_real_dst DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
 # Install the pcm files in case of ROOT 6.
