@@ -1,6 +1,6 @@
 #include <iomanip>
 #include <TFile.h>
-#include <TNtuple.h>
+#include <TTree.h>
 #include <TH1D.h>
 #include <TCanvas.h>
 #include <interface_main/SQRun.h>
@@ -10,14 +10,12 @@
 #include <phool/PHNodeIterator.h>
 #include <phool/PHIODataNode.h>
 #include <phool/getClass.h>
+#include <geom_svc/GeomSvc.h>
 #include "UtilSQHit.h"
 #include "AnaRealDst.h"
 using namespace std;
 
-AnaRealDst::~AnaRealDst()
-{
-  ;
-}
+const vector<string> AnaRealDst::list_det_name = { "H1T", "H1B", "H2T", "H2B" };
 
 int AnaRealDst::Init(PHCompositeNode* topNode)
 {
@@ -26,16 +24,33 @@ int AnaRealDst::Init(PHCompositeNode* topNode)
 
 int AnaRealDst::InitRun(PHCompositeNode* topNode)
 {
-  //SQRun* run = findNode::getClass<SQRun>(topNode, "SQRun");
-  //if (!run) return Fun4AllReturnCodes::ABORTEVENT;
-  //int run_id = run->get_run_id();
-
   f_out = new TFile("output.root", "RECREATE");
-  nt = new TNtuple("nt", "", "evt_id:n_h1t:n_h1b:n_h1l:n_h1r:n_h2t:n_h2b:n_h2l:n_h2r");
-  h1_nhit_h1x = new TH1D("h1_nhit_h1x", ";N of hits on H1X;N of events", 10, -0.5, 9.5);
-  h1_nhit_h1y = new TH1D("h1_nhit_h1y", ";N of hits on H1Y;N of events", 10, -0.5, 9.5);
-  h1_nhit_h2x = new TH1D("h1_nhit_h2x", ";N of hits on H2X;N of events", 10, -0.5, 9.5);
-  h1_nhit_h2y = new TH1D("h1_nhit_h2y", ";N of hits on H2Y;N of events", 10, -0.5, 9.5);
+  tree  = new TTree("tree", "Created by AnaRealDst");
+  tree->Branch("det_name", &b_det_name, "det_name/C");
+  tree->Branch("det"     , &b_det     ,      "det/I");
+  tree->Branch("ele"     , &b_ele     ,      "ele/I");
+  tree->Branch("time"    , &b_time    ,     "time/D");
+
+  ostringstream oss;
+  GeomSvc* geom = GeomSvc::instance();
+  for (unsigned int i_det = 0; i_det < list_det_name.size(); i_det++) {
+    string name = list_det_name[i_det];
+    int id = geom->getDetectorID(name);
+    if (id <= 0) {
+      cerr << "!ERROR!  AnaRealDst::InitRun():  Invalid ID (" << id << ").  Probably the detector name that you specified in 'list_det_name' (" << name << ") is not valid.  Abort." << endl;
+      exit(1);
+    }
+    list_det_id.push_back(id);
+    int n_ele = geom->getPlaneNElements(id);
+    cout << "  " << setw(6) << name << " = " << id << endl;
+
+    oss.str("");
+    oss << "h1_ele_" << name;
+    h1_ele[i_det] = new TH1D(oss.str().c_str(), "", n_ele, 0.5, n_ele+0.5);
+    oss.str("");
+    oss << name << ";Element ID;Hit count";
+    h1_ele[i_det]->SetTitle(oss.str().c_str());
+  }
 
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -45,54 +60,47 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
   SQEvent* event       = findNode::getClass<SQEvent    >(topNode, "SQEvent");
   SQHitVector* hit_vec = findNode::getClass<SQHitVector>(topNode, "SQHitVector");
   if (!event || !hit_vec) return Fun4AllReturnCodes::ABORTEVENT;
-  int spill_id = event->get_spill_id();
-  int event_id = event->get_event_id();
+  //int spill_id = event->get_spill_id();
+  //int event_id = event->get_event_id();
 
-  if (! event->get_trigger(SQEvent::NIM2)
-      || event->get_data_quality() != 0) {
+  ///
+  /// Event selection
+  ///
+  if (! event->get_trigger(SQEvent::NIM2)) {
     return Fun4AllReturnCodes::EVENT_OK;
   }
 
-  SQHitVector* hv_h1t = UtilSQHit::FindHits(hit_vec, "H1T");
-  SQHitVector* hv_h1b = UtilSQHit::FindHits(hit_vec, "H1B");
-  SQHitVector* hv_h1l = UtilSQHit::FindHits(hit_vec, "H1L");
-  SQHitVector* hv_h1r = UtilSQHit::FindHits(hit_vec, "H1R");
-  SQHitVector* hv_h2t = UtilSQHit::FindHits(hit_vec, "H2T");
-  SQHitVector* hv_h2b = UtilSQHit::FindHits(hit_vec, "H2B");
-  SQHitVector* hv_h2l = UtilSQHit::FindHits(hit_vec, "H2L");
-  SQHitVector* hv_h2r = UtilSQHit::FindHits(hit_vec, "H2R");
+  ///
+  /// Get & fill the hit info
+  ///
+  for (unsigned int i_det = 0; i_det < list_det_name.size(); i_det++) {
+    strncpy(b_det_name, list_det_name[i_det].c_str(), sizeof(b_det_name));
+    b_det = list_det_id[i_det];
+    SQHitVector* hv = UtilSQHit::FindHits(hit_vec, b_det);
+    for (SQHitVector::ConstIter it = hv->begin(); it != hv->end(); it++) {
+      b_ele  = (*it)->get_element_id();
+      b_time = (*it)->get_tdc_time  ();
+      tree->Fill();
 
-  nt->Fill(
-    hv_h1t->size(), hv_h1b->size(), hv_h1l->size(), hv_h1r->size(), 
-    hv_h2t->size(), hv_h2b->size(), hv_h2l->size(), hv_h2r->size()
-    );
+      h1_ele[i_det]->Fill(b_ele);
+    }
+    delete hv;
+  }
 
-  h1_nhit_h1x->Fill(hv_h1t->size() + hv_h1b->size());
-  h1_nhit_h1y->Fill(hv_h1l->size() + hv_h1r->size());
-  h1_nhit_h2x->Fill(hv_h2t->size() + hv_h2b->size());
-  h1_nhit_h2y->Fill(hv_h2l->size() + hv_h2r->size());
-
-  delete hv_h1t;
-  delete hv_h1b;
-  delete hv_h1l;
-  delete hv_h1r;
-  delete hv_h2t;
-  delete hv_h2b;
-  delete hv_h2l;
-  delete hv_h2r;
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
 int AnaRealDst::End(PHCompositeNode* topNode)
 {
+  ostringstream oss;
   TCanvas* c1 = new TCanvas("c1", "");
   c1->SetGrid();
-  
-  h1_nhit_h1x->Draw();  c1->SaveAs("h1_nhit_h1x.png");
-  h1_nhit_h1y->Draw();  c1->SaveAs("h1_nhit_h1y.png");
-  h1_nhit_h2x->Draw();  c1->SaveAs("h1_nhit_h2x.png");
-  h1_nhit_h2y->Draw();  c1->SaveAs("h1_nhit_h2y.png");
-
+  for (unsigned int i_det = 0; i_det < list_det_id.size(); i_det++) {
+    h1_ele[i_det]->Draw();
+    oss.str("");
+    oss << h1_ele[i_det]->GetName() << ".png";
+    c1->SaveAs(oss.str().c_str());
+  }
   delete c1;
 
   f_out->cd();

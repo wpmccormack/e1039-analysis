@@ -6,9 +6,9 @@ it might stop working occasionally.  In such cases, please contact the author.
 
 ## Basic Usage
 
-The procedure below will read the DST file of run 46, namely
+The procedure below will read the DST file of run 202 (for example), which is
 ```
-/data2/analysis/kenichi/e1039/codadata/run_000046_spin.dat
+/data2/e1039/dst/run_000202_spin.root
 ```
 and produce basic histograms and ntuple.
 
@@ -16,7 +16,7 @@ and produce basic histograms and ntuple.
 1. cd work
 1. cmake-e1039-ana
 1. make install
-1. root -b ../macro/Fun4RealDst.C
+1. root -b '../macro/Fun4RealDst.C(202)'
 
 ## Advanced Usage
 
