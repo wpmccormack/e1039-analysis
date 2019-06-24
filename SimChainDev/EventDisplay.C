@@ -1,6 +1,5 @@
 #pragma once
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
-#include <pheve_interface/PHEventDisplay.h>
 #include <TTimer.h>
 class SubsysReco;
 R__LOAD_LIBRARY(libpheve_display)

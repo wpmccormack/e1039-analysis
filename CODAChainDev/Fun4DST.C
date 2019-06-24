@@ -24,6 +24,7 @@ R__LOAD_LIBRARY(libdecoder_maindaq)
 R__LOAD_LIBRARY(libg4testbench)
 R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libonlmonserver)
 #endif
@@ -118,9 +119,13 @@ const int run = 195
   CalibXT* cali_xt = new CalibXT();
   se->registerSubsystem(cali_xt);
 
+  // Event Filter
+  EvtFilter *evt_filter = new EvtFilter();
+  se->registerSubsystem(evt_filter);
+
   // trakcing module
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(0);
+  ktracker->Verbosity(10);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);

@@ -24,6 +24,7 @@ R__LOAD_LIBRARY(libdecoder_maindaq)
 R__LOAD_LIBRARY(libg4testbench)
 R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libonlmonserver)
 #endif
@@ -118,6 +119,10 @@ const int run = 28692
   CalibXT* cali_xt = new CalibXT();
   se->registerSubsystem(cali_xt);
 
+  // Event Filter
+  EvtFilter *evt_filter = new EvtFilter();
+  se->registerSubsystem(evt_filter);
+
   // trakcing module
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(0);
@@ -129,7 +134,7 @@ const int run = 28692
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   //in->SetOnline(true);
-  //in->EventSamplingFactor(200);
+  in->EventSamplingFactor(10);
   in->DirParam(para_dir);
   in->fileopen(coda_file);
   se->registerInputManager(in);

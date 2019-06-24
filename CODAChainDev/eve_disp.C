@@ -1,7 +1,10 @@
 #include "Fun4CODA.C"
 
 Fun4AllServer *se;
+EvtFilter* evt_filter;
 TGLViewer*  v;
+TGNumberEntry *ne_evt_id;
+TGNumberEntry *ne_trig;
 
 class EvNavHandler
 {
@@ -9,7 +12,15 @@ class EvNavHandler
     void NextEvent()
     {
       printf("se->run(1)\n");
-      se->run(1);
+      se->run(1, true);
+    }
+    void ReqEvtID() {
+      printf("ReqEvtID: %ld\n",ne_evt_id->GetNumberEntry()->GetIntNumber());
+      evt_filter->set_event_id_req((int)(ne_evt_id->GetNumberEntry()->GetIntNumber()));
+    }
+    void ReqTrig() {
+      printf("ReqTrig: %ld\n",ne_trig->GetNumberEntry()->GetIntNumber());
+      evt_filter->set_trigger_req((int)(ne_trig->GetNumberEntry()->GetIntNumber()));
     }
     void TopView()
     {
@@ -48,33 +59,60 @@ void make_gui()
   browser->StartEmbedding(TRootBrowser::kLeft);
 
   TGMainFrame* frmMain = new TGMainFrame(gClient->GetRoot(), 1000, 600);
-  frmMain->SetWindowName("XX GUI");
+  frmMain->SetWindowName("Event Display");
   frmMain->SetCleanup(kDeepCleanup);
 
-  TGVerticalFrame* hf = new TGVerticalFrame(frmMain);
+  TGVerticalFrame* frmVert = new TGVerticalFrame(frmMain);
   {
 
     TGTextButton* b = 0;
-    EvNavHandler    *fh = new EvNavHandler;
+    EvNavHandler* handler = new EvNavHandler;
+    TGHorizontalFrame* frm1 = 0;
 
-    b = new TGTextButton(hf, "Next Event");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "NextEvent()");
+    TGLabel* lab = 0;
 
-    b = new TGTextButton(hf, "Top View");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "TopView()");
+    frm1 = new TGHorizontalFrame(frmVert);
+    lab = new TGLabel(frm1, "Event ID");
+    frm1->AddFrame(lab, new TGLayoutHints(kLHintsCenterY | kLHintsLeft, 5, 5, 3, 4));
+    ne_evt_id = new TGNumberEntry(frm1, -1, 9, 999, TGNumberFormat::kNESInteger,
+        TGNumberFormat::kNEAAnyNumber,
+        TGNumberFormat::kNELLimitMinMax,
+        -999999, 999999);
+    ne_evt_id->Connect("ValueSet(Long_t)", "EvNavHandler", handler, "ReqEvtID()");
+    frm1->AddFrame(ne_evt_id, new TGLayoutHints(kLHintsCenterY | kLHintsRight, 5, 5, 5, 5));
+    frmVert->AddFrame(frm1);
 
-    b = new TGTextButton(hf, "Side View");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "SideView()");
 
-    b = new TGTextButton(hf, "3D View");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "View3D()");
+    frm1 = new TGHorizontalFrame(frmVert);
+    lab = new TGLabel(frm1, "Trigger");
+    frm1->AddFrame(lab, new TGLayoutHints(kLHintsCenterY | kLHintsLeft, 5, 5, 3, 4));
+    ne_trig = new TGNumberEntry(frm1, -1, 9, 999, TGNumberFormat::kNESInteger,
+        TGNumberFormat::kNEAAnyNumber,
+        TGNumberFormat::kNELLimitMinMax,
+        -999, 999);
+    ne_trig->Connect("ValueSet(Long_t)", "EvNavHandler", handler, "ReqTrig()");
+    frm1->AddFrame(ne_trig, new TGLayoutHints(kLHintsCenterY | kLHintsRight, 5, 5, 5, 5));
+    frmVert->AddFrame(frm1);
+
+
+    b = new TGTextButton(frmVert, "Next Event");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "NextEvent()");
+
+    b = new TGTextButton(frmVert, "Top View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "TopView()");
+
+    b = new TGTextButton(frmVert, "Side View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "SideView()");
+
+    b = new TGTextButton(frmVert, "3D View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "View3D()");
 
   }
-  frmMain->AddFrame(hf);
+  frmMain->AddFrame(frmVert);
 
   frmMain->MapSubwindows();
   frmMain->Resize();
@@ -85,14 +123,15 @@ void make_gui()
 }
 
 
-void eve_disp(const int run=46) {
+void eve_disp() {
   gROOT->LoadMacro("Fun4CODA.C");
-  Fun4CODA(-1, run);
+  Fun4CODA(-1);
 
   se = Fun4AllServer::instance();
 
   PHG4Reco *g4 = (PHG4Reco *) se->getSubsysReco("PHG4RECO");
   PHEventDisplay *eve = (PHEventDisplay *) se->getSubsysReco("PHEventDisplay");
+  evt_filter = (EvtFilter*) se->getSubsysReco("EvtFilter");
 
   g4->InitRun(se->topNode());
   eve->InitRun(se->topNode());
@@ -100,6 +139,6 @@ void eve_disp(const int run=46) {
 
   make_gui();
 
-  se->run(1);
+  //se->run(1);
 }
 

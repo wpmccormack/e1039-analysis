@@ -12,6 +12,7 @@ R__LOAD_LIBRARY(libg4testbench)
 R__LOAD_LIBRARY(libg4eval)
 R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libembedding)
+R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libmodule_example)
 #endif
@@ -117,7 +118,7 @@ int Fun4Sim(
   if(gen_particle) {
     PHG4SimpleEventGenerator *gen = new PHG4SimpleEventGenerator("MUP");
     //gen->set_seed(123);
-    gen->add_particles("mu+", nmu);  // mu+,e+,proton,pi+,Upsilon
+    gen->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
     gen->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform);
@@ -200,12 +201,18 @@ int Fun4Sim(
   dptrigger->Verbosity(0);
   se->registerSubsystem(dptrigger);
 
+  // Event Filter
+  EvtFilter *evt_filter = new EvtFilter();
+  evt_filter->Verbosity(10);
+  //evt_filter->set_trigger_req(1<<5);
+  se->registerSubsystem(evt_filter);
+
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(0);
   ktracker->set_enable_event_reducer(true);
-  ktracker->set_DS_level(2);
+  ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
   // evaluation module
