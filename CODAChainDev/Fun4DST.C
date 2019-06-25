@@ -1,14 +1,4 @@
-/** Fun4CODA.C:  Fun4all macro to run full reconstruction chain from CODA files. 
- * 
- * To run this macro on a local computer, you need copy Coda file and also
- *  mapping files.  You can use the following commands;
-     RUN=28700
-     WORK_DIR=<some-working-dir>
-     
-     mkdir -p $WORK_DIR/runs
-     RUN6=$(printf '%06i' $RUN)
-     scp -p  e906-gat6.fnal.gov:/data3/data/mainDAQ/run_$RUN6.dat $WORK_DIR
-     scp -pr e906-gat6.fnal.gov:/seaquest/production/runs/run_$RUN6  $WORK_DIR/runs
+/** Fun4DST.C:  Fun4all macro to run full reconstruction chain from DST files. 
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 
@@ -43,17 +33,12 @@ const int run = 195
   gSystem->Load("libktracker.so");
   gSystem->Load("libonlmonserver.so");
 
-  //const char* coda_dir  = "/data3/data/mainDAQ/";
-  //const char* para_dir  = "/seaquest/production/runs/";
-
-  const char* coda_dir  = "./";
-  const char* para_dir  = "./";
-
-  const char* out_dir   = "./";
+  const char* dst_dir = "./"; // "/data2/e1039/dst";
+  const char* out_dir = "./";
 
   ostringstream oss;
   oss << setfill('0') 
-      << coda_dir << "/run_" << setw(6) << run << "_spin.root";
+      << dst_dir << "/run_" << setw(6) << run << "_spin.root";
   string in_file = oss.str();
   oss.str("");
   oss << out_dir << "/run_" << setw(6) << run << ".root";
@@ -136,7 +121,7 @@ const int run = 195
   se->registerInputManager(in);
 
 
-  // output manager for CODA files
+  // output manager for DST files
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   //se->registerOutputManager(out);
 
