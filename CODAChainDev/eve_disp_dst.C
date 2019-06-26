@@ -123,9 +123,9 @@ void make_gui()
 }
 
 
-void eve_disp_dst() {
+void eve_disp_dst(const int run=216, const int nevent=0) {
   gROOT->LoadMacro("Fun4DST.C");
-  Fun4DST(-1);
+  Fun4DST(nevent, run);
 
   se = Fun4AllServer::instance();
 
