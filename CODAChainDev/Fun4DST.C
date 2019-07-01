@@ -56,8 +56,9 @@ const int run = 195
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("run6_data.opts");
+  jobopt_svc->init("run7_data.opts");
 
+  GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
 
   // Fun4All G4 module

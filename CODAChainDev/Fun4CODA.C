@@ -71,8 +71,9 @@ const int run = 28692
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("run6_data.opts");
+  jobopt_svc->init("run7_data.opts");
 
+  GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
 
   // Fun4All G4 module
@@ -125,7 +126,7 @@ const int run = 28692
 
   // trakcing module
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(0);
+  //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);

@@ -13,11 +13,11 @@ R__LOAD_LIBRARY(libg4detectors)
 using namespace std;
 
 void SetupSensitiveDetectors(
-		PHG4Reco *g4Reco,
-		const int verbosity = 0
-		){
+    PHG4Reco *g4Reco,
+    const int verbosity = 0
+    ){
 
-	GeomSvc *geom_svc = GeomSvc::instance();
+  GeomSvc *geom_svc = GeomSvc::instance();
 
   vector<string> sim_list = geom_svc->getDefaultSimList();
 
@@ -37,9 +37,6 @@ void SetupSensitiveDetectors(
     size[2] = geom_svc->getPlaneScaleZ(id);
     string material = geom_svc->getPlaneMaterial(id);
 
-    if(!(fabs(size[0])<10000)) continue;
-    if(place[2]>680 && place[2]<700) continue;
-
     if(verbosity > 2) {
       LogDebug("");
       cout
@@ -51,6 +48,9 @@ void SetupSensitiveDetectors(
         << material
         << endl;
     }
+
+    if(!(fabs(size[0])<10000)) continue;
+    if(place[2]>680 && place[2]<700) continue;
 
     PHG4BlockSubsystem *box = new PHG4BlockSubsystem(name.c_str(), 0);
     box->SuperDetector(name.c_str());

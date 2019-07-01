@@ -54,8 +54,9 @@ int Fun4Sim(
   rc->Print();
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("run6_sim.opts");
+  jobopt_svc->init("run7_sim.opts");
 
+  GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
   //const double x0_shift = 0.0; //cm 
   //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
@@ -165,7 +166,7 @@ int Fun4Sim(
 
   // sensitive elements of the spectrometer
   gROOT->LoadMacro("G4_SensitiveDetectors.C");
-  SetupSensitiveDetectors(g4Reco);
+  SetupSensitiveDetectors(g4Reco, 0);
 
   se->registerSubsystem(g4Reco);
 
@@ -203,14 +204,14 @@ int Fun4Sim(
 
   // Event Filter
   EvtFilter *evt_filter = new EvtFilter();
-  evt_filter->Verbosity(10);
+  //evt_filter->Verbosity(10);
   //evt_filter->set_trigger_req(1<<5);
   se->registerSubsystem(evt_filter);
 
   // trakcing module
   gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  ktracker->Verbosity(0);
+  //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);

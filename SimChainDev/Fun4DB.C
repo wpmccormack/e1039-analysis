@@ -1,9 +1,15 @@
+
+#define GRID
+
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 #include <TSystem.h>
 
 #include "G4_SensitiveDetectors.C"
 #include "G4_Target.C"
+
+#ifndef GRID
 #include "EventDisplay.C"
+#endif
 
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libPHPythia8)
@@ -15,6 +21,7 @@ R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libmodule_example)
 #endif
+
 
 using namespace std;
 
@@ -126,9 +133,11 @@ int Fun4DB(
     genp->set_vertex_size_parameters(0.0, 0.0);
 
     if(FMAGSTR>0)
-      genp->set_pxpypz_range(0,6, -6,6, 10,100);
+      //genp->set_pxpypz_range(0,6, -6,6, 10,100);
+      genp->set_pxpypz_range(-3,6, -3,3, 10,100);
     else
-      genp->set_pxpypz_range(-6,0, -6,6, 10,100);
+      //genp->set_pxpypz_range(-6,0, -6,6, 10,100);
+      genp->set_pxpypz_range(-6,3, -3,3, 10,100);
 
 
     genp->Verbosity(0);
@@ -148,9 +157,11 @@ int Fun4DB(
     genm->set_vertex_size_parameters(0.0, 0.0);
 
     if(FMAGSTR>0)
-      genm->set_pxpypz_range(-6,0, -6,6, 10,100);
+      //genm->set_pxpypz_range(-6,0, -6,6, 10,100);
+      genm->set_pxpypz_range(-6,3, -3,3, 10,100);
     else
-      genm->set_pxpypz_range(0,6, -6,6, 10,100);
+      //genm->set_pxpypz_range(0,6, -6,6, 10,100);
+      genm->set_pxpypz_range(-3,6, -3,3, 10,100);
 
     genm->Verbosity(0);
     se->registerSubsystem(genm);
@@ -262,8 +273,10 @@ int Fun4DB(
     delete se;
     gSystem->Exit(0);
   } else { // TEve event display
+#ifndef GRID
     gROOT->LoadMacro("EventDisplay.C");
     EventDisplay(nevent);
+#endif
   } 
 
   return 0;
