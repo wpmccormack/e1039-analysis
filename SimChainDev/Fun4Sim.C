@@ -176,7 +176,7 @@ int Fun4Sim(
 
   // digitizer
   DPDigitizer *digitizer = new DPDigitizer("DPDigitizer", 0);
-  digitizer->Verbosity(0);
+  //digitizer->Verbosity(99);
   se->registerSubsystem(digitizer);
 
   // embedding
@@ -199,7 +199,7 @@ int Fun4Sim(
   dptrigger->set_hit_container_choice("Vector");
   //dptrigger->set_road_set_file_name("trigger_67.txt");
   dptrigger->set_road_set_file_name("/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/resource/trigger/trigger_67.txt");
-  dptrigger->Verbosity(0);
+  //dptrigger->Verbosity(99);
   se->registerSubsystem(dptrigger);
 
   // Event Filter
@@ -240,6 +240,7 @@ int Fun4Sim(
     se->registerInputManager(in);
   }
 
+  // DST output manager, tunred off to save disk by default
   //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   //se->registerOutputManager(out);
 
