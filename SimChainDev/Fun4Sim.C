@@ -37,9 +37,9 @@ int Fun4Sim(
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8  = true;
+  const bool gen_pythia8  = false;
   const bool gen_gun      = false;
-  const bool gen_particle = false;
+  const bool gen_particle = true;
   const bool read_hepmc   = false;
 
   gSystem->Load("libfun4all");
@@ -74,6 +74,7 @@ int Fun4Sim(
     gSystem->Load("libPHPythia8.so");
 
     PHPythia8 *pythia8 = new PHPythia8();
+    //pythia8->Verbosity(99);
     pythia8->set_config_file("phpythia8_DY.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     pythia8->set_embedding_id(1);
@@ -117,21 +118,50 @@ int Fun4Sim(
 
   // multi particle gun
   if(gen_particle) {
-    PHG4SimpleEventGenerator *gen = new PHG4SimpleEventGenerator("MUP");
-    //gen->set_seed(123);
-    gen->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
-    gen->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
+    PHG4SimpleEventGenerator *genp = new PHG4SimpleEventGenerator("MUP");
+    //genp->set_seed(123);
+    genp->add_particles("mu+", nmu);  // mu+,e+,proton,pi+,Upsilon
+    genp->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform);
-    gen->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
-    gen->set_vertex_distribution_width(0.0, 0.0, 0.0);
-    gen->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
-    gen->set_vertex_size_parameters(0.0, 0.0);
+    genp->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
+    genp->set_vertex_distribution_width(0.0, 0.0, 0.0);
+    genp->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
+    genp->set_vertex_size_parameters(0.0, 0.0);
 
-    gen->set_pxpypz_range(0,6, -6,6, 10,100);
+    if(FMAGSTR>0)
+      //genp->set_pxpypz_range(0,6, -6,6, 10,100);
+      genp->set_pxpypz_range(-3,6, -3,3, 10,100);
+    else
+      //genp->set_pxpypz_range(-6,0, -6,6, 10,100);
+      genp->set_pxpypz_range(-6,3, -3,3, 10,100);
 
-    gen->Verbosity(0);
-    se->registerSubsystem(gen);
+
+    genp->Verbosity(0);
+    se->registerSubsystem(genp);
+  }
+
+  if(gen_particle) {
+    PHG4SimpleEventGenerator *genm = new PHG4SimpleEventGenerator("MUP");
+    //genm->set_seed(123);
+    genm->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
+    genm->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
+        PHG4SimpleEventGenerator::Uniform,
+        PHG4SimpleEventGenerator::Uniform);
+    genm->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
+    genm->set_vertex_distribution_width(0.0, 0.0, 0.0);
+    genm->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
+    genm->set_vertex_size_parameters(0.0, 0.0);
+
+    if(FMAGSTR>0)
+      //genm->set_pxpypz_range(-6,0, -6,6, 10,100);
+      genm->set_pxpypz_range(-6,3, -3,3, 10,100);
+    else
+      //genm->set_pxpypz_range(0,6, -6,6, 10,100);
+      genm->set_pxpypz_range(-3,6, -3,3, 10,100);
+
+    genm->Verbosity(0);
+    se->registerSubsystem(genm);
   }
 
   // Fun4All G4 module
@@ -216,6 +246,9 @@ int Fun4Sim(
   ktracker->set_DS_level(0);
   se->registerSubsystem(ktracker);
 
+  //VertexFit* vertexing = new VertexFit();
+  //se->registerSubsystem(vertexing);
+
   // evaluation module
   gSystem->Load("libmodule_example.so");
   TrkEval *trk_eval = new TrkEval();
@@ -241,8 +274,8 @@ int Fun4Sim(
   }
 
   // DST output manager, tunred off to save disk by default
-  //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
-  //se->registerOutputManager(out);
+  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
+  se->registerOutputManager(out);
 
   if(gen_pythia8 && !read_hepmc) {
     Fun4AllHepMCOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
