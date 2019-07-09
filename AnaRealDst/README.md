@@ -16,7 +16,8 @@ and produce basic histograms and ntuple.
 1. cd work
 1. cmake-e1039-ana
 1. make install
-1. root -b '../macro/Fun4RealDst.C(202)'
+1. root -b -q '../macro/Fun4RealDst.C(202)'
+1. display h1_ele_H1T.png &
 
 ## Advanced Usage
 
