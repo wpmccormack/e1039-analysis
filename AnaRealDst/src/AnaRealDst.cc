@@ -15,7 +15,8 @@
 #include "AnaRealDst.h"
 using namespace std;
 
-const vector<string> AnaRealDst::list_det_name = { "H1T", "H1B", "H2T", "H2B" };
+//const vector<string> AnaRealDst::list_det_name = { "H1T", "H1B", "H2T", "H2B" };
+const vector<string> AnaRealDst::list_det_name = { "H4T", "H4B" };
 
 int AnaRealDst::Init(PHCompositeNode* topNode)
 {
@@ -50,6 +51,13 @@ int AnaRealDst::InitRun(PHCompositeNode* topNode)
     oss.str("");
     oss << name << ";Element ID;Hit count";
     h1_ele[i_det]->SetTitle(oss.str().c_str());
+
+    oss.str("");
+    oss << "h1_nhit_" << name;
+    h1_nhit[i_det] = new TH1D(oss.str().c_str(), "", 10, -0.5, 9.5);
+    oss.str("");
+    oss << name << ";N of hits/plane/event;Hit count";
+    h1_nhit[i_det]->SetTitle(oss.str().c_str());
   }
 
   return Fun4AllReturnCodes::EVENT_OK;
@@ -66,9 +74,22 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
   ///
   /// Event selection
   ///
-  if (! event->get_trigger(SQEvent::NIM2)) {
+  if (! event->get_trigger(SQEvent::NIM1)) {
     return Fun4AllReturnCodes::EVENT_OK;
   }
+
+  static int did_h3t = 0;
+  static int did_h3b = 0;
+  if (did_h3t == 0) {
+    GeomSvc* geom = GeomSvc::instance();
+    did_h3t = geom->getDetectorID("H3T");
+    did_h3b = geom->getDetectorID("H3B");
+    cout << "H3T = " << did_h3t << ", H3B = " << did_h3b << endl;
+  }
+
+  SQHitVector* hv_h3t = UtilSQHit::FindHits(hit_vec, did_h3t);
+  SQHitVector* hv_h3b = UtilSQHit::FindHits(hit_vec, did_h3b);
+  if (hv_h3t->size() + hv_h3b->size() != 1) return Fun4AllReturnCodes::EVENT_OK;
 
   ///
   /// Get & fill the hit info
@@ -84,6 +105,7 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
 
       h1_ele[i_det]->Fill(b_ele);
     }
+    h1_nhit[i_det]->Fill(hv->size());
     delete hv;
   }
 
@@ -99,6 +121,11 @@ int AnaRealDst::End(PHCompositeNode* topNode)
     h1_ele[i_det]->Draw();
     oss.str("");
     oss << h1_ele[i_det]->GetName() << ".png";
+    c1->SaveAs(oss.str().c_str());
+
+    h1_nhit[i_det]->Draw();
+    oss.str("");
+    oss << h1_nhit[i_det]->GetName() << ".png";
     c1->SaveAs(oss.str().c_str());
   }
   delete c1;
