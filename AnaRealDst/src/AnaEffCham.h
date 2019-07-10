@@ -3,11 +3,8 @@
 #include <fstream>
 #include <fun4all/SubsysReco.h>
 class TFile;
-class TTree;
 class TH1;
-class TH2;
 
-/// An example class to analyze the E1039 DST file.
 class AnaEffCham: public SubsysReco {
  public:
   typedef enum { D0, D1, D2, D3p, D3m } ChamType_t;

@@ -15,6 +15,7 @@ add_custom_command (
     -I$ENV{OFFLINE_MAIN}/include/ -I${ROOT_PREFIX}/include/
     ${dist_headers}
     ${PROJECT_SOURCE_DIR}/LinkDef.h
+  DEPENDS ${dist_headers} ${PROJECT_SOURCE_DIR}/LinkDef.h
 )
 
 # ROOT

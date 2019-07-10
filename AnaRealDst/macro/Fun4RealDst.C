@@ -3,6 +3,7 @@
 R__LOAD_LIBRARY(libana_real_dst)
 #endif
 
+/// Main function.
 int Fun4RealDst(const int run=370, const int nevent=0)
 {
   gSystem->Load("libana_real_dst.so");
@@ -16,9 +17,8 @@ int Fun4RealDst(const int run=370, const int nevent=0)
   in->fileopen(fn_in);
   se->registerInputManager(in);
 
-  //se->registerSubsystem(new AnaRealDst());
-  se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
-
+  se->registerSubsystem(new AnaEffHodo());
+  //se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
 
   se->run(nevent);
   se->End();
@@ -26,6 +26,14 @@ int Fun4RealDst(const int run=370, const int nevent=0)
   return 0;
 }
 
+/// Function to analyze multiple DST files.
+/**
+ * You first list up runs in "list_run.txt".
+ * Then type the following commands to execute this function:
+ *   root -b
+ *   .L Fun4RealDst.C
+ *   Fun4MultiRealDst();
+ */
 int Fun4MultiRealDst(const char* fn_list_run="list_run.txt")
 {
   gSystem->Load("libana_real_dst.so");
@@ -34,8 +42,8 @@ int Fun4MultiRealDst(const char* fn_list_run="list_run.txt")
   Fun4AllInputManager *in = new Fun4AllDstInputManager("RealDst");
   se->registerInputManager(in);
 
-  //se->registerSubsystem(new AnaRealDst());
-  se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
+  se->registerSubsystem(new AnaEffHodo());
+  //se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
 
   ifstream ifs(fn_list_run);
   int run;
@@ -45,6 +53,7 @@ int Fun4MultiRealDst(const char* fn_list_run="list_run.txt")
     in->fileopen(fn_in);
     se->run();
   }
+  ifs.close();
 
   se->End();
   delete se;
