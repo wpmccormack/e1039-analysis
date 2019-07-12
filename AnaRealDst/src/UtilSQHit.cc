@@ -36,7 +36,7 @@ SQHitVector* UtilSQHit::FindFirstHits(const SQHitVector* vec_in, const int plane
     int id = hit->get_detector_id();
     if (id != plane) continue;
     double time = hit->get_tdc_time();
-    if (id2time.find(id) != id2time.end() || id2time[id] > time) {
+    if (id2time.find(id) != id2time.end() || time > id2time[id]) {
       id2time[id] = time;
       id2idx [id] = idx;
     }
