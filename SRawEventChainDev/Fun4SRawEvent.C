@@ -2,14 +2,23 @@
  * 
  */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+#include <TSystem.h>
+#include "G4_SensitiveDetectors.C"
+#include "G4_Target.C"
 R__LOAD_LIBRARY(libinterface_main)
-R__LOAD_LIBRARY(libonlmonserver)
+R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libdecoder_maindaq)
+R__LOAD_LIBRARY(libg4testbench)
+R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libevt_filter)
+R__LOAD_LIBRARY(libktracker)
+R__LOAD_LIBRARY(libonlmonserver)
 #endif
 
 int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
 {
-  const char* fn_in  = "/data3/analysis/production/02/41/digit_024172_009.root";
+  const char* fn_in  = "/data3/analysis/production/R009/02/86/digit_028692_009.root";
   const char* fn_out = "./SRawEvent-DST.root";
 
   gSystem->Load("libfun4all");
@@ -31,8 +40,9 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
   se->Verbosity(100);
 
   JobOptsSvc *jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("e906_data.opts");
+  jobopt_svc->init("run7_data.opts");
 
+  GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
 
   // Fun4All G4 module
@@ -76,7 +86,9 @@ int Fun4SRawEvent(const int nevent = 0, const int run = 28700)
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   ktracker->Verbosity(0);
   ktracker->set_enable_event_reducer(true);
-  ktracker->set_DS_level(0);
+  ktracker->set_DS_level(2);
+  ktracker->set_pattern_db_name(gSystem->ExpandPathName("$E1039_RESOURCE/dsearch/v1/pattern.root"));
+  PatternDBUtil::LooseMode(false);
   se->registerSubsystem(ktracker);
 
   Fun4AllSRawEventInputManager *in = new Fun4AllSRawEventInputManager("SRawEventIM");
