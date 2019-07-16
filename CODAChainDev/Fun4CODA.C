@@ -31,7 +31,8 @@ R__LOAD_LIBRARY(libonlmonserver)
 
 int Fun4CODA(
 const int nevent = 0,
-const int run = 28692
+const int run = 28692,
+const int skip = 0
 )
 {
   gSystem->Load("libinterface_main.so");
@@ -129,23 +130,26 @@ const int run = 28692
   //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
+  ktracker->set_pattern_db_name(gSystem->ExpandPathName("$E1039_RESOURCE/dsearch/v1/pattern.root"));
+  //PatternDBUtil::LooseMode(false);
   se->registerSubsystem(ktracker);
 
   // input manager for CODA files
   Fun4AllEVIOInputManager *in = new Fun4AllEVIOInputManager("CODA");
   in->Verbosity(1);
   //in->SetOnline(true);
-  in->EventSamplingFactor(10);
+  in->EventSamplingFactor(200);
   in->DirParam(para_dir);
   in->fileopen(coda_file);
   se->registerInputManager(in);
 
   // output manager for CODA files
-  //Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
-  //se->registerOutputManager(out);
+  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
+  se->registerOutputManager(out);
 
-  if (nevent > 0)
+  if (nevent >= 0)
   {
+    //se->skip(skip);
     se->run(nevent);
 
     PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");

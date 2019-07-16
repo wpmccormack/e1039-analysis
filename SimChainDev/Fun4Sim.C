@@ -67,7 +67,7 @@ int Fun4Sim(
   // Make the Server
   //////////////////////////////////////////
   Fun4AllServer *se = Fun4AllServer::instance();
-  se->Verbosity(10);
+  se->Verbosity(0);
 
   // pythia8
   if(gen_pythia8) {
@@ -227,8 +227,7 @@ int Fun4Sim(
   gSystem->Load("libdptrigger.so");
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
-  //dptrigger->set_road_set_file_name("trigger_67.txt");
-  dptrigger->set_road_set_file_name("/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/resource/trigger/trigger_67.txt");
+  dptrigger->set_road_set_file_name(gSystem->ExpandPathName("$E1039_RESOURCE/trigger/trigger_67.txt"));
   //dptrigger->Verbosity(99);
   se->registerSubsystem(dptrigger);
 
@@ -244,10 +243,14 @@ int Fun4Sim(
   //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
   ktracker->set_DS_level(0);
+  ktracker->set_pattern_db_name(gSystem->ExpandPathName("$E1039_RESOURCE/dsearch/v1/pattern.root"));
+  //ktracker->set_sim_db_name(gSystem->ExpandPathName("$E1039_RESOURCE/dsearch/v1/sim.root"));
+  //PatternDBUtil::ResScaleDC3(3);
+  //PatternDBUtil::LooseMode(false);
   se->registerSubsystem(ktracker);
 
-  //VertexFit* vertexing = new VertexFit();
-  //se->registerSubsystem(vertexing);
+  VertexFit* vertexing = new VertexFit();
+  se->registerSubsystem(vertexing);
 
   // evaluation module
   gSystem->Load("libmodule_example.so");
@@ -256,10 +259,6 @@ int Fun4Sim(
   trk_eval->set_hit_container_choice("Vector");
   trk_eval->set_out_name("trk_eval.root");
   se->registerSubsystem(trk_eval);
-
-  ///////////////////////////////////////////
-  // Output
-  ///////////////////////////////////////////
 
   // input - we need a dummy to drive the event loop
   if(read_hepmc) {
@@ -273,15 +272,19 @@ int Fun4Sim(
     se->registerInputManager(in);
   }
 
+  ///////////////////////////////////////////
+  // Output
+  ///////////////////////////////////////////
+
   // DST output manager, tunred off to save disk by default
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   se->registerOutputManager(out);
 
-  if(gen_pythia8 && !read_hepmc) {
-    Fun4AllHepMCOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
-    out->set_embedding_id(1);
-    se->registerOutputManager(out);
-  }
+  //if(gen_pythia8 && !read_hepmc) {
+  //  Fun4AllHepMCOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
+  //  out->set_embedding_id(1);
+  //  se->registerOutputManager(out);
+  //}
 
   if (nevent >= 0)
   {

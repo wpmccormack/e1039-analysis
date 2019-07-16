@@ -43,9 +43,9 @@ int Fun4DB(
   const double FMAGSTR = -1.044; //-1.054;
   const double KMAGSTR = -1.025; //-0.951;
 
-  const bool gen_pythia8  = false;
+  const bool gen_pythia8  = true;
   const bool gen_gun      = false;
-  const bool gen_particle = true;
+  const bool gen_particle = false;
   const bool read_hepmc   = false;
 
   gSystem->Load("libfun4all");
@@ -79,6 +79,7 @@ int Fun4DB(
     gSystem->Load("libPHPythia8.so");
 
     PHPythia8 *pythia8 = new PHPythia8();
+    pythia8->Verbosity(1);
     pythia8->set_config_file("phpythia8_DY.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     pythia8->set_embedding_id(1);
@@ -218,20 +219,20 @@ int Fun4DB(
   se->registerSubsystem(dbgen);
 
   // trakcing module
-  //gSystem->Load("libktracker.so");
-  //KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
-  //ktracker->Verbosity(0);
-  //ktracker->set_enable_event_reducer(true);
-  //ktracker->set_DS_level(0);
-  //se->registerSubsystem(ktracker);
+  gSystem->Load("libktracker.so");
+  KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
+  ktracker->Verbosity(0);
+  ktracker->set_enable_event_reducer(true);
+  ktracker->set_DS_level(0);
+  se->registerSubsystem(ktracker);
 
   // evaluation module
-  //gSystem->Load("libmodule_example.so");
-  //TrkEval *trk_eval = new TrkEval();
-  //trk_eval->Verbosity(0);
-  //trk_eval->set_hit_container_choice("Vector");
-  //trk_eval->set_out_name("trk_eval.root");
-  //se->registerSubsystem(trk_eval);
+  gSystem->Load("libmodule_example.so");
+  TrkEval *trk_eval = new TrkEval();
+  trk_eval->Verbosity(0);
+  trk_eval->set_hit_container_choice("Vector");
+  trk_eval->set_out_name("trk_eval.root");
+  se->registerSubsystem(trk_eval);
 
   ///////////////////////////////////////////
   // Output
