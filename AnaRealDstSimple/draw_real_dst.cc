@@ -28,6 +28,9 @@ void draw_real_dst(const int run=318)
 
   TTree* tree = GetTree(run);
   //PrintTreeElements(tree); // Call this function if you want.
+  tree->SetAlias("event", "DST.SQEvent");
+  tree->SetAlias("hit"  , "DST.SQHitVector._vector");
+
   TCanvas* c1 = new TCanvas("c1", "");
   c1->SetGrid();
 
@@ -36,13 +39,13 @@ void draw_real_dst(const int run=318)
   //c1->SaveAs("n_hits.png");
 
   //// Example 2:  TDC time with trigger-type and detector selections
-  tree->Draw("DST.SQHitVector._vector.get_tdc_time()",
-             "DST.SQEvent._trigger == 0x4 && DST.SQHitVector._vector.get_detector_id() == 13");
+  tree->Draw("hit.get_tdc_time()",
+             "event._trigger == 0x4 && hit.get_detector_id() == 13");
   c1->SaveAs("tdc_time.png");
 
   //// Example 3:  Element ID with trigger-type and detector selections
-  tree->Draw("DST.SQHitVector._vector.get_element_id()",
-             "DST.SQEvent._trigger == 0x4 && DST.SQHitVector._vector.get_detector_id() == 13");
+  tree->Draw("hit.get_element_id()",
+             "event._trigger == 0x4 && hit.get_detector_id() == 13");
   c1->SaveAs("ele_id.png");
 
   exit(0);
