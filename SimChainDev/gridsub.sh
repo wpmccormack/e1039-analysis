@@ -17,7 +17,7 @@ fi
 echo "njobs=$njobs"
 echo "nevents=$nevents"
 
-macros=/e906/app/users/$USER/e1039-analysis/SimChainDev
+macros=$(dirname $(readlink -f $BASH_SOURCE))
 
 sed "s/nevents=NAN/nevents=$nevents/"             $macros/gridrun.sh > $macros/gridrun_new.sh 
 sed -i "s/nmu=NAN/nmu=$nmu/"                      $macros/gridrun_new.sh
@@ -33,7 +33,7 @@ mkdir -p $work
 chmod -R 01755 $work
 
 cd $macros
-tar -czvf $work/input.tar.gz *.C *.cfg *.opts trigger_*.txt
+tar -czvf $work/input.tar.gz *.C *.cfg *.opts
 cd -
 
 for (( id=1; id<=$njobs; id++ ))
@@ -50,6 +50,7 @@ do
   cmd="$cmd -L $work/$id/log/log.txt"
   cmd="$cmd -f $work/input.tar.gz"
   cmd="$cmd -d OUTPUT $work/$id/out"
+  cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
   cmd="$cmd file://`which $work/$id/gridrun_new.sh`"
 
   if [ $do_sub == 1 ]; then
@@ -63,3 +64,10 @@ do
     cd -
   fi
 done
+
+## When your job fails due to bad grid nodes,
+## you can use the following option to exclude those nodes;
+##   cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
+## Valid site names are listed here;
+## https://cdcvs.fnal.gov/redmine/projects/fife/wiki/Information_about_job_submission_to_OSG_sites
+## According to the Fermilab Service Desk, the "--blacklist" option has a known defect.

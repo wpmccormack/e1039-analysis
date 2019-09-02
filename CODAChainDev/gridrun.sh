@@ -36,11 +36,11 @@ ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 # setup enviroment
 #is_grid=1
 if [ $is_grid == 1 ]; then
-  echo "source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh"
-  source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
+  echo "source /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/this-e1039.sh"
+  source /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/this-e1039.sh
 else
-  echo "source /e906/app/software/osg/users/yuhw/e1039/setup.sh"
-  source /e906/app/software/osg/users/yuhw/e1039/setup.sh
+  echo "source /e906/app/software/osg/software/e1039/this-e1039.sh"
+  source /e906/app/software/osg/software/e1039/this-e1039.sh
 fi
 
 # test enviroment

@@ -26,14 +26,11 @@ pwd | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 tar -xzvf $CONDOR_DIR_INPUT/input.tar.gz
 ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
-source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
-export LD_LIBRARY_PATH=/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/externals/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/install/lib:$LD_LIBRARY_PATH
-#export LD_LIBRARY_PATH=/e906/app/software/osg/users/yuhw/install/lib:$LD_LIBRARY_PATH
+source /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/this-e1039.sh
 echo `which root`
 
-ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libktracker.so
-ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libg4detectors.so
+ldd $E1039_CORE/lib/libktracker.so
+ldd $E1039_CORE/lib/libg4detectors.so
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
 time root -b -q Fun4PatternDB.C\($nevents,$nmu\)

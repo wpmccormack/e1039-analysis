@@ -21,18 +21,19 @@ if [ -z ${CONDOR_DIR_OUTPUT+x} ];
 fi
 
 echo "hello, grid." | tee out.txt $CONDOR_DIR_OUTPUT/out.txt
+echo "HOST = $HOSTNAME" | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 pwd | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
 tar -xzvf $CONDOR_DIR_INPUT/input.tar.gz
 ls -lh | tee -a out.txt $CONDOR_DIR_OUTPUT/out.txt
 
-source /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/setup.sh
+source /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/this-e1039.sh
 #source /e906/app/software/osg/users/yuhw/e1039/setup.sh
 #export LD_LIBRARY_PATH=/cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/install/lib:$LD_LIBRARY_PATH
 echo `which root`
 
-ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libktracker.so
-ldd /cvmfs/seaquest.opensciencegrid.org/seaquest/users/yuhw/e1039/offline_main/lib/libg4detectors.so
+ldd $E1039_CORE/lib/libktracker.so
+ldd $E1039_CORE/lib/libg4detectors.so
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
 time root -b -q Fun4Sim.C\($nevents\)
