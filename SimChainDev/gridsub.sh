@@ -50,6 +50,7 @@ do
   cmd="$cmd -L $work/$id/log/log.txt"
   cmd="$cmd -f $work/input.tar.gz"
   cmd="$cmd -d OUTPUT $work/$id/out"
+  cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
   cmd="$cmd file://`which $work/$id/gridrun_new.sh`"
 
   if [ $do_sub == 1 ]; then
