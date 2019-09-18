@@ -32,9 +32,10 @@ Note that you have to set up the environment beforehand, as explained above.
 
 ```
 cd e1039-analysis/SimChainDev
-root -l -q Fun4Sim.C
+root -b -q Fun4Sim.C
 ```
 
+The simulation result is written into multiple ROOT files.
 By default a simple muon-pair event (via PHG4SimpleEventGenerator) is simulated.
 You can/should change various options to simulate what you need.
 
