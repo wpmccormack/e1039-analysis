@@ -17,6 +17,7 @@ int Fun4RealDst(const int run=370, const int nevent=0)
   in->fileopen(fn_in);
   se->registerInputManager(in);
 
+  se->registerSubsystem(new AnaRealDst());
   se->registerSubsystem(new AnaEffHodo());
   //se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
 

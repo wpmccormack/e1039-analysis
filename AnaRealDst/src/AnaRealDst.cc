@@ -15,8 +15,7 @@
 #include "AnaRealDst.h"
 using namespace std;
 
-//const vector<string> AnaRealDst::list_det_name = { "H1T", "H1B", "H2T", "H2B" };
-const vector<string> AnaRealDst::list_det_name = { "H4T", "H4B" };
+const vector<string> AnaRealDst::list_det_name = { "H1T", "H1B", "H2T", "H2B" };
 
 int AnaRealDst::Init(PHCompositeNode* topNode)
 {
@@ -74,7 +73,7 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
   ///
   /// Event selection
   ///
-  if (! event->get_trigger(SQEvent::NIM1)) {
+  if (! event->get_trigger(SQEvent::NIM2)) {
     return Fun4AllReturnCodes::EVENT_OK;
   }
 
