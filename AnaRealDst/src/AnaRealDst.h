@@ -18,6 +18,7 @@ class AnaRealDst: public SubsysReco {
   int    b_ele;
   double b_time;
   TH1*   h1_ele[99];
+  TH1*   h1_nhit[99];
 
  public:
   AnaRealDst() {;}
