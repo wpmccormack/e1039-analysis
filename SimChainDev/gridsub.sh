@@ -63,7 +63,7 @@ do
     $work/$id/gridrun_new.sh | tee $work/$id/log/log.txt
     cd -
   fi
-done
+done 2>&1 | tee log_gridsub.txt
 
 ## When your job fails due to bad grid nodes,
 ## you can use the following option to exclude those nodes;
