@@ -1,16 +1,11 @@
 /// Fun4SimDst.C:  Fun4all macro to analyze the E1039 simulated DST files.
-/**
- * You first list up DST files in "list_dst.txt".
- * Then type the following commands to execute this function:
- *   root -b
- *   .L Fun4RealDst.C
- *   Fun4MultiRealDst();
- */
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 R__LOAD_LIBRARY(libana_sim_dst)
 #endif
 
-int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
+int Fun4SimDst(const int   n_dst_ana=0,
+               const char* fn_list_dst="list_dst.txt",
+               const char* fn_udst="uDST.root")
 {
   gSystem->Load("libana_sim_dst.so");
 
@@ -19,13 +14,24 @@ int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
   Fun4AllInputManager *in = new Fun4AllDstInputManager("SimDst");
   se->registerInputManager(in);
 
-  se->registerSubsystem(new AnaSimDst());
+  se->registerSubsystem(new TrueNodeMaker());
+  //se->registerSubsystem(new FilterSimEvent());
+
+  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_udst);
+  se->registerOutputManager(out);
+  out->AddNode("SQHitVector");
+  out->AddNode("SQEvent");
+  out->AddNode("SRecEvent");
+  out->AddNode("SQTrueEvent");
+  out->AddNode("SQTrueTrackVector");
+  out->AddNode("SQTrueDimuonVector");
 
   vector<string> list_dst;
   string fn_dst;
   ifstream ifs(fn_list_dst);
   while (ifs >> fn_dst) list_dst.push_back(fn_dst);
   ifs.close();
+
   int n_dst = list_dst.size();
   cout << "N of DSTs: all = " << n_dst;
   if (n_dst_ana > 0 && n_dst > n_dst_ana) n_dst = n_dst_ana;
@@ -36,17 +42,6 @@ int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
     in->fileopen(fn_dst);
     se->run();
   }
-
-  //int i_dst = 0;
-  //string fn_dst;
-  //ifstream ifs(fn_list_dst);
-  //while (ifs >> fn_dst) {
-  //  cout << "DST: " << fn_dst << endl;
-  //  in->fileopen(fn_dst);
-  //  se->run();
-  //  if (n_dst > 0 && ++i_dst >= n_dst) break;
-  //}
-  //ifs.close();
 
   se->End();
   delete se;
