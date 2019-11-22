@@ -26,6 +26,8 @@ class AnaSimDst: public SubsysReco {
   TFile* file;
   TTree* tree;
   EventData  mo_evt;
+  TrackList  mo_trk_true;
+  TrackList  mo_trk_reco;
   DimuonList mo_dim_true;
   DimuonList mo_dim_reco;
 

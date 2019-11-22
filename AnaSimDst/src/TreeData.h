@@ -18,13 +18,9 @@ struct EventData {
 };
 
 struct TrackData {
-  int   charge;
-  float x ;
-  float y ;
-  float z ;
-  float px;
-  float py;
-  float pz;
+  int            charge;
+  TVector3       pos_vtx;
+  TLorentzVector mom_vtx;
 
   TrackData();
   virtual ~TrackData() {;}
@@ -33,24 +29,12 @@ struct TrackData {
 };
 
 struct DimuonData {
-  float x   ;
-  float y   ;
-  float z   ;
-  float px  ;
-  float py  ;
-  float pz  ;
-  float mass;
-  float eta ;
-  float phi ;
-  float x1  ;
-  float x2  ;
-
-  float pos_px;
-  float pos_py;
-  float pos_pz;
-  float neg_px;
-  float neg_py;
-  float neg_pz;
+  TVector3       pos;
+  TLorentzVector mom;
+  TLorentzVector mom_pos;
+  TLorentzVector mom_neg;
+  double         x1;
+  double         x2;
 
   DimuonData();
   virtual ~DimuonData() {;}

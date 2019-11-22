@@ -31,10 +31,8 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
   if    (++n_evt % 100000 == 0) cout << n_evt << endl;
   else if (n_evt %  10000 == 0) cout << " . " << flush;
 
-  const double M_MU = 0.1056583745; // GeV
-
   ///
-  /// Fill the event info
+  /// Event info
   ///
   mo_evt.proc_id = mi_evt_true->proc_id;
   for (int ii = 0; ii < 4; ii++) {
@@ -45,100 +43,57 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
   mo_evt.rec_stat   = mi_srec->getRecStatus();
   mo_evt.n_dim_reco = mi_srec->getNDimuons();
 
-  mo_dim_true.clear();
-  mo_dim_reco.clear();
-
   ///
-  /// Find the relation between true and reconstructed objects
+  /// Track info
   ///
-  //IdMap_t id_trk_t2r;
-  //FindTrackRelation(id_trk_t2r);
-  IdMap_t id_dim_t2r;
-  FindDimuonRelation(id_dim_t2r);
-
-  ///
-  /// Fill the output trees
-  ///
-//  trk_n = mi_vec_trk->size();
-//  for (int ii = 0; ii < trk_n; ii++) {
+//  IdMap_t id_trk_t2r;
+//  FindTrackRelation(id_trk_t2r);
+//  mo_trk_true.clear();
+//  mo_trk_reco.clear();
+//  for (unsigned int ii = 0; ii < mi_vec_trk->size(); ii++) {
 //    SQTrack* trk = &mi_vec_trk->at(ii);
-//    trk_ch[ii] = trk->charge;
-//    trk_x [ii] = trk->pos_vtx.X();
-//    trk_y [ii] = trk->pos_vtx.Y();
-//    trk_z [ii] = trk->pos_vtx.Z();
-//    trk_px[ii] = trk->mom_vtx.X();
-//    trk_py[ii] = trk->mom_vtx.Y();
-//    trk_pz[ii] = trk->mom_vtx.Z();
-//    trk_reco_id[ii] = id_trk_t2r[ii];
+//    TrackData td;
+//    td.charge  = trk->charge;
+//    td.pos_vtx = trk->pos_vtx;
+//    td.mom_vtx = trk->mom_vtx;
+//    mo_trk_true.push_back(td);
+//
+//    TrackData tdr;
 //    if (id_trk_t2r[ii] >= 0) {
 //      SRecTrack* trk_reco = &mi_srec->getTrack(id_trk_t2r[ii]);
-//      TVector3       pos = trk_reco->getVertex();
-//      TLorentzVector mom = trk_reco->getMomentumVertex();
-//      trk_reco_x [ii] = pos.X();
-//      trk_reco_y [ii] = pos.Y();
-//      trk_reco_z [ii] = pos.Z();
-//      trk_reco_px[ii] = mom.X();
-//      trk_reco_py[ii] = mom.Y();
-//      trk_reco_pz[ii] = mom.Z();
-//    } else {
-//      trk_reco_x [ii] = 0;
-//      trk_reco_y [ii] = 0;
-//      trk_reco_z [ii] = 0;
-//      trk_reco_px[ii] = 0;
-//      trk_reco_py[ii] = 0;
-//      trk_reco_pz[ii] = 0;
+//      tdr.charge  = trk_reco->getCharge();
+//      tdr.pos_vtx = trk_reco->getVertex();
+//      tdr.mom_vtx = trk_reco->getMomentumVertex();
 //    }
+//    mo_trk_reco.push_back(tdr);
 //  }
 
-  int dim_n = mi_vec_dim->size();
-  for (int ii = 0; ii < dim_n; ii++) {
+  ///
+  /// Dimuon info
+  ///
+  IdMap_t id_dim_t2r;
+  FindDimuonRelation(id_dim_t2r);
+  mo_dim_true.clear();
+  mo_dim_reco.clear();
+  for (unsigned int ii = 0; ii < mi_vec_dim->size(); ii++) {
     SQDimuon* dim = &mi_vec_dim->at(ii);
     DimuonData dd;
-    dd.x    = dim->pos.X();
-    dd.y    = dim->pos.Y();
-    dd.z    = dim->pos.Z();
-    dd.px   = dim->mom.X();
-    dd.py   = dim->mom.Y();
-    dd.pz   = dim->mom.Z();
-    dd.mass = dim->mom.M();
-    dd.eta  = dim->mom.Eta();
-    dd.phi  = dim->mom.Phi();
+    dd.pos     = dim->pos;
+    dd.mom     = dim->mom;
+    dd.mom_pos = dim->mom_pos;
+    dd.mom_neg = dim->mom_neg;
     UtilDimuon::GetX1X2(dim, dd.x1, dd.x2);
-
-    SQTrack* trk_pos = &mi_vec_trk->at(dim->track_idx_pos);
-    dd.pos_px = trk_pos->mom_vtx.X();
-    dd.pos_py = trk_pos->mom_vtx.Y();
-    dd.pos_pz = trk_pos->mom_vtx.Z();
-    SQTrack* trk_neg = &mi_vec_trk->at(dim->track_idx_neg);
-    dd.neg_px = trk_neg->mom_vtx.X();
-    dd.neg_py = trk_neg->mom_vtx.Y();
-    dd.neg_pz = trk_neg->mom_vtx.Z();
-
     mo_dim_true.push_back(dd);
 
     DimuonData ddr;
     if (id_dim_t2r[ii] >= 0) {
       SRecDimuon dim_reco = mi_srec->getDimuon(id_dim_t2r[ii]);
-      TVector3       pos = dim_reco.vtx;
-      TLorentzVector mom = dim_reco.p_pos + dim_reco.p_neg;
-      ddr.x    = pos.X();
-      ddr.y    = pos.Y();
-      ddr.z    = pos.Z();
-      ddr.px   = mom.X();
-      ddr.py   = mom.Y();
-      ddr.pz   = mom.Z();
-      ddr.mass = dim_reco.mass; // mom.M();
-      ddr.eta  = mom.Eta();
-      ddr.phi  = mom.Phi();
-      ddr.x1   = dim_reco.x1;
-      ddr.x2   = dim_reco.x2;
-
-      dd.pos_px = dim_reco.p_pos.X();
-      dd.pos_py = dim_reco.p_pos.Y();
-      dd.pos_pz = dim_reco.p_pos.Z();
-      dd.neg_px = dim_reco.p_neg.X();
-      dd.neg_py = dim_reco.p_neg.Y();
-      dd.neg_pz = dim_reco.p_neg.Z();
+      ddr.pos     = dim_reco.vtx;
+      ddr.mom     = dim_reco.p_pos + dim_reco.p_neg;
+      ddr.mom_pos = dim_reco.p_pos;
+      ddr.mom_neg = dim_reco.p_neg;
+      ddr.x1      = dim_reco.x1;
+      ddr.x2      = dim_reco.x2;
     }
     mo_dim_reco.push_back(ddr);
   }
@@ -173,7 +128,10 @@ void AnaSimDst::MakeTree()
   file = new TFile("sim_tree.root", "RECREATE");
   tree = new TTree("tree", "Created by AnaSimDst");
 
+  //tree->Branch("sqevt"   ,  mi_evt);
   tree->Branch("evt"     , &mo_evt);
+  //tree->Branch("trk_true", &mo_trk_true);
+  //tree->Branch("trk_reco", &mo_trk_reco);
   tree->Branch("dim_true", &mo_dim_true);
   tree->Branch("dim_reco", &mo_dim_reco);
 }
