@@ -41,6 +41,7 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
   }
   mo_evt.trig_bits  = mi_evt->get_trigger();
   mo_evt.rec_stat   = mi_srec->getRecStatus();
+  mo_evt.n_dim_true = mi_vec_dim->size();
   mo_evt.n_dim_reco = mi_srec->getNDimuons();
 
   ///
@@ -78,6 +79,7 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
   for (unsigned int ii = 0; ii < mi_vec_dim->size(); ii++) {
     SQDimuon* dim = &mi_vec_dim->at(ii);
     DimuonData dd;
+    dd.pdg_id  = dim->pdg_id;
     dd.pos     = dim->pos;
     dd.mom     = dim->mom;
     dd.mom_pos = dim->mom_pos;

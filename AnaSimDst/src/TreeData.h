@@ -9,6 +9,7 @@ struct EventData {
   TLorentzVector par_mom[4];
   int trig_bits;
   int rec_stat;
+  int n_dim_true;
   int n_dim_reco;
 
   EventData();
@@ -29,6 +30,7 @@ struct TrackData {
 };
 
 struct DimuonData {
+  int            pdg_id;
   TVector3       pos;
   TLorentzVector mom;
   TLorentzVector mom_pos;

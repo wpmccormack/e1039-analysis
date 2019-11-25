@@ -5,8 +5,9 @@
 
 struct SQDimuon : public PHObject {
   int id;
-  int track_idx_pos;
-  int track_idx_neg;
+  int pdg_id;
+  int track_id_pos;
+  int track_id_neg;
   TVector3 pos;
   TLorentzVector mom;
   TLorentzVector mom_pos;

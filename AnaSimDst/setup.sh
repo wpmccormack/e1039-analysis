@@ -15,11 +15,3 @@ if [ ${HOSTNAME:0:13} != 'spinquestgpvm' ] ; then
     echo "It might not run properly even if you follow 'README.md'."
     echo
 fi
-cat <<EOF 
-OK, your shell environment has been set up to use the software prepared in 
-'$E1039_ROOT'.
-Most likely you will next execute the following commands;
-  cd build
-  cmake-ana-sim-dst
-If you encounter any error in using AnaRealDst, please ask the author for help.
-EOF

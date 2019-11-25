@@ -1,13 +1,20 @@
-/// Macro to analyze the simulated tree created by Fun4SimMicroDst.C.
+/// Fun4SimTree.C:  Macro to analyze the simulated tree created by Fun4SimMicroDst.C.
+#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
+R__LOAD_LIBRARY(libana_sim_dst)
+#endif
+
 using namespace std;
 TCanvas* c1;
 void DrawDimTrueKin(TTree* tr);
 void DrawDimRecoKin(TTree* tr);
 void DrawTrkTrueKin(TTree* tr);
 void DrawTrueVar(TTree* tr, const string varname, const string title_x, const int n_x, const double x_lo, const double x_hi);
+void AnaEvents(TTree* tr);
 
 void Fun4SimTree(const char* fname="sim_tree.root", const char* tname="tree")
 {
+  //gSystem->Load("libana_sim_dst.so");
+
   TFile* file = new TFile(fname);
   TTree* tr = (TTree*)file->Get(tname);
 
@@ -20,6 +27,8 @@ void Fun4SimTree(const char* fname="sim_tree.root", const char* tname="tree")
   DrawDimRecoKin(tr);
   DrawTrkTrueKin(tr);
 
+  AnaEvents(tr);
+
   exit(0);
 }
 
@@ -28,10 +37,13 @@ void Fun4SimTree(const char* fname="sim_tree.root", const char* tname="tree")
 ///
 void DrawDimTrueKin(TTree* tr)
 {
+  tr->Draw("n_dim_true");
+  c1->SaveAs("result/h1_true_n_dim.png");
   tr->Draw("n_dim_reco");
   c1->SaveAs("result/h1_reco_n_dim.png");
 
   const double PI = TMath::Pi();
+  DrawTrueVar(tr, "dim_true.pdg_id"    , "True dimuon PDG ID", 1000, 0, 0);
   DrawTrueVar(tr, "dim_true.mom.X()"   , "True dimuon px (GeV)", 100, -5,   5);
   DrawTrueVar(tr, "dim_true.mom.Y()"   , "True dimuon py (GeV)", 100, -5,   5);
   DrawTrueVar(tr, "dim_true.mom.Z()"   , "True dimuon pz (GeV)", 100,  0, 100);
@@ -112,4 +124,29 @@ void DrawTrueVar(TTree* tr, const string varname, const string title_x, const in
 
   delete h1_all;
   delete h1_rec;
+}
+
+void AnaEvents(TTree* tr)
+{
+  typedef map<int, int> IntCount_t;
+  IntCount_t id_cnt;
+  DimuonList* list_dim = new DimuonList();
+  tr->SetBranchAddress("dim_true", &list_dim);
+
+  int n_ent = tr->GetEntries();
+  cout << "AnaEvents(): n = " << n_ent << endl;
+  for (int i_ent = 0; i_ent < n_ent; i_ent++) {
+    if ((i_ent+1) % (n_ent/10) == 0) cout << "  " << 100*(i_ent+1)/n_ent << "%" << flush;
+    tr->GetEntry(i_ent);
+    for (DimuonList::iterator it = list_dim->begin(); it != list_dim->end(); it++) {
+      DimuonData* dd = &(*it);
+      int pdg_id = dd->pdg_id;
+      if (id_cnt.find(pdg_id) == id_cnt.end()) id_cnt[pdg_id] = 1;
+      else                                     id_cnt[pdg_id]++;
+    }
+  }
+  cout << endl;
+  for (IntCount_t::iterator it = id_cnt.begin(); it != id_cnt.end(); it++) {
+    cout << setw(10) << it->first << "  " << setw(10) << it->second << endl;
+  }
 }

@@ -6,7 +6,6 @@
 struct SQTrack : public PHObject {
   int id;
   int charge;
-  int vtx_id;
   int n_hits;
   TVector3 pos_vtx;
   TLorentzVector mom_vtx;
