@@ -202,7 +202,7 @@ int Fun4Sim(
       e906legacy->enableJPsiGen();
     }
     
-    if(pythia_gen) e1039Phys->enablePythia();
+    if(pythia_gen) e906legacy->enablePythia();
 
     se->registerSubsystem(e906legacy);
   }
