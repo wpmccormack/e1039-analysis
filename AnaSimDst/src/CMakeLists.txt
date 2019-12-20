@@ -35,7 +35,7 @@ execute_process(COMMAND root-config --libs   OUTPUT_VARIABLE ROOT_LINK    OUTPUT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -I$ENV{OFFLINE_MAIN}/include/ ${ROOT_CFLAGS}")
 
 add_library(ana_sim_dst SHARED ${sources} ana_sim_dst_Dict.cc)
-target_link_libraries(ana_sim_dst fun4all interface_main geom_svc ktracker phg4hit PHPythia8 g4detectors)
+target_link_libraries(ana_sim_dst  fun4all interface_main geom_svc ktracker phg4hit PHPythia8 g4detectors UtilAna)
 install(TARGETS ana_sim_dst DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
 # Install the pcm files in case of ROOT 6.

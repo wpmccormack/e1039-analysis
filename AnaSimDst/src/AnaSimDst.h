@@ -9,7 +9,7 @@ class TFile;
 class TTree;
 class SQEvent;
 class SRecEvent;
-class SQTrueEvent;
+class SQMCEvent;
 class SQTrackVector;
 class SQDimuonVector;
 
@@ -18,7 +18,7 @@ class AnaSimDst: public SubsysReco {
   /// Input
   SQEvent       * mi_evt;
   SRecEvent     * mi_srec;
-  SQTrueEvent   * mi_evt_true;
+  SQMCEvent     * mi_evt_true;
   SQTrackVector * mi_vec_trk;
   SQDimuonVector* mi_vec_dim;
 
