@@ -21,7 +21,7 @@ R__LOAD_LIBRARY(libSQPrimaryGen)
 using namespace std;
 
 int Fun4Sim(
-    const int nevent = 100
+    const int nevent = 10
     )
 {
   const double target_coil_pos_z = -300;
@@ -72,24 +72,6 @@ int Fun4Sim(
   Fun4AllServer *se = Fun4AllServer::instance();
   se->Verbosity(0);
 
-  //Set the beam profile for legacy vertex generator
-  SQPrimaryVertexGen *legacy_vertex = new  SQPrimaryVertexGen();
-  TF2 *beam_profile = new TF2("beamProfile", "exp(-0.5*(x-[0])*(x-[0])/[1]/[1])*exp(-0.5*(y-[2])*(y-[2])/[3]/[3])", -10., 10., -10., 10.); 
-
-  //set the mean and sigma here 
-  double mean_x = 0.;
-  double sigma_x = 0.414;
-  double mean_y = 0.;
-  double sigma_y = 0.343;
-
-  beam_profile->SetParameter(0, mean_x);
-  beam_profile->SetParameter(1, sigma_x);
-  beam_profile->SetParameter(2, mean_y);
-  beam_profile->SetParameter(3, sigma_y);
-
-  legacy_vertex->set_beam_profile(beam_profile);
-  se->registerSubsystem(legacy_vertex);
-  
 
   // pythia8
   if(gen_pythia8) {
