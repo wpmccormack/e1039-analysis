@@ -15,12 +15,13 @@ R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libmodule_example)
+R__LOAD_LIBRARY(libSQPrimaryGen)
 #endif
 
 using namespace std;
 
 int Fun4Sim(
-    const int nevent = 1
+    const int nevent = 10
     )
 {
   const double target_coil_pos_z = -300;
@@ -39,8 +40,10 @@ int Fun4Sim(
 
   const bool gen_pythia8  = false;
   const bool gen_gun      = false;
-  const bool gen_particle = true;
+  const bool gen_particle = false;
   const bool read_hepmc   = false;
+  const bool gen_e906legacy = true; //E906LegacyGen()
+
 
   gSystem->Load("libfun4all");
   gSystem->Load("libg4detectors");
@@ -69,10 +72,11 @@ int Fun4Sim(
   Fun4AllServer *se = Fun4AllServer::instance();
   se->Verbosity(0);
 
+
   // pythia8
   if(gen_pythia8) {
     gSystem->Load("libPHPythia8.so");
-
+    
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
     pythia8->set_config_file("phpythia8_DY.cfg");
@@ -163,6 +167,42 @@ int Fun4Sim(
     genm->Verbosity(0);
     se->registerSubsystem(genm);
   }
+
+ // E906LegacyGen
+  //@
+  if(gen_e906legacy){
+    SQPrimaryParticleGen *e906legacy = new  SQPrimaryParticleGen();
+    
+    const bool pythia_gen = false;
+    const bool drellyan_gen = true;
+    const bool JPsi_gen = false;
+    const bool Psip_gen = false;  
+
+    if(drellyan_gen){
+      e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
+      e906legacy->set_massRange(0.23, 10.0);// 0.22 and above     
+      e906legacy->enableDrellYanGen();
+    }
+   
+   
+    if(Psip_gen){ 
+      e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
+      e906legacy->enablePsipGen();
+    }
+
+
+    if(JPsi_gen){
+      e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
+      e906legacy->enableJPsiGen();
+    }
+    
+    if(pythia_gen) e906legacy->enablePythia();
+
+    se->registerSubsystem(e906legacy);
+  }
+  //@
+
+
 
   // Fun4All G4 module
   PHG4Reco *g4Reco = new PHG4Reco();
