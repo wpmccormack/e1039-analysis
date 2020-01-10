@@ -27,16 +27,16 @@ class EvNavHandler
       printf("Top View\n");
       v->ResetCurrentCamera();
       v->CurrentCamera().RotateRad(-3.14/2.0, 0);
-      v->CurrentCamera().Zoom(400, 0, 0);
-      v->CurrentCamera().Truck(2800,0);
+      v->CurrentCamera().Zoom(200, 0, 0); // (400, 0, 0);
+      v->CurrentCamera().Truck(500, 0); // (2800,0);
       v->DoDraw();
     }
     void SideView()
     {
       printf("Side View\n");
       v->ResetCurrentCamera();
-      v->CurrentCamera().Zoom(400, 0, 0);
-      v->CurrentCamera().Truck(2800,0);
+      v->CurrentCamera().Zoom(200, 0, 0); // (400, 0, 0);
+      v->CurrentCamera().Truck(500, 0); // (2800,0);
       v->DoDraw();
     }
     void View3D()
@@ -44,8 +44,8 @@ class EvNavHandler
       printf("3D View\n");
       v->ResetCurrentCamera();
       v->CurrentCamera().RotateRad(-3.14/4., -3.14/4.);
-      v->CurrentCamera().Zoom(350, 0, 0);
-      v->CurrentCamera().Truck(2000,-1500);
+      v->CurrentCamera().Zoom(180, 0, 0); // (350, 0, 0);
+      v->CurrentCamera().Truck(1000, -500); // (2000,-1500);
       v->DoDraw();
     }
 
