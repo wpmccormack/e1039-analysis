@@ -10,6 +10,7 @@ R__LOAD_LIBRARY(libPHPythia8)
 R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4testbench)
 R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libg4dst)
 R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libevt_filter)
@@ -38,7 +39,7 @@ int Fun4Sim(
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8  = false;
+  const bool gen_pythia8  = true; // false;
   const bool gen_gun      = false;
   const bool gen_particle = false;
   const bool read_hepmc   = false;
@@ -49,6 +50,7 @@ int Fun4Sim(
   gSystem->Load("libg4detectors");
   gSystem->Load("libg4testbench");
   gSystem->Load("libg4eval");
+  gSystem->Load("libg4dst");
   gSystem->Load("libktracker.so");
 
   recoConsts *rc = recoConsts::instance();
@@ -79,7 +81,8 @@ int Fun4Sim(
     
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
-    pythia8->set_config_file("phpythia8_DY.cfg");
+    //pythia8->set_config_file("phpythia8_DY.cfg");
+    pythia8->set_config_file("phpythia8_Jpsi.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
@@ -88,16 +91,18 @@ int Fun4Sim(
 
     PHPy8ParticleTrigger* trigger_mup = new PHPy8ParticleTrigger();
     trigger_mup->AddParticles("-13");
-    //trigger_mup->SetPxHighLow(7, 0.5);
+    trigger_mup->SetPxHighLow(1.0, -6.0); // J/psi only
     //trigger_mup->SetPyHighLow(6, -6);
-    trigger_mup->SetPzHighLow(120, 10);
+    //trigger_mup->SetPzHighLow(120, 10);
+    trigger_mup->SetPzHighLow(120, 15); // For J/psi
     pythia8->register_trigger(trigger_mup);
 
     PHPy8ParticleTrigger* trigger_mum = new PHPy8ParticleTrigger();
     trigger_mum->AddParticles("13");
-    //trigger_mum->SetPxHighLow(-0.5, -7);
+    trigger_mum->SetPxHighLow(6.0, -1.0); // J/psi only
     //trigger_mum->SetPyHighLow(6, -6);
-    trigger_mum->SetPzHighLow(120, 10);
+    //trigger_mum->SetPzHighLow(120, 10);
+    trigger_mum->SetPzHighLow(120, 15); // For J/psi
     pythia8->register_trigger(trigger_mum);
   }
   
@@ -299,6 +304,9 @@ int Fun4Sim(
   trk_eval->set_hit_container_choice("Vector");
   trk_eval->set_out_name("trk_eval.root");
   se->registerSubsystem(trk_eval);
+
+  se->registerSubsystem(new TruthNodeMaker());
+  se->registerSubsystem(new SimDstTrimmer());
 
   // input - we need a dummy to drive the event loop
   if(read_hepmc) {

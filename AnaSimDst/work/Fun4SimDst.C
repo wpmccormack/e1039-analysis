@@ -14,7 +14,6 @@ int Fun4SimDst(const int   n_dst_ana=0,
   Fun4AllInputManager *in = new Fun4AllDstInputManager("SimDst");
   se->registerInputManager(in);
 
-  se->registerSubsystem(new TrueNodeMaker());
   //se->registerSubsystem(new FilterSimEvent());
 
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_udst);
@@ -22,9 +21,9 @@ int Fun4SimDst(const int   n_dst_ana=0,
   out->AddNode("SQHitVector");
   out->AddNode("SQEvent");
   out->AddNode("SRecEvent");
-  out->AddNode("SQTrueEvent");
-  out->AddNode("SQTrueTrackVector");
-  out->AddNode("SQTrueDimuonVector");
+  out->AddNode("SQMCEvent");
+  out->AddNode("SQTruthTrackVector");
+  out->AddNode("SQTruthDimuonVector");
 
   vector<string> list_dst;
   string fn_dst;
