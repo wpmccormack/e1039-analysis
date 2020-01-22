@@ -43,7 +43,7 @@ int Fun4Sim(
   const bool gen_gun      = false;
   const bool gen_particle = false;
   const bool read_hepmc   = false;
-  const bool gen_e906legacy = true; //E906LegacyGen()
+  const bool gen_e906legacy = false; //E906LegacyGen()
 
 
   gSystem->Load("libfun4all");
@@ -305,8 +305,8 @@ int Fun4Sim(
   trk_eval->set_out_name("trk_eval.root");
   se->registerSubsystem(trk_eval);
 
-  se->registerSubsystem(new TruthNodeMaker());
-  se->registerSubsystem(new SimDstTrimmer());
+ // se->registerSubsystem(new TruthNodeMaker());
+  //se->registerSubsystem(new SimDstTrimmer());
 
   // input - we need a dummy to drive the event loop
   if(read_hepmc) {
