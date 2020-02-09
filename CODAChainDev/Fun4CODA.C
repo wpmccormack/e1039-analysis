@@ -16,7 +16,6 @@
 
 #include "G4_SensitiveDetectors.C"
 #include "G4_Target.C"
-#include "EventDisplay.C"
 
 R__LOAD_LIBRARY(libinterface_main)
 R__LOAD_LIBRARY(libfun4all)
@@ -147,25 +146,17 @@ const int skip = 0
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", out_dst);
   se->registerOutputManager(out);
 
-  if (nevent >= 0)
-  {
-    //se->skip(skip);
-    se->run(nevent);
-
-    PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
-
-    // finish job - close and save output files
-    se->End();
-    se->PrintTimer();
-    std::cout << "All done" << std::endl;
-
-    // cleanup - delete the server and exit
-    delete se;
-    gSystem->Exit(0);
-  } else { // TEve event display
-    gROOT->LoadMacro("EventDisplay.C");
-    EventDisplay(nevent);
-  }
-
+  //se->skip(skip);
+  se->run(nevent);
+  
+  PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
+  
+  // finish job - close and save output files
+  se->End();
+  se->PrintTimer();
+  std::cout << "All done" << std::endl;
+  
+  // cleanup - delete the server and exit
+  delete se;
   return 0;
 }
