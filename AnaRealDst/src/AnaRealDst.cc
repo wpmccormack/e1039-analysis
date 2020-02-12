@@ -86,8 +86,8 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
     cout << "H3T = " << did_h3t << ", H3B = " << did_h3b << endl;
   }
 
-  SQHitVector* hv_h3t = UtilSQHit::FindHits(hit_vec, did_h3t);
-  SQHitVector* hv_h3b = UtilSQHit::FindHits(hit_vec, did_h3b);
+  shared_ptr<SQHitVector> hv_h3t(UtilSQHit::FindHits(hit_vec, did_h3t));
+  shared_ptr<SQHitVector> hv_h3b(UtilSQHit::FindHits(hit_vec, did_h3b));
   if (hv_h3t->size() + hv_h3b->size() != 1) return Fun4AllReturnCodes::EVENT_OK;
 
   ///
@@ -96,7 +96,7 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
   for (unsigned int i_det = 0; i_det < list_det_name.size(); i_det++) {
     strncpy(b_det_name, list_det_name[i_det].c_str(), sizeof(b_det_name));
     b_det = list_det_id[i_det];
-    SQHitVector* hv = UtilSQHit::FindHits(hit_vec, b_det);
+    shared_ptr<SQHitVector> hv(UtilSQHit::FindHits(hit_vec, b_det));
     for (SQHitVector::ConstIter it = hv->begin(); it != hv->end(); it++) {
       b_ele  = (*it)->get_element_id();
       b_time = (*it)->get_tdc_time  ();
@@ -105,7 +105,6 @@ int AnaRealDst::process_event(PHCompositeNode* topNode)
       h1_ele[i_det]->Fill(b_ele);
     }
     h1_nhit[i_det]->Fill(hv->size());
-    delete hv;
   }
 
   return Fun4AllReturnCodes::EVENT_OK;

@@ -4,14 +4,14 @@ R__LOAD_LIBRARY(libana_real_dst)
 #endif
 
 /// Main function.
-int Fun4RealDst(const int run=370, const int nevent=0)
+int Fun4RealDst(const int run=1666, const int nevent=0)
 {
   gSystem->Load("libana_real_dst.so");
 
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->Verbosity(1);
 
-  string fn_in = UtilOnline::GetDstFileDir() + "/" + UtilOnline::RunNum2DstFile(run);
+  string fn_in = UtilOnline::GetDstFilePath(run);
   cout << "DST file = " << fn_in << endl;
   Fun4AllInputManager *in = new Fun4AllDstInputManager("RealDst");
   in->fileopen(fn_in);

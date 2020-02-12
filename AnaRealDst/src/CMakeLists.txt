@@ -32,7 +32,7 @@ execute_process(COMMAND root-config --libs   OUTPUT_VARIABLE ROOT_LINK    OUTPUT
 #include_directories("${PROJECT_SOURCE_DIR}/" "$ENV{MY_INSTALL}/include/" "$ENV{OFFLINE_MAIN}/include/")
 #link_directories("./" "$ENV{MY_INSTALL}/lib/" "$ENV{OFFLINE_MAIN}/lib/")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -I$ENV{OFFLINE_MAIN}/include/ ${ROOT_CFLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -I$ENV{OFFLINE_MAIN}/include/ ${ROOT_CFLAGS}")
 
 add_library(ana_real_dst SHARED ${sources} ana_real_dst_Dict.cc)
 target_link_libraries(ana_real_dst -L$ENV{OFFLINE_MAIN}/lib fun4all interface_main geom_svc decoder_maindaq)

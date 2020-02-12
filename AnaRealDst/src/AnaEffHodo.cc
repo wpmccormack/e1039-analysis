@@ -68,35 +68,27 @@ int AnaEffHodo::process_event(PHCompositeNode* topNode)
   }
   n_evt_trig++;
 
-  SQHitVector* hv_h1t = UtilSQHit::FindFirstHits(hit_vec, "H1T");
-  SQHitVector* hv_h1b = UtilSQHit::FindFirstHits(hit_vec, "H1B");
-  SQHitVector* hv_h2t = UtilSQHit::FindFirstHits(hit_vec, "H2T");
-  SQHitVector* hv_h2b = UtilSQHit::FindFirstHits(hit_vec, "H2B");
-  SQHitVector* hv_h3t = UtilSQHit::FindFirstHits(hit_vec, "H3T");
-  SQHitVector* hv_h3b = UtilSQHit::FindFirstHits(hit_vec, "H3B");
-  SQHitVector* hv_h4t = UtilSQHit::FindFirstHits(hit_vec, "H4T");
-  SQHitVector* hv_h4b = UtilSQHit::FindFirstHits(hit_vec, "H4B");
+  shared_ptr<SQHitVector> hv_h1t(UtilSQHit::FindFirstHits(hit_vec, "H1T"));
+  shared_ptr<SQHitVector> hv_h1b(UtilSQHit::FindFirstHits(hit_vec, "H1B"));
+  shared_ptr<SQHitVector> hv_h2t(UtilSQHit::FindFirstHits(hit_vec, "H2T"));
+  shared_ptr<SQHitVector> hv_h2b(UtilSQHit::FindFirstHits(hit_vec, "H2B"));
+  shared_ptr<SQHitVector> hv_h3t(UtilSQHit::FindFirstHits(hit_vec, "H3T"));
+  shared_ptr<SQHitVector> hv_h3b(UtilSQHit::FindFirstHits(hit_vec, "H3B"));
+  shared_ptr<SQHitVector> hv_h4t(UtilSQHit::FindFirstHits(hit_vec, "H4T"));
+  shared_ptr<SQHitVector> hv_h4b(UtilSQHit::FindFirstHits(hit_vec, "H4B"));
   if (hv_h1t->size() + hv_h1b->size() != 1 ||
       hv_h2t->size() + hv_h2b->size() != 1 ||
       hv_h3t->size() + hv_h3b->size() != 1 ||
       hv_h4t->size() + hv_h4b->size() != 1 
     ) return Fun4AllReturnCodes::EVENT_OK;
-  delete hv_h1t;
-  delete hv_h1b;
-  delete hv_h2t;
-  delete hv_h2b;
-  delete hv_h3t;
-  delete hv_h3b;
-  delete hv_h4t;
-  delete hv_h4b;
 
   n_evt_nhit++;
 
   ///
   /// Analysis of detector hits
   ///
-  SQHitVector* hv_h2l = UtilSQHit::FindFirstHits(hit_vec, "H2L");
-  SQHitVector* hv_h2r = UtilSQHit::FindFirstHits(hit_vec, "H2R");
+  shared_ptr<SQHitVector> hv_h2l(UtilSQHit::FindFirstHits(hit_vec, "H2L"));
+  shared_ptr<SQHitVector> hv_h2r(UtilSQHit::FindFirstHits(hit_vec, "H2R"));
 
   int nhit = hv_h2l->size() + hv_h2r->size();
   h1_nhit->Fill(nhit);
@@ -112,9 +104,6 @@ int AnaEffHodo::process_event(PHCompositeNode* topNode)
   bool is_eff = nhit > 0; // very simple judgment for now
   if (is_eff) h1_eff_ok->Fill(0);
   h1_eff_all->Fill(0);
-
-  delete hv_h2l;
-  delete hv_h2r;
 
   return Fun4AllReturnCodes::EVENT_OK;
 }

@@ -104,25 +104,21 @@ int AnaEffCham::process_event(PHCompositeNode* topNode)
   }
   n_evt_trig++;
 
-  //SQHitVector* hv_h1 = UtilSQHit::FindFirstHits(hit_vec, "H1T");
-  //SQHitVector* hv_h2 = UtilSQHit::FindFirstHits(hit_vec, "H2T");
-  SQHitVector* hv_h3 = UtilSQHit::FindFirstHits(hit_vec, "H3T");
-  SQHitVector* hv_h4 = UtilSQHit::FindFirstHits(hit_vec, "H4T");
+  //shared_ptr<SQHitVector> hv_h1(UtilSQHit::FindFirstHits(hit_vec, "H1T"));
+  //shared_ptr<SQHitVector> hv_h2(UtilSQHit::FindFirstHits(hit_vec, "H2T"));
+  shared_ptr<SQHitVector> hv_h3(UtilSQHit::FindFirstHits(hit_vec, "H3T"));
+  shared_ptr<SQHitVector> hv_h4(UtilSQHit::FindFirstHits(hit_vec, "H4T"));
   if (//hv_h1->size() != 1 ||
       //hv_h2->size() != 1 ||
       hv_h3->size() != 1 ||
       hv_h4->size() != 1   ) return Fun4AllReturnCodes::EVENT_OK;
-  //delete hv_h1;
-  //delete hv_h2;
-  delete hv_h3;
-  delete hv_h4;
   n_evt_nhit++;
 
   ///
   /// Analysis of detector hits
   ///
   for (int i_pl = 0; i_pl < N_PL; i_pl++) {
-    SQHitVector* hv = UtilSQHit::FindHits(hit_vec, list_pl_id[i_pl]);
+    shared_ptr<SQHitVector> hv(UtilSQHit::FindHits(hit_vec, list_pl_id[i_pl]));
 
     bool is_eff = hv->size() > 0; // very simple judgment for now
     if (is_eff) h1_eff_ok->Fill(i_pl);
@@ -135,7 +131,6 @@ int AnaEffCham::process_event(PHCompositeNode* topNode)
       h1_ele [i_pl]->Fill(ele );
       h1_time[i_pl]->Fill(time);
     }
-    delete hv;
   }
 
   return Fun4AllReturnCodes::EVENT_OK;
