@@ -7,6 +7,7 @@ njobs=$3
 nevents=$4
 
 nmu=1
+LIFE_TIME=medium # short (3h), medium (8h) or long (23h)
 
 if [ $do_sub == 1 ]; then
   echo "grid!"
@@ -45,7 +46,7 @@ do
   rsync -av $macros/gridrun_new.sh $work/$id/gridrun_new.sh
 
   cmd="jobsub_submit"
-  cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='short'"
+  cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
   cmd="$cmd --mail_never"
   cmd="$cmd -L $work/$id/log/log.txt"
   cmd="$cmd -f $work/input.tar.gz"
