@@ -16,6 +16,11 @@ R__LOAD_LIBRARY(libmodule_example)
 
 using namespace std;
 
+/*
+This is an example script intended to demonstrate how to run SQReco in a minimalistic fashion, it is NOT
+suitable for production use and users should develop their own reconstruction macro for their own analysis.
+*/
+
 int RecoE1039Sim(const int nevent = 10)
 {
   const double target_coil_pos_z = -300;
@@ -25,6 +30,7 @@ int RecoE1039Sim(const int nevent = 10)
   const double target_l = 7.9; //cm
   const double target_z = (7.9-target_l)/2.; //cm
   const int use_g4steps = 1;
+  const int register_hits = 1;
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
@@ -95,7 +101,7 @@ int RecoE1039Sim(const int nevent = 10)
 
   // collimator, targer and shielding between target and FMag
   //gROOT->LoadMacro("G4_Target.C");
-  SetupTarget(g4Reco, do_collimator, do_target, do_e1039_shielding, target_coil_pos_z, target_l, target_z, use_g4steps);
+  SetupTarget(g4Reco, do_collimator, do_target, do_e1039_shielding, target_coil_pos_z, target_l, target_z, use_g4steps, register_hits);
 
   // sensitive elements of the spectrometer
   SetupSensitiveDetectors(g4Reco, 0);

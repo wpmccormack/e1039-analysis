@@ -10,17 +10,14 @@ R__LOAD_LIBRARY(libg4detectors)
 
 #define LogDebug(exp)   std::cout<<"DEBUG: "  <<__FILE__<<": "<<__LINE__<<": "<< exp << std::endl
 
-using namespace std;
-
 void SetupSensitiveDetectors(
-    PHG4Reco *g4Reco,
-    const int verbosity = 0
-    ){
-
-  GeomSvc *geom_svc = GeomSvc::instance();
+    PHG4Reco* g4Reco,
+    const int verbosity = 0)
+{
+  using namespace std;
+  GeomSvc* geom_svc = GeomSvc::instance();
 
   vector<string> sim_list = geom_svc->getDefaultSimList();
-
   for(int i=0; i<sim_list.size(); ++i){
     string name = sim_list[i];
 
@@ -52,7 +49,7 @@ void SetupSensitiveDetectors(
     if(!(fabs(size[0])<10000)) continue;
     if(place[2]>680 && place[2]<700) continue;
 
-    PHG4BlockSubsystem *box = new PHG4BlockSubsystem(name.c_str(), 0);
+    PHG4BlockSubsystem* box = new PHG4BlockSubsystem(name.c_str(), 0);
     box->SuperDetector(name.c_str());
     box->set_double_param("size_x", size[0]);
     box->set_double_param("size_y", size[1]);
@@ -61,7 +58,6 @@ void SetupSensitiveDetectors(
     box->set_double_param("place_y", place[1]);
     box->set_double_param("place_z", place[2]);
     box->set_string_param("material", material.c_str());// G4_Si, G4_AIR, G4_Galactic
-    //box->set_string_param("material", "G4_Galactic");// G4_Si, G4_AIR, G4_Galactic
     box->SetActive(1);
     g4Reco->registerSubsystem(box);
   }
