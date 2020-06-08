@@ -249,6 +249,9 @@ int Fun4Sim(
   PHG4TruthSubsystem *truth = new PHG4TruthSubsystem();
   g4Reco->registerSubsystem(truth);
 
+  // Make SQ nodes for truth info
+  se->registerSubsystem(new TruthNodeMaker());
+
   // digitizer
   DPDigitizer *digitizer = new DPDigitizer("DPDigitizer", 0);
   //digitizer->Verbosity(99);
@@ -297,15 +300,7 @@ int Fun4Sim(
   VertexFit* vertexing = new VertexFit();
   se->registerSubsystem(vertexing);
 
-  // evaluation module
-  gSystem->Load("libmodule_example.so");
-  TrkEval *trk_eval = new TrkEval();
-  trk_eval->Verbosity(0);
-  trk_eval->set_hit_container_choice("Vector");
-  trk_eval->set_out_name("trk_eval.root");
-  se->registerSubsystem(trk_eval);
-
-  se->registerSubsystem(new TruthNodeMaker());
+  //// Trim minor data nodes (to reduce the DST file size)
   //se->registerSubsystem(new SimDstTrimmer());
 
   // input - we need a dummy to drive the event loop

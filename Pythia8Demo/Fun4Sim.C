@@ -111,12 +111,13 @@ int Fun4Sim(const int nEvents = 1)
   digitizer->Verbosity(100);
   se->registerSubsystem(digitizer);
 
-  gSystem->Load("libmodule_example.so");
-  TestSimAnalyzer *analyzer = new TestSimAnalyzer();
-  analyzer->Verbosity(0);
-  analyzer->set_hit_container_choice("Vector");
-  analyzer->set_out_name("test_analyzer.root");
-  se->registerSubsystem(analyzer);
+  //// This module was removed in June 2020.
+  //gSystem->Load("libmodule_example.so");
+  //TestSimAnalyzer *analyzer = new TestSimAnalyzer();
+  //analyzer->Verbosity(0);
+  //analyzer->set_hit_container_choice("Vector");
+  //analyzer->set_out_name("test_analyzer.root");
+  //se->registerSubsystem(analyzer);
 
   //TruthEval* eval = new TruthEval("TruthEval","eval.root");
   //eval->target_l = target_l;
