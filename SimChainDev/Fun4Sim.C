@@ -1,7 +1,9 @@
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
-#include <TSystem.h>
+//#include <TSystem.h>
 
+#include "G4_InsensitiveVolumes.C"
 #include "G4_SensitiveDetectors.C"
+#include "G4_Beamline.C"
 #include "G4_Target.C"
 
 R__LOAD_LIBRARY(libfun4all)
@@ -31,6 +33,10 @@ int Fun4Sim(
   const bool do_collimator = true;
   const bool do_target = true;
   const bool do_e1039_shielding = true;
+  const bool do_fmag = true;
+  const bool do_kmag = true;
+  const bool do_absorber = true;
+
   const double target_l = 7.9; //cm
   const double target_z = (7.9-target_l)/2.; //cm
   const int use_g4steps = 1;
@@ -45,12 +51,12 @@ int Fun4Sim(
   const bool gen_e906legacy = false; //E906LegacyGen()
 
 
-  gSystem->Load("libfun4all");
-  gSystem->Load("libg4detectors");
-  gSystem->Load("libg4testbench");
-  gSystem->Load("libg4eval");
-  gSystem->Load("libg4dst");
-  gSystem->Load("libktracker.so");
+  //gSystem->Load("libfun4all");
+  //gSystem->Load("libg4detectors");
+  //gSystem->Load("libg4testbench");
+  //gSystem->Load("libg4eval");
+  //gSystem->Load("libg4dst");
+  //gSystem->Load("libktracker.so");
 
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -76,7 +82,7 @@ int Fun4Sim(
 
   // pythia8
   if(gen_pythia8) {
-    gSystem->Load("libPHPythia8.so");
+    //gSystem->Load("libPHPythia8.so");
     
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
@@ -231,15 +237,20 @@ int Fun4Sim(
   g4Reco->SetPhysicsList("FTFP_BERT");
 
   // insensitive elements of the spectrometer
-  PHG4E1039InsensSubsystem* insens = new PHG4E1039InsensSubsystem("Insens");
-  g4Reco->registerSubsystem(insens);
+  //gROOT->LoadMacro("G4_InsensitiveVolumes.C");
+  SetupInsensitiveVolumes(g4Reco, do_e1039_shielding, do_fmag, do_kmag, do_absorber);
 
   // collimator, targer and shielding between target and FMag
-  gROOT->LoadMacro("G4_Target.C");
-  SetupTarget(g4Reco, do_collimator, do_target, do_e1039_shielding, target_coil_pos_z, target_l, target_z, use_g4steps);
+  //gROOT->LoadMacro("G4_Beamline.C");
+  SetupBeamline(g4Reco, do_collimator, target_coil_pos_z - 302.36); // Is the position correct??
+
+  if (do_target) {
+    //gROOT->LoadMacro("G4_Target.C");
+    SetupTarget(g4Reco, target_coil_pos_z, target_l, target_z, use_g4steps);
+  }
 
   // sensitive elements of the spectrometer
-  gROOT->LoadMacro("G4_SensitiveDetectors.C");
+  //gROOT->LoadMacro("G4_SensitiveDetectors.C");
   SetupSensitiveDetectors(g4Reco, 0);
 
   se->registerSubsystem(g4Reco);
@@ -258,7 +269,7 @@ int Fun4Sim(
 
   // embedding
   if(embedding_opt == 1) {
-    gSystem->Load("libembedding.so");
+    //gSystem->Load("libembedding.so");
     SRawEventEmbed *embed = new SRawEventEmbed("SRawEventEmbed");
     embed->set_in_name("digit_016070_R007.root");
     embed->set_in_tree_name("save");
@@ -271,7 +282,7 @@ int Fun4Sim(
   }
 
   // Trigger Emulator
-  gSystem->Load("libdptrigger.so");
+  //gSystem->Load("libdptrigger.so");
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
   dptrigger->set_road_set_file_name(gSystem->ExpandPathName("$E1039_RESOURCE/trigger/trigger_67.txt"));
@@ -285,7 +296,7 @@ int Fun4Sim(
   se->registerSubsystem(evt_filter);
 
   // trakcing module
-  gSystem->Load("libktracker.so");
+  //gSystem->Load("libktracker.so");
   KalmanFastTrackingWrapper *ktracker = new KalmanFastTrackingWrapper();
   //ktracker->Verbosity(99);
   ktracker->set_enable_event_reducer(true);
