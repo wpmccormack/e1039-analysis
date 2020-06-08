@@ -3,7 +3,6 @@
 
 #include "G4_SensitiveDetectors.C"
 #include "G4_Target.C"
-#include "EventDisplay.C"
 
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libPHPythia8)
@@ -329,25 +328,18 @@ int Fun4Sim(
   //  se->registerOutputManager(out);
   //}
 
-  if (nevent >= 0)
-  {
-    se->run(nevent);
+  se->run(nevent);
 
-    PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
+  PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
+  
+  // finish job - close and save output files
+  se->End();
+  se->PrintTimer();
+  std::cout << "All done" << std::endl;
 
-    // finish job - close and save output files
-    se->End();
-    se->PrintTimer();
-    std::cout << "All done" << std::endl;
-
-    // cleanup - delete the server and exit
-    delete se;
-    gSystem->Exit(0);
-  } else { // TEve event display
-    gROOT->LoadMacro("EventDisplay.C");
-    EventDisplay(nevent);
-  } 
-
+  // cleanup - delete the server and exit
+  delete se;
+  gSystem->Exit(0);
   return 0;
 }
 
