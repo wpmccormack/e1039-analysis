@@ -1,7 +1,9 @@
 #include <TSystem.h>
 
-#include "support/G4_SensitiveDetectors.C"
-#include "support/G4_Target.C"
+#include <top/G4_Beamline.C>
+#include <top/G4_Target.C>
+#include <top/G4_InsensitiveVolumes.C>
+#include <top/G4_SensitiveDetectors.C>
 
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libPHPythia8)
@@ -23,14 +25,18 @@ suitable for production use and users should develop their own reconstruction ma
 
 int RecoE1039Sim(const int nevent = 10)
 {
-  const double target_coil_pos_z = -300;
   const bool do_collimator = true;
-  const bool do_target = true;
-  const bool do_e1039_shielding = true;
+  const bool do_target     = true;
+  const bool do_shielding  = true;
+  const bool do_fmag       = true;
+  const bool do_kmag       = true;
+  const bool do_absorber   = true;
+
+  const double collimator_pos_z = -602.36;
+  const double target_coil_pos_z = -300.;
   const double target_l = 7.9; //cm
   const double target_z = (7.9-target_l)/2.; //cm
-  const int use_g4steps = 1;
-  const int register_hits = 1;
+
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
@@ -95,21 +101,18 @@ int RecoE1039Sim(const int nevent = 10)
   // Geant4 Physics list to use
   g4Reco->SetPhysicsList("FTFP_BERT");
 
-  // insensitive elements of the spectrometer
-  PHG4E1039InsensSubsystem* insens = new PHG4E1039InsensSubsystem("Insens");
-  g4Reco->registerSubsystem(insens);
-
-  // collimator, targer and shielding between target and FMag
-  //gROOT->LoadMacro("G4_Target.C");
-  SetupTarget(g4Reco, do_collimator, do_target, do_e1039_shielding, target_coil_pos_z, target_l, target_z, use_g4steps, register_hits);
-
-  // sensitive elements of the spectrometer
-  SetupSensitiveDetectors(g4Reco, 0);
+  SetupBeamline(g4Reco, do_collimator, collimator_pos_z);
+  SetupTarget(g4Reco, target_coil_pos_z, target_l, target_z, 1, 0);
+  SetupInsensitiveVolumes(g4Reco, do_shielding, do_fmag, do_kmag, do_absorber);
+  SetupSensitiveDetectors(g4Reco, 99);
   se->registerSubsystem(g4Reco);
 
   // save truth info to the Node Tree
   PHG4TruthSubsystem* truth = new PHG4TruthSubsystem();
   g4Reco->registerSubsystem(truth);
+
+  // apply in-acceptance cut
+  se->registerSubsystem(new RequireParticlesInAcc());
 
   // digitizer
   DPDigitizer* digitizer = new DPDigitizer("DPDigitizer", 0);
@@ -137,9 +140,10 @@ int RecoE1039Sim(const int nevent = 10)
   reco->set_evt_reducer_opt("none");  //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none", for normal tracking, set to something like "aoc"
   reco->set_enable_eval(true);        //include final track candidates in eval tree
   reco->set_eval_file_name("eval.root");
-  reco->add_eval_list(4);             //include back partial tracks in eval tree
-  reco->add_eval_list(3);             //include station-3+/- in eval tree
-  reco->add_eval_list(2);             //include station-2 tracks in eval tree
+  reco->set_enable_eval_dst(true);    //include final track cnadidates in the DST tree
+  //reco->add_eval_list(4);             //include back partial tracks in eval tree
+  //reco->add_eval_list(3);             //include station-3+/- in eval tree
+  //reco->add_eval_list(2);             //include station-2 tracks in eval tree
   se->registerSubsystem(reco);
 
   //Vertexing is not tested and probably does not work yet
