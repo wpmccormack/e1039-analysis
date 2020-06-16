@@ -12,7 +12,6 @@ R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
-R__LOAD_LIBRARY(libmodule_example)
 R__LOAD_LIBRARY(libSQPrimaryGen)
 R__LOAD_LIBRARY(libpheve_display)
 R__LOAD_LIBRARY(libpheve_modules)
@@ -74,7 +73,7 @@ class EvNavHandler
 //
 // Main Function
 //
-int EventDispaly4Sim(const int nevent = 10)
+int EventDisplay4Sim(const int nevent = 10)
 {
   const double target_coil_pos_z = -300;
   const int nmu = 1;
