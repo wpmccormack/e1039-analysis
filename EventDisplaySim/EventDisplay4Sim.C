@@ -12,14 +12,72 @@ R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libembedding)
 R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libktracker)
+R__LOAD_LIBRARY(libmodule_example)
 R__LOAD_LIBRARY(libSQPrimaryGen)
+R__LOAD_LIBRARY(libpheve_display)
+R__LOAD_LIBRARY(libpheve_modules)
+R__LOAD_LIBRARY(libpheve_interface)
 using namespace std;
 
-int Fun4Sim(const int nevent = 10)
+Fun4AllServer* se;
+EvtFilter* evt_filter;
+TGLViewer* view;
+TGNumberEntry* ne_evt_id;
+TGNumberEntry* ne_trig;
+
+class EvNavHandler
+{
+  public:
+    void NextEvent()
+    {
+      printf("se->run(1)\n");
+      se->run(1, true);
+    }
+    void ReqEvtID() {
+      printf("ReqEvtID: %ld\n",ne_evt_id->GetNumberEntry()->GetIntNumber());
+      evt_filter->set_event_id_req((int)(ne_evt_id->GetNumberEntry()->GetIntNumber()));
+    }
+    void ReqTrig() {
+      printf("ReqTrig: %ld\n",ne_trig->GetNumberEntry()->GetIntNumber());
+      evt_filter->set_trigger_req((int)(ne_trig->GetNumberEntry()->GetIntNumber()));
+    }
+    void TopView()
+    {
+      printf("Top View\n");
+      view->ResetCurrentCamera();
+      view->CurrentCamera().RotateRad(-3.14/2.0, 0);
+      view->CurrentCamera().Zoom(400, 0, 0);
+      view->CurrentCamera().Truck(2800,0);
+      view->DoDraw();
+    }
+    void SideView()
+    {
+      printf("Side View\n");
+      view->ResetCurrentCamera();
+      view->CurrentCamera().Zoom(400, 0, 0);
+      view->CurrentCamera().Truck(2800,0);
+      view->DoDraw();
+    }
+    void View3D()
+    {
+      printf("3D View\n");
+      view->ResetCurrentCamera();
+      view->CurrentCamera().RotateRad(-3.14/4., -3.14/4.);
+      view->CurrentCamera().Zoom(350, 0, 0);
+      view->CurrentCamera().Truck(2000,-1500);
+      view->DoDraw();
+    }
+
+};
+
+////////////////////////////////////////////////////////////////
+//
+// Main Function
+//
+int EventDispaly4Sim(const int nevent = 10)
 {
   const double target_coil_pos_z = -300;
   const int nmu = 1;
-  int embedding_opt = 0;
 
   const bool do_collimator = true;
   const bool do_target = true;
@@ -35,11 +93,11 @@ int Fun4Sim(const int nevent = 10)
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
-  const bool gen_pythia8  = true; // false;
+  const bool gen_pythia8  = true;
   const bool gen_gun      = false;
   const bool gen_particle = false;
   const bool read_hepmc   = false;
-  const bool gen_e906legacy = false; //E906LegacyGen()
+  const bool gen_e906legacy = false;
 
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -51,24 +109,18 @@ int Fun4Sim(const int nevent = 10)
 
   GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
-  //const double x0_shift = 0.0; //cm 
-  //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
-  //geom_svc->setDetectorX0("D2X", geom_svc->getDetectorX0("D2X")+x0_shift);
-  //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
 
   ///////////////////////////////////////////
   // Make the Server
   //////////////////////////////////////////
-  Fun4AllServer *se = Fun4AllServer::instance();
+  se = Fun4AllServer::instance();
   se->Verbosity(0);
 
-
   // pythia8
-  if(gen_pythia8) {    
+  if(gen_pythia8) {
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
     pythia8->set_config_file("phpythia8_DY.cfg");
-    //pythia8->set_config_file("phpythia8_Jpsi.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
@@ -77,15 +129,11 @@ int Fun4Sim(const int nevent = 10)
 
     PHPy8ParticleTrigger* trigger_mup = new PHPy8ParticleTrigger();
     trigger_mup->AddParticles("-13");
-    //trigger_mup->SetPxHighLow(7, 0.5);
-    //trigger_mup->SetPyHighLow(6, -6);
     trigger_mup->SetPzHighLow(120, 10);
     pythia8->register_trigger(trigger_mup);
 
     PHPy8ParticleTrigger* trigger_mum = new PHPy8ParticleTrigger();
     trigger_mum->AddParticles("13");
-    //trigger_mum->SetPxHighLow(-0.5, 7);
-    //trigger_mum->SetPyHighLow(6, -6);
     trigger_mum->SetPzHighLow(120, 10);
     pythia8->register_trigger(trigger_mum);
   }
@@ -102,8 +150,6 @@ int Fun4Sim(const int nevent = 10)
   if(gen_gun) {
     PHG4ParticleGun *gun = new PHG4ParticleGun("GUN");
     gun->set_name("mu-");
-    //gun->set_vtx(0, 0, target_coil_pos_z);
-    //gun->set_mom(3, 3, 50);
     gun->set_vtx(30, 10, 590);
     gun->set_mom(-0.3, 2, 50);
     se->registerSubsystem(gun);
@@ -157,41 +203,31 @@ int Fun4Sim(const int nevent = 10)
     se->registerSubsystem(genm);
   }
 
- // E906LegacyGen
+  // E906LegacyGen
   //@
   if(gen_e906legacy){
     SQPrimaryParticleGen *e906legacy = new  SQPrimaryParticleGen();
-    
     const bool pythia_gen = false;
     const bool drellyan_gen = true;
     const bool JPsi_gen = false;
     const bool Psip_gen = false;  
-
     if(drellyan_gen){
       e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
       e906legacy->set_massRange(0.23, 10.0);// 0.22 and above     
       e906legacy->enableDrellYanGen();
     }
-   
-   
     if(Psip_gen){ 
       e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
       e906legacy->enablePsipGen();
     }
-
-
     if(JPsi_gen){
       e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
       e906legacy->enableJPsiGen();
     }
-    
     if(pythia_gen) e906legacy->enablePythia();
-
     se->registerSubsystem(e906legacy);
   }
   //@
-
-
 
   // Fun4All G4 module
   PHG4Reco *g4Reco = new PHG4Reco();
@@ -242,19 +278,6 @@ int Fun4Sim(const int nevent = 10)
   //digitizer->Verbosity(99);
   se->registerSubsystem(digitizer);
 
-  // embedding
-  if(embedding_opt == 1) {
-    SRawEventEmbed *embed = new SRawEventEmbed("SRawEventEmbed");
-    embed->set_in_name("digit_016070_R007.root");
-    embed->set_in_tree_name("save");
-    embed->set_trigger_bit((1<<0));
-    //embed->set_in_name("random_run3a_1.root");
-    //embed->set_in_tree_name("mb");
-    //embed->set_trigger_bit((1<<7));
-    embed->Verbosity(0);
-    se->registerSubsystem(embed);
-  }
-
   // Trigger Emulator
   DPTriggerAnalyzer* dptrigger = new DPTriggerAnalyzer();
   dptrigger->set_hit_container_choice("Vector");
@@ -263,7 +286,7 @@ int Fun4Sim(const int nevent = 10)
   se->registerSubsystem(dptrigger);
 
   // Event Filter
-  EvtFilter *evt_filter = new EvtFilter();
+  evt_filter = new EvtFilter();
   //evt_filter->Verbosity(10);
   //evt_filter->set_trigger_req(1<<5);
   se->registerSubsystem(evt_filter);
@@ -282,8 +305,11 @@ int Fun4Sim(const int nevent = 10)
   VertexFit* vertexing = new VertexFit();
   se->registerSubsystem(vertexing);
 
-  //// Trim minor data nodes (to reduce the DST file size)
-  //se->registerSubsystem(new SimDstTrimmer());
+  // Event display
+  // (width, height, use_fieldmap, use_geofile, field-map name, geo-file name)
+  PHEventDisplay* disp = new PHEventDisplay(1920, 1080, false, false, "", "geom.root");
+  disp->set_verbosity(3);
+  se->registerSubsystem(disp);
 
   // input - we need a dummy to drive the event loop
   if(read_hepmc) {
@@ -297,31 +323,78 @@ int Fun4Sim(const int nevent = 10)
     se->registerInputManager(in);
   }
 
-  ///////////////////////////////////////////
-  // Output
-  ///////////////////////////////////////////
+  //
+  // Make GUI
+  //
+  g4Reco->InitRun(se->topNode());
+  disp  ->InitRun(se->topNode());
+  view = gEve->GetDefaultGLViewer();
 
-  // DST output manager, tunred off to save disk by default
-  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
-  se->registerOutputManager(out);
+  TEveBrowser* browser = gEve->GetBrowser();
+  browser->StartEmbedding(TRootBrowser::kLeft);
 
-  //if(gen_pythia8 && !read_hepmc) {
-  //  Fun4AllHepMCOutputManager *out = new Fun4AllHepMCOutputManager("HEPMCOUT", "hepmcout.txt");
-  //  out->set_embedding_id(1);
-  //  se->registerOutputManager(out);
-  //}
+  TGMainFrame* frmMain = new TGMainFrame(gClient->GetRoot(), 1000, 600);
+  frmMain->SetWindowName("Event Display");
+  frmMain->SetCleanup(kDeepCleanup);
 
-  se->run(nevent);
+  TGVerticalFrame* frmVert = new TGVerticalFrame(frmMain);
+  {
 
-  PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
-  
-  // finish job - close and save output files
-  se->End();
-  se->PrintTimer();
-  std::cout << "All done" << std::endl;
+    TGTextButton* b = 0;
+    EvNavHandler* handler = new EvNavHandler;
+    TGHorizontalFrame* frm1 = 0;
 
-  // cleanup - delete the server and exit
-  delete se;
-  gSystem->Exit(0);
+    TGLabel* lab = 0;
+
+    frm1 = new TGHorizontalFrame(frmVert);
+    lab = new TGLabel(frm1, "Event ID");
+    frm1->AddFrame(lab, new TGLayoutHints(kLHintsCenterY | kLHintsLeft, 5, 5, 3, 4));
+    ne_evt_id = new TGNumberEntry(frm1, -1, 9, 999, TGNumberFormat::kNESInteger,
+        TGNumberFormat::kNEAAnyNumber,
+        TGNumberFormat::kNELLimitMinMax,
+        -999999, 999999);
+    ne_evt_id->Connect("ValueSet(Long_t)", "EvNavHandler", handler, "ReqEvtID()");
+    frm1->AddFrame(ne_evt_id, new TGLayoutHints(kLHintsCenterY | kLHintsRight, 5, 5, 5, 5));
+    frmVert->AddFrame(frm1);
+
+
+    frm1 = new TGHorizontalFrame(frmVert);
+    lab = new TGLabel(frm1, "Trigger");
+    frm1->AddFrame(lab, new TGLayoutHints(kLHintsCenterY | kLHintsLeft, 5, 5, 3, 4));
+    ne_trig = new TGNumberEntry(frm1, -1, 9, 999, TGNumberFormat::kNESInteger,
+        TGNumberFormat::kNEAAnyNumber,
+        TGNumberFormat::kNELLimitMinMax,
+        -999, 999);
+    ne_trig->Connect("ValueSet(Long_t)", "EvNavHandler", handler, "ReqTrig()");
+    frm1->AddFrame(ne_trig, new TGLayoutHints(kLHintsCenterY | kLHintsRight, 5, 5, 5, 5));
+    frmVert->AddFrame(frm1);
+
+
+    b = new TGTextButton(frmVert, "Next Event");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "NextEvent()");
+
+    b = new TGTextButton(frmVert, "Top View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "TopView()");
+
+    b = new TGTextButton(frmVert, "Side View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "SideView()");
+
+    b = new TGTextButton(frmVert, "3D View");
+    frmVert->AddFrame(b, new TGLayoutHints(kLHintsCenterX, 5, 5, 3, 4));
+    b->Connect("Clicked()", "EvNavHandler", handler, "View3D()");
+
+  }
+  frmMain->AddFrame(frmVert);
+
+  frmMain->MapSubwindows();
+  frmMain->Resize();
+  frmMain->MapWindow();
+
+  browser->StopEmbedding();
+  browser->SetTabTitle("Event Control", 0);
+
   return 0;
 }

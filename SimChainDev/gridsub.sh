@@ -11,10 +11,16 @@ nevents=$4
 echo "njobs=$njobs"
 echo "nevents=$nevents"
 if [ $do_sub == 1 ]; then
-    echo "grid!"
+    echo "Grid mode."
+    if ! which jobsub_submit &>/dev/null ; then
+	echo "Command 'jobsub_submit' not found."
+	echo "Forget 'source /e906/app/software/script/setup-jobsub-spinquest.sh'?"
+	exit
+    fi
     work=/pnfs/e906/persistent/users/$USER/SimChainDev/$jobname
+    ln -sf /pnfs/e906/persistent/users/$USER/SimChainDev data
 else
-    echo "local!"
+    echo "Local mode."
     work=$dir_macros/scratch/$jobname
 fi
 
