@@ -49,9 +49,6 @@ int RecoE1039Sim(const int nevent = 10)
   rc->set_IntFlag("RANDOMSEED", 12345);
   rc->Print();
 
-  JobOptsSvc* jobopt_svc = JobOptsSvc::instance();
-  jobopt_svc->init("support/e1039_sim.opts");
-
   GeomSvc::UseDbSvc(true);
   GeomSvc* geom_svc = GeomSvc::instance();
 
@@ -104,8 +101,8 @@ int RecoE1039Sim(const int nevent = 10)
   PHG4Reco* g4Reco = new PHG4Reco();
   //PHG4Reco::G4Seed(123);
   g4Reco->set_field_map(
-      jobopt_svc->m_fMagFile+" "+
-      jobopt_svc->m_kMagFile+" "+
+      rc->get_CharFlag("fMagFile")+" "+
+      rc->get_CharFlag("kMagFile")+" "+
       Form("%f",FMAGSTR) + " " +
       Form("%f",KMAGSTR) + " " +
       "5.0",
