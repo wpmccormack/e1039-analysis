@@ -62,14 +62,18 @@ int AnaModule::process_event(PHCompositeNode* topNode)
   }
 
   int rec = -1;
-  if(recEvent->getNTracks() == 1)
+  if(recEvent != nullptr && recEvent->getNTracks() == 1)
   {
     SRecTrack track = recEvent->getTrack(0);
     *mom = track.getMomentumVecSt1();
     rec = 1;
   }
+  else
+  {
+    mom->SetXYZ(-999., -999., -999.);
+  }
 
-  if(st1 > 0 && st2 > 0 && st3 > 0 && rec > 0) saveTree->Fill();
+  if(st1 > 0 && st2 > 0 && st3 > 0) saveTree->Fill();
 
   ++eventID;
   return Fun4AllReturnCodes::EVENT_OK;
@@ -100,7 +104,8 @@ int AnaModule::GetNodes(PHCompositeNode* topNode)
   recEvent = findNode::getClass<SRecEvent>(topNode, "SRecEvent");
   if(!recEvent)
   {
-    return Fun4AllReturnCodes::ABORTEVENT;
+    recEvent = nullptr;
+    //return Fun4AllReturnCodes::ABORTEVENT;
   }
   return Fun4AllReturnCodes::EVENT_OK;
 }

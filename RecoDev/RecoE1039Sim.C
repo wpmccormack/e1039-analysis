@@ -86,7 +86,6 @@ int RecoE1039Sim(const int nevent = 10)
   if(single)   //change the hard-coded numbers to change the initial vertex/momentum distribution
   {
     PHG4SimpleEventGenerator* genp = new PHG4SimpleEventGenerator("MUP"); 
-    genp->set_seed(123);
     genp->add_particles("mu+", 1);  // mu+,e+,proton,pi+,Upsilon
     genp->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform, PHG4SimpleEventGenerator::Uniform, PHG4SimpleEventGenerator::Uniform);
     genp->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
