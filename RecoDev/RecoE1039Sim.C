@@ -14,7 +14,7 @@ R__LOAD_LIBRARY(libg4dst)
 R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libevt_filter)
-R__LOAD_LIBRARY(libanamodule)
+//R__LOAD_LIBRARY(libanamodule)
 
 using namespace std;
 
@@ -25,8 +25,9 @@ suitable for production use and users should develop their own reconstruction ma
 
 int RecoE1039Sim(const int nevent = 10)
 {
-  const bool dimuon = false;
-  const bool single = !dimuon;
+  const bool cosmic = true;
+  const bool dimuon = false && (!cosmic);
+  const bool single = (!dimuon) && (!cosmic);
 
   const bool do_collimator = true;
   const bool do_target     = true;
@@ -47,10 +48,18 @@ int RecoE1039Sim(const int nevent = 10)
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
   rc->set_IntFlag("RANDOMSEED", 12345);
+  if(cosmic)
+  {
+    rc->init("cosmic");
+    rc->set_BoolFlag("COARSE_MODE", true);
+    rc->set_DoubleFlag("KMAGSTR", 0.);
+    rc->set_DoubleFlag("FMAGSTR", 0.);
+  }
   rc->Print();
 
   GeomSvc::UseDbSvc(true);
   GeomSvc* geom_svc = GeomSvc::instance();
+  geom_svc->printTable();
 
   Fun4AllServer *se = Fun4AllServer::instance();
   se->Verbosity(0);
@@ -96,6 +105,12 @@ int RecoE1039Sim(const int nevent = 10)
     se->registerSubsystem(genp);
   }
 
+  if(cosmic)
+  {
+    SQCosmicGen* cosmicGen = new SQCosmicGen();
+    se->registerSubsystem(cosmicGen);
+  }
+
   // Fun4All G4 module
   PHG4Reco* g4Reco = new PHG4Reco();
   //PHG4Reco::G4Seed(123);
@@ -133,13 +148,14 @@ int RecoE1039Sim(const int nevent = 10)
   if(dimuon)
   {
     inacc->SetNumParticlesPerEvent(2);
+    se->registerSubsystem(inacc);
   }
   else if(single)
   {
     inacc->SetNumParticlesPerEvent(1);
+    se->registerSubsystem(inacc);
   }
-  se->registerSubsystem(inacc);
-
+  
   // digitizer
   SQDigitizer* digitizer = new SQDigitizer("Digitizer", 0);
   //digitizer->Verbosity(99);
@@ -156,15 +172,19 @@ int RecoE1039Sim(const int nevent = 10)
   reco->set_enable_eval(true);          //set to true to generate evaluation file which includes final track candidates 
   reco->set_eval_file_name("eval.root");
   reco->set_enable_eval_dst(false);     //set to true to include final track cnadidates in the DST tree
-  //reco->add_eval_list(4);             //include back partial tracks in eval tree for debuging
-  //reco->add_eval_list(3);             //include station-3+/- in eval tree for debuging
-  //reco->add_eval_list(2);             //include station-2 tracks in eval tree for debuging
+  if(cosmic) reco->add_eval_list(3);    //output of cosmic reco is contained in the eval output for now
+  //reco->add_eval_list(3);             //include back partial tracks in eval tree for debuging
+  //reco->add_eval_list(2);             //include station-3+/- in eval tree for debuging
+  //reco->add_eval_list(1);             //include station-2 in eval tree for debugging
   se->registerSubsystem(reco);
 
-  //A simple analysis module for single muon tracking QA
-  AnaModule* ana = new AnaModule();
-  ana->set_output_filename("ana.root");
-  se->registerSubsystem(ana);
+  // TruthNodeMaker* truthMaker = new TruthNodeMaker();
+  // se->registerSubsystem(truthMaker);
+
+  // //A simple analysis module for single muon tracking QA
+  // AnaModule* ana = new AnaModule();
+  // ana->set_output_filename("ana.root");
+  // se->registerSubsystem(ana);
 
   //Vertexing is not tested and probably does not work yet
   // VertexFit* vertexing = new VertexFit();
