@@ -19,6 +19,7 @@ int RecoE1039Data(const int nEvents = 1)
 {
   const bool cosmic = true;
 
+  const bool legacy_rec_container = false;
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
@@ -42,6 +43,7 @@ int RecoE1039Data(const int nEvents = 1)
 
   SQReco* reco = new SQReco();
   reco->Verbosity(0);
+  reco->set_legacy_rec_container(legacy_rec_container);
   reco->set_geom_file_name("support/geom.root");
   reco->set_enable_KF(true); //Kalman filter not needed for the track finding, disabling KF saves a lot of initialization time
   reco->setInputTy(SQReco::E1039);    //options are SQReco::E906 and SQReco::E1039
@@ -60,7 +62,8 @@ int RecoE1039Data(const int nEvents = 1)
   Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "result.root");
   se->registerOutputManager(out);
 
-  se->run();
+  se->run(nEvents);
+
   // finish job - close and save output files
   se->End();
   se->PrintTimer();

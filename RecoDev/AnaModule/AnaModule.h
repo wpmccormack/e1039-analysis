@@ -39,8 +39,8 @@ private:
   SQDimuonVector* dimuonVector;
 
   SRecEvent* recEvent;
-  SRecTrackVector* recTrackVector;
-  SRecDimuonVector* recDimuonVector;
+  SQTrackVector*  recTrackVector;
+  SQDimuonVector* recDimuonVector;
 
   // Output
   TString saveName;

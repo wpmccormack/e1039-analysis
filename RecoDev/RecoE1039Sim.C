@@ -14,7 +14,7 @@ R__LOAD_LIBRARY(libg4dst)
 R__LOAD_LIBRARY(libdptrigger)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libevt_filter)
-//R__LOAD_LIBRARY(libanamodule)
+R__LOAD_LIBRARY(libanamodule)
 
 using namespace std;
 
@@ -25,9 +25,11 @@ suitable for production use and users should develop their own reconstruction ma
 
 int RecoE1039Sim(const int nevent = 10)
 {
-  const bool cosmic = true;
-  const bool dimuon = false && (!cosmic);
+  const bool cosmic = false;
+  const bool dimuon = true && (!cosmic);
   const bool single = (!dimuon) && (!cosmic);
+
+  const bool legacy_rec_container = false;
 
   const bool do_collimator = true;
   const bool do_target     = true;
@@ -164,6 +166,7 @@ int RecoE1039Sim(const int nevent = 10)
   // trakcing module
   SQReco* reco = new SQReco();
   reco->Verbosity(0);
+  reco->set_legacy_rec_container(legacy_rec_container);
   //reco->set_geom_file_name("support/geom.root"); //not needed as it's created on the fly
   reco->set_enable_KF(true);           //Kalman filter not needed for the track finding, disabling KF saves a lot of initialization time
   reco->setInputTy(SQReco::E1039);     //options are SQReco::E906 and SQReco::E1039
@@ -178,15 +181,21 @@ int RecoE1039Sim(const int nevent = 10)
   //reco->add_eval_list(1);             //include station-2 in eval tree for debugging
   se->registerSubsystem(reco);
 
-  // TruthNodeMaker* truthMaker = new TruthNodeMaker();
-  // se->registerSubsystem(truthMaker);
+  TruthNodeMaker* truthMaker = new TruthNodeMaker();
+  truthMaker->set_legacy_rec_container(legacy_rec_container);
+  se->registerSubsystem(truthMaker);
 
-  // //A simple analysis module for single muon tracking QA
-  // AnaModule* ana = new AnaModule();
-  // ana->set_output_filename("ana.root");
-  // se->registerSubsystem(ana);
+  SQTruthVertexing* truthVtx = new SQTruthVertexing();
+  truthVtx->set_legacy_rec_container(legacy_rec_container);
+  se->registerSubsystem(truthVtx);
 
-  //Vertexing is not tested and probably does not work yet
+  //A simple analysis module for single muon tracking QA
+  AnaModule* ana = new AnaModule();
+  ana->set_output_filename("ana.root");
+  ana->set_legacy_rec_container(legacy_rec_container);
+  se->registerSubsystem(ana);
+
+  // Vertexing is not tested and probably does not work yet
   // VertexFit* vertexing = new VertexFit();
   // se->registerSubsystem(vertexing);
 
