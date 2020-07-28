@@ -60,6 +60,7 @@ int RecoE1039Data(const int nEvents = 1)
   Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "result.root");
   se->registerOutputManager(out);
 
+  se->run();
   // finish job - close and save output files
   se->End();
   se->PrintTimer();
