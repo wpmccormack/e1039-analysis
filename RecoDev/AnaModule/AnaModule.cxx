@@ -96,7 +96,7 @@ int AnaModule::process_event(PHCompositeNode* topNode)
   }
 
   int nDimuons = dimuonVector->size();
-  int nRecDimuons = legacyContainer ? recEvent->getNDimuons() : recDimuonVector->size();
+  int nRecDimuons = legacyContainer ? recEvent->getNDimuons() : (recDimuonVector ? recDimuonVector->size() : -1);
   for(int i = 0; i < nDimuons; ++i)
   {
     SQDimuon* dimuon = dimuonVector->at(i);
@@ -105,7 +105,7 @@ int AnaModule::process_event(PHCompositeNode* topNode)
     *rec_nmom = dimuon->get_mom_neg().Vect();
 
     int recid = dimuon->get_rec_dimuon_id();
-    if(recid >= 0 && recid< nRecDimuons)
+    if(recid >= 0 && recid < nRecDimuons)
     {
       SRecDimuon* recDimuon = legacyContainer ? &(recEvent->getDimuon(recid)) : dynamic_cast<SRecDimuon*>(recDimuonVector->at(recid));
       rec_mass = recDimuon->mass;
@@ -157,7 +157,7 @@ int AnaModule::GetNodes(PHCompositeNode* topNode)
   {
     recTrackVector  = findNode::getClass<SQTrackVector>(topNode, "SQRecTrackVector");
     recDimuonVector = findNode::getClass<SQDimuonVector>(topNode, "SQRecDimuonVector");
-    if(!recTrackVector || !recDimuonVector)
+    if(!recTrackVector)
     {
       return Fun4AllReturnCodes::ABORTEVENT;
     }
