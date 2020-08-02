@@ -197,7 +197,7 @@ int RecoE1039Sim(const int nevent = 10, TString prefix = "run", int seed = 12345
 
   //A simple analysis module for single muon tracking QA
   AnaModule* ana = new AnaModule();
-  ana->set_output_filename(Form("ana_%s_%d.root", prefix, seed));
+  ana->set_output_filename(Form("ana_%s_%d.root", prefix.Data(), seed));
   ana->set_legacy_rec_container(legacy_rec_container);
   se->registerSubsystem(ana);
 
@@ -213,7 +213,7 @@ int RecoE1039Sim(const int nevent = 10, TString prefix = "run", int seed = 12345
   // Output
   ///////////////////////////////////////////
   // DST output manager, tunred off to save disk by default
-  Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", Form("DST_%s_%d.root", prefix, seed));
+  Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", Form("DST_%s_%d.root", prefix.Data(), seed));
   se->registerOutputManager(out);
 
   se->run(nevent);
