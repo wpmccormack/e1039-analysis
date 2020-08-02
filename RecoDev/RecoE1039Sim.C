@@ -23,11 +23,12 @@ This is an example script intended to demonstrate how to run SQReco in a minimal
 suitable for production use and users should develop their own reconstruction macro for their own analysis.
 */
 
-int RecoE1039Sim(const int nevent = 10)
+int RecoE1039Sim(const int nevent = 10, TString prefix = "run", int seed = 12345)
 {
   const bool cosmic = false;
-  const bool dimuon = true && (!cosmic);
+  const bool dimuon = false && (!cosmic);
   const bool single = (!dimuon) && (!cosmic);
+  const bool jpsi   = false;
 
   const bool legacy_rec_container = false;
 
@@ -49,7 +50,9 @@ int RecoE1039Sim(const int nevent = 10)
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
-  rc->set_IntFlag("RANDOMSEED", 12345);
+  rc->set_IntFlag("RANDOMSEED", seed);
+  rc->set_DoubleFlag("SIGX_BEAM", 2.);
+  rc->set_DoubleFlag("SIGY_BEAM", 2.);
   if(cosmic)
   {
     rc->init("cosmic");
@@ -70,8 +73,11 @@ int RecoE1039Sim(const int nevent = 10)
   {
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
-    //pythia8->set_config_file("phpythia8_DY.cfg");
-    pythia8->set_config_file("support/phpythia8_DY.cfg");
+    if(jpsi) 
+      pythia8->set_config_file("support/phpythia8_Jpsi.cfg");
+    else
+      pythia8->set_config_file("support/phpythia8_DY.cfg");
+
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     se->registerSubsystem(pythia8);
 
@@ -191,7 +197,7 @@ int RecoE1039Sim(const int nevent = 10)
 
   //A simple analysis module for single muon tracking QA
   AnaModule* ana = new AnaModule();
-  ana->set_output_filename("ana.root");
+  ana->set_output_filename(Form("ana_%s_%d.root", prefix, seed));
   ana->set_legacy_rec_container(legacy_rec_container);
   se->registerSubsystem(ana);
 
@@ -207,7 +213,7 @@ int RecoE1039Sim(const int nevent = 10)
   // Output
   ///////////////////////////////////////////
   // DST output manager, tunred off to save disk by default
-  Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
+  Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", Form("DST_%s_%d.root", prefix, seed));
   se->registerOutputManager(out);
 
   se->run(nevent);
