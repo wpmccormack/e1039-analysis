@@ -60,6 +60,8 @@ private:
   TVector3* rec_mom1;
   TVector3* rec_momvtx;
   TVector3* rec_posvtx;
+  TVector3* rec_momtgt;
+  TVector3* rec_postgt;
 
   TTree* saveTree2;
   TVector3* pmom;

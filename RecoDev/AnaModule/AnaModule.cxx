@@ -27,6 +27,8 @@ AnaModule::~AnaModule()
   delete rec_mom1;
   delete rec_momvtx;
   delete rec_posvtx;
+  delete rec_momtgt;
+  delete rec_postgt;
 
   delete pmom;
   delete nmom;
@@ -51,6 +53,8 @@ int AnaModule::Init(PHCompositeNode* topNode)
   rec_mom1 = new TVector3();
   rec_momvtx = new TVector3();
   rec_posvtx = new TVector3();
+  rec_momtgt = new TVector3();
+  rec_postgt = new TVector3();
 
   vtx  = new TVector3();
   pmom = new TVector3();
@@ -96,6 +100,8 @@ int AnaModule::process_event(PHCompositeNode* topNode)
       *rec_mom1 = recTrack->getMomentumVecSt1();
       *rec_momvtx = recTrack->getVertexMom();
       *rec_posvtx = recTrack->getVertexPos();
+      *rec_momtgt = recTrack->getTargetMom();
+      *rec_postgt = recTrack->getTargetPos();
     }
     else
     {
@@ -200,6 +206,8 @@ void AnaModule::MakeTree()
   saveTree1->Branch("rec_mom1", &rec_mom1, 256000, 99);
   saveTree1->Branch("rec_momvtx", &rec_momvtx, 256000, 99);
   saveTree1->Branch("rec_posvtx", &rec_posvtx, 256000, 99);
+  saveTree1->Branch("rec_momtgt", &rec_momtgt, 256000, 99);
+  saveTree1->Branch("rec_postgt", &rec_postgt, 256000, 99);
 
   saveTree2 = new TTree("dim", "Dimuon Tree Created by AnaModule");
   saveTree2->Branch("eventID", &eventID, "eventID/I");
