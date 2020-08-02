@@ -179,7 +179,7 @@ int RecoE1039Sim(const int nevent = 10, TString prefix = "run", int seed = 12345
   reco->setFitterTy(SQReco::KFREF);    //not relavant for the track finding
   reco->set_evt_reducer_opt("none");   //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none", for normal tracking, set to something like "aoc"
   reco->set_enable_eval(true);          //set to true to generate evaluation file which includes final track candidates 
-  reco->set_eval_file_name("eval.root");
+  reco->set_eval_file_name(Form("eval_%s_%d.root", prefix.Data(), seed));
   reco->set_enable_eval_dst(false);     //set to true to include final track cnadidates in the DST tree
   if(cosmic) reco->add_eval_list(3);    //output of cosmic reco is contained in the eval output for now
   //reco->add_eval_list(3);             //include back partial tracks in eval tree for debuging
