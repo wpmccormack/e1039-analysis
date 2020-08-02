@@ -26,11 +26,16 @@ AnaModule::~AnaModule()
   delete momvtx;
   delete rec_mom1;
   delete rec_momvtx;
+  delete rec_posvtx;
 
   delete pmom;
   delete nmom;
   delete rec_pmom;
   delete rec_nmom;
+  delete rec_ppos;
+  delete rec_npos;
+  delete rec_vtx;
+  delete vtx;
 }
 
 int AnaModule::Init(PHCompositeNode* topNode)
@@ -45,11 +50,16 @@ int AnaModule::Init(PHCompositeNode* topNode)
   momvtx = new TVector3();
   rec_mom1 = new TVector3();
   rec_momvtx = new TVector3();
+  rec_posvtx = new TVector3();
 
+  vtx  = new TVector3();
   pmom = new TVector3();
   nmom = new TVector3();
   rec_pmom = new TVector3();
   rec_nmom = new TVector3();
+  rec_ppos = new TVector3();
+  rec_npos = new TVector3();
+  rec_vtx  = new TVector3();
 
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -85,11 +95,13 @@ int AnaModule::process_event(PHCompositeNode* topNode)
       SRecTrack* recTrack = legacyContainer ? &(recEvent->getTrack(recid)) : dynamic_cast<SRecTrack*>(recTrackVector->at(recid));
       *rec_mom1 = recTrack->getMomentumVecSt1();
       *rec_momvtx = recTrack->getVertexMom();
+      *rec_posvtx = recTrack->getVertexPos();
     }
     else
     {
       rec_mom1->SetXYZ(-999., -999., -999.);
       rec_momvtx->SetXYZ(999., -999., -999.);
+      rec_posvtx->SetXYZ(999., -999., -999.);
     }
 
     saveTree1->Fill();
@@ -101,8 +113,9 @@ int AnaModule::process_event(PHCompositeNode* topNode)
   {
     SQDimuon* dimuon = dimuonVector->at(i);
     mass = dimuon->get_mom().M();
-    *rec_pmom = dimuon->get_mom_pos().Vect();
-    *rec_nmom = dimuon->get_mom_neg().Vect();
+    *vtx = dimuon->get_pos();
+    *pmom = dimuon->get_mom_pos().Vect();
+    *nmom = dimuon->get_mom_neg().Vect();
 
     int recid = dimuon->get_rec_dimuon_id();
     if(recid >= 0 && recid < nRecDimuons)
@@ -111,6 +124,9 @@ int AnaModule::process_event(PHCompositeNode* topNode)
       rec_mass = recDimuon->mass;
       *rec_pmom = recDimuon->p_pos.Vect();
       *rec_nmom = recDimuon->p_neg.Vect();
+      *rec_ppos = recDimuon->vtx_pos;
+      *rec_npos = recDimuon->vtx_neg;
+      *rec_vtx  = recDimuon->vtx;
     }
     else
     {
@@ -183,13 +199,18 @@ void AnaModule::MakeTree()
   saveTree1->Branch("momvtx", &momvtx, 256000, 99);
   saveTree1->Branch("rec_mom1", &rec_mom1, 256000, 99);
   saveTree1->Branch("rec_momvtx", &rec_momvtx, 256000, 99);
+  saveTree1->Branch("rec_posvtx", &rec_posvtx, 256000, 99);
 
   saveTree2 = new TTree("dim", "Dimuon Tree Created by AnaModule");
   saveTree2->Branch("eventID", &eventID, "eventID/I");
   saveTree2->Branch("mass", &mass, "mass/D");
   saveTree2->Branch("rec_mass", &rec_mass, "rec_mass/D");
+  saveTree2->Branch("vtx", &vtx, 256000, 99);
   saveTree2->Branch("pmom", &pmom, 256000, 99);
   saveTree2->Branch("nmom", &nmom, 256000, 99);
   saveTree2->Branch("rec_pmom", &rec_pmom, 256000, 99);
   saveTree2->Branch("rec_nmom", &rec_nmom, 256000, 99);
+  saveTree2->Branch("rec_ppos", &rec_ppos, 256000, 99);
+  saveTree2->Branch("rec_npos", &rec_npos, 256000, 99);
+  saveTree2->Branch("rec_vtx", &rec_vtx, 256000, 99);
 }

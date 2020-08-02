@@ -59,12 +59,17 @@ private:
   TVector3* momvtx;
   TVector3* rec_mom1;
   TVector3* rec_momvtx;
+  TVector3* rec_posvtx;
 
   TTree* saveTree2;
   TVector3* pmom;
   TVector3* nmom;
   TVector3* rec_pmom;
   TVector3* rec_nmom;
+  TVector3* rec_ppos;
+  TVector3* rec_npos;
+  TVector3* rec_vtx;
+  TVector3* vtx;
   double mass;
   double rec_mass;
 
