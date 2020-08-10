@@ -37,6 +37,11 @@ source $FN_SETUP
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
 time root -b -q Fun4Sim.C\($nevents\)
+RET=$?
+if [ $RET -ne 0 ] ; then
+    echo "Error in Fun4Sim.C: $RET"
+    exit $RET
+fi
 
 mv *.root $CONDOR_DIR_OUTPUT/
 

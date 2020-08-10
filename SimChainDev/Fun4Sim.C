@@ -42,6 +42,7 @@ int Fun4Sim(const int nevent = 10)
   const bool gen_particle = false;
   const bool read_hepmc   = false;
   const bool gen_e906legacy = false; //E906LegacyGen()
+  const bool save_in_acc  = false; //< Set true to save only in-acceptance events into DST.
 
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -231,6 +232,8 @@ int Fun4Sim(const int nevent = 10)
   SetupSensitiveDetectors(g4Reco, do_dphodo, do_station1DC);
 
   se->registerSubsystem(g4Reco);
+
+  if (save_in_acc) se->registerSubsystem(new RequireParticlesInAcc());
 
   // save truth info to the Node Tree
   PHG4TruthSubsystem *truth = new PHG4TruthSubsystem();
