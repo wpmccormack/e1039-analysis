@@ -76,8 +76,8 @@ int Fun4Sim(const int nevent = 10)
   if(gen_pythia8) {    
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
-    pythia8->set_config_file("phpythia8_DY.cfg");
-    //pythia8->set_config_file("phpythia8_Jpsi.cfg");
+//    pythia8->set_config_file("phpythia8_DY.cfg");
+    pythia8->set_config_file("phpythia8_Jpsi.cfg");
     pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
@@ -246,15 +246,15 @@ int Fun4Sim(const int nevent = 10)
   PHG4TruthSubsystem *truth = new PHG4TruthSubsystem();
   g4Reco->registerSubsystem(truth);
 
-  // Make SQ nodes for truth info
-  //se->registerSubsystem(new TruthNodeMaker());
-
   // digitizer
   SQDigitizer *digitizer = new SQDigitizer("DPDigitizer", 0);
   //digitizer->Verbosity(99);
   digitizer->set_enable_st1dc(do_station1DC);    // these two lines need to be in sync with the parameters used
   digitizer->set_enable_dphodo(do_dphodo);       // in the SetupSensitiveVolumes() function call above
   se->registerSubsystem(digitizer);
+
+  // Make SQ nodes for truth info
+  se->registerSubsystem(new TruthNodeMaker());
 
   // embedding
   if(embedding_opt == 1) {
