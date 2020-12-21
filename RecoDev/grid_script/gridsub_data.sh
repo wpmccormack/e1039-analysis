@@ -62,6 +62,7 @@ for run_num in $(cat $run_list) ; do
       cmd="$cmd -f $work/input.tar.gz"
       cmd="$cmd -d OUTPUT $work/$job_name/out"
       cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
+      cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"SU-ITS\")'"
       cmd="$cmd -f $data_path"
       cmd="$cmd file://`which $work/$job_name/gridrun_data.sh` $nevents $run_num $data_file"
       echo "$cmd"
