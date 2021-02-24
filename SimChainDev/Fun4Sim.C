@@ -298,6 +298,8 @@ int Fun4Sim(const int nevent = 10)
   se->registerSubsystem(reco);
 
   VertexFit* vertexing = new VertexFit();
+  //vertexing->enable_fit_target_center(); //uncomment if you want to fit in the target center
+  //vertexing->enableOptimization(); //uncomment if you want to fit according to new optimization formula
   se->registerSubsystem(vertexing);
 
   //// Trim minor data nodes (to reduce the DST file size)
