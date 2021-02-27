@@ -44,13 +44,14 @@ do
   rsync -av $dir_macros/gridrun.sh $work/$id/gridrun.sh
 
   if [ $do_sub == 1 ]; then
-    cmd="jobsub_submit"
-    cmd="$cmd -g --OS=SL7 --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
+    cmd="jobsub_submit --grid"
+    cmd="$cmd -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/e1039/e1039-sl7:latest\"'"
+    cmd="$cmd --append_condor_requirements='(TARGET.HAS_SINGULARITY=?=true)'"
+    cmd="$cmd --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
     cmd="$cmd --mail_never"
     cmd="$cmd -L $work/$id/log/log.txt"
     cmd="$cmd -f $work/input.tar.gz"
     cmd="$cmd -d OUTPUT $work/$id/out"
-    cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
     cmd="$cmd file://`which $work/$id/gridrun.sh` $nfile $list $id"
     echo "$cmd"
     $cmd
@@ -62,10 +63,3 @@ do
     cd -
   fi
 done 2>&1 | tee log_gridsub.txt
-
-## When your job fails due to bad grid nodes,
-## you can use the following option to exclude those nodes;
-##   cmd="$cmd --append_condor_requirements='(TARGET.GLIDEIN_Site isnt \"UCSD\")'"
-## Valid site names are listed here;
-## https://cdcvs.fnal.gov/redmine/projects/fife/wiki/Information_about_job_submission_to_OSG_sites
-## According to the Fermilab Service Desk, the "--blacklist" option has a known defect.
