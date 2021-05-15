@@ -1,7 +1,5 @@
 /// Fun4SimTree.C:  Macro to analyze the simulated tree created by Fun4SimMicroDst.C.
-#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
 R__LOAD_LIBRARY(libana_sim_dst)
-#endif
 
 using namespace std;
 TCanvas* c1;
@@ -9,25 +7,24 @@ void DrawDimTrueKin(TTree* tr);
 void DrawDimRecoKin(TTree* tr);
 void DrawTrkTrueKin(TTree* tr);
 void DrawTrueVar(TTree* tr, const string varname, const string title_x, const int n_x, const double x_lo, const double x_hi);
+void FitCosTheta(TTree* tr);
 void AnaEvents(TTree* tr);
 
 void Fun4SimTree(const char* fname="sim_tree.root", const char* tname="tree")
 {
-  //gSystem->Load("libana_sim_dst.so");
-
   TFile* file = new TFile(fname);
   TTree* tr = (TTree*)file->Get(tname);
-
   gSystem->mkdir("result", true);
   c1 = new TCanvas("c1", "");
   c1->SetGrid();
-  c1->SetLogy(true);
-  
-  DrawDimTrueKin(tr);
-  DrawDimRecoKin(tr);
-  DrawTrkTrueKin(tr);
+  //c1->SetLogy(true);
 
-  AnaEvents(tr);
+  /// You can use these functions or add new ones.
+  DrawDimTrueKin(tr);
+  //DrawDimRecoKin(tr);
+  //DrawTrkTrueKin(tr);
+  FitCosTheta(tr);
+  //AnaEvents(tr);
 
   exit(0);
 }
@@ -39,8 +36,6 @@ void DrawDimTrueKin(TTree* tr)
 {
   tr->Draw("n_dim_true");
   c1->SaveAs("result/h1_true_n_dim.png");
-  tr->Draw("n_dim_reco");
-  c1->SaveAs("result/h1_reco_n_dim.png");
 
   const double PI = TMath::Pi();
   DrawTrueVar(tr, "dim_true.pdg_id"    , "True dimuon PDG ID", 1000, 0, 0);
@@ -52,10 +47,16 @@ void DrawDimTrueKin(TTree* tr)
   DrawTrueVar(tr, "dim_true.mom.Phi()" , "True dimuon #phi", 100, -PI, PI);
   DrawTrueVar(tr, "dim_true.x1"        , "True x1", 50, 0, 1);
   DrawTrueVar(tr, "dim_true.x2"        , "True x2", 50, 0, 1);
+  DrawTrueVar(tr, "dim_true.xF"        , "True xF", 50, -1, 1);
+  DrawTrueVar(tr, "dim_true.costh"     , "True cos#theta", 50, -1, 1);
+  DrawTrueVar(tr, "dim_true.phi"       , "True #phi"     , 50, -PI, PI);
 }
 
 void DrawDimRecoKin(TTree* tr)
 {
+  tr->Draw("n_dim_reco");
+  c1->SaveAs("result/h1_reco_n_dim.png");
+
   tr->Draw("rec_stat"); // cf. GlobalConsts.h.
   c1->SaveAs("result/h1_rec_stat.png");
   
@@ -124,6 +125,18 @@ void DrawTrueVar(TTree* tr, const string varname, const string title_x, const in
 
   delete h1_all;
   delete h1_rec;
+}
+
+void FitCosTheta(TTree* tr)
+{
+  gStyle->SetOptFit(true);
+  TH1* h1_costh = new TH1D("h1_costh", "", 100, -1, 1);
+  tr->Project("h1_costh", "dim_true.costh");
+  TF1* f1 = new TF1("f1", "[0]*(1 + [1]*pow(x,2))", -0.8, 0.8);
+  h1_costh->Fit(f1, "REM");
+  c1->SaveAs("result/h1_costh_fit.png");
+  delete f1;
+  delete h1_costh;
 }
 
 void AnaEvents(TTree* tr)

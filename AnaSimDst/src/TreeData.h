@@ -35,8 +35,13 @@ struct DimuonData {
   TLorentzVector mom;
   TLorentzVector mom_pos;
   TLorentzVector mom_neg;
+  double         mass;
+  double         pT;
   double         x1;
   double         x2;
+  double         xF;
+  double         costh;
+  double         phi;
 
   DimuonData();
   virtual ~DimuonData() {;}

@@ -84,7 +84,7 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
     dd.mom     = dim->get_mom();
     dd.mom_pos = dim->get_mom_pos();
     dd.mom_neg = dim->get_mom_neg();
-    UtilDimuon::GetX1X2(dim, dd.x1, dd.x2);
+    UtilDimuon::CalcVar(dim, dd.mass, dd.pT, dd.x1, dd.x2, dd.xF, dd.costh, dd.phi);
     mo_dim_true.push_back(dd);
 
     DimuonData ddr;
@@ -115,13 +115,14 @@ int AnaSimDst::End(PHCompositeNode* topNode)
 int AnaSimDst::GetNodes(PHCompositeNode *topNode)
 {
   mi_evt      = findNode::getClass<SQEvent       >(topNode, "SQEvent");
-  mi_srec     = findNode::getClass<SRecEvent     >(topNode, "SRecEvent");
   mi_evt_true = findNode::getClass<SQMCEvent     >(topNode, "SQMCEvent");
   mi_vec_trk  = findNode::getClass<SQTrackVector >(topNode, "SQTruthTrackVector");
   mi_vec_dim  = findNode::getClass<SQDimuonVector>(topNode, "SQTruthDimuonVector");
-  if (!mi_evt || !mi_srec || !mi_evt_true || !mi_vec_trk || !mi_vec_dim) {
-    return Fun4AllReturnCodes::ABORTEVENT;
-  }
+  if (!mi_evt || !mi_evt_true || !mi_vec_trk || !mi_vec_dim) return Fun4AllReturnCodes::ABORTEVENT;
+
+  mi_srec = findNode::getClass<SRecEvent>(topNode, "SRecEvent");
+  if (!mi_srec) return Fun4AllReturnCodes::ABORTEVENT;
+
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
