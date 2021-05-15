@@ -13,16 +13,17 @@ The procedure below will read the DST file of run 202 (for example), which is
 and produce basic histograms and ntuple.
 
 1. source setup.sh
-1. cd work
-1. cmake-e1039-ana
-1. make install
-1. root -b -q '../macro/Fun4RealDst.C(202)'
+1. cmake-this
+1. make-this
+1. cd macro
+1. root -b -q 'Fun4RealDst.C(202)'
 1. display h1_ele_H1T.png &
 
 Here are some tips:
 
 - You need execute "source setup.sh" every time you open a new terminal.
-- You need execute "make install" every time you modify any file in "src/".
+- You need execute "make-this" every time you modify any file in "src/".
+- You need execute "cmake-this" every time you add/delete any file in "src/".
 - You can execute the macro at any directory.
 
 ## Advanced Usage

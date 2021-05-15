@@ -11,7 +11,7 @@
 #include <phool/PHIODataNode.h>
 #include <phool/getClass.h>
 #include <geom_svc/GeomSvc.h>
-#include "UtilSQHit.h"
+#include <UtilAna/UtilSQHit.h>
 #include "AnaRealDst.h"
 using namespace std;
 
