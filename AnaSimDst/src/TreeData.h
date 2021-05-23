@@ -7,6 +7,7 @@ struct EventData {
   int proc_id;
   int par_id[4]; // 2 -> 2
   TLorentzVector par_mom[4];
+  double weight;
   int trig_bits;
   int rec_stat;
   int n_dim_true;

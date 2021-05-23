@@ -32,7 +32,7 @@ class AnaSimDst: public SubsysReco {
   DimuonList mo_dim_reco;
 
  public:
-  AnaSimDst() {;}
+  AnaSimDst();
   virtual ~AnaSimDst() {;}
   int Init(PHCompositeNode *topNode);
   int InitRun(PHCompositeNode *topNode);

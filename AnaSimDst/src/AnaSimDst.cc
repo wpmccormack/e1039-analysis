@@ -12,6 +12,11 @@
 #include "AnaSimDst.h"
 using namespace std;
 
+AnaSimDst::AnaSimDst() : SubsysReco("AnaSimDst")
+{
+  ;
+}
+
 int AnaSimDst::Init(PHCompositeNode* topNode)
 {
   return Fun4AllReturnCodes::EVENT_OK;
@@ -39,6 +44,7 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
     mo_evt.par_id [ii] = mi_evt_true->get_particle_id      (ii);
     mo_evt.par_mom[ii] = mi_evt_true->get_particle_momentum(ii);
   }
+  mo_evt.weight     = mi_evt_true->get_weight();
   mo_evt.trig_bits  = mi_evt->get_trigger();
   mo_evt.rec_stat   = mi_srec->getRecStatus();
   mo_evt.n_dim_true = mi_vec_dim->size();
