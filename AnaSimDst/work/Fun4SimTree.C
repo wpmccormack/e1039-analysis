@@ -2,6 +2,7 @@
 R__LOAD_LIBRARY(libana_sim_dst)
 
 using namespace std;
+const char* TYPE_GMC = "D-Y E906Gen"; // D-Y, J/#psi, E906Gen, PYTHIA, etc.
 TFile* file;
 TTree* tree;
 TCanvas* c1;
@@ -95,7 +96,10 @@ void DrawTrkTrueKin()
   TH1* h1_rec = new TH1D("h1_rec", "", 100, -1, 1);
   tree->Project("h1_all", "(dim_true.mom_pos.Z() - dim_true.mom_neg.Z())/(dim_true.mom_pos.Z() + dim_true.mom_neg.Z())", "weight");
   tree->Project("h1_rec", "(dim_true.mom_pos.Z() - dim_true.mom_neg.Z())/(dim_true.mom_pos.Z() + dim_true.mom_neg.Z())", "weight * (rec_stat==0)");
-  hs = new THStack("hs", "J/#psi GMC;gpz+gpz (GeV) of tracks;N of tracks");
+
+  ostringstream oss;
+  oss << TYPE_GMC << " GMC;gpz+gpz (GeV) of tracks;N of tracks";
+  hs = new THStack("hs", oss.str().c_str());
   hs->Add(h1_all);
   hs->Add(h1_rec);
   h1_rec->SetLineColor(kRed);
@@ -111,7 +115,7 @@ void DrawTrueVar(const string varname, const string title_x, const int n_x, cons
   tree->Project("h1_rec", varname.c_str(), "weight * (rec_stat==0)");
 
   ostringstream oss;
-  oss << "J/#psi GMC;" << title_x << ";Yield";
+  oss << TYPE_GMC << " GMC;" << title_x << ";Yield";
   THStack hs("hs", oss.str().c_str());
   hs.Add(h1_all);
   hs.Add(h1_rec);
@@ -143,6 +147,10 @@ void FitCosTheta()
   TF1* f1 = new TF1("f1", "[0]*(1 + [1]*pow(x,2))", -0.8, 0.8);
   f1->SetParameters(h1_costh->Integral()/h1_costh->GetNbinsX(), 1.0);
   h1_costh->Fit(f1, "REM");
+
+  ostringstream oss;
+  oss << TYPE_GMC << " GMC;True cos#theta;Yield";
+  h1_costh->SetTitle(oss.str().c_str());
   c1->SaveAs("result/h1_costh_fit.png");
   delete f1;
   delete h1_costh;
@@ -177,8 +185,8 @@ double GetInteLumi(const char* fn_lumi)
 {
   ifstream ifs(fn_lumi);
   if (!ifs.is_open()) {
-    cout << "GetInteLumi():  Cannot open '" << fn_lumi << "'.  Abort." << endl;
-    exit(1);
+    cout << "GetInteLumi():  Cannot open '" << fn_lumi << "'.  Just return 1.0." << endl;
+    return 1.0;
   }
   double val;
   ifs >> val;
