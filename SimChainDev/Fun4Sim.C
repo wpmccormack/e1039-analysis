@@ -39,6 +39,7 @@ int Fun4Sim(const int nevent = 10)
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
 
+ //! particle generator flag
   const bool gen_pythia8  = true; // false;
   const bool gen_cosmic   = false;
   const bool gen_gun      = false;
@@ -47,14 +48,24 @@ int Fun4Sim(const int nevent = 10)
   const bool gen_e906legacy = false; //E906LegacyGen()
   const bool save_in_acc  = false; //< Set true to save only in-acceptance events into DST.
 
+  //! vtx gen flag
+  const bool legacyVtxGen = true;
+  
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->set_DoubleFlag("SIGX_BEAM", 0.3);
+  rc->set_DoubleFlag("SIGY_BEAM", 0.3);
   if(gen_cosmic) {
     rc->init("cosmic");
     rc->set_BoolFlag("COARSE_MODE", true);
     rc->set_DoubleFlag("KMAGSTR", 0.);
     rc->set_DoubleFlag("FMAGSTR", 0.);
+  }
+  if(legacyVtxGen)
+  {
+    rc->set_BoolFlag("TARGETONLY", false);
+    rc->set_BoolFlag("DUMPONLY", false);
   }
   rc->Print();
 
@@ -78,8 +89,11 @@ int Fun4Sim(const int nevent = 10)
     //pythia8->Verbosity(99);
 //    pythia8->set_config_file("phpythia8_DY.cfg");
     pythia8->set_config_file("phpythia8_Jpsi.cfg");
-    pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
-    pythia8->set_embedding_id(1);
+    if(legacyVtxGen) pythia8->enableLegacyVtxGen();
+    else{
+      pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
+    } 
+   pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
 
     pythia8->set_trigger_AND();
@@ -111,10 +125,11 @@ int Fun4Sim(const int nevent = 10)
   if(gen_gun) {
     PHG4ParticleGun *gun = new PHG4ParticleGun("GUN");
     gun->set_name("mu-");
-    //gun->set_vtx(0, 0, target_coil_pos_z);
-    //gun->set_mom(3, 3, 50);
-    gun->set_vtx(30, 10, 590);
-    gun->set_mom(-0.3, 2, 50);
+    if (legacyVtxGen) gun->enableLegacyVtxGen();
+    else{
+      gun->set_vtx(0, 0, target_coil_pos_z);
+    }
+    gun->set_mom(3, 3, 50);    
     se->registerSubsystem(gun);
   }
 
@@ -123,14 +138,16 @@ int Fun4Sim(const int nevent = 10)
     PHG4SimpleEventGenerator *genp = new PHG4SimpleEventGenerator("MUP");
     //genp->set_seed(123);
     genp->add_particles("mu+", nmu);  // mu+,e+,proton,pi+,Upsilon
-    genp->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
+    if (legacyVtxGen) genp->enableLegacyVtxGen();
+    else{
+      genp->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform);
-    genp->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
-    genp->set_vertex_distribution_width(0.0, 0.0, 0.0);
-    genp->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
-    genp->set_vertex_size_parameters(0.0, 0.0);
-
+      genp->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
+      genp->set_vertex_distribution_width(0.0, 0.0, 0.0);
+      genp->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
+      genp->set_vertex_size_parameters(0.0, 0.0);
+    }
     if(FMAGSTR>0)
       //genp->set_pxpypz_range(0,6, -6,6, 10,100);
       genp->set_pxpypz_range(-3,6, -3,3, 10,100);
@@ -147,14 +164,16 @@ int Fun4Sim(const int nevent = 10)
     PHG4SimpleEventGenerator *genm = new PHG4SimpleEventGenerator("MUP");
     //genm->set_seed(123);
     genm->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
-    genm->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
+    if (legacyVtxGen) genm->enableLegacyVtxGen();
+    else{
+      genm->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform);
-    genm->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
-    genm->set_vertex_distribution_width(0.0, 0.0, 0.0);
-    genm->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
-    genm->set_vertex_size_parameters(0.0, 0.0);
-
+      genm->set_vertex_distribution_mean(0.0, 0.0, target_coil_pos_z);
+      genm->set_vertex_distribution_width(0.0, 0.0, 0.0);
+      genm->set_vertex_size_function(PHG4SimpleEventGenerator::Uniform);
+      genm->set_vertex_size_parameters(0.0, 0.0);
+    }
     if(FMAGSTR>0)
       //genm->set_pxpypz_range(-6,0, -6,6, 10,100);
       genm->set_pxpypz_range(-6,3, -3,3, 10,100);
@@ -193,8 +212,10 @@ int Fun4Sim(const int nevent = 10)
       e906legacy->enableJPsiGen();
     }
     
-    if(pythia_gen) e906legacy->enablePythia();
-
+    if(pythia_gen){ 
+      e906legacy->enablePythia();
+      e906legacy->set_config_file("phpythia8_DY.cfg");
+    }
     se->registerSubsystem(e906legacy);
   }
 
