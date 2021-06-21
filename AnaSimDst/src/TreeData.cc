@@ -3,6 +3,7 @@ using namespace std;
 
 EventData::EventData()
   : proc_id(0)
+  , weight(1.0)
   , trig_bits(0)
   , rec_stat(0)
   , n_dim_true(0)

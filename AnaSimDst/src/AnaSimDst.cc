@@ -12,6 +12,11 @@
 #include "AnaSimDst.h"
 using namespace std;
 
+AnaSimDst::AnaSimDst() : SubsysReco("AnaSimDst")
+{
+  ;
+}
+
 int AnaSimDst::Init(PHCompositeNode* topNode)
 {
   return Fun4AllReturnCodes::EVENT_OK;
@@ -39,41 +44,50 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
     mo_evt.par_id [ii] = mi_evt_true->get_particle_id      (ii);
     mo_evt.par_mom[ii] = mi_evt_true->get_particle_momentum(ii);
   }
+  mo_evt.weight     = mi_evt_true->get_weight();
   mo_evt.trig_bits  = mi_evt->get_trigger();
-  mo_evt.rec_stat   = mi_srec->getRecStatus();
   mo_evt.n_dim_true = mi_vec_dim->size();
-  mo_evt.n_dim_reco = mi_srec->getNDimuons();
+
+  if (mi_srec) {
+    mo_evt.rec_stat   = mi_srec->getRecStatus();
+    mo_evt.n_dim_reco = mi_srec->getNDimuons();
+  } else {
+    mo_evt.rec_stat   = 0;
+    mo_evt.n_dim_reco = 0;
+  }
 
   ///
   /// Track info
   ///
-//  IdMap_t id_trk_t2r;
-//  FindTrackRelation(id_trk_t2r);
-//  mo_trk_true.clear();
-//  mo_trk_reco.clear();
-//  for (unsigned int ii = 0; ii < mi_vec_trk->size(); ii++) {
-//    SQTrack* trk = &mi_vec_trk->at(ii);
-//    TrackData td;
-//    td.charge  = trk->charge;
-//    td.pos_vtx = trk->pos_vtx;
-//    td.mom_vtx = trk->mom_vtx;
-//    mo_trk_true.push_back(td);
-//
-//    TrackData tdr;
-//    if (id_trk_t2r[ii] >= 0) {
-//      SRecTrack* trk_reco = &mi_srec->getTrack(id_trk_t2r[ii]);
-//      tdr.charge  = trk_reco->getCharge();
-//      tdr.pos_vtx = trk_reco->getVertex();
-//      tdr.mom_vtx = trk_reco->getMomentumVertex();
-//    }
-//    mo_trk_reco.push_back(tdr);
-//  }
+  //IdMap_t id_trk_t2r;
+  //if (mi_srec) FindTrackRelation(id_trk_t2r);
+  //mo_trk_true.clear();
+  //mo_trk_reco.clear();
+  //for (unsigned int ii = 0; ii < mi_vec_trk->size(); ii++) {
+  //  SQTrack* trk = &mi_vec_trk->at(ii);
+  //  TrackData td;
+  //  td.charge  = trk->charge;
+  //  td.pos_vtx = trk->pos_vtx;
+  //  td.mom_vtx = trk->mom_vtx;
+  //  mo_trk_true.push_back(td);
+  //
+  //  if (mi_srec) {
+  //    TrackData tdr;
+  //    if (id_trk_t2r[ii] >= 0) {
+  //      SRecTrack* trk_reco = &mi_srec->getTrack(id_trk_t2r[ii]);
+  //      tdr.charge  = trk_reco->getCharge();
+  //      tdr.pos_vtx = trk_reco->getVertex();
+  //      tdr.mom_vtx = trk_reco->getMomentumVertex();
+  //    }
+  //    mo_trk_reco.push_back(tdr);
+  //  }
+  //}
 
   ///
   /// Dimuon info
   ///
   IdMap_t id_dim_t2r;
-  FindDimuonRelation(id_dim_t2r);
+  if (mi_srec) FindDimuonRelation(id_dim_t2r);
   mo_dim_true.clear();
   mo_dim_reco.clear();
   for (unsigned int ii = 0; ii < mi_vec_dim->size(); ii++) {
@@ -87,17 +101,19 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
     UtilDimuon::CalcVar(dim, dd.mass, dd.pT, dd.x1, dd.x2, dd.xF, dd.costh, dd.phi);
     mo_dim_true.push_back(dd);
 
-    DimuonData ddr;
-    if (id_dim_t2r[ii] >= 0) {
-      SRecDimuon dim_reco = mi_srec->getDimuon(id_dim_t2r[ii]);
-      ddr.pos     = dim_reco.vtx;
-      ddr.mom     = dim_reco.p_pos + dim_reco.p_neg;
-      ddr.mom_pos = dim_reco.p_pos;
-      ddr.mom_neg = dim_reco.p_neg;
-      ddr.x1      = dim_reco.x1;
-      ddr.x2      = dim_reco.x2;
+    if (mi_srec) {
+      DimuonData ddr;
+      if (id_dim_t2r[ii] >= 0) {
+        SRecDimuon dim_reco = mi_srec->getDimuon(id_dim_t2r[ii]);
+        ddr.pos     = dim_reco.vtx;
+        ddr.mom     = dim_reco.p_pos + dim_reco.p_neg;
+        ddr.mom_pos = dim_reco.p_pos;
+        ddr.mom_neg = dim_reco.p_neg;
+        ddr.x1      = dim_reco.x1;
+        ddr.x2      = dim_reco.x2;
+      }
+      mo_dim_reco.push_back(ddr);
     }
-    mo_dim_reco.push_back(ddr);
   }
 
   tree->Fill();
@@ -121,7 +137,9 @@ int AnaSimDst::GetNodes(PHCompositeNode *topNode)
   if (!mi_evt || !mi_evt_true || !mi_vec_trk || !mi_vec_dim) return Fun4AllReturnCodes::ABORTEVENT;
 
   mi_srec = findNode::getClass<SRecEvent>(topNode, "SRecEvent");
-  if (!mi_srec) return Fun4AllReturnCodes::ABORTEVENT;
+  if (!mi_srec) {
+    cout << "The SRecEvent node cannot be found in DST and thus won't be analyzed." << endl;
+  }
 
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -131,7 +149,6 @@ void AnaSimDst::MakeTree()
   file = new TFile("sim_tree.root", "RECREATE");
   tree = new TTree("tree", "Created by AnaSimDst");
 
-  //tree->Branch("sqevt"   ,  mi_evt);
   tree->Branch("evt"     , &mo_evt);
   //tree->Branch("trk_true", &mo_trk_true);
   //tree->Branch("trk_reco", &mo_trk_reco);

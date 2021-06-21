@@ -10,6 +10,7 @@
 #pragma link C++ class DimuonList+;
 
 #pragma link C++ class FilterSimEvent-!;
+#pragma link C++ class AnaSimRunInfo-!;
 #pragma link C++ class AnaSimDst-!;
 
 #endif

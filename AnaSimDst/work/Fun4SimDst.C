@@ -10,6 +10,8 @@ int Fun4SimDst(const int   n_dst_ana=0,
   Fun4AllInputManager *in = new Fun4AllDstInputManager("SimDst");
   se->registerInputManager(in);
 
+  se->registerSubsystem(new AnaSimRunInfo());
+
   //se->registerSubsystem(new FilterSimEvent());
 
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_udst);
