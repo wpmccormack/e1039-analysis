@@ -274,6 +274,12 @@ int Fun4Sim(const int nevent = 10)
   digitizer->set_enable_dphodo(do_dphodo);       // in the SetupSensitiveVolumes() function call above
   se->registerSubsystem(digitizer);
 
+  /// Save only events that are in the geometric acceptance.
+  //SQGeomAcc* geom_acc = new SQGeomAcc();
+  //geom_acc->SetMuonMode(SQGeomAcc::PAIR_TBBT); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
+  //geom_acc->SetPlaneMode(SQGeomAcc::HODO_CHAM); // HODO, CHAM or HODO_CHAM
+  //se->registerSubsystem(geom_acc);
+
   // Make SQ nodes for truth info
   se->registerSubsystem(new TruthNodeMaker());
 
