@@ -271,8 +271,6 @@ int Fun4Sim(const int nevent = 10)
   digitizer->set_enable_dphodo(do_dphodo);       // in the SetupSensitiveVolumes() function call above
   se->registerSubsystem(digitizer);
 
-  const bool save_in_acc  = false; //< Set true to save only in-acceptance events into DST.
-
   /// Save only events that are in the geometric acceptance.
   //SQGeomAcc* geom_acc = new SQGeomAcc();
   //geom_acc->SetMuonMode(SQGeomAcc::PAIR); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
