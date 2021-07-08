@@ -46,7 +46,6 @@ int Fun4Sim(const int nevent = 10)
   const bool gen_particle = false;
   const bool read_hepmc   = false;
   const bool gen_e906legacy = false; //E906LegacyGen()
-  const bool save_in_acc  = false; //< Set true to save only in-acceptance events into DST.
 
   //! vtx gen flag
   const bool legacyVtxGen = true;
@@ -261,8 +260,6 @@ int Fun4Sim(const int nevent = 10)
 
   se->registerSubsystem(g4Reco);
 
-  if (save_in_acc) se->registerSubsystem(new RequireParticlesInAcc());
-
   // save truth info to the Node Tree
   PHG4TruthSubsystem *truth = new PHG4TruthSubsystem();
   g4Reco->registerSubsystem(truth);
@@ -274,10 +271,13 @@ int Fun4Sim(const int nevent = 10)
   digitizer->set_enable_dphodo(do_dphodo);       // in the SetupSensitiveVolumes() function call above
   se->registerSubsystem(digitizer);
 
+  const bool save_in_acc  = false; //< Set true to save only in-acceptance events into DST.
+
   /// Save only events that are in the geometric acceptance.
   //SQGeomAcc* geom_acc = new SQGeomAcc();
-  //geom_acc->SetMuonMode(SQGeomAcc::PAIR_TBBT); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
+  //geom_acc->SetMuonMode(SQGeomAcc::PAIR); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
   //geom_acc->SetPlaneMode(SQGeomAcc::HODO_CHAM); // HODO, CHAM or HODO_CHAM
+  //geom_acc->SetNumOfH1EdgeElementsExcluded(4); // Exclude 4 elements at H1 edges
   //se->registerSubsystem(geom_acc);
 
   // Make SQ nodes for truth info
