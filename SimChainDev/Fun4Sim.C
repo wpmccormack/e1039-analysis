@@ -45,7 +45,7 @@ int Fun4Sim(const int nevent = 10)
   const bool gen_gun      = false;
   const bool gen_particle = false;
   const bool read_hepmc   = false;
-  const bool gen_e906legacy = false; //E906LegacyGen()
+  const bool gen_e906legacy = false; // cf. SQPrimaryParticleGen
 
   //! vtx gen flag
   const bool legacyVtxGen = true;
@@ -61,14 +61,12 @@ int Fun4Sim(const int nevent = 10)
     rc->set_DoubleFlag("KMAGSTR", 0.);
     rc->set_DoubleFlag("FMAGSTR", 0.);
   }
-  if(legacyVtxGen)
+  if(legacyVtxGen) // cf. SQPrimaryVertexGen
   {
-    rc->set_BoolFlag("TARGETONLY", false);
-    rc->set_BoolFlag("DUMPONLY", false);
+    //rc->set_CharFlag("VTX_GEN_MATERIAL_MODE", "Target"); // Target, Dump or TargetDumpGap
   }
   rc->Print();
 
-  GeomSvc::UseDbSvc(true);
   GeomSvc *geom_svc = GeomSvc::instance();
   //const double x0_shift = 0.0; //cm 
   //std::cout << "D2X::X0: " << geom_svc->getDetectorX0("D2X") << std::endl;
