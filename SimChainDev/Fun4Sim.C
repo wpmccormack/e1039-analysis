@@ -84,8 +84,8 @@ int Fun4Sim(const int nevent = 10)
   if(gen_pythia8) {    
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
-//    pythia8->set_config_file("phpythia8_DY.cfg");
-    pythia8->set_config_file("phpythia8_Jpsi.cfg");
+    //pythia8->set_config_file("phpythia8_DY.cfg");
+    pythia8->set_config_file("phpythia8_Jpsi.cfg"); // Jpsi, Jpsi_direct, psip
     if(legacyVtxGen) pythia8->enableLegacyVtxGen();
     else{
       pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
@@ -196,7 +196,6 @@ int Fun4Sim(const int nevent = 10)
       e906legacy->set_massRange(0.23, 10.0);// 0.22 and above     
       e906legacy->enableDrellYanGen();
     }
-   
    
     if(Psip_gen){ 
       e906legacy->set_xfRange(0.1, 0.5); //[-1.,1.]
