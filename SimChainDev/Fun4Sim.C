@@ -42,7 +42,6 @@ int Fun4Sim(const int nevent = 10)
  //! particle generator flag
   const bool gen_pythia8  = true; // false;
   const bool gen_cosmic   = false;
-  const bool gen_gun      = false;
   const bool gen_particle = false;
   const bool read_hepmc   = false;
   const bool gen_e906legacy = false; // cf. SQPrimaryParticleGen
@@ -118,18 +117,6 @@ int Fun4Sim(const int nevent = 10)
     se->registerSubsystem(hr);
   }
 
-  // single gun
-  if(gen_gun) {
-    PHG4ParticleGun *gun = new PHG4ParticleGun("GUN");
-    gun->set_name("mu-");
-    if (legacyVtxGen) gun->enableLegacyVtxGen();
-    else{
-      gun->set_vtx(0, 0, target_coil_pos_z);
-    }
-    gun->set_mom(3, 3, 50);    
-    se->registerSubsystem(gun);
-  }
-
   // multi particle gun
   if(gen_particle) {
     PHG4SimpleEventGenerator *genp = new PHG4SimpleEventGenerator("MUP");
@@ -158,7 +145,7 @@ int Fun4Sim(const int nevent = 10)
   }
 
   if(gen_particle) {
-    PHG4SimpleEventGenerator *genm = new PHG4SimpleEventGenerator("MUP");
+    PHG4SimpleEventGenerator *genm = new PHG4SimpleEventGenerator("MUM");
     //genm->set_seed(123);
     genm->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
     if (legacyVtxGen) genm->enableLegacyVtxGen();
@@ -360,7 +347,7 @@ int Fun4Sim(const int nevent = 10)
   // finish job - close and save output files
   se->End();
   se->PrintTimer();
-  //rc->WriteToFile("recoConsts.tsv");
+  rc->WriteToFile("recoConsts.tsv");
   std::cout << "All done" << std::endl;
 
   // cleanup - delete the server and exit
