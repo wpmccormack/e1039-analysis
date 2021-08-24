@@ -13,10 +13,13 @@ In that case you are recommended to
 ## Default Setting of Event Generation
 
 The default setting configured in `Fun4Sim.C` uses
-* The J/psi production via `SQPrimaryParticleGen` and
-* The standard geometry configuration.
+* The J/psi production via `SQPrimaryParticleGen`,
+* The standard geometry configuration, and
+* The standard event reconstruction (i.e. tracking & vertexing).
 
 You can modify them as you need.
+The reconstruction here makes a result _not_ affected by the hit embedding.
+It will be compared to another result reconstructed after the hit embedding.
 
 ## Usage
 

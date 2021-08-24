@@ -11,7 +11,7 @@ A new macro to generate the embedding data from the E906 data will be set up nex
 ## Default Setting of Event Generation
 
 The default setting configured in `Fun4Sim.C` uses
-* `PHG4SimpleEventGenerator` to produce two mu+ per event and
+* `PHG4SimpleEventGenerator` to produce two mu+ per event, and
 * The standard geometry configuration.
 
 You can modify them as you need.

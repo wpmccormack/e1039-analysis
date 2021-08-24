@@ -1,4 +1,4 @@
-# `macro_ana`:  Macro to analyze the data before/after the hit embedding
+# `macro_ana`:  Macro to analyze data before/after hit embedding
 
 This macro is to analyze the data before/after the hit embedding.
 You can apply the identical analysis program to both the embedded data and non-embedded data.

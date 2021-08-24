@@ -50,3 +50,9 @@ source /e906/app/software/script/setup-jobsub-spinquest.sh
 kinit
 ./gridsub.sh -g 20210823_01
 ```
+
+## Event reconstruction
+
+The event reconstruction is carried out after the hit embedding.
+The setting has to be identical to the one in `macro_gen_signal/Fun4Sim.C`.
+The reconstruction here makes a result affected by the hit embedding.

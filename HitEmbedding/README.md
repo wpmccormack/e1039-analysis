@@ -8,7 +8,8 @@ It can be used in studying the effects of background hits, such fake track and e
 
 For events, data or files:
 
-| ---- | ---- |
+| Term | Meaning |
+| ---- | ------- |
 | "Signal" events    | (Simulated) physics events                    |
 | "Embedding" events | Events which (or whose hits) will be embedded |
 | "Embedded" events  | Physics events where hits have been embedded  |
@@ -46,10 +47,10 @@ They have to be executed again after you modify the codes.
 Multiple Fun4All macros are available in this packages in order to carry out the hit embedding step-by-step.
 Details of each macro are explained in `README.md` of each directory.
 
-1. `macro_gen_signal/`:  Macro to generate signal events.
-1. `macro_gen_emb/`:  Macro to generate embedding events.
-1. `macro_embed/`:  Macro to do the hit embedding.
-1. `macro_ana/`:  Macro to analysis the hit-embedded events.
+1. [`macro_gen_signal/`](macro_gen_signal/):  Macro to generate signal events.
+1. [`macro_gen_emb/`](macro_gen_emb/):  Macro to generate embedding events.
+1. [`macro_embed/`](macro_embed/):  Macro to do the hit embedding.
+1. [`macro_ana/`](macro_ana/):  Macro to analysis the hit-embedded events.
 
 ## To-do list
 
