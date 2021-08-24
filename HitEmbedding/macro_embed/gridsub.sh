@@ -46,12 +46,10 @@ echo "N of files/jobs to be processed = $N_JOB"
 ## Prepare and execute the job submission
 ##
 if [ $DO_SUB == 1 ]; then
-    echo "Grid mode."
     DIR_DATA=/pnfs/e1039/scratch/$USER/HitEmbedding/data_embedded
     DIR_WORK=$DIR_DATA/$JOB_NAME
     ln -nfs $DIR_DATA data # for convenience
 else
-    echo "Local mode."
     DIR_WORK=$DIR_MACRO/scratch/$JOB_NAME
 fi
 
@@ -70,15 +68,16 @@ for (( I_JOB = 0; I_JOB < $N_JOB; I_JOB++ )) ; do
     cp -p $DIR_MACRO/gridrun.sh $DIR_WORK/$I_JOB
 
     if [ $DO_SUB == 1 ]; then
-	CMD="$DIR_MACRO/../script/jobsub_submit_e1039.sh"
+	CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
 	CMD+=" -L $DIR_WORK/$I_JOB/log_gridrun.txt"
 	CMD+=" -f $DIR_WORK/input.tar.gz"
 	CMD+=" -f $FN_SIG"
 	CMD+=" -f $FN_EMB"
 	CMD+=" -d OUTPUT $DIR_WORK/$I_JOB/out"
 	CMD+=" file://$DIR_WORK/$I_JOB/gridrun.sh $N_EVT"
-	echo "$CMD"
-	$CMD |& tee log_gridsub.txt
+	$CMD |& tee $DIR_WORK/$I_JOB/log_jobsub_submit.txt
+	RET_SUB=${PIPESTATUS[0]}
+	test $RET_SUB -ne 0 && exit $RET_SUB
     else
 	export  CONDOR_DIR_INPUT=$DIR_WORK/$I_JOB/in
 	export CONDOR_DIR_OUTPUT=$DIR_WORK/$I_JOB/out

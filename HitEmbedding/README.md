@@ -52,8 +52,30 @@ Details of each macro are explained in `README.md` of each directory.
 1. [`macro_embed/`](macro_embed/):  Macro to do the hit embedding.
 1. [`macro_ana/`](macro_ana/):  Macro to analysis the hit-embedded events.
 
+```
+  [ Generate signal events ]                        ... `macro_gen_signal`
+    |             |
+    V             |
+  [ Reconstruct ] |                                 ... `macro_gen_signal`
+    |             |
+    |             |  [ Generate embedding events ]  ... `macro_gen_emb`
+    |             |    |
+    |             V    V
+    |           [ Embed hits ]                      ... `macro_emb`
+    |             |
+    |             V
+    |           [ Reconstruct ]                     ... `macro_emb`
+    |             |
+    V             V
+  [ Analyze ]   [ Analyze ]                         ... `macro_ana`
+          |       |
+          V       V
+         [ Compare ]                                ... `macro_ana`
+```
+
 ## To-do list
 
+* Find a way to auto-balance N of signal events and N of embedding events per file.
 * Check how compact the TTree object (`embedding_data.root`) is.
     If it is not much different from DST, DST can be used as is,
     although it is not sure how effectively we can read DST when 
