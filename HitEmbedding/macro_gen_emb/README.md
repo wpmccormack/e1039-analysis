@@ -1,4 +1,4 @@
-# `macro_gen_emb`:  Macro to generate events to be embedded
+# Macro to generate events to be embedded
 
 This macro is to generate background events from which hits are taken and embedded.
 A ROOT file that contains a compact TTree object (i.e. `embedding_data.root`) outputted by this macro is used in the hit embedding.
@@ -29,7 +29,6 @@ Typically you first execute the following command to execute the macro on local 
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-kinit
 ./gridsub.sh emb_20210823_01 1 50 1000
 ```
 

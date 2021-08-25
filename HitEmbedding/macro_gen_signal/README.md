@@ -1,4 +1,4 @@
-# `macro_gen_signal`:  Macro to generate signal events
+# Macro to generate signal events
 
 This macro is to generate signal events to be used for the hit embedding.
 The DST file (i.e. `DST.root`) outputted by this macro is used next.
@@ -34,6 +34,5 @@ Typically you first execute the following command to execute the macro on local 
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-kinit
 ./gridsub.sh sig_20210823_01 1 50 5000
 ```

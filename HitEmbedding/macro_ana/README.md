@@ -1,7 +1,7 @@
-# `macro_ana`:  Macro to analyze data before/after hit embedding
+# Macro to analyze data before/after hit embedding
 
 This macro is to analyze the data before/after the hit embedding.
-You can apply the identical analysis program to both the embedded data and non-embedded data.
+You can apply the identical analysis program to both the embedded data and the non-embedded data.
 The comparison between them shows you the effect of embedded hits.
 Thus you will carry out the analysis twice in two sub-directories; `not_embedded` and `embedded`.
 
@@ -15,7 +15,7 @@ cd not_embedded
 ```
 You see `list_dst.txt` and `info_dst.txt` are created.
 
-You then create a compact ROOT file (`ana_tree.root`) from the input data, by executing the following command;
+You then produce a compact ROOT file (`ana_tree.root`) from the input data, by executing the following command;
 ```
 root -b ../Fun4SimDst.C
 ```

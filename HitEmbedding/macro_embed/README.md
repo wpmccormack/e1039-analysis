@@ -1,4 +1,4 @@
-# `macro_emb`:  Macro to carry out the hit embedding
+# Macro to carry out the hit embedding
 
 This macro is to carry out the hit embedding.
 It reads
@@ -10,13 +10,13 @@ It writes out the embedded data into a new DST file (`DST.root`).
 ## Preparation
 
 You first make lists of signal and embedding data; `list_sig_file.txt` and `list_emb_file.txt`.
-You modify `make-list.sh` so that `DIR_SIG` and `DIR_EMB` in the script points to the directories where you store the files.
+You modify `make-list.sh` so that `DIR_SIG` and `DIR_EMB` in the script point to the directories where you store the data files.
 
 You then execute the script as follows;
 ```
 ./make-lists.sh
 ```
-You should check that the contents of the two files are valid.
+You will see the numbers of files and events found and should check that the contents of the two files are valid.
 
 ## Method of pairing signal data and embedding data
 
@@ -47,7 +47,6 @@ It processes only the first 10 events in the 1st job (i.e. input file pair) on l
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-kinit
 ./gridsub.sh -g 20210823_01
 ```
 

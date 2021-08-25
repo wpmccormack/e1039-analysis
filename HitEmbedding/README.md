@@ -78,7 +78,7 @@ Details of each macro are explained in `README.md` of each directory.
 * Find a way to auto-balance N of signal events and N of embedding events per file.
 * Check how compact the TTree object (`embedding_data.root`) is.
     If it is not much different from DST, DST can be used as is,
-    although it is not sure how effectively we can read DST when 
+    although it is not sure how efficiently we can read DST when 
     trying to shuffle the event order.
 
 ## Contact
