@@ -58,19 +58,16 @@ do
   rsync -a $macros/gridrun.sh $local_work_dir/gridrun.sh
 
   if [ $do_sub == 1 ]; then
-    cmd="jobsub_submit --grid"
-    cmd="$cmd -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/e1039/e1039-sl7:latest\"'"
-    cmd="$cmd --append_condor_requirements='(TARGET.HAS_SINGULARITY=?=true)'"
-    cmd="$cmd --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='short'"
-    cmd="$cmd --mail_never"
-    cmd="$cmd -L $local_work_dir/log/log.txt"
-    cmd="$cmd -f $local_work_dir/input.tar.gz"
-    cmd="$cmd -f $local_work_dir/para.tar.gz"
-    cmd="$cmd -f $local_work_dir/$coda_file"
-    cmd="$cmd -d OUTPUT $local_work_dir/out"
-    cmd="$cmd file://`which $local_work_dir/gridrun.sh` $nevents $run_num"
-    echo $cmd
-    $cmd
+    CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
+    CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
+    CMD+=" -L $local_work_dir/log/log.txt"
+    CMD+=" -f $local_work_dir/input.tar.gz"
+    CMD+=" -f $local_work_dir/para.tar.gz"
+    CMD+=" -f $local_work_dir/$coda_file"
+    CMD+=" -d OUTPUT $local_work_dir/out"
+    CMD+=" file://$local_work_dir/gridrun.sh $nevents $run_num"
+    echo $CMD
+    $CMD
   else
     condor_work_dir=$local_work_dir/condor
     mkdir -p $condor_work_dir/input

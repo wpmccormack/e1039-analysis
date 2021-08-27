@@ -44,19 +44,16 @@ do
 
   rsync -av $macros/gridrun_new.sh $work/$id/gridrun_new.sh
 
-  cmd="jobsub_submit --grid"
-  cmd="$cmd -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/e1039/e1039-sl7:latest\"'"
-  cmd="$cmd --append_condor_requirements='(TARGET.HAS_SINGULARITY=?=true)'"
-  cmd="$cmd --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='short'"
-  cmd="$cmd --mail_never"
-  cmd="$cmd -L $work/$id/log/log.txt"
-  cmd="$cmd -f $work/input.tar.gz"
-  cmd="$cmd -d OUTPUT $work/$id/out"
-  cmd="$cmd file://`which $work/$id/gridrun_new.sh`"
+  CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
+  CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
+  CMD+=" -L $work/$id/log/log.txt"
+  CMD+=" -f $work/input.tar.gz"
+  CMD+=" -d OUTPUT $work/$id/out"
+  CMD+=" file://$work/$id/gridrun_new.sh"
 
   if [ $do_sub == 1 ]; then
-    echo $cmd
-    $cmd
+    echo $CMD
+    $CMD
   else
     mkdir -p $work/$id/input
     rsync -av $work/input.tar.gz $work/$id/input

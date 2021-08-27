@@ -1,7 +1,6 @@
 #!/bin/bash
 
 dir_macros=$(dirname $(readlink -f $BASH_SOURCE))
-LIFE_TIME=long # short (3h), medium (8h) or long (23h)
 
 jobname=$1
 do_sub=$2
@@ -15,13 +14,8 @@ echo "nevents=$nevents"
  
 if [ $do_sub == 1 ]; then
     echo "Grid mode."
-    if ! which jobsub_submit &>/dev/null ; then
-	echo "Command 'jobsub_submit' not found."
-	echo "Forget 'source /e906/app/software/script/setup-jobsub-spinquest.sh'?"
-	exit
-    fi
     work=/pnfs/e906/persistent/users/$USER/RecoDataDev/$jobname
-    ln -sf /pnfs/e906/persistent/users/$USER/RecoDataDev data
+    ln -nfs /pnfs/e906/persistent/users/$USER/RecoDataDev data
 else
     echo "Local mode."
     work=$dir_macros/scratch/$jobname
@@ -54,18 +48,17 @@ for run_num in $(cat $run_list) ; do
     rsync -av $dir_macros/gridrun_data.sh $work/$job_name/gridrun_data.sh
 
     if [ $do_sub == 1 ]; then
-      cmd="jobsub_submit --grid"
-      cmd="$cmd -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/e1039/e1039-sl7:latest\"'"
-      cmd="$cmd --append_condor_requirements='(TARGET.HAS_SINGULARITY=?=true)'"
-      cmd="$cmd --use_gftp --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE -e IFDHC_VERSION --expected-lifetime='$LIFE_TIME'"
-      cmd="$cmd --mail_never"
-      cmd="$cmd -L $work/$job_name/log/log.txt"
-      cmd="$cmd -f $work/input.tar.gz"
-      cmd="$cmd -d OUTPUT $work/$job_name/out"
-      cmd="$cmd -f $data_path"
-      cmd="$cmd file://`which $work/$job_name/gridrun_data.sh` $nevents $run_num $data_file"
-      echo "$cmd"
-      $cmd
+      CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
+      CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
+      CMD+=" -L $work/$job_name/log/log.txt"
+      CMD+=" -f $work/input.tar.gz"
+      CMD+=" -d OUTPUT $work/$job_name/out"
+      CMD+=" -f $data_path"
+      CMD+=" file://$work/$job_name/gridrun_data.sh $nevents $run_num $data_file"
+      echo "$CMD"
+      $CMD |& tee $work/$id/log_jobsub_submit.txt
+      RET_SUB=${PIPESTATUS[0]}
+      test $RET_SUB -ne 0 && exit $RET_SUB
     else
       mkdir -p $work/$job_name/input
       rsync -av $work/input.tar.gz $data_path  $work/$job_name/input
@@ -74,4 +67,4 @@ for run_num in $(cat $run_list) ; do
       cd -
     fi
   done
-done 2>&1 | tee log_gridsub.txt
+done

@@ -69,6 +69,7 @@ for (( I_JOB = 0; I_JOB < $N_JOB; I_JOB++ )) ; do
 
     if [ $DO_SUB == 1 ]; then
 	CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
+	CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
 	CMD+=" -L $DIR_WORK/$I_JOB/log_gridrun.txt"
 	CMD+=" -f $DIR_WORK/input.tar.gz"
 	CMD+=" -f $FN_SIG"
