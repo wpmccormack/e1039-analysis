@@ -1,0 +1,55 @@
+Command: ../make-dst-list.sh ../../macro_gen_signal/data/20210823_11
+Time: 2021-08-24 08:23:00
+Directory = /pnfs/e1039/scratch/kenichi/HitEmbedding/data_signal/20210823_11
+        1/out/DST.root       2 MB 
+        2/out/DST.root       2 MB 
+        3/out/DST.root       2 MB 
+        4/out/DST.root       2 MB 
+        5/out/DST.root       2 MB 
+        6/out/DST.root       2 MB 
+        7/out/DST.root       2 MB 
+        8/out/DST.root       2 MB 
+        9/out/DST.root       3 MB 
+       10/out/DST.root       2 MB 
+       11/out/DST.root       2 MB 
+       12/out/DST.root       2 MB 
+       13/out/DST.root       3 MB 
+       14/out/DST.root       2 MB 
+       15/out/DST.root       2 MB 
+       16/out/DST.root       2 MB 
+       17/out/DST.root       2 MB 
+       18/out/DST.root       2 MB 
+       19/out/DST.root       2 MB 
+       20/out/DST.root       2 MB 
+       21/out/DST.root       3 MB 
+       22/out/DST.root       3 MB 
+       23/out/DST.root       2 MB 
+       24/out/DST.root       2 MB 
+       25/out/DST.root       2 MB 
+       26/out/DST.root       2 MB 
+       27/out/DST.root       2 MB 
+       28/out/DST.root       2 MB 
+       29/out/DST.root       2 MB 
+       30/out/DST.root       2 MB 
+       31/out/DST.root       2 MB 
+       32/out/DST.root       2 MB 
+       33/out/DST.root       2 MB 
+       34/out/DST.root       2 MB 
+       35/out/DST.root       2 MB 
+       36/out/DST.root       2 MB 
+       37/out/DST.root       2 MB 
+       38/out/DST.root       2 MB 
+       39/out/DST.root       2 MB 
+       40/out/DST.root       2 MB 
+       41/out/DST.root       2 MB 
+       42/out/DST.root       2 MB 
+       43/out/DST.root       2 MB 
+       44/out/DST.root       2 MB 
+       45/out/DST.root       2 MB 
+       46/out/DST.root       3 MB 
+       47/out/DST.root       2 MB 
+       48/out/DST.root       3 MB 
+       49/out/DST.root       2 MB 
+       50/out/DST.root       2 MB 
+
+Total: 50 files, 136 MB
