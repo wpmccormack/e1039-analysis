@@ -66,12 +66,3 @@ MakeOneList 'list_sig_file.txt' "$DIR_SIG" 'DST.root' 'T'
 echo
 MakeOneList 'list_emb_file.txt' "$DIR_EMB" 'embedding_data.root' 'tree'
 } |& tee info_list.txt
-
-##
-## Old lines
-##
-#find $DIR_SIG -name DST.root            | xargs -r readlink -m >list_sig_file.txt
-#find $DIR_EMB -name embedding_data.root | xargs -r readlink -m >list_emb_file.txt
-#
-#wc -l list_sig_file.txt
-#wc -l list_emb_file.txt

@@ -44,10 +44,6 @@ class AnaEmbeddedData: public SubsysReco {
 
  private:
   void SeparateHits(const SQHitVector* vec_in, std::map<int, SQHitVector*>& vec_sep, const bool in_time=false);
-
-  typedef std::map<int, int> IdMap_t; // For now the key is not ID but index.
-  void FindTrackRelation (IdMap_t& id_map);
-  void FindDimuonRelation(IdMap_t& id_map);
 };
 
 #endif /* _ANA_EMBEDDED_DATA__H_ */

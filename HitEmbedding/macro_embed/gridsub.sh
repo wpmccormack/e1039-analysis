@@ -22,7 +22,7 @@ while getopts ":gj:e:" OPT ; do
 done
 shift $((OPTIND - 1))
 JOB_NAME=$1
-test -z $JOB_NAME  && echo "Need a job name.  Abort."        && exit
+test -z $JOB_NAME  && echo "Need a job name.  Abort." && exit
 
 echo "JOB_NAME = $JOB_NAME"
 echo "DO_SUB   = $DO_SUB"

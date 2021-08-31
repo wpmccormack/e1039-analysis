@@ -2,8 +2,8 @@ DIR_TOP=$(dirname $(readlink -f $BASH_SOURCE))
 DIR_BUILD=$DIR_TOP/build
 DIR_INST=$DIR_TOP/inst
 
+E1039_CORE_VERSION=pr.112
 source /e906/app/software/osg/software/e1039/this-e1039.sh
-#source /e906/app/software/osg/users/$USER/e1039/core/this-e1039.sh
 export   LD_LIBRARY_PATH=$DIR_TOP/inst/lib:$LD_LIBRARY_PATH
 export ROOT_INCLUDE_PATH=$DIR_TOP/inst/include:$ROOT_INCLUDE_PATH
 

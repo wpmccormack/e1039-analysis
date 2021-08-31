@@ -1,8 +1,5 @@
 #ifndef _DO_EMBEDDING__H_
 #define _DO_EMBEDDING__H_
-//#include <map>
-//#include <TVector3.h>
-//#include <TLorentzVector.h>
 #include <fun4all/SubsysReco.h>
 #include "EmbeddingData.h"
 class TFile;

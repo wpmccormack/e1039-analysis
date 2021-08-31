@@ -54,10 +54,6 @@ int GenEmbeddingData::InitRun(PHCompositeNode* topNode)
 
 int GenEmbeddingData::process_event(PHCompositeNode* topNode)
 {
-  //static unsigned int n_evt = 0;
-  //if    (++n_evt % 100000 == 0) cout << n_evt << endl;
-  //else if (n_evt %  10000 == 0) cout << " . " << flush;
-
   mo_evt.run_id    = mi_evt->get_run_id();
   mo_evt.spill_id  = mi_evt->get_spill_id();
   mo_evt.event_id  = mi_evt->get_event_id();

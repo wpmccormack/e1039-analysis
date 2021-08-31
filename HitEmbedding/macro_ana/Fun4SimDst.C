@@ -1,15 +1,10 @@
-/// Fun4SimDst.C:  Fun4all macro to analyze the E1039 simulated DST files.
 R__LOAD_LIBRARY(libana_embedding)
 
 int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
 {
   Fun4AllServer* se = Fun4AllServer::instance();
-  //se->Verbosity(1);
   Fun4AllInputManager* man_in = new Fun4AllDstInputManager("DSTIN");
   se->registerInputManager(man_in);
-
-  //se->registerSubsystem(new AnaSimRunInfo());
-  //se->registerSubsystem(new FilterSimEvent());
 
   se->registerSubsystem(new AnaEmbeddedData());
 

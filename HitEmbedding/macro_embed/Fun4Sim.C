@@ -1,7 +1,3 @@
-#include <top/G4_Beamline.C>
-#include <top/G4_Target.C>
-#include <top/G4_InsensitiveVolumes.C>
-#include <top/G4_SensitiveDetectors.C>
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libana_embedding)
 R__LOAD_LIBRARY(libktracker)
@@ -12,14 +8,11 @@ int Fun4Sim(const char* fn_sig, const char* fn_emb, const int n_evt_in=0)
   ///
   /// Global parameters
   ///
-  const double target_coil_pos_z = -300;
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
-
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
-  rc->set_CharFlag("VTX_GEN_MATERIAL_MODE", "Target");
 
   Fun4AllServer *se = Fun4AllServer::instance();
 
@@ -43,9 +36,6 @@ int Fun4Sim(const char* fn_sig, const char* fn_emb, const int n_evt_in=0)
   //vertexing->Verbosity(1);
   vertexing->enable_fit_target_center();
   se->registerSubsystem(vertexing);
-
-  //// Trim minor data nodes (to reduce the DST file size)
-  //se->registerSubsystem(new SimDstTrimmer());
 
   ///
   /// Input, output and execution
@@ -72,10 +62,8 @@ int Fun4Sim(const char* fn_sig, const char* fn_emb, const int n_evt_in=0)
   man_in->fileopen(fn_sig);
   se->run(n_evt);
   
-  PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
   se->End();
   se->PrintTimer();
-  rc->WriteToFile("recoConsts.tsv");
   std::cout << "All done" << std::endl;
   delete se;
   gSystem->Exit(0);
