@@ -12,5 +12,8 @@
 #pragma link C++ class FilterSimEvent-!;
 #pragma link C++ class AnaSimRunInfo-!;
 #pragma link C++ class AnaSimDst-!;
+#pragma link C++ class AnaSimHit-!;
+#pragma link C++ class TraceHepMCParticle-!;
+#pragma link C++ class TracePHG4Particle-!;
 
 #endif

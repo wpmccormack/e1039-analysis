@@ -24,9 +24,24 @@ int AnaSimDst::Init(PHCompositeNode* topNode)
 
 int AnaSimDst::InitRun(PHCompositeNode* topNode)
 {
-  int ret = GetNodes(topNode);
-  if (ret != Fun4AllReturnCodes::EVENT_OK) return ret;
-  MakeTree();
+  mi_evt      = findNode::getClass<SQEvent       >(topNode, "SQEvent");
+  mi_evt_true = findNode::getClass<SQMCEvent     >(topNode, "SQMCEvent");
+  mi_vec_trk  = findNode::getClass<SQTrackVector >(topNode, "SQTruthTrackVector");
+  mi_vec_dim  = findNode::getClass<SQDimuonVector>(topNode, "SQTruthDimuonVector");
+  mi_srec     = findNode::getClass<SRecEvent     >(topNode, "SRecEvent");
+  if (!mi_evt || !mi_evt_true || !mi_vec_trk || !mi_vec_dim) return Fun4AllReturnCodes::ABORTEVENT;
+  if (!mi_srec) {
+    cout << "The SRecEvent node cannot be found in DST and thus won't be analyzed." << endl;
+  }
+
+  mo_file = new TFile("sim_tree.root", "RECREATE");
+  mo_tree = new TTree("tree", "Created by AnaSimDst");
+  mo_tree->Branch("evt"     , &mo_evt);
+  //mo_tree->Branch("trk_true", &mo_trk_true);
+  //mo_tree->Branch("trk_reco", &mo_trk_reco);
+  mo_tree->Branch("dim_true", &mo_dim_true);
+  mo_tree->Branch("dim_reco", &mo_dim_reco);
+
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
@@ -66,9 +81,9 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
   //for (unsigned int ii = 0; ii < mi_vec_trk->size(); ii++) {
   //  SQTrack* trk = &mi_vec_trk->at(ii);
   //  TrackData td;
-  //  td.charge  = trk->charge;
-  //  td.pos_vtx = trk->pos_vtx;
-  //  td.mom_vtx = trk->mom_vtx;
+  //  td.charge  = trk->get_charge();
+  //  td.pos_vtx = trk->get_pos_vtx();
+  //  td.mom_vtx = trk->get_mom_vtx();
   //  mo_trk_true.push_back(td);
   //
   //  if (mi_srec) {
@@ -116,44 +131,16 @@ int AnaSimDst::process_event(PHCompositeNode* topNode)
     }
   }
 
-  tree->Fill();
+  mo_tree->Fill();
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
 int AnaSimDst::End(PHCompositeNode* topNode)
 {
-  file->cd();
-  file->Write();
-  file->Close();
+  mo_file->cd();
+  mo_file->Write();
+  mo_file->Close();
   return Fun4AllReturnCodes::EVENT_OK;
-}
-
-int AnaSimDst::GetNodes(PHCompositeNode *topNode)
-{
-  mi_evt      = findNode::getClass<SQEvent       >(topNode, "SQEvent");
-  mi_evt_true = findNode::getClass<SQMCEvent     >(topNode, "SQMCEvent");
-  mi_vec_trk  = findNode::getClass<SQTrackVector >(topNode, "SQTruthTrackVector");
-  mi_vec_dim  = findNode::getClass<SQDimuonVector>(topNode, "SQTruthDimuonVector");
-  if (!mi_evt || !mi_evt_true || !mi_vec_trk || !mi_vec_dim) return Fun4AllReturnCodes::ABORTEVENT;
-
-  mi_srec = findNode::getClass<SRecEvent>(topNode, "SRecEvent");
-  if (!mi_srec) {
-    cout << "The SRecEvent node cannot be found in DST and thus won't be analyzed." << endl;
-  }
-
-  return Fun4AllReturnCodes::EVENT_OK;
-}
-
-void AnaSimDst::MakeTree()
-{
-  file = new TFile("sim_tree.root", "RECREATE");
-  tree = new TTree("tree", "Created by AnaSimDst");
-
-  tree->Branch("evt"     , &mo_evt);
-  //tree->Branch("trk_true", &mo_trk_true);
-  //tree->Branch("trk_reco", &mo_trk_reco);
-  tree->Branch("dim_true", &mo_dim_true);
-  tree->Branch("dim_reco", &mo_dim_reco);
 }
 
 void AnaSimDst::FindTrackRelation(IdMap_t& id_map)

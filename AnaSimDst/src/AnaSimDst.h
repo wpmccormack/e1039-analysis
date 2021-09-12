@@ -23,8 +23,8 @@ class AnaSimDst: public SubsysReco {
   SQDimuonVector* mi_vec_dim;
 
   /// Output
-  TFile* file;
-  TTree* tree;
+  TFile*     mo_file;
+  TTree*     mo_tree;
   EventData  mo_evt;
   TrackList  mo_trk_true;
   TrackList  mo_trk_reco;
@@ -40,9 +40,6 @@ class AnaSimDst: public SubsysReco {
   int End(PHCompositeNode *topNode);
 
  private:
-  int GetNodes(PHCompositeNode *topNode);
-  void MakeTree();
-
   typedef std::map<int, int> IdMap_t; // For now the key is not ID but index.
   void FindTrackRelation (IdMap_t& id_map);
   void FindDimuonRelation(IdMap_t& id_map);

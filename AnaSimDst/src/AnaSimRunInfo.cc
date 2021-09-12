@@ -21,7 +21,6 @@ AnaSimRunInfo::AnaSimRunInfo(const char* fn_lumi_tot, const char* fn_lumi_info, 
 
 int AnaSimRunInfo::Init(PHCompositeNode* topNode)
 {
-  if (m_fn_lumi_list.length() > 0) ofs_lumi_list.open(m_fn_lumi_list.c_str());
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
@@ -33,7 +32,11 @@ int AnaSimRunInfo::InitRun(PHCompositeNode* topNode)
 {
   mi_evt      = findNode::getClass<SQEvent      >(topNode, "SQEvent");
   mi_gen_inte = findNode::getClass<PHGenIntegral>(topNode, "PHGenIntegral");
-  if (!mi_evt || !mi_gen_inte) return Fun4AllReturnCodes::ABORTEVENT;
+  if (mi_evt && mi_gen_inte) {
+    if (m_fn_lumi_list.length() > 0) ofs_lumi_list.open(m_fn_lumi_list.c_str());
+  } else {
+    cout << "AnaSimRunInfo will do nothing since cannot find SQEvent/PHGenIntegral." << endl;
+  }
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
@@ -43,6 +46,8 @@ int AnaSimRunInfo::InitRun(PHCompositeNode* topNode)
  */
 int AnaSimRunInfo::process_event(PHCompositeNode* topNode)
 {
+  if (!mi_evt || !mi_gen_inte) return Fun4AllReturnCodes::EVENT_OK;
+
   static int run_id_pre = -1;
   static int evt_id_pre = -1;
   int run_id = mi_evt->get_run_id();
@@ -69,6 +74,8 @@ int AnaSimRunInfo::process_event(PHCompositeNode* topNode)
 
 int AnaSimRunInfo::End(PHCompositeNode* topNode)
 {
+  if (!mi_evt || !mi_gen_inte) return Fun4AllReturnCodes::EVENT_OK;
+
   if (ofs_lumi_list.is_open()) ofs_lumi_list.close();
 
   ostringstream oss;
