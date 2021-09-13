@@ -117,7 +117,7 @@ void TracePHG4Particle::PrintTraces(const int pdg_id)
 
 void TracePHG4Particle::TraceParent(const PHG4Particle* par, const int depth)
 {
-  if (depth == 1) cout << "  Trace:PHG4 ";
+  if (depth == 1) cout << "  Trace ";
   int pdg_id = par->get_pid();
   int trk_id = par->get_track_id(); // ID of this particle
   //int vtx_id = par->get_vtx_id();

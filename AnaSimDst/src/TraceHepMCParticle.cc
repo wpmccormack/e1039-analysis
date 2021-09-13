@@ -82,7 +82,7 @@ void TraceHepMCParticle::PrintTraces(const int pdg_id)
 
 void TraceHepMCParticle::TraceParent(const HepMC::GenParticle* par, const int depth)
 {
-  if (depth == 1) cout << "  Trace:HepMC ";
+  if (depth == 1) cout << "  Trace ";
   cout << setw(5) << par->pdg_id();
   const HepMC::GenVertex* vtx = par->production_vertex();
   if (! vtx) {
@@ -94,7 +94,7 @@ void TraceHepMCParticle::TraceParent(const HepMC::GenParticle* par, const int de
   bool line_1st = true;
   for (HepMC::GenVertex::particles_in_const_iterator it = vtx->particles_in_const_begin(); it != vtx->particles_in_const_end(); it++) {
     if (! line_1st) { // Fill spaces
-      cout << "              "; // "  Trace:HepMC "
+      cout << "        "; // "  Trace "
       for (int dd = 0; dd < depth; dd++) cout << "         "; // "***** <= "
     }
     TraceParent(*it, depth + 1);
