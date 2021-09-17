@@ -13,9 +13,9 @@ int Fun4SimDst(const int   n_dst_ana=0,
   se->registerSubsystem(new AnaSimRunInfo());
 
   /// Use these modules to debug simulation events.
-  //se->registerSubsystem(new TraceHepMCParticle());
-  //se->registerSubsystem(new TracePHG4Particle());
-  //se->registerSubsystem(new AnaSimHit());
+  se->registerSubsystem(new TraceHepMCParticle());
+  se->registerSubsystem(new TracePHG4Particle());
+  se->registerSubsystem(new AnaSimHit());
 
   //se->registerSubsystem(new FilterSimEvent());
 

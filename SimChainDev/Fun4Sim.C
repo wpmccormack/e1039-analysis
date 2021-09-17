@@ -47,7 +47,7 @@ int Fun4Sim(const int nevent = 10)
   const bool gen_e906legacy = false; // cf. SQPrimaryParticleGen
 
   //! vtx gen flag
-  const bool legacyVtxGen = true;
+  const bool legacyVtxGen = false;
   
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -84,12 +84,13 @@ int Fun4Sim(const int nevent = 10)
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
     //pythia8->set_config_file("phpythia8_DY.cfg");
-    pythia8->set_config_file("phpythia8_Jpsi.cfg"); // Jpsi, Jpsi_direct, psip
+    //pythia8->set_config_file("phpythia8_Jpsi.cfg"); // Jpsi, Jpsi_direct, psip
+    pythia8->set_config_file("phpythia8_OC.cfg"); // Jpsi, Jpsi_direct, psip
     if(legacyVtxGen) pythia8->enableLegacyVtxGen();
     else{
       pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     } 
-   pythia8->set_embedding_id(1);
+    pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
 
     pythia8->set_trigger_AND();
@@ -114,6 +115,7 @@ int Fun4Sim(const int nevent = 10)
     hr->set_particle_filter_on(true);
     hr->insert_particle_filter_pid(13);
     hr->insert_particle_filter_pid(-13);
+    hr->enable_position_filter(-500,500, -500,500, -500,500);
     se->registerSubsystem(hr);
   }
 
@@ -253,14 +255,15 @@ int Fun4Sim(const int nevent = 10)
   //digitizer->Verbosity(99);
   digitizer->set_enable_st1dc(do_station1DC);    // these two lines need to be in sync with the parameters used
   digitizer->set_enable_dphodo(do_dphodo);       // in the SetupSensitiveVolumes() function call above
+  //digitizer->set_digitize_secondaries(true);
   se->registerSubsystem(digitizer);
 
   /// Save only events that are in the geometric acceptance.
-  //SQGeomAcc* geom_acc = new SQGeomAcc();
-  //geom_acc->SetMuonMode(SQGeomAcc::PAIR); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
-  //geom_acc->SetPlaneMode(SQGeomAcc::HODO_CHAM); // HODO, CHAM or HODO_CHAM
-  //geom_acc->SetNumOfH1EdgeElementsExcluded(4); // Exclude 4 elements at H1 edges
-  //se->registerSubsystem(geom_acc);
+  SQGeomAcc* geom_acc = new SQGeomAcc();
+  geom_acc->SetMuonMode(SQGeomAcc::PAIR); // PAIR, PAIR_TBBT, SINGLE, SINGLE_T, etc.
+  geom_acc->SetPlaneMode(SQGeomAcc::HODO_CHAM); // HODO, CHAM or HODO_CHAM
+  geom_acc->SetNumOfH1EdgeElementsExcluded(4); // Exclude 4 elements at H1 edges
+  se->registerSubsystem(geom_acc);
 
   // Make SQ nodes for truth info
   se->registerSubsystem(new TruthNodeMaker());
@@ -290,26 +293,26 @@ int Fun4Sim(const int nevent = 10)
   //se->registerSubsystem(evt_filter);
 
   // Tracking module
-  SQReco* reco = new SQReco();
-  reco->Verbosity(0);
-  //reco->set_geom_file_name("support/geom.root"); //not needed as it's created on the fly
-  reco->set_enable_KF(true);           //Kalman filter not needed for the track finding, disabling KF saves a lot of initialization time
-  reco->setInputTy(SQReco::E1039);     //options are SQReco::E906 and SQReco::E1039
-  reco->setFitterTy(SQReco::KFREF);    //not relavant for the track finding
-  reco->set_evt_reducer_opt("none");   //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none", for normal tracking, set to something like "aoc"
-  reco->set_enable_eval(true);          //set to true to generate evaluation file which includes final track candidates 
-  reco->set_eval_file_name("eval.root");
-  reco->set_enable_eval_dst(false);     //set to true to include final track cnadidates in the DST tree
-  if(gen_cosmic) reco->add_eval_list(3);    //output of cosmic reco is contained in the eval output for now
-  //reco->add_eval_list(3);             //include back partial tracks in eval tree for debuging
-  //reco->add_eval_list(2);             //include station-3+/- in eval tree for debuging
-  //reco->add_eval_list(1);             //include station-2 in eval tree for debugging
-  se->registerSubsystem(reco);
+//  SQReco* reco = new SQReco();
+//  reco->Verbosity(0);
+//  //reco->set_geom_file_name("support/geom.root"); //not needed as it's created on the fly
+//  reco->set_enable_KF(true);           //Kalman filter not needed for the track finding, disabling KF saves a lot of initialization time
+//  reco->setInputTy(SQReco::E1039);     //options are SQReco::E906 and SQReco::E1039
+//  reco->setFitterTy(SQReco::KFREF);    //not relavant for the track finding
+//  reco->set_evt_reducer_opt("none");   //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none", for normal tracking, set to something like "aoc"
+//  reco->set_enable_eval(true);          //set to true to generate evaluation file which includes final track candidates 
+//  reco->set_eval_file_name("eval.root");
+//  reco->set_enable_eval_dst(false);     //set to true to include final track cnadidates in the DST tree
+//  if(gen_cosmic) reco->add_eval_list(3);    //output of cosmic reco is contained in the eval output for now
+//  //reco->add_eval_list(3);             //include back partial tracks in eval tree for debuging
+//  //reco->add_eval_list(2);             //include station-3+/- in eval tree for debuging
+//  //reco->add_eval_list(1);             //include station-2 in eval tree for debugging
+//  se->registerSubsystem(reco);
 
-  VertexFit* vertexing = new VertexFit();
+//  VertexFit* vertexing = new VertexFit();
   //vertexing->enable_fit_target_center(); //uncomment if you want to fit in the target center
   //vertexing->enableOptimization(); //uncomment if you want to fit according to new optimization formula
-  se->registerSubsystem(vertexing);
+//  se->registerSubsystem(vertexing);
 
   //// Trim minor data nodes (to reduce the DST file size)
   //se->registerSubsystem(new SimDstTrimmer());
