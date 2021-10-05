@@ -6,12 +6,18 @@
 struct EventData {
   int event_id;
   int trig_bits;
-  int rec_stat;
+  int rfp01;
+  int rfp00;
+  int rfm01;
   double weight;
+  int rec_stat;
   int n_h1x;
   int n_h2x;
   int n_h3x;
   int n_h4x;
+  int n_d1;
+  int n_d2;
+  int n_d3;
 
   EventData();
   virtual ~EventData() {;}
@@ -35,6 +41,11 @@ struct DimuonData {
   TLorentzVector mom;
   TLorentzVector mom_pos;
   TLorentzVector mom_neg;
+  double mass;
+  double pT;
+  double x1;
+  double x2;
+  double xF;
 
   DimuonData();
   virtual ~DimuonData() {;}

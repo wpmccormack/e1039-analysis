@@ -23,7 +23,8 @@ class DoEmbedding: public SubsysReco {
   SQMCEvent     * mi_sim_evt;
   SQTrackVector * mi_sim_vec_trk;
   SQDimuonVector* mi_sim_vec_dim;
-  SQEvent       * _evt_emb;
+  SQEvent       * mi_evt_emb; ///< Node to hold SQEvent of embedded event as is
+  SQMCEvent     * mi_sim_evt_emb; ///< Node to hold SQMCEvent of embedded event as is
 
   /// Embedding data
   std::vector<std::string> m_list_emb_file;
@@ -32,13 +33,21 @@ class DoEmbedding: public SubsysReco {
   bool m_emb_data_has_sim_evt;
   bool m_emb_data_has_sim_trk;
   bool m_emb_data_has_sim_dim;
+  //TFile* m_file_emb;
+  //TTree* m_tree_emb;
+  //EmbEventData*     m_emb_evt;
+  //EmbHitList*       m_emb_hit_list;
+  //EmbSimEventData*  m_emb_sim_evt;
+  //EmbSimTrackList*  m_emb_sim_trk_list;
+  //EmbSimDimuonList* m_emb_sim_dim_list;
+
   TFile* m_file_emb;
   TTree* m_tree_emb;
-  EmbEventData*     m_emb_evt;
-  EmbHitList*       m_emb_hit_list;
-  EmbSimEventData*  m_emb_sim_evt;
-  EmbSimTrackList*  m_emb_sim_trk_list;
-  EmbSimDimuonList* m_emb_sim_dim_list;
+  SQEvent*        m_emb_sqevt;
+  SQMCEvent*      m_emb_sqmcevt;
+  SQHitVector*    m_emb_sqvec_hit;
+  SQTrackVector*  m_emb_sqvec_trk;
+  SQDimuonVector* m_emb_sqvec_dim;
 
  public:
   DoEmbedding(const std::string name="DoEmbedding");
@@ -46,6 +55,8 @@ class DoEmbedding: public SubsysReco {
   int Init(PHCompositeNode *topNode);
   int InitRun(PHCompositeNode *topNode);
   int process_event(PHCompositeNode *topNode);
+  int process_event_v2(PHCompositeNode *topNode);
+  int process_event_v1(PHCompositeNode *topNode);
   int End(PHCompositeNode *topNode);
 
   void DoOverwriteRfInfo(const bool overwrite) { m_overwrite_rf_info = overwrite; }

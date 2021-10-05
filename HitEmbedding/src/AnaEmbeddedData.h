@@ -14,16 +14,17 @@ class SQHitVector;
 class SQTrackVector;
 class SQDimuonVector;
 
-/// An example class to analyze the simulated uDST file.
+/// A SubsysReco module to analyze the hit-embedded data.
 class AnaEmbeddedData: public SubsysReco {
   /// Input
   SQEvent       * mi_evt;
   SQEvent       * mi_evt_emb;
-  SRecEvent     * mi_srec;
   SQMCEvent     * mi_evt_mc;
+  SQMCEvent     * mi_evt_mc_emb;
   SQHitVector   * mi_vec_hit;
   SQTrackVector * mi_vec_trk;
   SQDimuonVector* mi_vec_dim;
+  SRecEvent     * mi_srec;
 
   /// Output
   TFile*     mo_file;

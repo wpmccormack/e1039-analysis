@@ -4,7 +4,7 @@ DIR_MACRO=$(dirname $(readlink -f $BASH_SOURCE))
 JOB_NAME=$1
 DO_SUB=$2
 N_JOB=$3
-N_EVT=$4 # 10000 for 2 hours
+N_EVT=$4 # 5000 = 17 hours, 10000 for 300 accepted events in 1 hour
 echo "JOB_NAME = $JOB_NAME"
 echo "DO_SUB   = $DO_SUB"
 echo "N_JOB    = $N_JOB"
@@ -31,7 +31,7 @@ for (( I_JOB = 1; I_JOB <= $N_JOB; I_JOB++ )) ; do
     
     if [ $DO_SUB == 1 ]; then
 	CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
-	CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
+	CMD+=" --expected-lifetime='long'" # medium=8h, short=3h, long=23h
 	CMD+=" -L $DIR_WORK/$I_JOB/log_gridrun.txt"
 	CMD+=" -f $DIR_WORK/input.tar.gz"
 	CMD+=" -d OUTPUT $DIR_WORK/$I_JOB/out"

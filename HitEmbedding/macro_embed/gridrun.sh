@@ -15,7 +15,6 @@ echo "PWD    = $PWD"
 
 tar xzf $CONDOR_DIR_INPUT/input.tar.gz
 
-E1039_CORE_VERSION=pr.112
 FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
 if [ ! -e $FN_SETUP ] ; then # On grid
     FN_SETUP=/cvmfs/seaquest.opensciencegrid.org/seaquest/${FN_SETUP#/e906/app/software/osg/}

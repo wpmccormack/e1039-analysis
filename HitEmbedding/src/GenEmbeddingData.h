@@ -33,6 +33,14 @@ class GenEmbeddingData: public SubsysReco {
   EmbSimTrackList  mo_sim_trk_list;
   EmbSimDimuonList mo_sim_dim_list;
 
+  TFile* mo_file2;
+  TTree* mo_tree2;
+  //SQEvent*        mo_sqevt;
+  //SQMCEvent*      mo_sqmcevt;
+  //SQHitVector*    mo_sqhv;
+  //SQTrackVector*  mo_sqtv;
+  //SQDimuonVector* mo_sqdv;
+
  public:
   GenEmbeddingData(const std::string name="GenEmbeddingData");
   virtual ~GenEmbeddingData() {;}

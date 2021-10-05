@@ -1,7 +1,7 @@
 #!/bin/bash
-
-nevents=$1
-job_id=$2
+RUN=$1
+FNAME=$2
+N_EVT=$3
 
 if [ -z "$CONDOR_DIR_INPUT" -o -z "$CONDOR_DIR_OUTPUT" ] ; then
     echo "!ERROR!  CONDOR_DIR_INPUT/OUTPUT is undefined.  Abort."
@@ -23,13 +23,13 @@ source $FN_SETUP
 export   LD_LIBRARY_PATH=inst/lib:$LD_LIBRARY_PATH
 export ROOT_INCLUDE_PATH=inst/include:$ROOT_INCLUDE_PATH
 
-time root -b -q Fun4Sim.C\($nevents\)
+time root -b -q "Fun4All.C($RUN, \"$CONDOR_DIR_INPUT/$FNAME\", $N_EVT)"
 RET=$?
 if [ $RET -ne 0 ] ; then
-    echo "Error in Fun4Sim.C: $RET"
+    echo "Error in Fun4All.C: $RET"
     exit $RET
 fi
 
-mv  *.root *.tsv  $CONDOR_DIR_OUTPUT
+mv  *.root *.txt  $CONDOR_DIR_OUTPUT
 
 echo "gridrun.sh finished!"

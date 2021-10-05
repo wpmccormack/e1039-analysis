@@ -31,7 +31,7 @@ int Fun4Sim(const int n_evt=0)
   /// Event generator
   ///
   SQPrimaryParticleGen *sq_gen = new SQPrimaryParticleGen();
-  sq_gen->set_xfRange(0.0, 0.9);
+  sq_gen->set_xfRange(0.2, 0.8); // 0.0-0.9
   sq_gen->enableJPsiGen();
   se->registerSubsystem(sq_gen);
 
@@ -103,7 +103,8 @@ int Fun4Sim(const int n_evt=0)
   man_out->AddNode("SQTruthTrackVector");
   man_out->AddNode("SQTruthDimuonVector");
 
-  se->run(n_evt);
+  const bool count_only_good_events = true;
+  se->run(n_evt, count_only_good_events);
   
   se->End();
   se->PrintTimer();

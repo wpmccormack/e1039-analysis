@@ -6,6 +6,13 @@
 #include <interface_main/SQHitVector.h>
 #include <interface_main/SQTrackVector.h>
 #include <interface_main/SQDimuonVector.h>
+//
+//#include <interface_main/SQEvent_v1.h>
+//#include <interface_main/SQMCEvent_v1.h>
+//#include <interface_main/SQHitVector_v1.h>
+//#include <interface_main/SQTrackVector_v1.h>
+//#include <interface_main/SQDimuonVector_v1.h>
+//
 #include <ktracker/SRecEvent.h>
 #include <fun4all/Fun4AllReturnCodes.h>
 #include <phool/getClass.h>
@@ -41,13 +48,33 @@ int GenEmbeddingData::InitRun(PHCompositeNode* topNode)
   mi_sim_vec_dim = findNode::getClass<SQDimuonVector>(topNode, "SQTruthDimuonVector");
   //if (!mi_evt || !mi_sim_evt || !mi_vec_hit || !mi_vec_trk) return Fun4AllReturnCodes::ABORTEVENT;
 
-  mo_file = new TFile(m_name_file.c_str(), "RECREATE");
+  mo_file = new TFile("embedding_data_v1.root", "RECREATE");
   mo_tree = new TTree(m_name_tree.c_str(), "Created by GenEmbeddingData");
   mo_tree->Branch("emb_evt"     , &mo_evt     );
   mo_tree->Branch("emb_hit_list", &mo_hit_list);
   if (mi_sim_evt    ) mo_tree->Branch("emb_sim_evt"     , &mo_sim_evt     );
   if (mi_sim_vec_trk) mo_tree->Branch("emb_sim_trk_list", &mo_sim_trk_list);
   if (mi_sim_vec_dim) mo_tree->Branch("emb_sim_dim_list", &mo_sim_dim_list);
+
+  //mo_sqevt   = new SQEvent_v1();
+  //mo_sqhv    = new SQHitVector_v1();
+  //mo_sqmcevt = new SQMCEvent_v1();
+  //mo_sqtv    = new SQTrackVector_v1();
+  //mo_sqdv    = new SQDimuonVector_v1();
+  //mo_tree2 = new TTree("tree2", "Created by GenEmbeddingData");
+  //mo_tree->Branch("SQEventEmb"    , &mo_sqevt);
+  //mo_tree->Branch("SQHitVectorEmb", &mo_sqhv);
+  //if (mi_sim_evt    ) mo_tree->Branch("SQMCEventEmb"     , &mo_sqmcevt);
+  //if (mi_sim_vec_trk) mo_tree->Branch("SQTrackVectorEmb" , &mo_sqtv);
+  //if (mi_sim_vec_dim) mo_tree->Branch("SQDimuonVectorEmb", &mo_sqdv);
+
+  mo_file2 = new TFile(m_name_file.c_str(), "RECREATE");
+  mo_tree2 = new TTree(m_name_tree.c_str(), "Created by GenEmbeddingData");
+  mo_tree2->Branch("SQEvent"    , &mi_evt);
+  mo_tree2->Branch("SQHitVector", &mi_vec_hit);
+  if (mi_sim_evt    ) mo_tree2->Branch("SQMCEvent"          , &mi_sim_evt);
+  if (mi_sim_vec_trk) mo_tree2->Branch("SQTruthTrackVector" , &mi_sim_vec_trk);
+  if (mi_sim_vec_dim) mo_tree2->Branch("SQTruthDimuonVector", &mi_sim_vec_dim);
 
   return Fun4AllReturnCodes::EVENT_OK;
 }
@@ -115,6 +142,7 @@ int GenEmbeddingData::process_event(PHCompositeNode* topNode)
   }
 
   mo_tree->Fill();
+  mo_tree2->Fill();
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
@@ -123,5 +151,8 @@ int GenEmbeddingData::End(PHCompositeNode* topNode)
   mo_file->cd();
   mo_file->Write();
   mo_file->Close();
+  mo_file2->cd();
+  mo_file2->Write();
+  mo_file2->Close();
   return Fun4AllReturnCodes::EVENT_OK;
 }

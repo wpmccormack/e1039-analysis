@@ -18,7 +18,7 @@ int Fun4Sim(const char* fn_sig, const char* fn_emb, const int n_evt_in=0)
 
   /// Hit embedding
   DoEmbedding* do_emb = new DoEmbedding();
-  //do_emb->Verbosity(10);
+  do_emb->Verbosity(10);
   do_emb->AddEmbDataFile(fn_emb);
   int n_evt_emb = do_emb->GetNumEmbEvents();
   se->registerSubsystem(do_emb);
