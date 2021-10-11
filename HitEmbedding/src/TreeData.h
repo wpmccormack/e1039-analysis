@@ -1,6 +1,5 @@
 #ifndef _TREE_DATA__H_
 #define _TREE_DATA__H_
-#include <phool/PHObject.h>
 #include <TLorentzVector.h>
 
 struct EventData {
@@ -46,6 +45,8 @@ struct DimuonData {
   double x1;
   double x2;
   double xF;
+  double costh_cs;
+  double phi_cs;
 
   DimuonData();
   virtual ~DimuonData() {;}
@@ -56,4 +57,4 @@ struct DimuonData {
 typedef std::vector<TrackData > TrackList;
 typedef std::vector<DimuonData> DimuonList;
 
-#endif /* _TREE_DATA__H_ */
+#endif // _TREE_DATA__H_

@@ -8,7 +8,8 @@ RUN_LIST=/data2/production/list/R009/R009_fy2017.list
 RUN_N=$(cat $RUN_LIST | wc -l)
 
 DIR_IN=scratch
-DIR_OUT=/pnfs/e1039/scratch/$USER/data_emb_e906
+#DIR_OUT=/pnfs/e1039/scratch/$USER/data_emb_e906
+DIR_OUT=/pnfs/e1039/persistent/users/$USER/data_emb_e906
 
 ##
 ## Function
@@ -23,23 +24,18 @@ function WriteOneFile {
     echo "$FN_LIST" >$DIR/input.txt
 }
 
-#function WriteOneFile {
-#    local -r II=$1
-#    local -r FN_LIST="$2"
-#    local -r OUT_ROOT=$(printf "embedding_data_%04d.root" $II)
-#    local -r  OUT_LOG=$(printf "embedding_data_%04d.txt"  $II)
-#    echo "Write to $OUT_ROOT..."
-#    hadd -k $DIR_OUT/$OUT_ROOT $FN_LIST &>$DIR_OUT/$OUT_LOG
-#}
-
 ##
 ## Main
 ##
 if [ -e $DIR_OUT ] ; then
-    echo "Clean up DIR_OUT..."
+    echo "DIR_OUT exists."
+    if [ "X$1" != 'Xgo' ] ; then
+	echo "Give 'go' to clean it up and proceed.  Abort."
+	exit
+    fi
+    echo "  Clean up..."
     rm -rf $DIR_OUT
 fi
-#mkdir -p $DIR_OUT
 
 source /e906/app/software/osg/software/e1039/this-e1039.sh
 

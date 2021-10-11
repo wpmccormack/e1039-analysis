@@ -92,8 +92,6 @@ int CalibXTv2::process_event(PHCompositeNode* topNode)
       if (drift_dist < 0) drift_dist = 0;
       hit->set_in_time(t1 <= tdc_time && tdc_time <= t0);
       hit->set_drift_distance(drift_dist);
-      /// No field for resolution in SQHit now.
-      //cout << "check: " << det << " " << ele << " " << t0 << " " << drift_time << " " << hit->get_drift_distance() << endl;
     } else { // Hodoscope
       hit->set_drift_distance(0);
     }

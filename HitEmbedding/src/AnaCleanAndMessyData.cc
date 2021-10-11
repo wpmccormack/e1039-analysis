@@ -1,3 +1,4 @@
+#include <iostream>
 #include <iomanip>
 #include <TFile.h>
 #include <TTree.h>
@@ -5,13 +6,12 @@
 #include <TH1D.h>
 #include <TEfficiency.h>
 #include <TCanvas.h>
-#include <UtilAna/UtilSQHit.h>
-#include <UtilAna/UtilDimuon.h>
 #include "AnaCleanAndMessyData.h"
 using namespace std;
 
 AnaCleanAndMessyData::AnaCleanAndMessyData()
-  : m_cl_file(0)
+  : m_verb(0)
+  , m_cl_file(0)
   , m_cl_tree(0)
   , m_me_file(0)
   , m_me_tree(0)
@@ -62,6 +62,13 @@ void AnaCleanAndMessyData::Init(const char* fn_clean, const char* fn_messy)
   m_h1_dim_me     = new TH1D("h1_dim_me"    , ";RF+00;", 20, 0, 1000);
 }
 
+/// Function to analyze a pair of non-embedded and embedded (i.e. clean and messy) data.
+/**
+ * The main part of this function is to match the event between the two data.
+ * The present (signal) data don't have file ID (or job ID), and thus
+ * this function assumes the file (or job) of an event has changed when
+ * event ID decreases.
+ */
 void AnaCleanAndMessyData::Analyze()
 {
   int n_cl_evt = m_cl_tree->GetEntries();
@@ -77,23 +84,24 @@ void AnaCleanAndMessyData::Analyze()
     m_cl_tree->GetEntry(i_cl_evt);
     m_me_tree->GetEntry(i_me_evt);
 
-    while (file_id_cl < file_id_me) {
-      int evt_id_pre = m_cl_evt->event_id;
-      i_cl_evt++;
-      if (i_cl_evt >= n_cl_evt) return;
-      m_cl_tree->GetEntry(i_cl_evt);
-      if (m_cl_evt->event_id < evt_id_pre) file_id_cl++;
-    }
-    while (file_id_cl > file_id_me) {
-      int evt_id_pre = m_me_evt->event_id;
-      i_me_evt++;
-      if (i_me_evt >= n_me_evt) return;
-      m_me_tree->GetEntry(i_me_evt);
-      if (m_me_evt->event_id < evt_id_pre) file_id_me++;
+    while (file_id_cl != file_id_me) { // File IDs are different
+      if (file_id_cl < file_id_me) {
+        int evt_id_pre = m_cl_evt->event_id;
+        i_cl_evt++;
+        if (i_cl_evt >= n_cl_evt) return;
+        m_cl_tree->GetEntry(i_cl_evt);
+        if (m_cl_evt->event_id < evt_id_pre) file_id_cl++;
+      } else { // >
+        int evt_id_pre = m_me_evt->event_id;
+        i_me_evt++;
+        if (i_me_evt >= n_me_evt) return;
+        m_me_tree->GetEntry(i_me_evt);
+        if (m_me_evt->event_id < evt_id_pre) file_id_me++;
+      }
     }
 
     bool file_id_changed = false;
-    while (m_cl_evt->event_id != m_me_evt->event_id) {
+    while (m_cl_evt->event_id != m_me_evt->event_id) { // Event IDs are different
       if (m_cl_evt->event_id < m_me_evt->event_id) {
         int evt_id_pre = m_cl_evt->event_id;
         i_cl_evt++;
@@ -116,10 +124,13 @@ void AnaCleanAndMessyData::Analyze()
         }
       }
     }
-    if (file_id_changed) continue;
+    if (file_id_changed) continue; // Need align file IDs first.
 
-    //cout << "L " << i_cl_evt << "/" << n_cl_evt << " " << file_id_cl << ":" << m_cl_evt->event_id
-    //     << "  " << i_me_evt << "/" << n_me_evt << " " << file_id_me << ":" << m_me_evt->event_id << endl;
+    if (Verbosity() > 9) {
+      cout << "AnaCleanAndMessyData::Analyze():\n"
+           << "  Clean: " << i_cl_evt << "/" << n_cl_evt << " " << file_id_cl << ":" << m_cl_evt->event_id
+           << "  Messy: " << i_me_evt << "/" << n_me_evt << " " << file_id_me << ":" << m_me_evt->event_id << endl;
+    }
     AnalyzeEvent();
     i_cl_evt++;
     i_me_evt++;
@@ -133,6 +144,10 @@ void AnaCleanAndMessyData::End()
   if (m_out_file) DrawAndWriteOutput();
 }
 
+/// Function to analyze one event.
+/**
+ * This function should be modified as your analysis needs.
+ */
 void AnaCleanAndMessyData::AnalyzeEvent()
 {
   double ww = m_cl_evt->weight;
@@ -169,78 +184,9 @@ void AnaCleanAndMessyData::AnalyzeEvent()
   m_h1_trk_neg_me->Fill(rfp00, n_trk_neg_me);
   m_h1_dim_cl    ->Fill(rfp00, n_dim_cl    );
   m_h1_dim_me    ->Fill(rfp00, n_dim_me    );
-
-  ///
-  /// Event info
-  ///
-//  mo_evt.event_id  = mi_evt->get_event_id();
-//  mo_evt.trig_bits = mi_evt->get_trigger();
-//  mo_evt.rfp01     = mi_evt->get_qie_rf_intensity(+1);
-//  mo_evt.rfp00     = mi_evt->get_qie_rf_intensity( 0);
-//  mo_evt.rfm01     = mi_evt->get_qie_rf_intensity(-1);
-//
-//  if (mi_evt_mc) {
-//    mo_evt.weight = mi_evt_mc->get_weight();
-//  }
-//  if (mi_srec) {
-//    mo_evt.rec_stat = mi_srec->getRecStatus();
-//  }
-//
-//  ///
-//  /// Truth track/dimuon info
-//  ///
-//  if (mi_vec_trk) {
-//    mo_trk_true.clear();
-//    for (unsigned int ii = 0; ii < mi_vec_trk->size(); ii++) {
-//      SQTrack* trk = mi_vec_trk->at(ii);
-//      TrackData td;
-//      td.charge  = trk->get_charge();
-//      td.mom_vtx = trk->get_mom_vtx();
-//      //cout << " " << trk->get_track_id() << ":" << trk->get_charge();
-//      mo_trk_true.push_back(td);
-//    }
-//  }
-//  if (mi_vec_dim) {
-//    mo_dim_true.clear();
-//    for (unsigned int ii = 0; ii < mi_vec_dim->size(); ii++) {
-//      SQDimuon* dim = mi_vec_dim->at(ii);
-//      DimuonData dd;
-//      dd.mom     = dim->get_mom();
-//      dd.mom_pos = dim->get_mom_pos();
-//      dd.mom_neg = dim->get_mom_neg();
-//      UtilDimuon::CalcVar(dim, dd.mass, dd.pT, dd.x1, dd.x2, dd.xF);
-//      mo_dim_true.push_back(dd);
-//      //cout << " " << dim->get_dimuon_id();
-//    }
-//  }
-//
-//  ///
-//  /// Reconstructed track/dimuon info
-//  ///
-//  if (mi_srec) {
-//    mo_trk_reco.clear();
-//    for (int ii = 0; ii < mi_srec->getNTracks(); ii++) {
-//      SRecTrack* trk = &mi_srec->getTrack(ii);
-//      TrackData td;
-//      td.charge  = trk->getCharge();
-//      td.mom_vtx = trk->getMomentumVertex();
-//      mo_trk_reco.push_back(td);
-//    }
-//    mo_dim_reco.clear();
-//    for (int ii = 0; ii < mi_srec->getNDimuons(); ii++) {
-//      SRecDimuon* dim = &mi_srec->getDimuon(ii);
-//      DimuonData dd;
-//      dd.mom     = dim->p_pos + dim->p_neg;
-//      dd.mom_pos = dim->p_pos;
-//      dd.mom_neg = dim->p_neg;
-//      UtilDimuon::CalcVar(dd.mom_pos, dd.mom_neg, dd.mass, dd.pT, dd.x1, dd.x2, dd.xF);
-//      mo_dim_reco.push_back(dd);
-//    }
-//  }
-//
-//  mo_tree->Fill();
 }
 
+/// Function to be called in End() to make, draw and write output objects.
 void AnaCleanAndMessyData::DrawAndWriteOutput()
 {
   m_out_file->cd();

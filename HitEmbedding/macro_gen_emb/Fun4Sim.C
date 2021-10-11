@@ -12,23 +12,16 @@ using namespace std;
 
 int Fun4Sim(const int nevent = 10)
 {
+  recoConsts *rc = recoConsts::instance();
+  Fun4AllServer *se = Fun4AllServer::instance();
+
   ///
   /// Global parameters
   ///
-  const double target_coil_pos_z = -300;
-  const double target_l = 7.9; //cm
-  const double target_z = (7.9-target_l)/2.; //cm
-  const int use_g4steps = 1;
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
-
-  recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
-  rc->set_DoubleFlag("SIGX_BEAM", 0.3);
-  rc->set_DoubleFlag("SIGY_BEAM", 0.3);
-
-  Fun4AllServer *se = Fun4AllServer::instance();
 
   ///
   /// Event generator
@@ -59,8 +52,8 @@ int Fun4Sim(const int nevent = 10)
   g4Reco->SetPhysicsList("FTFP_BERT");
 
   SetupInsensitiveVolumes(g4Reco);
-  SetupBeamline(g4Reco, true, target_coil_pos_z - 302.36); // collimator, targer and shielding between target and FMag
-  SetupTarget(g4Reco, target_coil_pos_z, target_l, target_z, use_g4steps);
+  SetupBeamline(g4Reco);
+  SetupTarget(g4Reco);
   SetupSensitiveDetectors(g4Reco);
 
   se->registerSubsystem(g4Reco);

@@ -1,6 +1,6 @@
-Command: ../make-dst-list.sh ../../macro_gen_signal/data/20211003_01
-Time: 2021-10-03 23:05:40
-Directory = /pnfs/e1039/scratch/kenichi/HitEmbedding/data_signal/20211003_01
+Command: ../make-dst-list.sh ../../macro_gen_signal/data/jpsi_20211003
+Time: 2021-10-11 12:04:06
+Directory = /pnfs/e1039/scratch/kenichi/HitEmbedding/data_signal/jpsi_20211003
         1/out/DST.root      83 MB 
         2/out/DST.root      83 MB 
         4/out/DST.root      83 MB 

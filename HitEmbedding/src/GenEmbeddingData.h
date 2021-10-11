@@ -1,10 +1,6 @@
 #ifndef _GEN_EMBEDDING_DATA__H_
 #define _GEN_EMBEDDING_DATA__H_
-//#include <map>
-//#include <TVector3.h>
-//#include <TLorentzVector.h>
 #include <fun4all/SubsysReco.h>
-#include "EmbeddingData.h"
 class TFile;
 class TTree;
 class SQEvent;
@@ -27,19 +23,6 @@ class GenEmbeddingData: public SubsysReco {
   std::string m_name_tree;
   TFile* mo_file;
   TTree* mo_tree;
-  EmbEventData     mo_evt;
-  EmbHitList       mo_hit_list;
-  EmbSimEventData  mo_sim_evt;
-  EmbSimTrackList  mo_sim_trk_list;
-  EmbSimDimuonList mo_sim_dim_list;
-
-  TFile* mo_file2;
-  TTree* mo_tree2;
-  //SQEvent*        mo_sqevt;
-  //SQMCEvent*      mo_sqmcevt;
-  //SQHitVector*    mo_sqhv;
-  //SQTrackVector*  mo_sqtv;
-  //SQDimuonVector* mo_sqdv;
 
  public:
   GenEmbeddingData(const std::string name="GenEmbeddingData");

@@ -37,7 +37,6 @@ LIST_EMB=( $(cat $FN_LIST_EMB) )
 N_SIG=${#LIST_SIG[*]}
 N_EMB=${#LIST_EMB[*]}
 N_BOTH=$(( N_SIG < N_EMB ? N_SIG : N_EMB ))
-#test $JOB_E -eq 0 -o $JOB_E -gt $N_BOTH  &&  JOB_E=$N_BOTH
 test -z "$JOB_B" || test $JOB_B -lt 1       && JOB_B=1
 test -z "$JOB_E" || test $JOB_E -gt $N_BOTH && JOB_E=$N_BOTH
 
@@ -65,9 +64,9 @@ mkdir -p $DIR_WORK
 rm -f    $DIR_WORK/input.tar.gz
 tar czf  $DIR_WORK/input.tar.gz  *.C  ../inst
 
-for (( JOB_I = $JOB_B; JOB_I < $JOB_E; JOB_I++ )) ; do
-    FN_SIG=${LIST_SIG[$JOB_I]}
-    FN_EMB=${LIST_EMB[$JOB_I]}
+for (( JOB_I = $JOB_B; JOB_I <= $JOB_E; JOB_I++ )) ; do
+    FN_SIG=${LIST_SIG[$((JOB_I-1))]}
+    FN_EMB=${LIST_EMB[$((JOB_I-1))]}
     DIR_WORK_JOB=$DIR_WORK/$(printf "%04d" $JOB_I)
 
     if [ -e $DIR_WORK_JOB ] ; then
@@ -106,4 +105,4 @@ for (( JOB_I = $JOB_B; JOB_I < $JOB_E; JOB_I++ )) ; do
 	cd $DIR_WORK_JOB
 	$DIR_WORK_JOB/gridrun.sh $N_EVT |& tee $DIR_WORK_JOB/log_gridrun.txt
     fi
-done <$FN_LIST_EMB
+done

@@ -7,6 +7,7 @@ class SQEvent;
 /// A SubsysReco module to filter E906 NIM3 events.
 /** 
  * It accepts only good NIM3 (i.e. random RF) events.
+ * A list of good spills is read from a list file.
  */
 class FilterE906Nim3: public SubsysReco {
   std::string m_list_name;

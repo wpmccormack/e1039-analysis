@@ -1,7 +1,6 @@
 #ifndef _DO_EMBEDDING__H_
 #define _DO_EMBEDDING__H_
 #include <fun4all/SubsysReco.h>
-#include "EmbeddingData.h"
 class TFile;
 class TTree;
 class SQEvent;
@@ -33,13 +32,6 @@ class DoEmbedding: public SubsysReco {
   bool m_emb_data_has_sim_evt;
   bool m_emb_data_has_sim_trk;
   bool m_emb_data_has_sim_dim;
-  //TFile* m_file_emb;
-  //TTree* m_tree_emb;
-  //EmbEventData*     m_emb_evt;
-  //EmbHitList*       m_emb_hit_list;
-  //EmbSimEventData*  m_emb_sim_evt;
-  //EmbSimTrackList*  m_emb_sim_trk_list;
-  //EmbSimDimuonList* m_emb_sim_dim_list;
 
   TFile* m_file_emb;
   TTree* m_tree_emb;
@@ -51,18 +43,20 @@ class DoEmbedding: public SubsysReco {
 
  public:
   DoEmbedding(const std::string name="DoEmbedding");
-  virtual ~DoEmbedding() {;}
+  virtual ~DoEmbedding();
   int Init(PHCompositeNode *topNode);
   int InitRun(PHCompositeNode *topNode);
   int process_event(PHCompositeNode *topNode);
-  int process_event_v2(PHCompositeNode *topNode);
-  int process_event_v1(PHCompositeNode *topNode);
   int End(PHCompositeNode *topNode);
 
   void DoOverwriteRfInfo(const bool overwrite) { m_overwrite_rf_info = overwrite; }
-  void SetHitIdShift   (const int id_shift) { m_hit_id_shift = id_shift; }
-  void SetTrackIdShift (const int id_shift) { m_trk_id_shift = id_shift; }
+  bool DoOverwriteRfInfo() const        { return m_overwrite_rf_info; }
+  void SetHitIdShift(const int id_shift) { m_hit_id_shift = id_shift; }
+  int  GetHitIdShift() const      { return m_hit_id_shift; }
+  void SetTrackIdShift(const int id_shift) { m_trk_id_shift = id_shift; }
+  int  GetTrackIdShift() const      { return m_trk_id_shift; }
   void SetDimuonIdShift(const int id_shift) { m_dim_id_shift = id_shift; }
+  int  GetDimuonIdShift() const      { return m_dim_id_shift; }
 
   void AddEmbDataFile(const char* fn_root);
   void AddEmbDataFiles(const char* fn_list);

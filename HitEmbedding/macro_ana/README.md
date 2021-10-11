@@ -11,7 +11,7 @@ You first make a list of the input data, which are `DST.root` that you generetd 
 You execute the following commands;
 ```
 cd not_embedded
-../make-dst-list.sh ../../macro_gen_signal/data/sig_20210823_01
+../make-dst-list.sh ../../macro_gen_signal/data/jpsi_20211003_01
 ```
 You see `list_dst.txt` and `info_dst.txt` are created.
 
@@ -24,7 +24,7 @@ You will most likely modify it for your own study.
 
 You last draw a set of plots using `ana_tree.root`, by executing the following command;
 ```
-root -b ../AnaTree.C
+root -b ../AnaOneData.C
 ```
 The plots will appear in `result/`.
 
@@ -36,6 +36,17 @@ The input data this time are `DST.root` that you generated with `macro_embed`.
 cd ../not_embedded
 ../make-dst-list.sh ../../macro_embed/data/20210823_01
 root -b ../Fun4SimDst.C
-root -b ../AnaTree.C
+root -b ../AnaOneData.C
 ```
 
+
+## Simultaneous analysis of non-embedded and embedded data
+
+You can/should analyze both the non-embedded and embedded data simultaneously, 
+for example to evaluate the relative reconstruction efficiency versus rate.
+Such analysis can be done via `AnaBothData.C`, where the contents of 
+the analysis are implemented in `src/AnaCleanAndMessyData.cc`;
+```
+cd ..
+root -b AnaBothData.C
+```

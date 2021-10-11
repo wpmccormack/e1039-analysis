@@ -7,6 +7,7 @@ It reads
 
 It writes out the embedded data into a new DST file (`DST.root`).
 
+
 ## Preparation
 
 You first make lists of signal and embedding data; `list_sig_file.txt` and `list_emb_file.txt`.
@@ -17,6 +18,7 @@ You then execute the script as follows;
 ./make-lists.sh
 ```
 You will see the numbers of files and events found and should check that the contents of the two files are valid.
+
 
 ## Method of pairing signal data and embedding data
 
@@ -34,21 +36,23 @@ It is fine because
 * The fixed order is helpful in checking the reproducibility of the hit embedding.
 But the random pairing might be implemented in future.
 
+
 ## Usage
 
 Two scripts (`gridsub.sh` and `gridrun.sh`) are used as usual, although the contents of `gridsub.sh` are quite difference since it needs two input data files.
 
-You first execute the following command for test;
+You first execute the following command for test,
+which processes only the first 10 events in the 1st job (i.e. input file pair) on local.
 ```
-./gridsub.sh -j 1 -e 10 20210823_01
+./gridsub.sh -j 1 -e 10 jpsi_20211008
 ```
-It processes only the first 10 events in the 1st job (i.e. input file pair) on local.
 
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-./gridsub.sh -g 20210823_01
+./gridsub.sh -g jpsi_20211008
 ```
+
 
 ## Event reconstruction
 

@@ -26,13 +26,20 @@ It will be compared to another result reconstructed after the hit embedding.
 The usage is quite similar to `SimChainDev`.
 You use two shell scripts to execute the macro on the grid.
 
-Typically you first execute the following command to execute the macro on local for test;
+Typically you first execute the following command to execute the macro on local for test,
+which runs one job that generates 100 events;
 ```
-./gridsub.sh sig_20210823_01 0 1 100
+./gridsub.sh jpsi_20211003
 ```
 
-You then execute the following commands to submit grid jobs;
+You then execute the following commands to submit grid jobs (`-g`),
+which runs 100 jobs (`-j 100`) that generate 5000 events/job (`-e 5000`);
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-./gridsub.sh sig_20210823_01 1 50 5000
+./gridsub.sh -g -j 100 -e 5000 jpsi_20211003
+```
+
+You might submit more jobs when the statistics are not enough;
+```
+./gridsub.sh -g -j 101-200 -e 5000 jpsi_20211003
 ```

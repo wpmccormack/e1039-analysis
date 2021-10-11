@@ -11,28 +11,40 @@ R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libSQPrimaryGen)
 using namespace std;
 
-int Fun4Sim(const int n_evt=0)
+int Fun4Sim(const int job_id=0, const int n_evt=0)
 {
+  recoConsts *rc = recoConsts::instance();
+  Fun4AllServer *se = Fun4AllServer::instance();
+
   ///
   /// Global parameters
   ///
-  const double target_coil_pos_z = -300;
   const double FMAGSTR = -1.054;
   const double KMAGSTR = -0.951;
-
-  recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
   rc->set_CharFlag("VTX_GEN_MATERIAL_MODE", "Target");
 
-  Fun4AllServer *se = Fun4AllServer::instance();
-
   ///
   /// Event generator
   ///
-  SQPrimaryParticleGen *sq_gen = new SQPrimaryParticleGen();
-  sq_gen->set_xfRange(0.2, 0.8); // 0.0-0.9
-  sq_gen->enableJPsiGen();
+  const int gen_switch = 1;
+  SQPrimaryParticleGen* sq_gen = new SQPrimaryParticleGen();
+  switch (gen_switch) {
+  case 1: // Drell-Yan: 5000 events = 12 hour
+    sq_gen->set_massRange(1.5, 9.0); // Not tuned yet
+    sq_gen->set_xfRange(0.2, 0.9); // Not tuned yet
+    sq_gen->enableDrellYanGen();
+    break;
+  case 2: // J/psi: 5000 events = 20 hours
+    sq_gen->set_xfRange(0.2, 0.9);
+    sq_gen->enableJPsiGen();
+    break;
+  case 3: // psi'
+    sq_gen->set_xfRange(0.2, 0.9); // Not tuned yet
+    sq_gen->enablePsipGen();
+    break;
+  }
   se->registerSubsystem(sq_gen);
 
   ///
@@ -54,8 +66,8 @@ int Fun4Sim(const int n_evt=0)
   g4Reco->SetPhysicsList("FTFP_BERT");
 
   SetupInsensitiveVolumes(g4Reco);
-  SetupBeamline(g4Reco, true, target_coil_pos_z - 302.36);
-  SetupTarget(g4Reco, target_coil_pos_z);
+  SetupBeamline(g4Reco);
+  SetupTarget(g4Reco);
   SetupSensitiveDetectors(g4Reco);
 
   se->registerSubsystem(g4Reco);
@@ -75,7 +87,9 @@ int Fun4Sim(const int n_evt=0)
   se->registerSubsystem(geom_acc);
 
   // Make SQ nodes for truth info
-  se->registerSubsystem(new TruthNodeMaker());
+  TruthNodeMaker* tnm = new TruthNodeMaker();
+  tnm->SetJobID(job_id);
+  se->registerSubsystem(tnm);
 
   ///
   /// Reconstruction

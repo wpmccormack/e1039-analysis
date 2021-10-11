@@ -5,7 +5,7 @@ TTree* tree;
 TCanvas* c1;
 void Draw1D(const string name, const string var, const string cut, const string title_x, const int n_x, const double x_lo, const double x_hi);
 
-void AnaTree(const char* fname="ana_tree.root", const char* tname="tree")
+void AnaOneData(const char* fname="ana_tree.root", const char* tname="tree")
 {
   file = new TFile(fname);
   tree = (TTree*)file->Get(tname);
@@ -43,13 +43,17 @@ void AnaTree(const char* fname="ana_tree.root", const char* tname="tree")
   Draw1D("trk_py_reco", "trk_reco.mom_vtx.Y()", "weight", "p_{y} of reco. tracks", 50, -5, 5);
   Draw1D("trk_pz_reco", "trk_reco.mom_vtx.Z()", "weight", "p_{z} of reco. tracks", 45, 10, 100);
 
-  Draw1D("dim_xF_true"  , "dim_true.xF"     , "weight", "x_{F} of true dimuons", 75, -0.5, 1.0);
-  Draw1D("dim_mass_true", "dim_true.mom.M()", "weight", "Mass of true dimuons", 50, 1, 6);
-  Draw1D("dim_pz_true"  , "dim_true.mom.Z()", "weight", "p_{z} of true dimuons", 45, 30, 120);
+  Draw1D("dim_mass_true"    , "dim_true.mom.M()" , "weight",            "Mass of true dimuons", 50, 1, 6);
+  Draw1D("dim_pz_true"      , "dim_true.mom.Z()" , "weight",           "p_{z} of true dimuons", 45, 30, 120);
+  Draw1D("dim_xF_true"      , "dim_true.xF"      , "weight",           "x_{F} of true dimuons", 75, -0.5, 1.0);
+  Draw1D("dim_costh_cs_true", "dim_true.costh_cs", "weight", "#cos#theta_{CS} of true dimuons", 50, -1, 1);
+  Draw1D("dim_phi_cs_true"  , "dim_true.phi_cs"  , "weight",       "#phi_{CS} of true dimuons", 50,  0, 2*TMath::Pi());
 
-  Draw1D("dim_xF_reco"  , "dim_reco.xF"     , "weight", "x_{F} of reco dimuons", 75, -0.5, 1.0);
-  Draw1D("dim_mass_reco", "dim_reco.mom.M()", "weight", "Mass of reco. dimuons", 50, 1, 6);
-  Draw1D("dim_pz_reco"  , "dim_reco.mom.Z()", "weight", "p_{z} of reco. dimuons", 45, 30, 120);
+  Draw1D("dim_mass_reco"    , "dim_reco.mom.M()" , "weight",           "Mass of reco. dimuons", 50, 1, 6);
+  Draw1D("dim_pz_reco"      , "dim_reco.mom.Z()" , "weight",          "p_{z} of reco. dimuons", 45, 30, 120);
+  Draw1D("dim_xF_reco"      , "dim_reco.xF"      , "weight",           "x_{F} of reco dimuons", 75, -0.5, 1.0);
+  Draw1D("dim_costh_cs_reco", "dim_reco.costh_cs", "weight", "#cos#theta_{CS} of reco dimuons", 50, -1, 1);
+  Draw1D("dim_phi_cs_reco"  , "dim_reco.phi_cs"  , "weight",       "#phi_{CS} of reco dimuons", 50,  0, 2*TMath::Pi());
 
   exit(0);
 }

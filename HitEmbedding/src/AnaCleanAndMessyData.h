@@ -1,15 +1,14 @@
 #ifndef _ANA_CLEAN_AND_MESSY_DATA__H_
 #define _ANA_CLEAN_AND_MESSY_DATA__H_
-#include <map>
-//#include <TVector3.h>
-//#include <TLorentzVector.h>
 #include "TreeData.h"
-class TH1;
 class TFile;
 class TTree;
+class TH1;
 
-/// A SubsysReco module to analyze the hit-embedded data.
+/// A SubsysReco module to analyze the non-embedded and embedded data at once.
 class AnaCleanAndMessyData {
+  int m_verb;
+
   /// Input: clean data
   TFile*      m_cl_file;
   TTree*      m_cl_tree;
@@ -43,6 +42,9 @@ class AnaCleanAndMessyData {
   void Init(const char* fn_clean, const char* fn_messy);
   void Analyze();
   void End();
+
+  void Verbosity(const int verb) { m_verb = verb; }
+  int  Verbosity() const  { return m_verb; }
 
  private:
   void AnalyzeEvent();

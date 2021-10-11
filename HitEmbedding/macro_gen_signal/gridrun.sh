@@ -1,7 +1,7 @@
 #!/bin/bash
 
-nevents=$1
-job_id=$2
+JOB_ID=$1
+N_EVT=$2
 
 if [ -z "$CONDOR_DIR_INPUT" -o -z "$CONDOR_DIR_OUTPUT" ] ; then
     echo "!ERROR!  CONDOR_DIR_INPUT/OUTPUT is undefined.  Abort."
@@ -14,14 +14,15 @@ echo "PWD    = $PWD"
 
 tar xzf $CONDOR_DIR_INPUT/input.tar.gz
 
-FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
+FN_SETUP=/e906/app/software/osg/users/kenichi/e1039/core/this-e1039.sh
+#FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
 if [ ! -e $FN_SETUP ] ; then # On grid
     FN_SETUP=/cvmfs/seaquest.opensciencegrid.org/seaquest/${FN_SETUP#/e906/app/software/osg/}
 fi
 echo "SETUP = $FN_SETUP"
 source $FN_SETUP
 
-time root -b -q Fun4Sim.C\($nevents\)
+time root -b -q "Fun4Sim.C($JOB_ID, $N_EVT)"
 RET=$?
 if [ $RET -ne 0 ] ; then
     echo "Error in Fun4Sim.C: $RET"

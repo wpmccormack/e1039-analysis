@@ -1,8 +1,6 @@
 #ifndef _ANA_EMBEDDED_DATA__H_
 #define _ANA_EMBEDDED_DATA__H_
 #include <map>
-#include <TVector3.h>
-#include <TLorentzVector.h>
 #include <fun4all/SubsysReco.h>
 #include "TreeData.h"
 class TFile;
@@ -15,6 +13,11 @@ class SQTrackVector;
 class SQDimuonVector;
 
 /// A SubsysReco module to analyze the hit-embedded data.
+/**
+ * It is to check the basic quality of generated data.
+ * The non-embedded data (i.e. the signal data before the hit embedding) can be analyzed also,
+ * in order to be compared with the result of the embedded data.
+ */
 class AnaEmbeddedData: public SubsysReco {
   /// Input
   SQEvent       * mi_evt;
@@ -44,7 +47,7 @@ class AnaEmbeddedData: public SubsysReco {
   int End(PHCompositeNode *topNode);
 
  private:
-  void SeparateHits(const SQHitVector* vec_in, std::map<int, SQHitVector*>& vec_sep, const bool in_time=false);
+  void DivideHitVector(const SQHitVector* vec_in, std::map<int, SQHitVector*>& vec_sep, const bool in_time=false);
 };
 
 #endif /* _ANA_EMBEDDED_DATA__H_ */

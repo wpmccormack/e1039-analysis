@@ -32,6 +32,8 @@ DimuonData::DimuonData()
   , x1(0)
   , x2(0)
   , xF(0)
+  , costh_cs(0)
+  , phi_cs(0)
 {
   ;
 }
