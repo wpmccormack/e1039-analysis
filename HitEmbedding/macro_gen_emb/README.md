@@ -6,7 +6,6 @@ A ROOT file that contains a compact TTree object (i.e. `embedding_data.root`) ou
 ## Alternative
 
 The NIM3 events in the E906 or E1039 data are better (i.e. more realistic) sources of background hits.
-A new macro to generate the embedding data from the E906 data will be set up next.
 
 ## Default Setting of Event Generation
 
@@ -23,12 +22,12 @@ You use two shell scripts to execute the macro on the grid.
 
 Typically you first execute the following command to execute the macro on local for test;
 ```
-./gridsub.sh emb_20210823_01 0 1 100
+./gridsub.sh emb_20210823 0 1 100
 ```
 
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-./gridsub.sh emb_20210823_01 1 50 1000
+./gridsub.sh emb_20210823 1 50 1000
 ```
 

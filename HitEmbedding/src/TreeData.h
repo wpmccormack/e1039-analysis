@@ -3,6 +3,7 @@
 #include <TLorentzVector.h>
 
 struct EventData {
+  int job_id;
   int event_id;
   int trig_bits;
   int rfp01;

@@ -2,7 +2,8 @@
 using namespace std;
 
 EventData::EventData()
-  : event_id(0)
+  : job_id(0)
+  , event_id(0)
   , trig_bits(0)
   , rfp01(0)
   , rfp00(0)

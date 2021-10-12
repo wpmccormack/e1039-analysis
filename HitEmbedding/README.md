@@ -46,9 +46,11 @@ They have to be executed again after you modify the codes.
 
 Multiple Fun4All macros are available in this packages in order to carry out the hit embedding step-by-step.
 Details of each macro are explained in `README.md` of each directory.
+Probably you need not generate embedding events, since the E906 NIM3 events are already available and used by default.
 
 1. [`macro_gen_signal/`](macro_gen_signal/):  Macro to generate signal events.
 1. [`macro_gen_emb/`](macro_gen_emb/):  Macro to generate embedding events.
+1. [`macro_gen_emb_e906/`](macro_gen_emb_e906/):  Macro to generate embedding events from E906 NIM3 events.
 1. [`macro_embed/`](macro_embed/):  Macro to do the hit embedding.
 1. [`macro_ana/`](macro_ana/):  Macro to analysis the hit-embedded events.
 
@@ -58,7 +60,7 @@ Details of each macro are explained in `README.md` of each directory.
     V             |
   [ Reconstruct ] |                                 ... `macro_gen_signal`
     |             |
-    |             |  [ Generate embedding events ]  ... `macro_gen_emb`
+    |             |  [ Generate embedding events ]  ... `macro_gen_emb` or `macro_gen_emb_e906`
     |             |    |
     |             V    V
     |           [ Embed hits ]                      ... `macro_emb`
@@ -75,11 +77,7 @@ Details of each macro are explained in `README.md` of each directory.
 
 ## To-do list
 
-* Find a way to auto-balance N of signal events and N of embedding events per file.
-* Check how compact the TTree object (`embedding_data.root`) is.
-    If it is not much different from DST, DST can be used as is,
-    although it is not sure how efficiently we can read DST when 
-    trying to shuffle the event order.
+* Nothing planned.
 
 ## Contact
 

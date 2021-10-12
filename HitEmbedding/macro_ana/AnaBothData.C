@@ -4,6 +4,7 @@ using namespace std;
 void AnaBothData()
 {
   AnaCleanAndMessyData* ana = new AnaCleanAndMessyData();
+  //ana->Verbosity(10);
   ana->Init("not_embedded/ana_tree.root", "embedded/ana_tree.root");
   ana->Analyze();
   ana->End();

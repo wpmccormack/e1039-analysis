@@ -65,9 +65,6 @@ void AnaCleanAndMessyData::Init(const char* fn_clean, const char* fn_messy)
 /// Function to analyze a pair of non-embedded and embedded (i.e. clean and messy) data.
 /**
  * The main part of this function is to match the event between the two data.
- * The present (signal) data don't have file ID (or job ID), and thus
- * this function assumes the file (or job) of an event has changed when
- * event ID decreases.
  */
 void AnaCleanAndMessyData::Analyze()
 {
@@ -75,61 +72,31 @@ void AnaCleanAndMessyData::Analyze()
   int n_me_evt = m_me_tree->GetEntries();
   int i_cl_evt = 0;
   int i_me_evt = 0;
-  int file_id_cl = 0;
-  int file_id_me = 0;
 
   bool no_event = false;
   while (! no_event) {
     if (i_cl_evt >= n_cl_evt || i_me_evt >= n_me_evt) return;
     m_cl_tree->GetEntry(i_cl_evt);
     m_me_tree->GetEntry(i_me_evt);
+    pair<int, int> job_evt_cl(m_cl_evt->job_id, m_cl_evt->event_id);
+    pair<int, int> job_evt_me(m_me_evt->job_id, m_me_evt->event_id);
 
-    while (file_id_cl != file_id_me) { // File IDs are different
-      if (file_id_cl < file_id_me) {
-        int evt_id_pre = m_cl_evt->event_id;
+    while (job_evt_cl != job_evt_me) { // job+event IDs are different
+      if (job_evt_cl < job_evt_me) {
         i_cl_evt++;
         if (i_cl_evt >= n_cl_evt) return;
         m_cl_tree->GetEntry(i_cl_evt);
-        if (m_cl_evt->event_id < evt_id_pre) file_id_cl++;
+        job_evt_cl = pair<int, int>(m_cl_evt->job_id, m_cl_evt->event_id);
       } else { // >
-        int evt_id_pre = m_me_evt->event_id;
         i_me_evt++;
         if (i_me_evt >= n_me_evt) return;
         m_me_tree->GetEntry(i_me_evt);
-        if (m_me_evt->event_id < evt_id_pre) file_id_me++;
+        job_evt_me = pair<int, int>(m_me_evt->job_id, m_me_evt->event_id);
       }
     }
-
-    bool file_id_changed = false;
-    while (m_cl_evt->event_id != m_me_evt->event_id) { // Event IDs are different
-      if (m_cl_evt->event_id < m_me_evt->event_id) {
-        int evt_id_pre = m_cl_evt->event_id;
-        i_cl_evt++;
-        if (i_cl_evt >= n_cl_evt) return;
-        m_cl_tree->GetEntry(i_cl_evt);
-        if (evt_id_pre > m_cl_evt->event_id) {
-          file_id_cl++;
-          file_id_changed = true;
-          break;
-        }
-      } else { // >
-        int evt_id_pre = m_me_evt->event_id;
-        i_me_evt++;
-        if (i_me_evt >= n_me_evt) return;
-        m_me_tree->GetEntry(i_me_evt);
-        if (evt_id_pre > m_me_evt->event_id) {
-          file_id_me++;
-          file_id_changed = true;
-          break;
-        }
-      }
-    }
-    if (file_id_changed) continue; // Need align file IDs first.
 
     if (Verbosity() > 9) {
-      cout << "AnaCleanAndMessyData::Analyze():\n"
-           << "  Clean: " << i_cl_evt << "/" << n_cl_evt << " " << file_id_cl << ":" << m_cl_evt->event_id
-           << "  Messy: " << i_me_evt << "/" << n_me_evt << " " << file_id_me << ":" << m_me_evt->event_id << endl;
+      cout << "AnaCleanAndMessyData::Analyze():  Job ID " << m_cl_evt->job_id << ", Event ID " << m_cl_evt->event_id << ": Clean " << i_cl_evt << "/" << n_cl_evt << ", Messy " << i_me_evt << "/" << n_me_evt << endl;
     }
     AnalyzeEvent();
     i_cl_evt++;

@@ -64,6 +64,7 @@ int AnaEmbeddedData::process_event(PHCompositeNode* topNode)
   ///
   /// Event info
   ///
+  mo_evt.job_id    = mi_evt->get_spill_id(); // Ppill ID in simulation means job ID
   mo_evt.event_id  = mi_evt->get_event_id();
   mo_evt.trig_bits = mi_evt->get_trigger();
   mo_evt.rfp01     = mi_evt->get_qie_rf_intensity(+1);

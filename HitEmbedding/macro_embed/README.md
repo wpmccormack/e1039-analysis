@@ -44,13 +44,13 @@ Two scripts (`gridsub.sh` and `gridrun.sh`) are used as usual, although the cont
 You first execute the following command for test,
 which processes only the first 10 events in the 1st job (i.e. input file pair) on local.
 ```
-./gridsub.sh -j 1 -e 10 jpsi_20211008
+./gridsub.sh -j 1 -e 10 jpsi_20211012
 ```
 
 You then execute the following commands to submit grid jobs;
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
-./gridsub.sh -g jpsi_20211008
+./gridsub.sh -g jpsi_20211012
 ```
 
 

@@ -1,6 +1,6 @@
 R__LOAD_LIBRARY(libana_embedding)
 
-int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
+int Fun4All(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
 {
   Fun4AllServer* se = Fun4AllServer::instance();
   Fun4AllInputManager* man_in = new Fun4AllDstInputManager("DSTIN");
@@ -20,7 +20,7 @@ int Fun4SimDst(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
   cout << ", to be analyzed = " << n_dst << endl;
   for (int i_dst = 0; i_dst < n_dst; i_dst++) {
     string fn_dst = list_dst[i_dst];
-    cout << "DST: " << i_dst << "/" << n_dst << ": " << fn_dst << endl;
+    cout << "DST: " << i_dst+1 << "/" << n_dst << ": " << fn_dst << endl;
     man_in->fileopen(fn_dst);
     se->run();
   }

@@ -28,20 +28,20 @@ int Fun4Sim(const int job_id=0, const int n_evt=0)
   ///
   /// Event generator
   ///
-  const int gen_switch = 1;
+  const int gen_switch = 2;
   SQPrimaryParticleGen* sq_gen = new SQPrimaryParticleGen();
   switch (gen_switch) {
   case 1: // Drell-Yan: 5000 events = 12 hour
-    sq_gen->set_massRange(1.5, 9.0); // Not tuned yet
-    sq_gen->set_xfRange(0.2, 0.9); // Not tuned yet
+    sq_gen->set_massRange(1.5, 9.0);
+    sq_gen->set_xfRange(0.00, 0.95);
     sq_gen->enableDrellYanGen();
     break;
   case 2: // J/psi: 5000 events = 20 hours
-    sq_gen->set_xfRange(0.2, 0.9);
+    sq_gen->set_xfRange(0.2, 1.0);
     sq_gen->enableJPsiGen();
     break;
   case 3: // psi'
-    sq_gen->set_xfRange(0.2, 0.9); // Not tuned yet
+    sq_gen->set_xfRange(0.2, 1.0); // Not tuned yet
     sq_gen->enablePsipGen();
     break;
   }
