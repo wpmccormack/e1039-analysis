@@ -1,7 +1,7 @@
-/// MakeRT.C:  ROOT macro to make the X-T curve.
+/// AnaRTCurve.C:  ROOT macro to make the X-T curve.
 R__LOAD_LIBRARY(libCalibChamXT)
 
-int MakeRT(const int iter, const char* fn_list_input)
+int AnaRTCurve(const int iter, const char* fn_list_input)
 {
   recoConsts* rc = recoConsts::instance();
   rc->init("cosmic");

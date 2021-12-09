@@ -6,7 +6,7 @@ DIR_BASE=$(dirname $(readlink -f $BASH_SOURCE))
 
 ITER=1
 LIST_RUN="list_run.txt"
-VERSION="default"
+VERSION="main"
 DIR_DATA=/pnfs/e1039/scratch/$USER/CalibChamXT/$VERSION
 
 LIST_DATA=scratch/list_input_data.txt

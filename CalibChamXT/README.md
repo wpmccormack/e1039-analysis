@@ -1,9 +1,10 @@
 # e1039-analysis/CalibChamXT
 
-A program to calibrate the chamber X-T curve, using cosmic-ray events.
-It is based on the following programs;
+A program to calibrate the chamber X-T curve, using cosmic-ray events at present.
+The file structure, the configuration and the usage are similar to the following programs;
 
 * https://cdcvs.fnal.gov/redmine/projects/calib-cham-rt
+* https://github.com/E1039-Collaboration/e1039-analysis/tree/master/AnaRealDst
 * https://github.com/E1039-Collaboration/e1039-analysis/tree/master/RecoDev
 * /seaquest/users/apun/abi_project/data_manage/e1039-data-mgt_test
 
@@ -14,7 +15,7 @@ You are recommended to use `spinquestgpvm01`.
 You first clone the GitHub repository as usual;
 
 ```
-ssh spinquestgpvm01
+ssh spinquestgpvm01.fnal.gov
 cd /path/to/your/working/directory
 git clone git@github.com:E1039-Collaboration/e1039-analysis.git
 cd e1039-analysis/CalibChamXT
@@ -38,7 +39,7 @@ cd work
 ./copy_dst.sh
 ```
 
-The analysis code is located in `e1039-analysis/AnaSimDst/src`.
+The source code is located in `src/`.
 The following commands set up the shell environment and compile the code;
 
 ```
@@ -60,19 +61,20 @@ cd work
 ./run_reco.sh -d 1 -e 10000 GO
 ```
 
-The main output file is `scratch/default/run_003492_spill_000000000_spin/out/eval.root`.
+The main output file is `scratch/main/run_003492_spill_000000000_spin/out/eval.root`.
 The ROOT file (`eval.root`) contains all tracklets.
-You had better check the number of entries is non-zero.
+You had better check the number of tree entries is non-zero.
 
 You then execute the following commands to process all events/runs.
 The `-g` option is to run jobs on the grid.
-You use 'jobsub_q_mine' and wait until all grid jobs finish.
 
 ```
 source /e906/app/software/script/setup-jobsub-spinquest.sh
 kinit
 ./run_reco.sh -g GO
 ```
+
+You use `jobsub_q_mine` (or `./check_job.sh`) to wait until all grid jobs finish.
 
 
 ## Tracklet Analysis

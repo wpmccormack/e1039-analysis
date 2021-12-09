@@ -2,7 +2,7 @@
 DIR_BASE=$(dirname $(readlink -f $BASH_SOURCE))
 
 LIST_RUN="list_run.txt"
-VERSION="default"
+VERSION="main"
 DIR_DST=/pnfs/e1039/scratch/$USER/CalibChamXT/dst
 
 USE_GRID=no
@@ -36,10 +36,10 @@ function ProcessOneRun {
     #test $N_DST_ANA -gt 0 -a $N_DST -gt $N_DST_ANA && N_DST=$N_DST_ANA
 
     for (( I_DST = 0 ; I_DST < N_DST ; I_DST++ )) ; do
+	echo "----------------------------------------------------------------"
 	FN_DST=${LIST_DST[$I_DST]}
-	echo "  DST $I_DST: $FN_DST"
 	BASE_NAME=$(basename $FN_DST .root)
-	echo "    $BASE_NAME"
+	echo "  DST $I_DST/$N_DST: $BASE_NAME.root"
 
 	mkdir -p $DIR_WORK/$BASE_NAME/out
 	cp -a    $DIR_BASE/gridrun.sh $DIR_WORK/$BASE_NAME
@@ -94,6 +94,3 @@ while read RUN ; do
 done <$LIST_RUN
 
 echo "run_reco.sh finished."
-if [ $USE_GRID = 'yes' ]; then
-    echo "Use 'jobsub_q_mine' and wait until all grid jobs finish."
-fi
