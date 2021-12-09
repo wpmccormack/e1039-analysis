@@ -22,7 +22,7 @@ class MakeRTCurve {
   void Init();
   void AnalyzeListOfFiles(const char* fn_list);
   void AnalyzeFile(const char* fname);
-  //void ExtractRT();
+  void ExtractRT();
 
   void DrawHistEvent();
   void DrawHistHit();

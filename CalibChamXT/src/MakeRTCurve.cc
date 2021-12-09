@@ -25,13 +25,12 @@ MakeRTCurve::MakeRTCurve(const int iter)
   , m_dir_name_out("")
 {
   if (iter <= 0) {
-    cout << "The 1st argument must be a positive integer as interation count.  Abort." << endl;
+    cout << "'iter' must be a positive integer.  Abort." << endl;
     exit(1);
   }
-
   //gErrorIgnoreLevel = 1111;
-  GeomSvc* geom = GeomSvc::instance();
-  geom->init();
+  //GeomSvc* geom = GeomSvc::instance();
+  //geom->init();
 }
 
 MakeRTCurve::~MakeRTCurve()
@@ -92,7 +91,6 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
     map<int, int> list_n_trk; // <station ID, N of tracks>
     
     int n_trk = tracklets->GetEntries();
-    //if (n_trk > 0 || n_trk > 0) cout << "  " << i_evt << " " << n_trk << " " << n_trk << endl;
     for (int i_trk = 0; i_trk < n_trk; i_trk++) {
       Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
       cal_dat.FillTracklet(trk);
@@ -125,9 +123,9 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
   cout << "  N of all events = " << n_evt << ", analyzed events = " << n_evt_ana << ", tracks = " << n_trk_ana << endl;
 }
 
-//void MakeRTCurve::ExtractRT()
-//{
-//  cout << "ExtractRT()" << endl;
+void MakeRTCurve::ExtractRT()
+{
+  cout << "ExtractRT()" << endl;
 //  FitRTDist* fit = new FitRTDist(N_RT_PT);
 //  for (int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
 //    if (SKIP_D1 && 6 <= ip && ip < 12) continue;
@@ -144,7 +142,7 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
 //    fit->DoFit(cal_par.GetRTCurve(ip));
 //  }
 //  delete fit;
-//}
+}
 
 void MakeRTCurve::DrawHistEvent()
 {
