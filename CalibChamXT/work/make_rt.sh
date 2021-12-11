@@ -17,4 +17,4 @@ while read RUN ; do
     find $DIR_DATA/run_$RUN6_* -name eval.root
 done <$LIST_RUN >$LIST_DATA
 
-root.exe -b -q "MakeRT.C($ITER, \"$LIST_DATA\")"
+root.exe -b -q "AnaRTCurve.C($ITER, \"$LIST_DATA\")"
