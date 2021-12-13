@@ -2,6 +2,7 @@
 #define _ROAD_LIST_BASE__H_
 #include <string>
 
+/// Base class to hold a set (list or map) of roads.
 class RoadListBase {
  protected:
   int m_pn; //< +1 = pos, -1 = neg, 0 = unset

@@ -4,6 +4,7 @@
 #include <cmath>
 //#include <map>
 
+/// Class to hold one road.
 class RoadInfo {
   int    m_road_id;
   int    m_count;

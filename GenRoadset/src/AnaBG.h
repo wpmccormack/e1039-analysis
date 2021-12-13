@@ -11,6 +11,11 @@ class AnaSignal;
 
 class AnaBG : public AnaBase {
  protected:
+  /// N of RFs per spill
+  /** Expected counts per spill = [N of "fired" events] / [N of all events] * [N of filled RFs]
+   *  N of filled RFs = 186e6 = 588 * 369000 * 6 / 7
+   */
+  static constexpr double N_RF_PER_SPILL = 186e6; 
   typedef std::vector<int> EleList;
 
   int  m_n_evt_used;

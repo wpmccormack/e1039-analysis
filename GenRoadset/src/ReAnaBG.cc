@@ -19,10 +19,6 @@ using namespace std;
 
 ReAnaBG::ReAnaBG(const std::string label)
   : AnaBG(label)
-  , m_road_map_pos_top_on(0)
-  , m_road_map_pos_bot_on(0)
-  , m_road_map_neg_top_on(0)
-  , m_road_map_neg_bot_on(0)
 {
   ;
 }
@@ -34,7 +30,10 @@ ReAnaBG::~ReAnaBG()
 
 void ReAnaBG::Init()
 {
-  ;
+  if (!m_road_map_pos_top) {
+    cout << "AnaBG::Init():  ERROR  No road given.  Abort." << endl;
+    exit(1);
+  }
 }
 
 void ReAnaBG::End()
@@ -73,18 +72,15 @@ void ReAnaBG::ProcessOneEvent()
   FindAllRoads(h1t, h2t, h3t, h4t, +1, &map_top);
   FindAllRoads(h1b, h2b, h3b, h4b, -1, &map_bot);
   
-  if (m_road_map_pos_top_on) {
-    bool fired = false;
-    if (map_top.ContainEnabled(m_road_map_pos_top_on) &&
-        map_bot.ContainEnabled(m_road_map_neg_bot_on)   ) fired = true;
-    if (map_top.ContainEnabled(m_road_map_neg_top_on) &&
-        map_bot.ContainEnabled(m_road_map_pos_bot_on)   ) fired = true;
-    if (! fired) return;
+  if ((map_top.ContainEnabled(m_road_map_pos_top) && 
+       map_bot.ContainEnabled(m_road_map_neg_bot)   ) || // T+B ||
+      (map_top.ContainEnabled(m_road_map_neg_top) &&
+       map_bot.ContainEnabled(m_road_map_pos_bot)   )) { // B+T
+    m_n_evt_fired++;
+        
+    m_road_map_top.AddBG(&map_top);
+    m_road_map_bot.AddBG(&map_bot);
   }
-  m_n_evt_fired++;
-  
-  m_road_map_top.AddBG(&map_top);
-  m_road_map_bot.AddBG(&map_bot);
 }
 
 void ReAnaBG::Analyze()
@@ -103,11 +99,9 @@ void ReAnaBG::Analyze()
         << "  T+B   " << m_n_evt_tb << "\n"
         << "  Fired " << m_n_evt_fired << "\n \n"
         << "Expected counts per spill:\n"
-        << "  T+B   " << 186e6 * m_n_evt_tb    / m_n_evt_used << "\n"
-        << "  Fired " << 186e6 * m_n_evt_fired / m_n_evt_used << "\n"
+        << "  T+B   " << N_RF_PER_SPILL * m_n_evt_tb    / m_n_evt_used << "\n"
+        << "  Fired " << N_RF_PER_SPILL * m_n_evt_fired / m_n_evt_used << "\n"
         << endl;
-  // Expected counts per spill = [N of "fired" events] / [N of all events] * [N of filled RFs]
-  // N of filled RFs = 186e6 = 588 * 369000 * 6 / 7
 
   RoadList road_list_top;
   RoadList road_list_bot;
@@ -127,12 +121,4 @@ void ReAnaBG::Analyze()
   UtilRoad::PrintList(&road_list_bot, +1, +5, m_ofs);
   m_ofs << "      Last Five\n";
   UtilRoad::PrintList(&road_list_bot, -5, -1, m_ofs);
-}
-
-void ReAnaBG::SetEnabledRoads(const RoadMap* pos_top, const RoadMap* pos_bot, const RoadMap* neg_top, const RoadMap* neg_bot)
-{
-  m_road_map_pos_top_on = pos_top;
-  m_road_map_pos_bot_on = pos_bot;
-  m_road_map_neg_top_on = neg_top;
-  m_road_map_neg_bot_on = neg_bot;
 }

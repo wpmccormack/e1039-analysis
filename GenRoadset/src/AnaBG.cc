@@ -42,6 +42,11 @@ AnaBG::~AnaBG()
 
 void AnaBG::Init()
 {
+  if (!m_road_map_pos_top) {
+    cout << "AnaBG::Init():  ERROR  No road given.  Abort." << endl;
+    exit(1);
+  }
+
   ostringstream oss;
   oss << m_dir_out << "/output.root";
   m_file_out = new TFile(oss.str().c_str(), "RECREATE");
@@ -57,9 +62,6 @@ void AnaBG::End()
   m_file_out->Close();
 }
 
-/**
- * Read one ROOT file, which is usually "data_nim3.root" created by e1039-analysis/AnaRealDst/src/AnaBGEvent.
- */
 void AnaBG::ReadEvents(const char* fname)
 {
   gROOT->cd();
@@ -167,18 +169,16 @@ void AnaBG::Analyze()
         << "  T+B   " << m_n_evt_tb << "\n"
         << "  Fired " << m_n_evt_fired << "\n \n"
         << "Expected counts per spill:\n"
-        << "  T+B   " << 186e6 * m_n_evt_tb    / m_n_evt_used << "\n"
-        << "  Fired " << 186e6 * m_n_evt_fired / m_n_evt_used << "\n"
+        << "  T+B   " << N_RF_PER_SPILL * m_n_evt_tb    / m_n_evt_used << "\n"
+        << "  Fired " << N_RF_PER_SPILL * m_n_evt_fired / m_n_evt_used << "\n"
         << endl;
-  // Expected counts per spill = [N of "fired" events] / [N of all events] * [N of filled RFs]
-  // N of filled RFs = 186e6 = 588 * 369000 * 6 / 7
 
   DrawInteMax();
 
-  m_road_map_pos_top->ScaleBG(186e6 / m_n_evt_used);
-  m_road_map_pos_bot->ScaleBG(186e6 / m_n_evt_used);
-  m_road_map_neg_top->ScaleBG(186e6 / m_n_evt_used);
-  m_road_map_neg_bot->ScaleBG(186e6 / m_n_evt_used);
+  m_road_map_pos_top->ScaleBG(N_RF_PER_SPILL / m_n_evt_used);
+  m_road_map_pos_bot->ScaleBG(N_RF_PER_SPILL / m_n_evt_used);
+  m_road_map_neg_top->ScaleBG(N_RF_PER_SPILL / m_n_evt_used);
+  m_road_map_neg_bot->ScaleBG(N_RF_PER_SPILL / m_n_evt_used);
 
   ///
   /// Regularize BG, namely set its weight to 1 (per spill), so that FoM is always finite.

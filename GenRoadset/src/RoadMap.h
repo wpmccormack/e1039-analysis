@@ -4,6 +4,7 @@
 #include "RoadListBase.h"
 class RoadInfo;
 
+/// Class to hold a non-ordered set (i.e. map) of roads.
 class RoadMap : public RoadListBase {
   typedef std::map<int, RoadInfo*> InfoMap;
   InfoMap m_map;

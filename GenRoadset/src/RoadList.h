@@ -5,7 +5,7 @@
 class RoadInfo;
 class RoadMap;
 
-/// Ordered list of roads.
+/// Class to hold an ordered set (i.e. vector) of roads.
 class RoadList : public RoadListBase {
   typedef std::vector<RoadInfo*> InfoVec;
   InfoVec m_vec;

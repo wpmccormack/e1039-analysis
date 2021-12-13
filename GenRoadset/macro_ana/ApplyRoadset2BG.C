@@ -19,7 +19,7 @@ void ApplyRoadset2BG()
   ana_bg->SetInputTreeName  ("bg_tree");
   ana_bg->SetInputBranchName("bg_data");
   ana_bg->SetInteCut(inte_cut);
-  ana_bg->SetEnabledRoads(&map_pos_top, &map_pos_bot, &map_neg_top, &map_neg_bot);
+  ana_bg->SetRoads(&map_pos_top, &map_pos_bot, &map_neg_top, &map_neg_bot);
   ana_bg->Init();
   ana_bg->ReadEventsFromFileList("list_bg.txt");
   ana_bg->Analyze();
