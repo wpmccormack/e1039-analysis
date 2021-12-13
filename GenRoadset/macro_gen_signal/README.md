@@ -7,6 +7,7 @@ It outputs a small ROOT file named `signal_tree.root`, which will be used later 
 ## Setting of Event Generation
 
 The setting of the event generation is configured in `Fun4All.C` as usual.
+The SubsysReco module that creates `signal_tree.root` is `src/SubsysRecoSignal.(h|cc)`.
 You can modify them as you need.
 
 

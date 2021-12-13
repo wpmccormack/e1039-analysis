@@ -3,6 +3,17 @@
 This directory is to first generate a new roadset, using the signal and BG events.
 It then evaluates the new roadset, namely re-analyzes the signal and BG events to compute the signal acceptance and the BG rate.
 
+You need execute `source setup.sh` beforehand.
+
+
+## Lists of Input Files
+
+It is used in `macro_ana/make-input-list.sh` by default.
+
+```
+./make-input-list.sh
+```
+
 
 ## Generation of Roadset
 
@@ -12,7 +23,6 @@ It then evaluates the new roadset, namely re-analyzes the signal and BG events t
 * `src/GenRoadset.(h|cc)`
 
 ```
-./make-input-list.sh
 root -b GenerateRoad.C
 ```
 
