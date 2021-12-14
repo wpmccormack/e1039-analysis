@@ -4,6 +4,7 @@
 #pragma link off all global;
 
 #pragma link C++ class AnaRealDst-!;
+#pragma link C++ class AnaTriggerHit-!;
 #pragma link C++ class AnaEffHodo-!;
 #pragma link C++ class AnaEffCham-!;
 

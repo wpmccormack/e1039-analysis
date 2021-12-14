@@ -1,13 +1,8 @@
-/// Fun4MainDaq.C:  Fun4all macro to decode the MainDAQ data.
-#if ROOT_VERSION_CODE >= ROOT_VERSION(6,00,0)
-R__LOAD_LIBRARY(libana_real_dst)
-#endif
+R__LOAD_LIBRARY(AnaRealDst)
 
 /// Main function.
 int Fun4RealDst(const int run=1666, const int nevent=0)
 {
-  gSystem->Load("libana_real_dst.so");
-
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->Verbosity(1);
 
@@ -17,8 +12,9 @@ int Fun4RealDst(const int run=1666, const int nevent=0)
   in->fileopen(fn_in);
   se->registerInputManager(in);
 
-  se->registerSubsystem(new AnaRealDst());
-  se->registerSubsystem(new AnaEffHodo());
+  se->registerSubsystem(new AnaTriggerHit());
+  //se->registerSubsystem(new AnaRealDst());
+  //se->registerSubsystem(new AnaEffHodo());
   //se->registerSubsystem(new AnaEffCham(AnaEffCham::D3p));
 
   se->run(nevent);

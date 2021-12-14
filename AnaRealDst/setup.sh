@@ -4,7 +4,8 @@ DIR_INST=$DIR_TOP/inst
 
 source /data2/e1039/this-e1039.sh
 #source /e906/app/software/osg/software/e1039/this-e1039.sh
-export LD_LIBRARY_PATH=$DIR_INST/lib:$LD_LIBRARY_PATH
+export   LD_LIBRARY_PATH=$DIR_INST/lib:$LD_LIBRARY_PATH
+export ROOT_INCLUDE_PATH=$DIR_INST/include:$ROOT_INCLUDE_PATH
 
 function cmake-this {
     if [ -e $DIR_BUILD ] ; then
@@ -55,8 +56,6 @@ if [   ${HOSTNAME:0:13} != 'seaquestdaq01' \
     echo
 fi
 echo "OK, your shell environment has been set up to use the E1039 software prepared in '$E1039_ROOT'."
-echo
-echo "!!Note!!  The usage of this package changed on 2021-05-15."
 echo
 echo "Two commands for source build:"
 echo "  cmake-this"
