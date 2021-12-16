@@ -28,15 +28,15 @@ make-this
 1. Evaluation of new roadset
 
 The 1st step is carried out in `macro_gen_signal/`.
-You can find details in [macro_gen_signal/README.md](`macro_gen_signal/README.md`).
+You can find details in [`macro_gen_signal/README.md`](macro_gen_signal/README.md).
 
 The 2nd step is carried out in `macro_e906_nim3/`.
-You can find details in `macro_e906_nim3/README.md`.
+You can find details in [`macro_e906_nim3/README.md`](macro_e906_nim3/README.md).
 But you usually need not carry out this step, since a full set of extracted events is already available.
 The existing set is used in the next step by default.
 
 The 3rd and 4th steps are carried out in `macro_ana/`.
-You can find details in `macro_ana/README.md`.
+You can find details in [`macro_ana/README.md`](macro_ana/README.md).
 
 
 ## To-Do List
