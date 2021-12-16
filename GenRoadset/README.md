@@ -28,7 +28,7 @@ make-this
 1. Evaluation of new roadset
 
 The 1st step is carried out in `macro_gen_signal/`.
-You can find details in `macro_gen_signal/README.md`.
+You can find details in [macro_gen_signal/README.md](`macro_gen_signal/README.md`).
 
 The 2nd step is carried out in `macro_e906_nim3/`.
 You can find details in `macro_e906_nim3/README.md`.

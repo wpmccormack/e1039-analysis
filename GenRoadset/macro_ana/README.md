@@ -8,11 +8,14 @@ You need execute `source setup.sh` beforehand.
 
 ## Lists of Input Files
 
-It is used in `macro_ana/make-input-list.sh` by default.
+Signal files and BG files should be listed in `list_signal.txt` and `list_bg.txt`.
+You can make the lists by the following command;
 
 ```
 ./make-input-list.sh
 ```
+
+If you have modified some setting in `macro_gen_signal` or `macro_e906_nim3`, you might have to modify `make-input-list.sh` accordingly.
 
 
 ## QIE Inhibit Threshold
