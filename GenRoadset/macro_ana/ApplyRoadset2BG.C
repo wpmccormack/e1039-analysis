@@ -1,12 +1,8 @@
 R__LOAD_LIBRARY(libGenRoadset)
 using namespace std;
 
-void ApplyRoadset2BG()
+void ApplyRoadset2BG(const int inte_cut=0, const string rs_id="113")
 {
-  /// 0 or 1200
-  const string rs_id = "113";
-  const int inte_cut = 0; // Default = 0, no cut.
-
   RoadMap map_pos_top;
   RoadMap map_pos_bot;
   RoadMap map_neg_top;
@@ -29,6 +25,3 @@ void ApplyRoadset2BG()
   cout << "E N D" << endl;
   exit(0);
 }
-
-// ----  Note  ------------------------------------------------------------
-// QIE inhibit threshold = 1200 on average in the last E906 run.

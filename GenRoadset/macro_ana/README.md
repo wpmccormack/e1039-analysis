@@ -15,20 +15,40 @@ It is used in `macro_ana/make-input-list.sh` by default.
 ```
 
 
+## QIE Inhibit Threshold
+
+You set the QIE inhibit threshold when generating and evaluating a new roadset.
+It was 1200 on average in the last E906 run, although it varied with time.
+Thus you should try 1200 and also different values (like 1000 and 1400) to check how the result changes.
+
+
 ## Generation of Roadset
 
-* `macro_ana/GenerateRoad.C`
-* `src/AnaGmc.(h|cc)`
-* `src/AnaNim3.(h|cc)`
-* `src/GenRoadset.(h|cc)`
+Typical procedure:
 
 ```
 root -b GenerateRoad.C
 ```
 
+Related files:
+* `macro_ana/GenerateRoad.C`
+* `src/AnaGmc.(h|cc)`
+* `src/AnaNim3.(h|cc)`
+* `src/GenRoadset.(h|cc)`
+
 
 ## Evaluation of Roadset
 
+Typical procedure:
+
+```
+root -b ApplyRoadset2Signal.C
+root -b 'ApplyRoadset2BG.C(0)'
+root -b 'ApplyRoadset2BG.C(1200)'
+root -b DrawRS.C
+```
+
+Related files:
 * `work/ApplyRoadset2Signal.C`
 * `work/ApplyRoasetd2BG.C`
 * `work/DrawRS.C`
@@ -36,8 +56,3 @@ root -b GenerateRoad.C
 * `src/ReAnaBG.(h|cc)`
 * `src/DrawRoadset.(h|cc)`
 
-```
-root -b ApplyRoadset2Signal.C
-root -b ApplyRoadset2BG.C
-root -b DrawRS.C
-```

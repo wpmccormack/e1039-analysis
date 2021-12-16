@@ -1,16 +1,16 @@
 R__LOAD_LIBRARY(libGenRoadset)
 using namespace std;
 
-void ApplyRoadset2Signal()
+void ApplyRoadset2Signal(const string rs_id="113")
 {
-  /// 101, 4.0, 5.0
-  /// 102, 4.0, 5.0
-  /// 103, 2.5, 3.5
-  /// 104, 2.5, 3.5
-  /// 105, 7.0, 8.0
-  const string   rs_id = "113";
-  const double mass_lo = 2.5;
-  const double mass_hi = 3.5;
+  /// You have to make these parameters identical to the ones in `GenerateRoad.C`.
+  double  mass_lo;
+  double  mass_hi;
+  if      (rs_id == "102") { mass_lo=4.0; mass_hi=5.0; }
+  else if (rs_id == "103") { mass_lo=2.5; mass_hi=3.5; }
+  else if (rs_id == "104") { mass_lo=2.5; mass_hi=3.5; }
+  else if (rs_id == "105") { mass_lo=7.0; mass_hi=8.0; }
+  else if (rs_id == "113") { mass_lo=2.5; mass_hi=3.5; }
 
   ReAnaSignal* ana_sig = new ReAnaSignal("app_sig_rs" + rs_id);
   ana_sig->SetInputTreeName  ("signal_tree");
@@ -32,13 +32,3 @@ void ApplyRoadset2Signal()
   cout << "E N D" << endl;
   exit(0);
 }
-
-/*
-
-QIE inhibit threshold = 1200 in the last E906 run.
-
-Expected counts per spill = [N of "fired" events] / [N of all events] * [N of filled RFs]
-
-N of filled RFs = 186e6
-
- */
