@@ -41,7 +41,6 @@ You can find details in [`macro_ana/README.md`](macro_ana/README.md).
 
 ## To-Do List
 
-* Make the full-BG simulation usable to generage BG events.
 * Take and use RF ID & Turn ID for NIM3 events.
 
 
