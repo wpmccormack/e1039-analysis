@@ -8,8 +8,9 @@
 #pragma link C++ class BgData+;
 
 #pragma link C++ class SubsysRecoSignal-!;
-#pragma link C++ class SubsysRecoNim3-!;
-#pragma link C++ class SubsysRecoFullBG-!;
+#pragma link C++ class SubsysRecoBG-!;
+#pragma link C++ class E906SpillSelector-!;
+#pragma link C++ class FilterByTrigger-!;
 
 #pragma link C++ class RoadInfo-!;
 #pragma link C++ class RoadList-!;

@@ -2,62 +2,67 @@
 #include <fstream>
 #include <TFile.h>
 #include <TTree.h>
-#include <TH1D.h>
-#include <TCanvas.h>
 #include <interface_main/SQRun.h>
 #include <interface_main/SQEvent.h>
+#include <interface_main/SQMCEvent.h>
 #include <interface_main/SQHitVector.h>
 #include <fun4all/Fun4AllReturnCodes.h>
-#include <phool/PHNodeIterator.h>
-#include <phool/PHIODataNode.h>
 #include <phool/getClass.h>
-#include <geom_svc/GeomSvc.h>
 #include <UtilAna/UtilSQHit.h>
-#include <UtilAna/UtilTrigger.h>
-#include "SubsysRecoFullBG.h"
+#include "SubsysRecoBG.h"
 using namespace std;
 
-SubsysRecoFullBG::SubsysRecoFullBG(const std::string &name)
+SubsysRecoBG::SubsysRecoBG(const std::string &name)
   : SubsysReco(name)
+  , m_mode(DEFAULT)
+  , mi_evt(0)
+  , mi_mc_evt(0)
+  , mi_vec_hit(0)
+  , mo_file(0)
+  , mo_tree(0)
 {
   ;
 }
 
-int SubsysRecoFullBG::Init(PHCompositeNode* topNode)
+int SubsysRecoBG::Init(PHCompositeNode* topNode)
 {
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
-int SubsysRecoFullBG::InitRun(PHCompositeNode* topNode)
+int SubsysRecoBG::InitRun(PHCompositeNode* topNode)
 {
   mi_evt     = findNode::getClass<SQEvent    >(topNode, "SQEvent");
   mi_vec_hit = findNode::getClass<SQHitVector>(topNode, "SQHitVector");
   if (!mi_evt || !mi_vec_hit) return Fun4AllReturnCodes::ABORTEVENT;
 
-  mo_file = new TFile("bg_data.root", "RECREATE");
-  mo_tree = new TTree("bg_tree", "Created by SubsysRecoFullBG");
-  mo_tree->Branch("bg_data", &mo_bg);
+  if (m_mode == FULL_BG) {
+    mi_mc_evt = findNode::getClass<SQMCEvent>(topNode, "SQMCEvent");
+    if (!mi_mc_evt) return Fun4AllReturnCodes::ABORTEVENT;
+  }
 
-  h1_evt_cnt = new TH1D("h1_evt_cnt", "", 20, 0.5, 20.5);
+  mo_file = new TFile("bg_data.root", "RECREATE");
+  mo_tree = new TTree("bg_tree", "Created by SubsysRecoBG");
+  mo_tree->Branch("bg_data", &mo_bg);
 
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
-int SubsysRecoFullBG::process_event(PHCompositeNode* topNode)
+int SubsysRecoBG::process_event(PHCompositeNode* topNode)
 {
-  h1_evt_cnt->Fill(1);
-  h1_evt_cnt->Fill(2);
-  h1_evt_cnt->Fill(3);
+  mo_bg.run   = mi_evt->get_run_id();
+  mo_bg.evt   = mi_evt->get_event_id();
+  mo_bg.fpga1 = mi_evt->get_trigger(SQEvent::MATRIX1);
 
-  mo_bg.run        = mi_evt->get_run_id();
-  mo_bg.evt        = mi_evt->get_event_id();
-  mo_bg.fpga1      = mi_evt->get_trigger(SQEvent::MATRIX1);
-  mo_bg.inte_rfp00 = mi_evt->get_qie_rf_intensity(0);
-
-  mo_bg.inte_max = 0;
-  for (int ii = -8; ii <= 8; ii++) {
-    int inte = mi_evt->get_qie_rf_intensity(ii);
-    if (inte > mo_bg.inte_max) mo_bg.inte_max = inte;
+  if (m_mode == FULL_BG) {
+    mo_bg.inte_rfp00 = mi_mc_evt->get_cross_section();
+    mo_bg.inte_max   = mo_bg.inte_rfp00;
+  } else { // == DEFAULT
+    mo_bg.inte_rfp00 = mi_evt->get_qie_rf_intensity(0);
+    mo_bg.inte_max   = 0;
+    for (int ii = -8; ii <= 8; ii++) {
+      int inte = mi_evt->get_qie_rf_intensity(ii);
+      if (inte > mo_bg.inte_max) mo_bg.inte_max = inte;
+    }
   }
 
   ExtractHits(mi_vec_hit, "H1T", mo_bg.h1t);
@@ -74,7 +79,7 @@ int SubsysRecoFullBG::process_event(PHCompositeNode* topNode)
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
-int SubsysRecoFullBG::End(PHCompositeNode* topNode)
+int SubsysRecoBG::End(PHCompositeNode* topNode)
 {
   mo_file->cd();
   mo_file->Write();
@@ -82,7 +87,7 @@ int SubsysRecoFullBG::End(PHCompositeNode* topNode)
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
-void SubsysRecoFullBG::ExtractHits(const SQHitVector* hit_vec, const std::string det_name, std::vector<int>& list_ele)
+void SubsysRecoBG::ExtractHits(const SQHitVector* hit_vec, const std::string det_name, std::vector<int>& list_ele)
 {
   list_ele.clear();
   shared_ptr<SQHitVector> hv(UtilSQHit::FindFirstHits(hit_vec, det_name, true));

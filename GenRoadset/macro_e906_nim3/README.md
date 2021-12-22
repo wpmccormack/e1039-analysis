@@ -9,7 +9,7 @@ You usually need not carry out this step by yourself.
 ## Setting of Event Extraction
 
 The setting of the event extraction is configured in `Fun4All.C` as usual.
-The SubsysReco module that creates `bg_tree.root` is `src/SubsysRecoNim3.(h|cc)`.
+The SubsysReco module that creates `bg_tree.root` is `src/SubsysRecoBG.(h|cc)`.
 You can modify them as you need.
 
 

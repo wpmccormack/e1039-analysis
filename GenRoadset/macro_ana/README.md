@@ -15,6 +15,8 @@ You can make the lists by the following command;
 ./make-input-list.sh
 ```
 
+When you use the full-BG simulation, you have to change `DIR_IN_BG` in the script beforehand.
+
 If you have modified some setting in `macro_gen_signal` or `macro_e906_nim3`, you might have to modify `make-input-list.sh` accordingly.
 
 

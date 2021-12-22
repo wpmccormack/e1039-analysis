@@ -17,7 +17,8 @@ echo
 echo "##"
 echo "## BG List"
 echo "##"
-DIR_IN_BG=/pnfs/e1039/persistent/users/kenichi/GenRoadsetCommon
+DIR_IN_BG=/pnfs/e1039/persistent/users/kenichi/GenRoadsetCommon # E906 NIM3
+#DIR_IN_BG=../macro_full_bg/data/main # Full BG
 FN_IN_BG=bg_data.root
 FN_OUT_BG=list_bg.txt
 echo "DIR_IN_BG = $DIR_IN_BG"

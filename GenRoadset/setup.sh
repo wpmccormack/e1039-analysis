@@ -1,7 +1,6 @@
 DIR_TOP=$(dirname $(readlink -f $BASH_SOURCE))
 DIR_BUILD=$DIR_TOP/build
 
-E1039_CORE_VERSION=pr.116
 source /e906/app/software/osg/software/e1039/this-e1039.sh
 #source /data2/users/kenichi/e1039/git/knakano0524/core-inst/this-e1039.sh
 export   LD_LIBRARY_PATH=$DIR_TOP/inst/lib:$LD_LIBRARY_PATH
@@ -43,8 +42,3 @@ if [ ${HOSTNAME:0:13} != 'spinquestgpvm' ] ; then
     echo "You are recommended to use 'spinquestgpvm01'."
     echo
 fi
-
-echo "Usage:"
-echo "  cmake-this"
-echo "  make-this"
-

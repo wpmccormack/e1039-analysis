@@ -1,17 +1,21 @@
-#ifndef _SUBSYS_RECO_NIM3__H_
-#define _SUBSYS_RECO_NIM3__H_
+#ifndef _SUBSYS_RECO_BG__H_
+#define _SUBSYS_RECO_BG__H_
 #include <vector>
 #include <fun4all/SubsysReco.h>
 #include "TreeData.h"
 class TFile;
 class TTree;
-class TH1;
 class SQEvent;
+class SQMCEvent;
 class SQHitVector;
 
-class SubsysRecoNim3: public SubsysReco {
+class SubsysRecoBG: public SubsysReco {
+  typedef enum { DEFAULT, FULL_BG } Mode_t;
+  Mode_t m_mode;
+
   /// Input
   SQEvent*     mi_evt;
+  SQMCEvent*   mi_mc_evt;
   SQHitVector* mi_vec_hit;
 
   /// Output
@@ -19,19 +23,18 @@ class SubsysRecoNim3: public SubsysReco {
   TTree* mo_tree;
   BgData mo_bg;
 
-  TH1* h1_evt_cnt;
-
  public:
-  SubsysRecoNim3(const std::string &name="SubsysRecoNim3");
-  virtual ~SubsysRecoNim3() {;}
+  SubsysRecoBG(const std::string &name="SubsysRecoBG");
+  virtual ~SubsysRecoBG() {;}
   int Init(PHCompositeNode *topNode);
   int InitRun(PHCompositeNode *topNode);
   int process_event(PHCompositeNode *topNode);
   int End(PHCompositeNode *topNode);
 
+  void FullBgMode() { m_mode = FULL_BG; }
+
  protected:
   void ExtractHits(const SQHitVector* hit_vec, const std::string det_name, std::vector<int>& list_ele);
-  //void FindAllRoads(const SQHitVector* hv, const int tb, std::vector<int>& roads, int* n_hit);
 };
 
-#endif // _SUBSYS_RECO_NIM3__H_
+#endif // _SUBSYS_RECO_BG__H_
