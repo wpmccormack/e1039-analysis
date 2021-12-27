@@ -40,6 +40,8 @@ void CalibData::Init(CalibParam* ptr)
   h2_y0    = new TH2D("h2_y0"   ,        ";y_{0} (cm);Station ID;N of tracks",  100,  -500, 500,  7, 0.5, 7.5);
   h2_tx    = new TH2D("h2_tx"   ,             ";t_{x};Station ID;N of tracks",  100,  -1.0, 1.0,  7, 0.5, 7.5);
   h2_ty    = new TH2D("h2_ty"   ,             ";t_{y};Station ID;N of tracks",  100,  -1.0, 1.0,  7, 0.5, 7.5);
+  h2_x1800 = new TH2D("h2_x1800",     ";x_{1800} (cm);Station ID;N of tracks",  100,  -250, 250,  7, 0.5, 7.5);
+  h2_y1800 = new TH2D("h2_y1800",     ";y_{1800} (cm);Station ID;N of tracks",  100,  -250, 250,  7, 0.5, 7.5);
 
   GeomSvc* geom = GeomSvc::instance();
   ostringstream oss;
@@ -113,6 +115,9 @@ void CalibData::FillTracklet(const Tracklet* trk)
   int ndf = n_hit - (st_id == 7  ?  5  :  4); // Incorrect, when KMag is off
   double rchi2 = ndf > 0  ?  trk->chisq / ndf  :  0;
 
+  double x1800 = trk->x0 + 1800 * trk->tx;
+  double y1800 = trk->y0 + 1800 * trk->ty;
+
   h1_st_id->Fill(st_id);
   h2_nhit ->Fill(n_hit      , st_id);
   h2_mom  ->Fill(1/trk->invP, st_id);
@@ -121,6 +126,8 @@ void CalibData::FillTracklet(const Tracklet* trk)
   h2_y0   ->Fill(trk->y0    , st_id);
   h2_tx   ->Fill(trk->tx    , st_id);
   h2_ty   ->Fill(trk->ty    , st_id);
+  h2_x1800->Fill(x1800      , st_id);
+  h2_y1800->Fill(y1800      , st_id);
 }
 
 /// Fill the hit information.
@@ -162,10 +169,12 @@ void CalibData::DrawHistEvent(const string dir_out)
   DrawIn1D(h2_nhit , "nhit" , dir_out, iy_lo, iy_hi);
   //DrawIn1D(h2_mom  , "mom"  , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_rchi2, "rchi2", dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_x0   , "x0"   , dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_y0   , "y0"   , dir_out, iy_lo, iy_hi);
+  //DrawIn1D(h2_x0   , "x0"   , dir_out, iy_lo, iy_hi);
+  //DrawIn1D(h2_y0   , "y0"   , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_tx   , "tx"   , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_ty   , "ty"   , dir_out, iy_lo, iy_hi);
+  DrawIn1D(h2_x1800, "x1800", dir_out, iy_lo, iy_hi);
+  DrawIn1D(h2_y1800, "y1800", dir_out, iy_lo, iy_hi);
 
   delete c1;
 }
@@ -195,8 +204,6 @@ void CalibData::DrawHistHit(const string dir_out)
     oss.str("");
     oss << dir_out << "/h1_time_wide_" << setw(2) << (ip+1) << "_" << det_name << ".png";
     c1->SaveAs(oss.str().c_str());
-
-    continue; // Histograms below are useless at present
 
     h1_time[ip]->Draw();
     oss.str("");

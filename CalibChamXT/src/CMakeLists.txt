@@ -34,6 +34,8 @@ add_library(CalibChamXT SHARED ${sources} CalibChamXT_Dict.cc)
 target_link_libraries(CalibChamXT  fun4all interface_main geom_svc ktracker UtilAna)
 install(TARGETS CalibChamXT DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
+install(FILES ${dist_headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+
 # Install the pcm files
 add_custom_target(install_pcm ALL COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/lib COMMAND cp -up *_rdict.pcm ${CMAKE_INSTALL_PREFIX}/lib)
 add_dependencies(install_pcm CalibChamXT)

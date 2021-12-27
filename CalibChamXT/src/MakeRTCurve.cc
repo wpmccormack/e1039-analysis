@@ -87,20 +87,36 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
   for (int i_evt = 0; i_evt < n_evt; i_evt++) {
     dataTree->GetEntry(i_evt);
     n_evt_ana++;
+    int n_trk = tracklets->GetEntries();
 
     map<int, int> list_n_trk; // <station ID, N of tracks>
-    
-    int n_trk = tracklets->GetEntries();
     for (int i_trk = 0; i_trk < n_trk; i_trk++) {
       Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
-      cal_dat.FillTracklet(trk);
+      //cal_dat.FillTracklet(trk); // To fill all tracklets
+      list_n_trk[trk->stationID]++;
+    }
+    int rec_st = 0; // rec->getRecStatus()
+    cal_dat.FillEventInfo(rec_st, list_n_trk);
+    if (list_n_trk[5] > 40) continue;
+    
+    for (int i_trk = 0; i_trk < n_trk; i_trk++) {
+      Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
       int st_id = trk->stationID;
-      list_n_trk[st_id]++;
-
       if (st_id != 5) continue; // 5 = D3m
-      //if (trk->getNHits() <  15) continue;
-      //if (trk->chisq / (trk->getNHits()-5) > 1.0) continue;
-      //if (1/trk->invP < 20.0) continue;
+
+      double x1800 = trk->x0 + 1800 * trk->tx;
+      double y1800 = trk->y0 + 1800 * trk->ty;
+      int n_hit = trk->getNHits();
+      if (n_hit != 6) continue;
+
+      int ndf = n_hit - 4; // Correct only when KMag is off
+      double rchi2 = trk->chisq / ndf;
+      if (rchi2 < 1.0 || rchi2 > 3.0 ||
+          fabs(trk->tx) > 0.3 ||
+          fabs(trk->ty) > 0.4 ||
+          fabs(x1800)   > 100 ||
+          fabs(y1800+75) > 75   ) continue;
+      cal_dat.FillTracklet(trk); // To fill only good tracklets
       n_trk_ana++;
       
       for(std::list<SignedHit>::iterator it = trk->hits.begin(); it != trk->hits.end(); ++it) {
@@ -114,8 +130,6 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
       }
     }
     
-    int rec_st = 0; // rec->getRecStatus()
-    cal_dat.FillEventInfo(rec_st, list_n_trk);
     
     tracklets->Clear();
   }

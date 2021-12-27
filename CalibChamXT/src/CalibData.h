@@ -26,6 +26,8 @@ class CalibData {
   TH2* h2_y0;
   TH2* h2_tx;
   TH2* h2_ty;
+  TH2* h2_x1800;
+  TH2* h2_y1800;
 
   /// Histograms for R-T
   TH1* h1_time_wide[99];

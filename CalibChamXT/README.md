@@ -76,6 +76,10 @@ kinit
 
 You use `jobsub_q_mine` (or `./check_job.sh`) to wait until all grid jobs finish.
 
+```
+~kenichi/bin/hadddraw -o hist_raw data/main/run_*/out/output_*.root
+```
+
 
 ## Tracklet Analysis
 

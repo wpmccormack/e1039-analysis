@@ -1,7 +1,8 @@
 #!/bin/bash
 
-FN_DST=$1
-N_EVT=$2
+ITER=$1
+FN_DST=$2
+N_EVT=$3
 
 if [ -z "$CONDOR_DIR_INPUT" -o -z "$CONDOR_DIR_OUTPUT" ] ; then
     echo "!ERROR!  CONDOR_DIR_INPUT/OUTPUT is undefined.  Abort."
@@ -16,7 +17,8 @@ echo "PWD    = $PWD"
 
 tar xzf $CONDOR_DIR_INPUT/input.tar.gz
 
-FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
+#FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
+FN_SETUP=/e906/app/software/osg/users/kenichi/e1039/core/this-e1039.sh
 if [ ! -e $FN_SETUP ] ; then # On grid
     FN_SETUP=/cvmfs/seaquest.opensciencegrid.org/seaquest/${FN_SETUP#/e906/app/software/osg/}
 fi
@@ -29,13 +31,14 @@ if [ ${FN_DST:0:1} != '/' ] ; then # in case of relative path
     FN_DST=$CONDOR_DIR_INPUT/$FN_DST
 fi
 
-time root.exe -b -q "Fun4AllReco.C(\"$FN_DST\", $N_EVT)"
+touch timestamp.txt
+time root.exe -b -q "Fun4AllReco.C($ITER, \"$FN_DST\", $N_EVT)"
 RET=$?
 if [ $RET -ne 0 ] ; then
     echo "Error in Fun4AllReco.C: $RET"
     exit $RET
 fi
 
-mv DSTreco.root eval.root event_count.root  $CONDOR_DIR_OUTPUT
+find . -mindepth 1 -maxdepth 1 -newer timestamp.txt -exec mv {} $CONDOR_DIR_OUTPUT \;
 
 echo "gridrun.sh finished!"

@@ -25,7 +25,8 @@ echo "N_EVT_ANA = $N_EVT_ANA"
 ## Functions
 ##
 function ProcessOneRun {
-    local -r      RUN=$1
+    local -r     ITER=$1
+    local -r      RUN=$2
     local -r     RUN6=$(printf '%06d' $RUN)
     local -r LIST_DST=( $(find $DIR_DST/run_$RUN6 -name 'run_*.root' | sort) )
     local -r N_DST_ALL="${#LIST_DST[*]}"
@@ -51,7 +52,7 @@ function ProcessOneRun {
 	    CMD+=" -f $DIR_WORK/input.tar.gz"
 	    CMD+=" -f $FN_DST"
 	    CMD+=" -d OUTPUT $DIR_WORK/$BASE_NAME/out"
-	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $(basename $FN_DST) $N_EVT_ANA"
+	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $ITER $(basename $FN_DST) $N_EVT_ANA"
 	    #echo "$CMD"
 	    $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
 	    RET_SUB=${PIPESTATUS[0]}
@@ -61,8 +62,9 @@ function ProcessOneRun {
 	    export CONDOR_DIR_OUTPUT=$DIR_WORK/$BASE_NAME/out
 	    mkdir -p $DIR_WORK/$BASE_NAME/in
 	    cp -p $DIR_WORK/input.tar.gz $DIR_WORK/$BASE_NAME/in
-	    cd $DIR_WORK/$BASE_NAME
-	    $DIR_WORK/$BASE_NAME/gridrun.sh $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
+	    mkdir -p $DIR_WORK/$BASE_NAME/exe
+	    cd       $DIR_WORK/$BASE_NAME/exe
+	    $DIR_WORK/$BASE_NAME/gridrun.sh $ITER $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
 	fi
     done
 }
@@ -88,8 +90,9 @@ mkdir -p $DIR_WORK
 cd $DIR_BASE
 tar czvf $DIR_WORK/input.tar.gz  ../inst Fun4AllReco.C geom.root
 
+ITER=1
 while read RUN ; do
-    ProcessOneRun $RUN
+    ProcessOneRun $ITER $RUN
     test $USE_GRID = 'no' && break ## Process one run in case of test
 done <$LIST_RUN
 

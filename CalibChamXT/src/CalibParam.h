@@ -9,7 +9,6 @@ class CalibParam {
   static const int N_PL = 30;
   static const double DT_RT; // time interval between R-T points.
 
-  //bool m_skip_d1;
   bool m_ana_d0;
   bool m_ana_d1;
   bool m_ana_d2;
@@ -32,7 +31,6 @@ class CalibParam {
   virtual ~CalibParam();
 
   int GetNumPlanes() const { return N_PL; }
-  //bool SkipD1() const { return m_skip_d1; }
   bool AnaD0 () const { return m_ana_d0;  }
   bool AnaD1 () const { return m_ana_d1;  }
   bool AnaD2 () const { return m_ana_d2;  }
