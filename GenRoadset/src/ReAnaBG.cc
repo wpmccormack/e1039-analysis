@@ -88,12 +88,6 @@ void ReAnaBG::Analyze()
   cout << "ReAnaBG::Analyze():" << endl;
 
   m_ofs << "Event Counts:\n";
-  for (int ib = 1; ib < m_h1_evt_cnt->GetNbinsX(); ib++) {
-    double cont = m_h1_evt_cnt->GetBinContent(ib);
-    if (cont == 0) break;
-    m_ofs << setw(4) << ib << " " << cont << "\n";
-  }
-  m_ofs << "\n"
         << "N of analyzed events:\n"
         << "  Used  " << m_n_evt_used << "\n"
         << "  T+B   " << m_n_evt_tb << "\n"

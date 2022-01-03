@@ -21,7 +21,6 @@ class AnaBG : public AnaBase {
   int  m_n_evt_used;
   int  m_n_evt_tb;
   int  m_n_evt_fired;
-  TH1* m_h1_evt_cnt;
 
   RoadMap* m_road_map_pos_top;
   RoadMap* m_road_map_pos_bot;

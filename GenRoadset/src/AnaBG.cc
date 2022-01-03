@@ -24,7 +24,6 @@ AnaBG::AnaBG(const std::string label)
   , m_n_evt_used (0)
   , m_n_evt_tb   (0)
   , m_n_evt_fired(0)
-  , m_h1_evt_cnt (0)
   , m_road_map_pos_top(0)
   , m_road_map_pos_bot(0)
   , m_road_map_neg_top(0)
@@ -37,7 +36,7 @@ AnaBG::AnaBG(const std::string label)
 
 AnaBG::~AnaBG() 
 {
-  if (m_h1_evt_cnt) delete m_h1_evt_cnt;
+  ;
 }
 
 void AnaBG::Init()
@@ -74,15 +73,6 @@ void AnaBG::ReadEvents(const char* fname)
   if (! tree) {
     cout << "Cannot get the tree, '" << m_tree_name.c_str() << "'.  Abort." << endl;
     exit(1);
-  }
-
-  TH1* h1_evt_cnt = (TH1*)file->Get("h1_evt_cnt");
-  assert(h1_evt_cnt);
-  if (! m_h1_evt_cnt) {
-    gROOT->cd();
-    m_h1_evt_cnt = (TH1*)h1_evt_cnt->Clone("h1_evt_cnt_tot");
-  } else {
-    m_h1_evt_cnt->Add(h1_evt_cnt);
   }
 
   tree->SetBranchAddress(m_branch_name.c_str(), &m_bg_data);
@@ -158,12 +148,6 @@ void AnaBG::Analyze()
   cout << "AnaBG::Analyze():" << endl;
 
   m_ofs << "Event Counts:\n";
-  for (int ib = 1; ib < m_h1_evt_cnt->GetNbinsX(); ib++) {
-    double cont = m_h1_evt_cnt->GetBinContent(ib);
-    if (cont == 0) break;
-    m_ofs << setw(4) << ib << " " << cont << "\n";
-  }
-  m_ofs << "\n"
         << "N of analyzed events:\n"
         << "  Used  " << m_n_evt_used << "\n"
         << "  T+B   " << m_n_evt_tb << "\n"
