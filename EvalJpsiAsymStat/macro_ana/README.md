@@ -1,14 +1,14 @@
-# e1039-analysis/AnaSimDst/work in Branch `jpsi_tssa_sim`
+# e1039-analysis/EvalJpsiAsymStat/work
 
-This code is a special version of `AnaSimDst` to evaluate
-the anticipated statistics of TSSA of J/psi and psi'.
+The simulated DSTs can be processed by `AnaSimDst`, as explained in `AnaSimDst/README.md`.
+The conditions and qualities of simulated DSTs should be checked by looking into the outputs of `Fun4SimTree.C`.
 
-## Event generation
+This branch includes another ROOT macro, `asymmetry.C`.
+It reads the tree (like `Fun4SimTree.C`) to compute J/psi TSSA;
+```
+root -b -q asymmetry.C
+```
 
-Use `e1039-analysis/SimChainDev` to generate two sets of events;
- - `stat_jpsi`:  N of generated events = 20k/job * 796 jobs
- - `stat_psip`:  N of generated events = 20k/job * 496 jobs
- - `stat_dy`  :  N of generated events = 20k/job * 697 jobs
 
 ## Processing `jpsi` event set
 
@@ -21,6 +21,7 @@ root -b ../Fun4SimMicroDst.C
 root -b '../Fun4SimTree.C("jpsi")'
 ```
 
+
 ## Processing `psip` event set
 
 ```
@@ -31,6 +32,7 @@ root -b ../Fun4SimDst.C
 root -b ../Fun4SimMicroDst.C
 root -b '../Fun4SimTree.C("psip")'
 ```
+
 
 ## Processing `dy` event set
 
@@ -43,8 +45,11 @@ root -b ../Fun4SimMicroDst.C
 root -b '../Fun4SimTree.C("dy")'
 ```
 
+
 ## Drawing the anticipated statistics
 
+`draw_stat_exp.cc` is to draw the expected accuracy of J/psi TSSA.
+You first write the simulated accuracy (which is obtained by `asymmetry.C`) into this macro manually and then execute it;
 ```
-root -b draw_stat_exp.cc
+root -b -q draw_stat_exp.cc
 ```

@@ -35,31 +35,3 @@ function make-this {
     ( cd $DIR_BUILD && make install )
     return $?
 }
-
-function cmake-ana-sim-dst {
-    echo "!!WARNING!!  This function is obsolete."
-    echo "Please execute 'cmake-this' and then 'make-this' instead."
-}
-
-##
-## Main
-##
-
-if [ ${HOSTNAME:0:13} != 'spinquestgpvm' ] ; then
-    echo "!!CAUTION!!"
-    echo "This AnaSimDst package does not support your computer ($HOSTNAME)."
-    echo "It might not run properly even if you follow 'README.md'."
-    echo
-fi
-
-echo "!!Note!!  The usage of this package changed on 2021-05-15."
-echo
-echo "Two commands for source build:"
-echo "  cmake-this"
-echo "  make-this"
-echo
-echo "These commands can be executed in any directory."
-echo "All built files are always created under $DIR_BUILD."
-echo
-echo "You need execute 'make-this'  when you modify source files."
-echo "You need execute 'cmake-this' when you add/delete source files."
