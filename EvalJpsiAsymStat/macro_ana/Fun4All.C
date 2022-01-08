@@ -1,9 +1,7 @@
-/// Fun4SimDst.C:  Fun4all macro to analyze the E1039 simulated DST files.
-R__LOAD_LIBRARY(libana_sim_dst)
+/// macro_ana/Fun4All.C:  Fun4all macro to analyze the simDST files for J/psi TSSA.
+R__LOAD_LIBRARY(EvalJpsiAsymStat)
 
-int Fun4SimDst(const int   n_dst_ana=0,
-               const char* fn_list_dst="list_dst.txt",
-               const char* fn_udst="uDST.root")
+int Fun4All(const int n_dst_ana=0, const char* fn_list_dst="list_dst.txt")
 {
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->Verbosity(1);
@@ -11,16 +9,7 @@ int Fun4SimDst(const int   n_dst_ana=0,
   se->registerInputManager(in);
 
   se->registerSubsystem(new AnaSimRunInfo());
-  //se->registerSubsystem(new FilterSimEvent());
-
-  Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", fn_udst);
-  se->registerOutputManager(out);
-  out->AddNode("SQHitVector");
-  out->AddNode("SQEvent");
-  out->AddNode("SRecEvent");
-  out->AddNode("SQMCEvent");
-  out->AddNode("SQTruthTrackVector");
-  out->AddNode("SQTruthDimuonVector");
+  se->registerSubsystem(new AnaSimDimuon());
 
   vector<string> list_dst;
   string fn_dst;

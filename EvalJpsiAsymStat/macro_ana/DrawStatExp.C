@@ -4,7 +4,6 @@
  * delta_{AN}^{1w} = 1 / (df * pol * sqrt(R * L^1w))
  */
 const double lumi_1w  = 7e4; // integrated luminosity in 1 week [/pb]
-//const double lumi_1w  = 1.75e4 / 0.0593; // integrated luminosity in 1 week [/pb]
 const double df       = 0.176; // dilution_factor
 const double pol      = 0.8;   // polarization
 TFile* file;
@@ -12,7 +11,7 @@ TCanvas* c1;
 void DrawOneParticle(const char* part);
 void DrawOneVar(const char* part, const char* var, const double x_min, const double x_max);
 
-void draw_stat_exp()
+void DrawStatExp()
 {
   cout << "Luminosity   = " << lumi_1w << " /pb for one week\n"
        << "Duty factor  = " << df << "\n"

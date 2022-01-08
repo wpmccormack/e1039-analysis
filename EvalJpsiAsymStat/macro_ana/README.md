@@ -1,55 +1,38 @@
-# e1039-analysis/EvalJpsiAsymStat/work
+# Macro for Event Analysis
 
-The simulated DSTs can be processed by `AnaSimDst`, as explained in `AnaSimDst/README.md`.
-The conditions and qualities of simulated DSTs should be checked by looking into the outputs of `Fun4SimTree.C`.
-
-This branch includes another ROOT macro, `asymmetry.C`.
-It reads the tree (like `Fun4SimTree.C`) to compute J/psi TSSA;
-```
-root -b -q asymmetry.C
-```
+This directory is to analyze the events generated under `macro_gen/`.
 
 
-## Processing `jpsi` event set
+## Creation of Histograms from DST Files
+
+You first analyze the DST files of each event set to extract histogmras.
+You can use `ana-one-set.sh` as follows:
 
 ```
-mkdir  jpsi
-cd jpsi
-../make-dst-list.sh ../../../SimChainDev/data/stat_jpsi_20210723_0*
-root -b ../Fun4SimDst.C
-root -b ../Fun4SimMicroDst.C
-root -b '../Fun4SimTree.C("jpsi")'
+./ana-one-set.sh jpsi
+./ana-one-set.sh psip
+./ana-one-set.sh dy
 ```
 
+Outputs of each event set will appear in `jpsi/`, `psip/` or `dy/`.
+You might comment out some lines in `ana-one-set.sh`,
+because for example you need not execute `make-dst-list.sh` when the input DST files haven't changed.
 
-## Processing `psip` event set
+
+## Computation of Anticipated Statistics
+
+`DrawStatExp.C` is to draw the expected accuracy of J/psi TSSA.
 
 ```
-mkdir  psip
-cd psip
-../make-dst-list.sh ../../../SimChainDev/data/stat_psip_20210723_0*
-root -b ../Fun4SimDst.C
-root -b ../Fun4SimMicroDst.C
-root -b '../Fun4SimTree.C("psip")'
+root -b DawStatExp.C
 ```
 
 
-## Processing `dy` event set
+## Drawing the mass distributions
+
+This step is optional.
+`DrawMassDist.C` is to draw the mass distributions of J/psi, psi', D-Y and their totals.
 
 ```
-mkdir  dy
-cd dy
-../make-dst-list.sh ../../../SimChainDev/data/stat_dy_20210723_0*
-root -b ../Fun4SimDst.C
-root -b ../Fun4SimMicroDst.C
-root -b '../Fun4SimTree.C("dy")'
-```
-
-
-## Drawing the anticipated statistics
-
-`draw_stat_exp.cc` is to draw the expected accuracy of J/psi TSSA.
-You first write the simulated accuracy (which is obtained by `asymmetry.C`) into this macro manually and then execute it;
-```
-root -b -q draw_stat_exp.cc
+root -b DawMassDist.C
 ```

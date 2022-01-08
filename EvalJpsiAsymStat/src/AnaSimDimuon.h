@@ -1,5 +1,5 @@
-#ifndef _ANA_SIM_DST__H_
-#define _ANA_SIM_DST__H_
+#ifndef _ANA_SIM_DIMUON__H_
+#define _ANA_SIM_DIMUON__H_
 #include <map>
 #include <TVector3.h>
 #include <TLorentzVector.h>
@@ -14,7 +14,7 @@ class SQTrackVector;
 class SQDimuonVector;
 
 /// An example class to analyze the simulated uDST file.
-class AnaSimDst: public SubsysReco {
+class AnaSimDimuon: public SubsysReco {
   /// Input
   SQEvent       * mi_evt;
   SRecEvent     * mi_srec;
@@ -23,8 +23,8 @@ class AnaSimDst: public SubsysReco {
   SQDimuonVector* mi_vec_dim;
 
   /// Output
-  TFile* file;
-  TTree* tree;
+  TFile* mo_file;
+  TTree* mo_tree;
   EventData  mo_evt;
   TrackList  mo_trk_true;
   TrackList  mo_trk_reco;
@@ -39,22 +39,16 @@ class AnaSimDst: public SubsysReco {
   std::map<std::string, int> m_part_id_12_cnt;
 
  public:
-  AnaSimDst();
-  virtual ~AnaSimDst() {;}
+  AnaSimDimuon(const std::string& name="AnaSimDimuon");
+  virtual ~AnaSimDimuon() {;}
   int Init(PHCompositeNode *topNode);
   int InitRun(PHCompositeNode *topNode);
   int process_event(PHCompositeNode *topNode);
   int End(PHCompositeNode *topNode);
 
  private:
-  int GetNodes(PHCompositeNode *topNode);
-  void MakeTree();
-
   typedef std::map<int, int> IdMap_t; // For now the key is not ID but index.
-  void FindTrackRelation (IdMap_t& id_map);
   void FindDimuonRelation(IdMap_t& id_map);
-
-  void CalcAngle(const TLorentzVector& mu0, const TLorentzVector& mu1, const int pol_sign, double& xb, double& xt, double& phi_s_tf);
 };
 
-#endif /* _ANA_SIM_DST__H_ */
+#endif // _ANA_SIM_DIMUON__H_

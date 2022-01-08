@@ -1,20 +1,24 @@
-/// Fun4SimTree.C:  Macro to analyze the simulated tree created by Fun4SimMicroDst.C.
-R__LOAD_LIBRARY(libana_sim_dst)
+/// macro_ana/AnaTree.C:  Macro to analyze the tree created by Fun4All.C
+R__LOAD_LIBRARY(EvalJpsiAsymStat)
 
 using namespace std;
 TFile* file_out;
-string mode;
+string mode; // jpsi, psip, dy
+string generator; // legacy, pythia
 TFile* file;
 TTree* tree;
 TCanvas* c1;
 double inte_lumi;
-void DrawDimTrueKin();
 void MakeHist1D(const string name, const string var_x, const string title_x, const int n_x, const double x_lo, const double x_hi);
 double GetInteLumi(const char* fn_lumi="lumi_tot.txt");
 
-void Fun4SimTree(const char* mode_in="jpsi", const char* fname="sim_tree.root", const char* tname="tree")
+///
+/// Main
+///
+void AnaTree(const char* mode_in="jpsi", const char* generator_in="legacy", const char* fname="sim_tree.root", const char* tname="tree")
 {
   mode = mode_in;
+  generator = generator_in;
   file = new TFile(fname);
   tree = (TTree*)file->Get(tname);
   gSystem->mkdir("result", true);
@@ -27,7 +31,31 @@ void Fun4SimTree(const char* mode_in="jpsi", const char* fname="sim_tree.root", 
   inte_lumi = GetInteLumi();
   cout << "Integrated luminosity = " << inte_lumi << endl;
 
-  DrawDimTrueKin();
+  c1->SetLogy(true);
+  tree->Draw("n_dim_true");
+  c1->SaveAs("result/h1_true_n_dim.png");
+  tree->Draw("rec_stat", "n_dim_true==1");
+  c1->SaveAs("result/h1_rec_stat.png");
+  tree->Draw("weight", "n_dim_true==1");
+  c1->SaveAs("result/h1_weight.png");
+
+  c1->SetLogy(false);
+  const double PI = TMath::Pi();
+  //MakeHist1D("vtx_x", "dim_true.pos.X()"   , "X-vertex", 100, -2, 2);
+  //MakeHist1D("vtx_y", "dim_true.pos.Y()"   , "Y-vertex", 100, -2, 2);
+  MakeHist1D("vtx_z", "dim_true.pos.Z()"   , "Z-vertex", 100, -310, -290);
+  //MakeHist1D("px"      , "dim_true.mom.X()"   , "px"  , 50, -5, 5);
+  //MakeHist1D("py"      , "dim_true.mom.Y()"   , "py"  , 50, -5, 5);
+  MakeHist1D("pz"      , "dim_true.mom.Z()"   , "pz"  , 30, 30, 120);
+  MakeHist1D("pT"      , "dim_true.mom.Perp()", "pT"  , 10, 0,   5);
+  MakeHist1D("mass"    , "dim_true.mom.M()"   , "Mass"        , 50, 1, 6);
+  MakeHist1D("mass_rec", "dim_reco.mom.M()"   , "Reco. Mass"  , 50, 1, 6);
+  //MakeHist1D("phi"     , "dim_true.mom.Phi()" , "#phi", 30, -PI, PI);
+  MakeHist1D("x1"      , "dim_true.x1"        , "x1"  , 10, 0.0, 1.0);
+  MakeHist1D("x2"      , "dim_true.x2"        , "x2"  , 10, 0.0, 0.2);
+  MakeHist1D("xF"      , "dim_true.xF"        , "xF"  , 10, 0.0, 1.0);
+  //MakeHist1D("cs_costh", "dim_true.costh"     , "cos#theta in C-S frame", 50, -1, 1);
+  //MakeHist1D("cs_phi"  , "dim_true.phi"       , "#phi in C-S frame"     , 50, 0, 2*PI);
 
   file_out->Write();
   file_out->Close();
@@ -35,36 +63,8 @@ void Fun4SimTree(const char* mode_in="jpsi", const char* fname="sim_tree.root", 
 }
 
 ///
-/// Functions below
+/// Sub-Functions
 ///
-void DrawDimTrueKin()
-{
-  c1->SetLogy(true);
-  tree->Draw("n_dim_true");
-  c1->SaveAs("result/h1_true_n_dim.png");
-  tree->Draw("rec_stat", "n_dim_true");
-  c1->SaveAs("result/h1_rec_stat.png");
-
-  c1->SetLogy(false);
-
-  const double PI = TMath::Pi();
-  //MakeHist1D("vtx_x", "dim_true.pos.X()"   , "X-vertex", 100, -2, 2);
-  //MakeHist1D("vtx_y", "dim_true.pos.Y()"   , "Y-vertex", 100, -2, 2);
-  //MakeHist1D("vtx_z", "dim_true.pos.Z()"   , "Z-vertex", 100, -310, -290);
-  //MakeHist1D("px"      , "dim_true.mom.X()"   , "px"  , 50, -5, 5);
-  //MakeHist1D("py"      , "dim_true.mom.Y()"   , "py"  , 50, -5, 5);
-  MakeHist1D("pz"      , "dim_true.mom.Z()"   , "pz"  , 30, 30, 120);
-  MakeHist1D("pT"      , "dim_true.mom.Perp()", "pT"  , 10, 0,   5);
-  MakeHist1D("mass"    , "dim_true.mom.M()"   , "Mass"        , 50, 1,  11);
-  MakeHist1D("mass_rec", "dim_reco.mom.M()"   , "Reco. Mass"  , 50, 1,  11);
-  //MakeHist1D("phi"     , "dim_true.mom.Phi()" , "#phi", 30, -PI, PI);
-  MakeHist1D("x1"      , "dim_true.x1"        , "x1"  , 10, 0.0, 1.0);
-  MakeHist1D("x2"      , "dim_true.x2"        , "x2"  , 10, 0.0, 0.2);
-  MakeHist1D("xF"      , "dim_true.xF"        , "xF"  , 10, 0.0, 1.0);
-  //MakeHist1D("cs_costh", "dim_true.costh"     , "cos#theta in C-S frame", 50, -1, 1);
-  //MakeHist1D("cs_phi"  , "dim_true.phi"       , "#phi in C-S frame"     , 50, 0, 2*PI);
-}
-
 void MakeHist1D(const string name, const string var_x, const string title_x, const int n_x, const double x_lo, const double x_hi)
 {
   static double mass_min = -1;
@@ -74,11 +74,11 @@ void MakeHist1D(const string name, const string var_x, const string title_x, con
     if (mode == "jpsi") {
       mass_min = 3.097 - 0.010;
       mass_max = 3.097 + 0.010;
-      ww_br    = 1.0; // BR = 0.0593 by PYTHIA
+      ww_br    = (generator == "pythia" ? 0.0593 : 1.0);
     } else if (mode == "psip") {
       mass_min = 3.686 - 0.010;
       mass_max = 3.686 + 0.010;
-      ww_br    = 7.3e-3; // BR = 1 by PYTHIA
+      ww_br    = (generator == "pythia" ? 7.3e-3 : 1.0);
     } else if (mode == "dy") {
       mass_min =  0.0;
       mass_max = 15.0;

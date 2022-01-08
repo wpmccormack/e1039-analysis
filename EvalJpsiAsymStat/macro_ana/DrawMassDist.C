@@ -1,9 +1,5 @@
-const double lumi_1w  = 7e4;
-//const double lumi_1w  = 1.75e4 / 0.0593;
-
-void draw_mass_dist()
+void DrawMassDist()
 {
-  cout << "Luminosity   = " << lumi_1w << " /pb for one week\n";
   gSystem->mkdir("result_asym", true);
   TFile* file_jpsi = new TFile("jpsi/result/hist.root");
   TFile* file_psip = new TFile("psip/result/hist.root");
@@ -40,5 +36,9 @@ void draw_mass_dist()
   h1_dy_jpsi->Draw("HISTsame");
 
   c1->SaveAs("result_asym/h1_mass_tot.png");
+
+  c1->SetLogy(true);
+  c1->SaveAs("result_asym/h1_mass_tot_log.png");
+
   exit(0);
 }

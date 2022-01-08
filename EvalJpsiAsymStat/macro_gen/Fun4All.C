@@ -29,14 +29,14 @@ int Fun4All(const string gen_mode, const int n_evt=0)
   /// Event generator
   ///
   SQPrimaryParticleGen* sq_gen = new SQPrimaryParticleGen();
-  if (gen_mode == "dy") { // Drell-Yan: 500 events = 1 hour
+  if (gen_mode == "dy") {
     sq_gen->set_massRange(1.5, 8.0);
     sq_gen->set_xfRange(-0.2, 0.9);
     sq_gen->enableDrellYanGen();
-  } else if (gen_mode == "jpsi") { // J/psi: 500 events = 2 hours
+  } else if (gen_mode == "jpsi") {
     sq_gen->set_xfRange(-0.2, 0.9);
     sq_gen->enableJPsiGen();
-  } else if (gen_mode == "psip") { // psi'
+  } else if (gen_mode == "psip") {
     sq_gen->set_xfRange(-0.2, 0.9);
     sq_gen->enablePsipGen();
   } else {
@@ -100,6 +100,12 @@ int Fun4All(const string gen_mode, const int n_evt=0)
 
   Fun4AllDstOutputManager *man_out = new Fun4AllDstOutputManager("DSTOUT", "DST.root");
   se->registerOutputManager(man_out);
+  //man_out->AddNode("SQHitVector");
+  //man_out->AddNode("SQEvent");
+  //man_out->AddNode("SRecEvent");
+  //man_out->AddNode("SQMCEvent");
+  //man_out->AddNode("SQTruthTrackVector");
+  //man_out->AddNode("SQTruthDimuonVector");
 
   const bool count_only_good_events = true;
   se->run(n_evt, count_only_good_events);
