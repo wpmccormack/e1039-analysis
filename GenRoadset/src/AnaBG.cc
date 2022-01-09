@@ -147,7 +147,7 @@ void AnaBG::Analyze()
 {
   cout << "AnaBG::Analyze():" << endl;
 
-  m_ofs << "Event Counts:\n";
+  m_ofs << "Event Counts:\n"
         << "N of analyzed events:\n"
         << "  Used  " << m_n_evt_used << "\n"
         << "  T+B   " << m_n_evt_tb << "\n"

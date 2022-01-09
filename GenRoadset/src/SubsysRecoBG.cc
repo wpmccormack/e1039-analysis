@@ -54,15 +54,13 @@ int SubsysRecoBG::process_event(PHCompositeNode* topNode)
   mo_bg.fpga1 = mi_evt->get_trigger(SQEvent::MATRIX1);
 
   if (m_mode == FULL_BG) {
-    mo_bg.inte_rfp00 = mi_mc_evt->get_cross_section();
-    mo_bg.inte_max   = mo_bg.inte_rfp00;
-  } else { // == DEFAULT
-    mo_bg.inte_rfp00 = mi_evt->get_qie_rf_intensity(0);
-    mo_bg.inte_max   = 0;
-    for (int ii = -8; ii <= 8; ii++) {
-      int inte = mi_evt->get_qie_rf_intensity(ii);
-      if (inte > mo_bg.inte_max) mo_bg.inte_max = inte;
-    }
+    mo_bg.pot_rfp00 = mi_mc_evt->get_cross_section();
+  }
+  mo_bg.inte_rfp00 = mi_evt->get_qie_rf_intensity(0);
+  mo_bg.inte_max   = 0;
+  for (int ii = -8; ii <= 8; ii++) {
+    int inte = mi_evt->get_qie_rf_intensity(ii);
+    if (inte > mo_bg.inte_max) mo_bg.inte_max = inte;
   }
 
   ExtractHits(mi_vec_hit, "H1T", mo_bg.h1t);

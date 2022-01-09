@@ -26,7 +26,8 @@ struct BgData {
   int    run;
   int    evt;
   bool   fpga1;
-  int    inte_rfp00;
+  double pot_rfp00; ///< In unit of N of protons.
+  int    inte_rfp00; ///< In unit of QIE count.
   int    inte_max;
   std::vector<int> h1t;
   std::vector<int> h2t;
@@ -36,64 +37,10 @@ struct BgData {
   std::vector<int> h2b;
   std::vector<int> h3b;
   std::vector<int> h4b;
-  //int    b_n_top[4];
-  //int    b_n_bot[4];
-  //std::vector<int> b_roads_top;
-  //std::vector<int> b_roads_bot;
 
   BgData();
   virtual ~BgData() {;}
   ClassDef(BgData, 1);
 };
-
-//struct EventData {
-//  int proc_id;
-//  int par_id[4]; // 2 -> 2
-//  TLorentzVector par_mom[4];
-//  double weight;
-//  int trig_bits;
-//  int rec_stat;
-//  int n_dim_true;
-//  int n_dim_reco;
-//
-//  EventData();
-//  virtual ~EventData() {;}
-//
-//  ClassDef(EventData, 1);
-//};
-//
-//struct TrackData {
-//  int            charge;
-//  TVector3       pos_vtx;
-//  TLorentzVector mom_vtx;
-//
-//  TrackData();
-//  virtual ~TrackData() {;}
-//
-//  ClassDef(TrackData, 1);
-//};
-//
-//struct DimuonData {
-//  int            pdg_id;
-//  TVector3       pos;
-//  TLorentzVector mom;
-//  TLorentzVector mom_pos;
-//  TLorentzVector mom_neg;
-//  double         mass;
-//  double         pT;
-//  double         x1;
-//  double         x2;
-//  double         xF;
-//  double         costh;
-//  double         phi;
-//
-//  DimuonData();
-//  virtual ~DimuonData() {;}
-//
-//  ClassDef(DimuonData, 1);
-//};
-//
-//typedef std::vector<TrackData > TrackList;
-//typedef std::vector<DimuonData> DimuonList;
 
 #endif /* _TREE_DATA__H_ */

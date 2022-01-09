@@ -12,6 +12,7 @@ The full-BG simulation will become usable to generate BG events.
 
 All source files are placed in `src/`.
 You use the following commands to compile them.
+The e1039-core version has to be `pr.124` or higher.
 
 ```
 source setup.sh
