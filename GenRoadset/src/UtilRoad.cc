@@ -25,12 +25,16 @@ using namespace std;
 void UtilRoad::PrintList(RoadList* road_list, int i_begin, int i_end, std::ostream& os)
 {
   int nn = road_list->Size();
+  if (nn == 0) return;
+
   if      (i_begin == 0) i_begin = 1;
   else if (i_begin <  0) i_begin = nn + i_begin + 1;
 
   if      (i_end == 0) i_end = nn;
   else if (i_end <  0) i_end = nn + i_end + 1;
 
+  if (i_begin <  1) i_begin =  1;
+  if (i_end   <  1) i_end   =  1;
   if (i_begin > nn) i_begin = nn;
   if (i_end   > nn) i_end   = nn;
 
