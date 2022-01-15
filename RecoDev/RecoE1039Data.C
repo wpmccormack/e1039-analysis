@@ -4,6 +4,7 @@ R__LOAD_LIBRARY(libinterface_main)
 R__LOAD_LIBRARY(libfun4all)
 R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libg4eval)
+R__LOAD_LIBRARY(libcalibrator)
 R__LOAD_LIBRARY(libktracker)
 
 /*
@@ -38,8 +39,10 @@ int RecoE1039Data(const int nEvents = 1)
   Fun4AllServer* se = Fun4AllServer::instance();
   se->Verbosity(0);
 
-  GeomSvc::UseDbSvc(true);  
-  GeomSvc* geom_svc = GeomSvc::instance();
+  //GeomSvc* geom_svc = GeomSvc::instance();
+
+  CalibDriftDist* cal_dd = new CalibDriftDist();
+  se->registerSubsystem(cal_dd);
 
   SQReco* reco = new SQReco();
   reco->Verbosity(0);
@@ -48,7 +51,7 @@ int RecoE1039Data(const int nEvents = 1)
   reco->set_enable_KF(true); //Kalman filter not needed for the track finding, disabling KF saves a lot of initialization time
   reco->setInputTy(SQReco::E1039);    //options are SQReco::E906 and SQReco::E1039
   reco->setFitterTy(SQReco::KFREF);  //not relavant for the track finding
-  reco->set_evt_reducer_opt("e"); //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none"
+  reco->set_evt_reducer_opt("none"); //if not provided, event reducer will be using JobOptsSvc to intialize; to turn off, set it to "none"
   reco->set_enable_eval(true);
   reco->set_eval_file_name("eval.root");
   if(cosmic) reco->add_eval_list(3);    //output of cosmic reco is contained in the eval output for now

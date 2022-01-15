@@ -74,7 +74,6 @@ int RecoE1039Sim(const int nevent = 10, TString prefix = "run", int seed = 12345
 
   rc->Print();
 
-  GeomSvc::UseDbSvc(true);
   GeomSvc* geom_svc = GeomSvc::instance();
   geom_svc->printTable();
 
