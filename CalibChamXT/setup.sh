@@ -3,7 +3,7 @@ DIR_BUILD=$DIR_TOP/build
 DIR_INST=$DIR_TOP/inst
 
 #source /e906/app/software/osg/software/e1039/this-e1039.sh
-source /e906/app/software/osg/users/kenichi/e1039/core/this-e1039.sh
+source /e906/app/software/osg/users/kenichi/e1039/core-20220131/this-e1039.sh
 export   LD_LIBRARY_PATH=$DIR_INST/lib:$LD_LIBRARY_PATH
 export ROOT_INCLUDE_PATH=$DIR_INST/include:$ROOT_INCLUDE_PATH
 
