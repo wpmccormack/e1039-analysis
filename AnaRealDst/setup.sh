@@ -37,16 +37,11 @@ function make-this {
     return $?
 }
 
-function cmake-e1039-ana {
-    echo "!!WARNING!!  This function is obsolete."
-    echo "Please execute 'cmake-this' and then 'make-this' instead."
-}
-
 ##
 ## Main
 ##
-
 if [   ${HOSTNAME:0:13} != 'seaquestdaq01' \
+    -a ${HOSTNAME:0:9}  != 'e1039gat1' \
     -a ${HOSTNAME:0:13} != 'e1039-monitor' \
     -a ${HOSTNAME:0:12} != 'spinquestana' \
     -a ${HOSTNAME:0:13} != 'spinquestgpvm' ] ; then
@@ -55,7 +50,7 @@ if [   ${HOSTNAME:0:13} != 'seaquestdaq01' \
     echo "It might not run properly even if you follow 'README.md'."
     echo
 fi
-echo "OK, your shell environment has been set up to use the E1039 software prepared in '$E1039_ROOT'."
+echo "Your shell environment has been set up to use the E1039 software under '$E1039_ROOT'."
 echo
 echo "Two commands for source build:"
 echo "  cmake-this"
