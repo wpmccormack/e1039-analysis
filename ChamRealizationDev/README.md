@@ -2,9 +2,11 @@
 
 A compact program to develop the chamber realization, which adds inefficiencies and position resolutions to chamber and prop tube hits.
 
+
 ## Preparation
 
 The version of e1039-core is selected in `setup.sh`.
+The pre-built offline version is used by default.
 If you need modify e1039-core, you build e1039-core and select it in `setup.sh`.
 
 
@@ -30,7 +32,12 @@ cd macro
 root -b 'Fun4AllStep1.C(10000)'
 ```
 
-This step includes the track reconstruction and the analysis.
+This step generates a set of single-track events using `PHG4SimpleEventGenerator`.
+The vertex and the momentum of tracks are fixed by default for simplicity.
+You can change them as you need, by modifying `Fun4AllStep1.C`.
+
+This step also includes the reconstruction and the analysis of tracks.
+Results of the analysis will appear under `AnaTrack_raw/`.
 The chamber realization is carried out in the next step.
 
 
@@ -40,7 +47,11 @@ The chamber realization is carried out in the next step.
 root -b Fun4AllStep2.C
 ```
 
-This step includes the track reconstruction and the analysis.
+This step reads the DST file (`DST.root`) created in the previous step.
+It applies the chamber realization and then reconstruct and analyze tracks.
+Results of the analysis will appear under `AnaTrack_real/`.
+
+You compare `AnaTrack_raw/` and `AnaTrack_real/` to evaluate the effect of the chamber realization.
 
 
 ## Contact

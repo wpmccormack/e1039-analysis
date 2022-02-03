@@ -23,12 +23,7 @@ int Fun4AllStep1(const int n_evt=10)
   rc->set_IntFlag("RUNNUMBER", RUNNUMBER);
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
-  //rc->Print();
-  //GeomSvc *geom_svc = GeomSvc::instance();
 
-  ///////////////////////////////////////////
-  // Make the Server
-  //////////////////////////////////////////
   Fun4AllServer *se = Fun4AllServer::instance();
   se->Verbosity(0);
 
