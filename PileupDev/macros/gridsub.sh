@@ -39,8 +39,8 @@ do
     chmod -R 01755 $work/$id
     
     runid=`expr $id + 0` 
-    bkg_path=$bkg_dir/e1039pythiaGen_17Nov21/$(printf '%i_bkge1039_pythia_17Nov21_100M.root' $runid)
-    bkg_file=$(printf '%i_bkge1039_pythia_17Nov21_100M.root' $runid)
+    bkg_path=$bkg_dir/fullbg_candidates/01/$(printf '%05i_bkg_100M_v1.root' $runid)
+    bkg_file=$(printf '%05i_bkg_100M_v1.root' $runid)
 
     rsync -av $dir_macros/gridrun.sh $work/$id/gridrun.sh
 
