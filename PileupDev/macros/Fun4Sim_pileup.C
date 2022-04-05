@@ -82,7 +82,7 @@ int Fun4Sim_pileup(const int nevent = 10)
     {
       extgen->setBucketSize(fixedBucketSize);//manual pileup
     }
-  extgen->setExtInputFile("/pnfs/e1039/persistent/users/apun/bkg_study/e1039pythiaGen_17Nov21/1_bkge1039_pythia_17Nov21_100M.root");
+  extgen->setExtInputFile("/pnfs/e1039/persistent/users/apun/bkg_study/fullbg_candidates/01/00001_bkg_100M_v1.root");
   //extgen->setExtInputFile("bkg.root");//uncomment for gridjobs
   se->registerSubsystem(extgen);
 
