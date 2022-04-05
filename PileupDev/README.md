@@ -14,7 +14,7 @@ make-this
 
 ## Analysis Procedure
 1. Requriemets: 
-	- ROOT file with background candidate information is needed. A separate module to generate such files are under developement but general users are not expected to produce such files by themselves. Such files are currently provided under the `/pnfs/e1039/persistent/users/apun/bkg_study/e1039pythiaGen_17Nov21/*root` location. 
+	- ROOT file with background candidate information is needed. A separate module to generate such files are under developement but general users are not expected to produce such files by themselves. Such files are currently provided under the `/pnfs/e1039/persistent/users/apun/bkg_study/fullbg_candidates/` location. 
  	- NIM3 intensity profile from E906 data (from road set 67) are provided as `e906_rf00.root` under `macros` directory
 1. Run the pileup macro with desired methods of pileup
 	- with distribution in the form of histogram (default) from E906 NIM3 intensity profile. You can choose the inhibit threshold (in intensity distribution) and proton conversion factor (following same convention as in E906 data).
