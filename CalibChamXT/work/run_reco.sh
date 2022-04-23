@@ -52,7 +52,7 @@ function ProcessOneRun {
 	    CMD+=" -f $DIR_WORK/input.tar.gz"
 	    CMD+=" -f $FN_DST"
 	    CMD+=" -d OUTPUT $DIR_WORK/$BASE_NAME/out"
-	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $ITER $(basename $FN_DST) $N_EVT_ANA"
+	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $RUN $ITER $(basename $FN_DST) $N_EVT_ANA"
 	    #echo "$CMD"
 	    $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
 	    RET_SUB=${PIPESTATUS[0]}
@@ -64,7 +64,7 @@ function ProcessOneRun {
 	    cp -p $DIR_WORK/input.tar.gz $DIR_WORK/$BASE_NAME/in
 	    mkdir -p $DIR_WORK/$BASE_NAME/exe
 	    cd       $DIR_WORK/$BASE_NAME/exe
-	    $DIR_WORK/$BASE_NAME/gridrun.sh $ITER $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
+	    $DIR_WORK/$BASE_NAME/gridrun.sh $RUN $ITER $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
 	fi
     done
 }
@@ -88,7 +88,7 @@ rm -rf   $DIR_WORK
 mkdir -p $DIR_WORK
 
 cd $DIR_BASE
-tar czvf $DIR_WORK/input.tar.gz  ../inst Fun4AllReco.C geom.root
+tar czvf $DIR_WORK/input.tar.gz  ../setup.sh ../inst Fun4AllReco.C geom.root
 
 ITER=1
 while read RUN ; do

@@ -16,13 +16,18 @@
 #include "RTCurve.h"
 #include "CalibParam.h"
 #include "CalibData.h"
-//#include "FitRTDist.h"
+#include "FitRTDist.h"
 #include "MakeRTCurve.h"
 using namespace std;
 
 MakeRTCurve::MakeRTCurve(const int iter)
   : m_iter(iter)
   , m_dir_name_out("")
+  , m_n_evt_all(0)
+  , m_n_evt_ana(0)
+  , m_n_trk_all(0)
+  , m_n_trk_ana(0)
+  , m_verb     (0)
 {
   if (iter <= 0) {
     cout << "'iter' must be a positive integer.  Abort." << endl;
@@ -46,7 +51,10 @@ void MakeRTCurve::Init()
   gSystem->mkdir(m_dir_name_out.c_str(), kTRUE);
 
   cal_par.Init(N_RT_PT);
-  //cal_par.ReadRTParam(jobopts->m_calibrationsFile);
+
+  oss.str("");
+  oss << "calib/" << (m_iter-1) << "/param.tsv";
+  cal_par.ReadRTParam(oss.str());
 
   //const char* env_str = gSystem->Getenv("FIX_TIME_WINDOW");
   //if (! env_str) {
@@ -73,94 +81,137 @@ void MakeRTCurve::AnalyzeFile(const char* fname)
   TFile* dataFile = new TFile(fname, "READ");
   TTree* dataTree = (TTree*)dataFile->Get("eval");
 
-  //SRawEvent*    raw       = new SRawEvent();
-  //SRecEvent*    rec       = new SRecEvent();
-  TClonesArray* tracklets = new TClonesArray("Tracklet");
+  // SRawEvent is not available in the evaluation file.  Need to use DST.
+  //static SRawEvent*    raw       = new SRawEvent();
+  //static SRecEvent*    rec       = 0; // new SRecEvent();
+  static TClonesArray* tracklets = new TClonesArray("Tracklet");
   tracklets->Clear();
   //dataTree->SetBranchAddress("rawEvent" , &raw      );
   //dataTree->SetBranchAddress("recEvent" , &rec      );
   dataTree->SetBranchAddress("tracklets", &tracklets);
 
   int n_evt_ana = 0;
+  int n_trk_all = 0;
   int n_trk_ana = 0;
   int n_evt = dataTree->GetEntries();
   for (int i_evt = 0; i_evt < n_evt; i_evt++) {
     dataTree->GetEntry(i_evt);
+    //bool nim1 = raw->isTriggeredBy(SRawEvent::NIM1); // H1234
+    //bool nim2 = raw->isTriggeredBy(SRawEvent::NIM2); // H12
+    //bool nim4 = raw->isTriggeredBy(SRawEvent::NIM4); // H24
+    //if (! nim4) continue;
     n_evt_ana++;
+
     int n_trk = tracklets->GetEntries();
+    n_trk_all += n_trk;
 
     map<int, int> list_n_trk; // <station ID, N of tracks>
     for (int i_trk = 0; i_trk < n_trk; i_trk++) {
       Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
-      //cal_dat.FillTracklet(trk); // To fill all tracklets
+      //cal_dat.FillTracklet(trk); // Use this to fill all tracklets
       list_n_trk[trk->stationID]++;
     }
+    if (list_n_trk[ST_ID_D3M] > 64) continue; // Exclude noisy events
+
     int rec_st = 0; // rec->getRecStatus()
     cal_dat.FillEventInfo(rec_st, list_n_trk);
-    if (list_n_trk[5] > 40) continue;
     
+    int i_trk_best = -1;
+    double rchi2_best = 0;
     for (int i_trk = 0; i_trk < n_trk; i_trk++) {
       Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
       int st_id = trk->stationID;
-      if (st_id != 5) continue; // 5 = D3m
+      if (st_id != ST_ID_D3M) continue;
 
-      double x1800 = trk->x0 + 1800 * trk->tx;
-      double y1800 = trk->y0 + 1800 * trk->ty;
       int n_hit = trk->getNHits();
-      if (n_hit != 6) continue;
-
       int ndf = n_hit - 4; // Correct only when KMag is off
       double rchi2 = trk->chisq / ndf;
-      if (rchi2 < 1.0 || rchi2 > 3.0 ||
-          fabs(trk->tx) > 0.3 ||
-          fabs(trk->ty) > 0.4 ||
-          fabs(x1800)   > 100 ||
-          fabs(y1800+75) > 75   ) continue;
-      cal_dat.FillTracklet(trk); // To fill only good tracklets
+      if (n_hit != 6) continue;
+      if (rchi2 > 3.0) continue;
+
+      double x_d2, y_d2;
+      double x_d3, y_d3;
+      EvalD2XY(trk, x_d2, y_d2);
+      EvalD3XY(trk, x_d3, y_d3);
+
+      if (fabs(trk->tx) > 0.3 || fabs(trk->ty) > 0.4 ||
+          fabs(x_d3)    > 131 || fabs(y_d3+85) > 85    ) continue; // Track in the D3m acceptance, page 15 of doc9856.
+
+      // Cut L1 = st_id & tx & ty & x_d3 & y_d3
+      // Cut L2 = L1 & n_hit & n_trk <= 64
+      // Cut L3 = L2 & rchi2 < 2
+
+      if (i_trk_best < 0 || rchi2 < rchi2_best) {
+        i_trk_best = i_trk;
+        rchi2_best = rchi2;
+      }
+    }
+
+    if (i_trk_best >= 0) {
+      Tracklet* trk = (Tracklet*)tracklets->At(i_trk_best);
+      cal_dat.FillTracklet(trk); // Use this to fill only good tracklets
       n_trk_ana++;
       
       for(std::list<SignedHit>::iterator it = trk->hits.begin(); it != trk->hits.end(); ++it) {
-        if(it->hit.index < 0) continue;
+        if(it->hit.index < 0) continue; // Probably not necessary.
+        //int sign = it->hit.sign;
         int    det_id     = it->hit.detectorID;
+        int    ele_id     = it->hit.elementID;
         double drift_dist = it->hit.driftDistance;
         double tdc_time   = it->hit.tdcTime;
-        double track_dist = trk->getExpPositionW(det_id) - it->hit.pos; // track position - wire position
-        //if (det_id == 1) cout << " Z " << trk->getExpPositionW(det_id) << " " << it->hit.pos << " " << r << " " << t << " " << TMAX[det_id-1]-t << endl;
-        cal_dat.FillHit(det_id, drift_dist, tdc_time, track_dist);
+        double track_pos  = trk->getExpPositionW(det_id);
+        double wire_pos   = it->hit.pos; // GeomSvc::instance()->getMeasurement(det_id, ele_id);
+        cal_dat.FillHit(det_id, drift_dist, tdc_time, track_pos, wire_pos);
+        //cout << "D " << det_id << " " << it->hit.pos << " " << tdc_time << " " << drift_dist << " " << track_dist << endl;
       }
     }
-    
     
     tracklets->Clear();
   }
   dataFile->Close();
   cout << "  N of all events = " << n_evt << ", analyzed events = " << n_evt_ana << ", tracks = " << n_trk_ana << endl;
+  m_n_evt_all += n_evt;
+  m_n_evt_ana += n_evt_ana;
+  m_n_trk_all += n_trk_all;
+  m_n_trk_ana += n_trk_ana;
 }
 
 void MakeRTCurve::ExtractRT()
 {
   cout << "ExtractRT()" << endl;
-//  FitRTDist* fit = new FitRTDist(N_RT_PT);
-//  for (int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
-//    if (SKIP_D1 && 6 <= ip && ip < 12) continue;
-//    cout << "  Plane " << ip+1 << endl;
-//    if (cal_par.TimeWindowIsFixed()) {
-//      double t1 = cal_par.GetT1(ip);
-//      double t0 = cal_par.GetT0(ip);
-//      fit->FixT1T0(t1, t0);
-//    }
-//    TH2* h2_rt     = cal_dat.GetHistRT  (ip);
-//    double r_max   = cal_par.GetRMax    (ip);
-//    TGraph* gr_t2r = cal_par.GetGraphT2R(ip);
-//    fit->InitInput(h2_rt, r_max, gr_t2r);
-//    fit->DoFit(cal_par.GetRTCurve(ip));
-//  }
-//  delete fit;
+  FitRTDist* fit = new FitRTDist();
+  fit->Verbosity(m_verb);
+  for (int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
+    if      (ip <  6) { if (! cal_par.AnaD0 ()) continue; }
+    else if (ip < 12) { if (! cal_par.AnaD1 ()) continue; }
+    else if (ip < 18) { if (! cal_par.AnaD2 ()) continue; }
+    else if (ip < 24) { if (! cal_par.AnaD3p()) continue; }
+    else              { if (! cal_par.AnaD3m()) continue; }
+
+    cout << "  Plane " << ip+1 << endl;
+    if (cal_par.TimeWindowIsFixed()) {
+      double t1 = cal_par.GetT1(ip);
+      double t0 = cal_par.GetT0(ip);
+      fit->FixT1T0(t1, t0);
+    }
+    TH2* h2_rt     = cal_dat.GetHistRT  (ip);
+    double r_max   = cal_par.GetRMax    (ip);
+    TGraph* gr_t2r = cal_par.GetGraphT2R(ip);
+    fit->DoFit(N_RT_PT, h2_rt, r_max, gr_t2r, cal_par.GetRTCurve(ip));
+  }
+  delete fit;
 }
 
 void MakeRTCurve::DrawHistEvent()
 {
   cal_dat.DrawHistEvent(m_dir_name_out);
+  string fname = m_dir_name_out + "/info_event.txt";
+  ofstream ofs(fname.c_str());
+  ofs << m_n_evt_all << "\n"
+      << m_n_evt_ana << "\n"
+      << m_n_trk_all << "\n"
+      << m_n_trk_ana << "\n";
+  ofs.close();
 }
 
 void MakeRTCurve::DrawHistHit()
@@ -170,8 +221,8 @@ void MakeRTCurve::DrawHistHit()
 
 void MakeRTCurve::WriteRT()
 {
-  cal_par.WriteRTParam(m_dir_name_out);
-  cal_par.WriteRTGraph(m_dir_name_out);
+  cal_par.WriteRTParam(m_dir_name_out, "param.tsv");
+  cal_par.WriteRTGraph(m_dir_name_out, "rt_graph.root");
 }
 
 void MakeRTCurve::DrawCalibResult()
@@ -265,3 +316,16 @@ void MakeRTCurve::DrawCalibResult()
   //   c1->SaveAs(oss.str().c_str());
   //}
 }
+
+void MakeRTCurve::EvalD2XY(const Tracklet* trk, double& x, double& y)
+{
+  x = trk->x0 + 1345 * trk->tx;
+  y = trk->y0 + 1345 * trk->ty;
+}
+
+void MakeRTCurve::EvalD3XY(const Tracklet* trk, double& x, double& y)
+{
+  x = trk->x0 + 1900 * trk->tx;
+  y = trk->y0 + 1900 * trk->ty;
+}
+

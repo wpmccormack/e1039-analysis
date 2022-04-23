@@ -1,8 +1,9 @@
 #!/bin/bash
 
-ITER=$1
-FN_DST=$2
-N_EVT=$3
+RUN=$1
+ITER=$2
+FN_DST=$3
+N_EVT=$4
 
 if [ -z "$CONDOR_DIR_INPUT" -o -z "$CONDOR_DIR_OUTPUT" ] ; then
     echo "!ERROR!  CONDOR_DIR_INPUT/OUTPUT is undefined.  Abort."
@@ -10,29 +11,23 @@ if [ -z "$CONDOR_DIR_INPUT" -o -z "$CONDOR_DIR_OUTPUT" ] ; then
 fi
 echo "INPUT  = $CONDOR_DIR_INPUT"
 echo "OUTPUT = $CONDOR_DIR_OUTPUT"
-echo "N_EVT  = $N_EVT"
+echo "RUN    = $RUN"
+echo "ITER   = $ITER"
 echo "FN_DST = $FN_DST"
+echo "N_EVT  = $N_EVT"
 echo "HOST   = $HOSTNAME"
 echo "PWD    = $PWD"
 
 tar xzf $CONDOR_DIR_INPUT/input.tar.gz
-
-#FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
-FN_SETUP=/e906/app/software/osg/users/kenichi/e1039/core-20220131/this-e1039.sh
-if [ ! -e $FN_SETUP ] ; then # On grid
-    FN_SETUP=/cvmfs/seaquest.opensciencegrid.org/seaquest/${FN_SETUP#/e906/app/software/osg/}
-fi
-echo "SETUP = $FN_SETUP"
-source $FN_SETUP
-export   LD_LIBRARY_PATH=inst/lib:$LD_LIBRARY_PATH
-export ROOT_INCLUDE_PATH=inst/include:$ROOT_INCLUDE_PATH
+source setup.sh
+echo "E1039_CORE = $E1039_CORE"
 
 if [ ${FN_DST:0:1} != '/' ] ; then # in case of relative path
     FN_DST=$CONDOR_DIR_INPUT/$FN_DST
 fi
 
 touch timestamp.txt
-time root.exe -b -q "Fun4AllReco.C($ITER, \"$FN_DST\", $N_EVT)"
+time root.exe -b -q "Fun4AllReco.C($RUN, $ITER, \"$FN_DST\", $N_EVT)"
 RET=$?
 if [ $RET -ne 0 ] ; then
     echo "Error in Fun4AllReco.C: $RET"

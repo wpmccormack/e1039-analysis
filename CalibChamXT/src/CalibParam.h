@@ -25,7 +25,6 @@ class CalibParam {
   double T0[N_PL]; ///< T0 of the fixed time window.
   double T1[N_PL]; ///< T1 of the fixed time window.
 
-
  public:
   CalibParam();
   virtual ~CalibParam();
@@ -50,8 +49,8 @@ class CalibParam {
 
   void Init(const int n_rt_pt);
   void  ReadRTParam(const std::string fname);
-  void WriteRTParam(const std::string dir_name);
-  void WriteRTGraph(const std::string dir_name);
+  void WriteRTParam(const std::string dir_name, const std::string fname);
+  void WriteRTGraph(const std::string dir_name, const std::string fname);
   void ReadTimeWindow(const std::string fname);
 
  private:

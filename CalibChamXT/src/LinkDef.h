@@ -3,7 +3,6 @@
 #pragma link off all function;
 #pragma link off all global;
 
-#pragma link C++ class FilterByTrigger-!;
 #pragma link C++ class AnaChamPlane-!;
 #pragma link C++ class MakeRTCurve-!;
 

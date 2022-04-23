@@ -31,7 +31,7 @@ execute_process(COMMAND root-config --libs   OUTPUT_VARIABLE ROOT_LINK    OUTPUT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ROOT_CFLAGS}")
 
 add_library(CalibChamXT SHARED ${sources} CalibChamXT_Dict.cc)
-target_link_libraries(CalibChamXT  fun4all interface_main geom_svc ktracker UtilAna)
+target_link_libraries(CalibChamXT  ${ROOT_LINK} Minuit2 fun4all interface_main geom_svc ktracker UtilAna)
 install(TARGETS CalibChamXT DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
 install(FILES ${dist_headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)

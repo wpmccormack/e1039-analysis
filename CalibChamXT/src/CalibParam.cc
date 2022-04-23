@@ -74,45 +74,37 @@ void CalibParam::Init(const int n_rt_pt)
 
 void CalibParam::ReadRTParam(const string fname)
 {
-  cout << "ReadRT(): input = " << fname << "." << endl;
+  cout << "ReadRTParam(): input = " << fname << "." << endl;
   ifstream ifs(fname.c_str());
   if (! ifs) {
     cerr << "ERROR:  Cannot open the input file.  Abort." << endl;
     exit(1);
   }
+
   char buf[300];
   while (ifs.getline(buf, 300)) {
-    istringstream detector_info(buf);
-    int det_id, n_bin;
-    double tmin_temp, tmax_temp;
-    string det_name;
-    detector_info >> det_id >> n_bin >> tmin_temp >> tmax_temp >> det_name;
-    if (det_id > N_PL) break;
-    
-    for (int ii = 0; ii < n_bin; ii++) {
-      int i_bin;
-      double R, T;
-      ifs.getline(buf, 100);
-      istringstream cali_line(buf);
-      cali_line >> i_bin >> T >> R;
-      m_gr_t2r_in[det_id - 1]->SetPoint(ii, T, R);
-    }
+    if (buf[0] != 'D') continue; // comment or PT lines
+    istringstream iss(buf);
+    string det;
+    double t, x, dt, dx;
+    iss >> det >> t >> x >> dt >> dx;
+    int det_id = GeomSvc::instance()->getDetectorID(det);
+    TGraph* gr = m_gr_t2r_in[det_id - 1];
+    gr->SetPoint(gr->GetN(), t, x);
   }
+
   ifs.close();
 }
 
-void CalibParam::WriteRTParam(const string dir_name)
+void CalibParam::WriteRTParam(const string dir_name, const string fname)
 {
-  cout << "WriteRT(): output = " << dir_name << "." << endl;
+  cout << "WriteRTParam(): output = " << dir_name << "." << endl;
   ostringstream oss;
-  oss << dir_name << "/calibration_cham.txt";
+  oss << dir_name << "/" << fname;
   ofstream ofs1(oss.str().c_str()); 
   ofs1.setf(ios_base::fixed, ios_base::floatfield);
 
-  oss.str("");
-  oss << dir_name << "/calibration_cham_res.txt";
-  ofstream ofs2(oss.str().c_str());
-  ofs2.setf(ios_base::fixed, ios_base::floatfield);
+  ofs1 << "#det\tt\tx\tdt\tdx\n";
 
   GeomSvc* geom = GeomSvc::instance();
   for (int ip = 0; ip < N_PL; ip++) {
@@ -132,15 +124,26 @@ void CalibParam::WriteRTParam(const string dir_name)
       n_pt  = m_gr_t2r_in[ip]->GetN();
       t_min = m_gr_t2r_in[ip]->GetX()[0];
       t_max = m_gr_t2r_in[ip]->GetX()[n_pt-1];
-    }
-    ofs1 << ip+1 << "  " << n_pt << "  " << fixed << setprecision(1) << t_min << " " << t_max << " " << geom->getDetectorName(ip+1) << "\n";
-    for (int i_pt = 0; i_pt < n_pt; i_pt++) {
-      double t = t_min + DT_RT * i_pt;
-      double r = m_rtc[ip]->EvalR(t);
-      ofs1 <<"0   "<< setprecision(1) << t << "  " << setprecision(4) << r << "\n";
+      if (t_min > t_max) {
+        double t_tmp = t_min;
+        t_min = t_max;
+        t_max = t_tmp;
+      }
     }
 
-    ofs2 << ip+1 << "\t" << setprecision(3) << m_rtc[ip]->GetRWidth() << "\n";
+    string det = geom->getDetectorName(ip+1);
+    double dx  = m_rtc[ip]->GetRWidth();
+    double dt  = dx * (t_max - t_min) / R_MAX[ip];
+
+    for (int i_pt = 0; i_pt < n_pt; i_pt++) {
+      double t = t_min + DT_RT * i_pt;
+      double x = m_rtc[ip]->EvalR(t);
+      ofs1 << det << "\t"
+           << setprecision(1) << t  << "\t"
+           << setprecision(4) << x  << "\t"
+           << setprecision(3) << dt << "\t"
+           << setprecision(3) << dx << "\n";
+    }
   }
 
   //ifstream ifs( "calibration_prop.txt" );
@@ -152,13 +155,12 @@ void CalibParam::WriteRTParam(const string dir_name)
   //while (getline(ifs, buffer)) ofs1 << buffer << endl;
   //ifs .close();
   ofs1.close();
-  ofs2.close();
 }
 
-void CalibParam::WriteRTGraph(const string dir_name)
+void CalibParam::WriteRTGraph(const string dir_name, const string fname)
 {
   ostringstream oss;
-  oss << dir_name << "/rt_graph.root";
+  oss << dir_name << "/" << fname;
   TFile* file = new TFile(oss.str().c_str(), "RECREATE");
 
   GeomSvc* geom = GeomSvc::instance();

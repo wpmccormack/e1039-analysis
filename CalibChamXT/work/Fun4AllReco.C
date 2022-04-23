@@ -1,27 +1,37 @@
 /// Fun4AllReco.C:  Fun4all macro to run the reconstruction.
 // /seaquest/users/apun/abi_project/data_manage/e1039-data-mgt_test/RecoE1039Data.C
+R__LOAD_LIBRARY(libphg4hit) // Need be included in libevt_filter
+R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libcalibrator)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libCalibChamXT)
 
-int Fun4AllReco(const int iter, const char* fn_dst, const int n_evt)
+int Fun4AllReco(const int run, const int iter, const char* fn_dst, const int n_evt)
 {
   recoConsts* rc = recoConsts::instance();
   rc->init("cosmic");
+  rc->set_IntFlag("RUNNUMBER", run);
   rc->set_BoolFlag("COARSE_MODE", false);
   rc->set_DoubleFlag("KMAGSTR", 0.);
   rc->set_DoubleFlag("FMAGSTR", 0.);
-  rc->Print();
+  rc->set_IntFlag("MaxHitsDC0" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC1" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC2" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC3p", 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC3m", 12); // default = 100
+  //rc->Print();
 
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->Verbosity(1);
 
   FilterByTrigger* fbt = new FilterByTrigger();
-  fbt->SetTriggerBits( (0x1<<SQEvent::NIM4) );
-  fbt->EnableOutput("event_count.root");
+  fbt->SetNimBits(0,0,0,1,0); // (1,1,0,1,0);
+  fbt->EnableOutput();
   se->registerSubsystem(fbt);
 
   CalibDriftDist* cal_dd = new CalibDriftDist();
+  cal_dd->Verbosity(1);
+  cal_dd->SetResolution(0.03, 0.03, 0.03, 0.03, 0.03); // (D0, D1, D2, D3p, D3m) in cm.
   //if (iter > 1) {
   //  cal_dd->ReadParamFromFile(fn_in_time, fn_xt_curve);
   //}
@@ -51,11 +61,12 @@ int Fun4AllReco(const int iter, const char* fn_dst, const int n_evt)
   }
 
   const bool legacy_rec_container = false;
-  SQReco* reco = new SQReco();
-  reco->Verbosity(0);
+  SQReco* reco = new SQTrackletReco();
+  //reco->Verbosity(9);
   reco->set_legacy_rec_container(legacy_rec_container);
   reco->set_geom_file_name("geom.root");
-  reco->set_enable_KF(true);
+  reco->set_enable_KF(false); // default = true
+  reco->set_output_list_ID(0); // 0 = Always build all tracklet types.  3 = D23
   reco->setInputTy(SQReco::E1039);
   reco->setFitterTy(SQReco::KFREF);
   reco->set_evt_reducer_opt("none"); // was "e", default = aoc, "" = aoc
