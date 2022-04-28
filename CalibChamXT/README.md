@@ -101,6 +101,16 @@ cd work
 
 Station ID:  https://github.com/E1039-Collaboration/e1039-wiki/wiki/event-reconstruction
 
+Trigger bits:
+* FPGA1: Any ST2 and Any ST4
+* FPGA2: Top ST2 and Top ST4
+* FPGA3: Top ST2 and Bottom ST4
+* FPGA4: Bottom ST2 and Top ST4
+* FPGA5: ((H1X||H1Y)&&(H2X||H2Y)) || ((H2X||H2Y)&&(H4X||H4Y2))
+* NIM1: (H1X||H1Y)&&(H2X||H2Y)&&(H3X||H4Y1)&&(H4X||H4Y2)
+* NIM2: (H1X||H1Y)&&(H2X||H2Y)
+* NIM3: Random
+* NIM4: (H2X||H2Y)&&(H4X||H4Y2)
 
 ## Author
 

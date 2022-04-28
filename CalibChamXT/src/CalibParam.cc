@@ -12,19 +12,24 @@ using namespace std;
 const double CalibParam::DT_RT = 2.5;
 
 CalibParam::CalibParam()
-  : m_ana_d0 (false)
-  , m_ana_d1 (false)
-  , m_ana_d2 (false)
-  , m_ana_d3p(false)
-  , m_ana_d3m(true ) // hard-coded for now
-  , fix_time_window(false)
+  : fix_time_window(false)
 {
+  memset(m_ana_pl, 0, sizeof(m_ana_pl));
   memset(m_rtc, 0, sizeof(m_rtc));
 }
 
 CalibParam::~CalibParam()
 {
   ;
+}
+
+void CalibParam::SetAnaPlanes(const bool d0, const bool d1, const bool d2, const bool d3p, const bool d3m)
+{
+  for (int ip =  0; ip <  6; ip++) m_ana_pl[ip] = d0;
+  for (int ip =  6; ip < 12; ip++) m_ana_pl[ip] = d1;
+  for (int ip = 12; ip < 18; ip++) m_ana_pl[ip] = d2;
+  for (int ip = 18; ip < 24; ip++) m_ana_pl[ip] = d3p;
+  for (int ip = 24; ip < 30; ip++) m_ana_pl[ip] = d3m;
 }
 
 void CalibParam::Init(const int n_rt_pt)
@@ -108,11 +113,7 @@ void CalibParam::WriteRTParam(const string dir_name, const string fname)
 
   GeomSvc* geom = GeomSvc::instance();
   for (int ip = 0; ip < N_PL; ip++) {
-    if      (ip <  6) { if (! m_ana_d0 ) continue; }
-    else if (ip < 12) { if (! m_ana_d1 ) continue; }
-    else if (ip < 18) { if (! m_ana_d2 ) continue; }
-    else if (ip < 24) { if (! m_ana_d3p) continue; }
-    else              { if (! m_ana_d3m) continue; }
+    if (! m_ana_pl[ip]) continue;
 
     int n_pt;
     double t_min, t_max;
@@ -165,11 +166,7 @@ void CalibParam::WriteRTGraph(const string dir_name, const string fname)
 
   GeomSvc* geom = GeomSvc::instance();
   for(int ip = 0; ip < N_PL; ip++){
-    if      (ip <  6) { if (! m_ana_d0 ) continue; }
-    else if (ip < 12) { if (! m_ana_d1 ) continue; }
-    else if (ip < 18) { if (! m_ana_d2 ) continue; }
-    else if (ip < 24) { if (! m_ana_d3p) continue; }
-    else              { if (! m_ana_d3m) continue; }
+    if (! m_ana_pl[ip]) continue;
 
     oss.str(""); 
     oss << "gr_t2r_in_" << geom->getDetectorName(ip+1);

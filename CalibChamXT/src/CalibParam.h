@@ -9,11 +9,7 @@ class CalibParam {
   static const int N_PL = 30;
   static const double DT_RT; // time interval between R-T points.
 
-  bool m_ana_d0;
-  bool m_ana_d1;
-  bool m_ana_d2;
-  bool m_ana_d3p;
-  bool m_ana_d3m;
+  bool m_ana_pl[N_PL];
 
   bool fix_time_window;
   TGraph* m_gr_t2r_in[N_PL]; // Input R-T curve
@@ -30,11 +26,9 @@ class CalibParam {
   virtual ~CalibParam();
 
   int GetNumPlanes() const { return N_PL; }
-  bool AnaD0 () const { return m_ana_d0;  }
-  bool AnaD1 () const { return m_ana_d1;  }
-  bool AnaD2 () const { return m_ana_d2;  }
-  bool AnaD3p() const { return m_ana_d3p; }
-  bool AnaD3m() const { return m_ana_d3m; }
+
+  void SetAnaPlanes(const bool d0, const bool d1, const bool d2, const bool d3p, const bool d3m);
+  bool GetAnaPlane(const int i_pl) { return m_ana_pl[i_pl]; }
 
   bool TimeWindowIsFixed() const { return fix_time_window; }
   RTCurve* GetRTCurve(const int i_pl) const { return m_rtc[i_pl]; }

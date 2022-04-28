@@ -217,11 +217,7 @@ void CalibData::DrawHistHit(const string dir_out)
   
   oss << setfill('0');
   for (int ip = 0; ip < cal_par->GetNumPlanes(); ip++) {
-    if      (ip <  6) { if (! cal_par->AnaD0 ()) continue; }
-    else if (ip < 12) { if (! cal_par->AnaD1 ()) continue; }
-    else if (ip < 18) { if (! cal_par->AnaD2 ()) continue; }
-    else if (ip < 24) { if (! cal_par->AnaD3p()) continue; }
-    else              { if (! cal_par->AnaD3m()) continue; }
+    if (! cal_par->GetAnaPlane(ip)) continue;
     string det_name = geom->getDetectorName(ip+1);
     //cout << "  Plane " << ip+1 << endl;
 

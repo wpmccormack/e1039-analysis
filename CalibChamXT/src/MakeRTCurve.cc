@@ -50,6 +50,7 @@ void MakeRTCurve::Init()
   m_dir_name_out = oss.str();
   gSystem->mkdir(m_dir_name_out.c_str(), kTRUE);
 
+  cal_par.SetAnaPlanes(false, false, false, false, true); // (d0, d1, d2, d3p, d3m)
   cal_par.Init(N_RT_PT);
 
   oss.str("");
@@ -182,11 +183,7 @@ void MakeRTCurve::ExtractRT()
   FitRTDist* fit = new FitRTDist();
   fit->Verbosity(m_verb);
   for (int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
-    if      (ip <  6) { if (! cal_par.AnaD0 ()) continue; }
-    else if (ip < 12) { if (! cal_par.AnaD1 ()) continue; }
-    else if (ip < 18) { if (! cal_par.AnaD2 ()) continue; }
-    else if (ip < 24) { if (! cal_par.AnaD3p()) continue; }
-    else              { if (! cal_par.AnaD3m()) continue; }
+    if (! cal_par.GetAnaPlane(ip)) continue;
 
     cout << "  Plane " << ip+1 << endl;
     if (cal_par.TimeWindowIsFixed()) {
@@ -240,11 +237,7 @@ void MakeRTCurve::DrawCalibResult()
   ostringstream oss;
   oss << setfill('0');
   for(int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
-    if      (ip <  6) { if (! cal_par.AnaD0 ()) continue; }
-    else if (ip < 12) { if (! cal_par.AnaD1 ()) continue; }
-    else if (ip < 18) { if (! cal_par.AnaD2 ()) continue; }
-    else if (ip < 24) { if (! cal_par.AnaD3p()) continue; }
-    else              { if (! cal_par.AnaD3m()) continue; }
+    if (! cal_par.GetAnaPlane(ip)) continue;
     
     leg->Clear();
 
@@ -281,11 +274,7 @@ void MakeRTCurve::DrawCalibResult()
   int n_pl = cal_par.GetNumPlanes();
   TH1* h1_res = new TH1D("h1_res", ";;Resolution (cm)", n_pl, 0, n_pl);
   for (int ip = 0; ip < n_pl; ip++) {
-    if      (ip <  6) { if (! cal_par.AnaD0 ()) continue; }
-    else if (ip < 12) { if (! cal_par.AnaD1 ()) continue; }
-    else if (ip < 18) { if (! cal_par.AnaD2 ()) continue; }
-    else if (ip < 24) { if (! cal_par.AnaD3p()) continue; }
-    else              { if (! cal_par.AnaD3m()) continue; }
+    if (! cal_par.GetAnaPlane(ip)) continue;
     string det_name = geom->getDetectorName(ip+1);
     h1_res->SetBinContent(ip+1, cal_par.GetRTCurve(ip)->GetRWidth());
     h1_res->GetXaxis()->SetBinLabel(ip+1, det_name.c_str());
