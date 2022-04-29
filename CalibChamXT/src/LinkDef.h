@@ -7,5 +7,6 @@
 
 #pragma link C++ class AnaChamPlane-!;
 #pragma link C++ class MakeRTCurve-!;
+#pragma link C++ class SRMakeRTCurve-!;
 
 #endif

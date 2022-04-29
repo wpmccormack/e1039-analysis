@@ -1,50 +1,58 @@
 #include <iomanip>
-#include <sstream>
-#include <fstream>
 #include <TFile.h>
 #include <TTree.h>
 #include <TH2D.h>
+#include <THStack.h>
+//#include <TEfficiency.h>
 #include <TCanvas.h>
-#include <TClonesArray.h>
 #include <TSystem.h>
 #include <TStyle.h>
 #include <TGraph.h>
 #include <TLegend.h>
-#include <geom_svc/GeomSvc.h>
-//#include <SRecEvent.h>
+#include <interface_main/SQRun.h>
+#include <interface_main/SQEvent.h>
+#include <interface_main/SQHitVector.h>
 #include <ktracker/FastTracklet.h>
+#include <fun4all/Fun4AllReturnCodes.h>
+#include <phool/PHNodeIterator.h>
+#include <phool/PHIODataNode.h>
+#include <phool/getClass.h>
+#include <geom_svc/GeomSvc.h>
+#include <UtilAna/UtilSQHit.h>
 #include "RTCurve.h"
 #include "CalibParam.h"
 #include "CalibData.h"
 #include "FitRTDist.h"
-#include "MakeRTCurve.h"
+#include "SRMakeRTCurve.h"
 using namespace std;
 
-MakeRTCurve::MakeRTCurve(const int iter)
-  : m_iter(iter)
+SRMakeRTCurve::SRMakeRTCurve(const int iter, const std::string& name)
+  : SubsysReco(name)
+  , m_iter(iter)
   , m_dir_name_out("")
-  , m_n_evt_all(0)
-  , m_n_evt_ana(0)
-  , m_n_trk_all(0)
-  , m_n_trk_ana(0)
-  , m_verb     (0)
-{
-  if (iter <= 0) {
-    cout << "'iter' must be a positive integer.  Abort." << endl;
-    exit(1);
-  }
-  //gErrorIgnoreLevel = 1111;
-  //GeomSvc* geom = GeomSvc::instance();
-  //geom->init();
-}
-
-MakeRTCurve::~MakeRTCurve()
+  , m_n_evt_all (0)
+  , m_n_evt_ana (0)
+  , m_n_trk_all (0)
+  , m_n_trk_ana (0)
+  , m_evt       (0)
+  , m_hit_vec   (0)
+  , m_trklet_vec(0)
 {
   ;
 }
 
-void MakeRTCurve::Init()
+int SRMakeRTCurve::Init(PHCompositeNode* topNode)
 {
+  return Fun4AllReturnCodes::EVENT_OK;
+}
+
+int SRMakeRTCurve::InitRun(PHCompositeNode* topNode)
+{
+  m_evt        = findNode::getClass<SQEvent       >(topNode, "SQEvent");
+  m_hit_vec    = findNode::getClass<SQHitVector   >(topNode, "SQHitVector");
+  m_trklet_vec = findNode::getClass<TrackletVector>(topNode, "TrackletVector");
+  if (!m_evt || !m_hit_vec || !m_trklet_vec) return Fun4AllReturnCodes::ABORTEVENT;
+
   ostringstream oss;
   oss << "calib/" << m_iter;
   m_dir_name_out = oss.str();
@@ -65,119 +73,102 @@ void MakeRTCurve::Init()
   //if (strcmp(env_str, "true" ) == 0) cal_par.ReadTimeWindow("calib/time_window.txt");
 
   cal_dat.Init(&cal_par);
+  
+  return Fun4AllReturnCodes::EVENT_OK;
 }
 
-void MakeRTCurve::AnalyzeListOfFiles(const char* fn_list)
+int SRMakeRTCurve::process_event(PHCompositeNode* topNode)
 {
-  ifstream ifs(fn_list);
-  string fn_file;
-  while (ifs >> fn_file) AnalyzeFile(fn_file.c_str());
-  ifs.close();
-}
+  //int run_id   = m_evt->get_run_id();
+  //int spill_id = m_evt->get_spill_id();
+  //int event_id = m_evt->get_event_id();
+  m_n_evt_all++;
 
-void MakeRTCurve::AnalyzeFile(const char* fname)
-{
-  if (gSystem->AccessPathName(fname)) return;
-  cout << "Input: " << fname << endl;
-  TFile* dataFile = new TFile(fname, "READ");
-  TTree* dataTree = (TTree*)dataFile->Get("eval");
+  //bool nim1 = m_evt->get_trigger(SQEvent::NIM1); // H1 && H2 && H3 && H4
+  //bool nim2 = m_evt->get_trigger(SQEvent::NIM2); // H1 && H2
+  bool nim4 = m_evt->get_trigger(SQEvent::NIM4); // H2 && H4
+  if (! nim4) return Fun4AllReturnCodes::EVENT_OK;
+  m_n_evt_ana++;
 
-  // SRawEvent is not available in the evaluation file.  Need to use DST.
-  //static SRawEvent*    raw       = new SRawEvent();
-  //static SRecEvent*    rec       = 0; // new SRecEvent();
-  static TClonesArray* tracklets = new TClonesArray("Tracklet");
-  tracklets->Clear();
-  //dataTree->SetBranchAddress("rawEvent" , &raw      );
-  //dataTree->SetBranchAddress("recEvent" , &rec      );
-  dataTree->SetBranchAddress("tracklets", &tracklets);
+  int n_trk = m_trklet_vec->size();
+  m_n_trk_all += n_trk;
 
-  int n_evt_ana = 0;
-  int n_trk_all = 0;
-  int n_trk_ana = 0;
-  int n_evt = dataTree->GetEntries();
-  for (int i_evt = 0; i_evt < n_evt; i_evt++) {
-    dataTree->GetEntry(i_evt);
-    //bool nim1 = raw->isTriggeredBy(SRawEvent::NIM1); // H1234
-    //bool nim2 = raw->isTriggeredBy(SRawEvent::NIM2); // H12
-    //bool nim4 = raw->isTriggeredBy(SRawEvent::NIM4); // H24
-    //if (! nim4) continue;
-    n_evt_ana++;
-
-    int n_trk = tracklets->GetEntries();
-    n_trk_all += n_trk;
-
-    map<int, int> list_n_trk; // <station ID, N of tracks>
-    for (int i_trk = 0; i_trk < n_trk; i_trk++) {
-      Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
-      //cal_dat.FillTracklet(trk); // Use this to fill all tracklets
-      list_n_trk[trk->stationID]++;
-    }
-    if (list_n_trk[ST_ID_D3M] > 64) continue; // Exclude noisy events
-
-    int rec_st = 0; // rec->getRecStatus()
-    cal_dat.FillEventInfo(rec_st, list_n_trk);
-    
-    int i_trk_best = -1;
-    double rchi2_best = 0;
-    for (int i_trk = 0; i_trk < n_trk; i_trk++) {
-      Tracklet* trk = (Tracklet*)tracklets->At(i_trk);
-      int st_id = trk->stationID;
-      if (st_id != ST_ID_D3M) continue;
-
-      int n_hit = trk->getNHits();
-      int ndf = n_hit - 4; // Correct only when KMag is off
-      double rchi2 = trk->chisq / ndf;
-      if (n_hit != 6) continue;
-      if (rchi2 > 3.0) continue;
-
-      double x_d2, y_d2;
-      double x_d3, y_d3;
-      EvalD2XY(trk, x_d2, y_d2);
-      EvalD3XY(trk, x_d3, y_d3);
-
-      if (fabs(trk->tx) > 0.3 || fabs(trk->ty) > 0.4 ||
-          fabs(x_d3)    > 131 || fabs(y_d3+85) > 85    ) continue; // Track in the D3m acceptance, page 15 of doc9856.
-
-      // Cut L1 = st_id & tx & ty & x_d3 & y_d3
-      // Cut L2 = L1 & n_hit & n_trk <= 64
-      // Cut L3 = L2 & rchi2 < 2
-
-      if (i_trk_best < 0 || rchi2 < rchi2_best) {
-        i_trk_best = i_trk;
-        rchi2_best = rchi2;
-      }
-    }
-
-    if (i_trk_best >= 0) {
-      Tracklet* trk = (Tracklet*)tracklets->At(i_trk_best);
-      cal_dat.FillTracklet(trk); // Use this to fill only good tracklets
-      n_trk_ana++;
-      
-      for(std::list<SignedHit>::iterator it = trk->hits.begin(); it != trk->hits.end(); ++it) {
-        if(it->hit.index < 0) continue; // Probably not necessary.
-        //int sign = it->hit.sign;
-        int    det_id     = it->hit.detectorID;
-        int    ele_id     = it->hit.elementID;
-        double drift_dist = it->hit.driftDistance;
-        double tdc_time   = it->hit.tdcTime;
-        double track_pos  = trk->getExpPositionW(det_id);
-        double wire_pos   = it->hit.pos; // GeomSvc::instance()->getMeasurement(det_id, ele_id);
-        cal_dat.FillHit(det_id, drift_dist, tdc_time, track_pos, wire_pos);
-        //cout << "D " << det_id << " " << it->hit.pos << " " << tdc_time << " " << drift_dist << " " << track_dist << endl;
-      }
-    }
-    
-    tracklets->Clear();
+  map<int, int> list_n_trk; // <station ID, N of tracks>
+  for (int i_trk = 0; i_trk < n_trk; i_trk++) {
+    Tracklet* trk = m_trklet_vec->at(i_trk);
+    //cal_dat.FillTracklet(trk); // Use this to fill all tracklets
+    list_n_trk[trk->stationID]++;
   }
-  dataFile->Close();
-  cout << "  N of all events = " << n_evt << ", analyzed events = " << n_evt_ana << ", tracks = " << n_trk_ana << endl;
-  m_n_evt_all += n_evt;
-  m_n_evt_ana += n_evt_ana;
-  m_n_trk_all += n_trk_all;
-  m_n_trk_ana += n_trk_ana;
+  if (list_n_trk[ST_ID_D3M] > 64) return Fun4AllReturnCodes::EVENT_OK; // Exclude noisy events
+
+  int rec_st = 0; // rec->getRecStatus()
+  cal_dat.FillEventInfo(rec_st, list_n_trk);
+    
+  int i_trk_best = -1;
+  double rchi2_best = 0;
+  for (int i_trk = 0; i_trk < n_trk; i_trk++) {
+    Tracklet* trk = m_trklet_vec->at(i_trk);
+    int st_id = trk->stationID;
+    if (st_id != ST_ID_D3M) continue;
+    
+    int n_hit = trk->getNHits();
+    int ndf = n_hit - 4; // Correct only when KMag is off
+    double rchi2 = trk->chisq / ndf;
+    if (n_hit != 6) continue;
+    if (rchi2 > 3.0) continue;
+    
+    double x_d2, y_d2;
+    double x_d3, y_d3;
+    EvalD2XY(trk, x_d2, y_d2);
+    EvalD3XY(trk, x_d3, y_d3);
+    
+    if (fabs(trk->tx) > 0.3 || fabs(trk->ty) > 0.4 ||
+        fabs(x_d3)    > 131 || fabs(y_d3+85) > 85    ) continue; // Track in the D3m acceptance, page 15 of doc9856.
+    
+    // Cut L1 = st_id & tx & ty & x_d3 & y_d3
+    // Cut L2 = L1 & n_hit & n_trk <= 64
+    // Cut L3 = L2 & rchi2 < 2
+    
+    if (i_trk_best < 0 || rchi2 < rchi2_best) {
+      i_trk_best = i_trk;
+      rchi2_best = rchi2;
+    }
+  }
+  
+  if (i_trk_best >= 0) {
+    Tracklet* trk = m_trklet_vec->at(i_trk_best);
+    cal_dat.FillTracklet(trk); // Use this to fill only good tracklets
+    m_n_trk_ana++;
+    
+    for(std::list<SignedHit>::iterator it = trk->hits.begin(); it != trk->hits.end(); ++it) {
+      if(it->hit.index < 0) continue; // Probably not necessary.
+      //int sign = it->hit.sign;
+      int    det_id     = it->hit.detectorID;
+      int    ele_id     = it->hit.elementID;
+      double drift_dist = it->hit.driftDistance;
+      double tdc_time   = it->hit.tdcTime;
+      double track_pos  = trk->getExpPositionW(det_id);
+      double wire_pos   = it->hit.pos; // GeomSvc::instance()->getMeasurement(det_id, ele_id);
+      cal_dat.FillHit(det_id, drift_dist, tdc_time, track_pos, wire_pos);
+      //cout << "D " << det_id << " " << it->hit.pos << " " << tdc_time << " " << drift_dist << " " << track_dist << endl;
+    }
+  }
+
+  return Fun4AllReturnCodes::EVENT_OK;
 }
 
-void MakeRTCurve::DrawHistEvent()
+int SRMakeRTCurve::End(PHCompositeNode* topNode)
+{
+  DrawHistEvent();
+  DrawHistHit();
+  ExtractRT();
+  WriteRT();
+  DrawCalibResult();
+  
+  return Fun4AllReturnCodes::EVENT_OK;
+}
+
+void SRMakeRTCurve::DrawHistEvent()
 {
   cal_dat.DrawHistEvent(m_dir_name_out);
   string fname = m_dir_name_out + "/info_event.txt";
@@ -189,16 +180,16 @@ void MakeRTCurve::DrawHistEvent()
   ofs.close();
 }
 
-void MakeRTCurve::DrawHistHit()
+void SRMakeRTCurve::DrawHistHit()
 {
   cal_dat.DrawHistHit(m_dir_name_out);
 }
 
-void MakeRTCurve::ExtractRT()
+void SRMakeRTCurve::ExtractRT()
 {
   cout << "ExtractRT()" << endl;
   FitRTDist* fit = new FitRTDist();
-  fit->Verbosity(m_verb);
+  fit->Verbosity(Verbosity());
   for (int ip = 0; ip < cal_par.GetNumPlanes(); ip++) {
     if (! cal_par.GetAnaPlane(ip)) continue;
 
@@ -216,13 +207,13 @@ void MakeRTCurve::ExtractRT()
   delete fit;
 }
 
-void MakeRTCurve::WriteRT()
+void SRMakeRTCurve::WriteRT()
 {
   cal_par.WriteRTParam(m_dir_name_out, "param.tsv");
   cal_par.WriteRTGraph(m_dir_name_out, "rt_graph.root");
 }
 
-void MakeRTCurve::DrawCalibResult()
+void SRMakeRTCurve::DrawCalibResult()
 {
   GeomSvc* geom = GeomSvc::instance();
   cout << "DrawCalibResult()" << endl;
@@ -306,15 +297,20 @@ void MakeRTCurve::DrawCalibResult()
   //}
 }
 
-void MakeRTCurve::EvalD2XY(const Tracklet* trk, double& x, double& y)
+void SRMakeRTCurve::EvalD0XY(const Tracklet* trk, double& x, double& y)
+{
+  x = trk->x0 + 620 * trk->tx;
+  y = trk->y0 + 620 * trk->ty;
+}
+
+void SRMakeRTCurve::EvalD2XY(const Tracklet* trk, double& x, double& y)
 {
   x = trk->x0 + 1345 * trk->tx;
   y = trk->y0 + 1345 * trk->ty;
 }
 
-void MakeRTCurve::EvalD3XY(const Tracklet* trk, double& x, double& y)
+void SRMakeRTCurve::EvalD3XY(const Tracklet* trk, double& x, double& y)
 {
   x = trk->x0 + 1900 * trk->tx;
   y = trk->y0 + 1900 * trk->ty;
 }
-
