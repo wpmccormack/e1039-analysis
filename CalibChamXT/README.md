@@ -88,13 +88,15 @@ Plots will appear in `calib/1/`.
 
 ```
 cd work
-./make_rt.sh
+./make_rt_dst.sh
 ```
+
+Note that `make_rt.sh` is the previous version of the analysis script that reads the evaluation file (`eval.root`) instead of `DSTreco.root`.
 
 
 ## To-Do List
 
-1. n/a
+1. Clean up old sources/macros/scripts that use the evaluation file.
 
 
 ## Reference
