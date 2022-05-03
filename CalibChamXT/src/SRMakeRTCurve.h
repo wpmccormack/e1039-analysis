@@ -12,6 +12,8 @@ class CalibData;
 
 class SRMakeRTCurve: public SubsysReco {
   typedef enum {
+    ST_ID_D0  = 1,
+    ST_ID_D2  = 3,
     ST_ID_D3P = 4,
     ST_ID_D3M = 5,
     ST_ID_D23 = 6
@@ -41,15 +43,16 @@ class SRMakeRTCurve: public SubsysReco {
   int End(PHCompositeNode *topNode);
 
  protected:
+  int AnaForOneStation(TrackletVector* trklet_vec, const int st_id, const int n_trklet);
+  void GetGoodTrackletRange(const int st_id, double& x_lo, double& x_hi, double& y_lo, double& y_hi, double& tx_lo, double& tx_hi, double& ty_lo, double& ty_hi);
+  bool InAcceptance(const Tracklet* trk);
+  int FindBestTracklet(TrackletVector* trklet_vec, const int st_id_tgt);
+
   void DrawHistEvent();
   void DrawHistHit();
   void ExtractRT();
   void WriteRT();
   void DrawCalibResult();
-
-  void EvalD0XY(const Tracklet* trk, double& x, double& y);
-  void EvalD2XY(const Tracklet* trk, double& x, double& y);
-  void EvalD3XY(const Tracklet* trk, double& x, double& y);
 };
 
 #endif // _SR_MAKE_RT_CURVE_H_

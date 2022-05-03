@@ -47,7 +47,7 @@ function ProcessOneRun {
 
 	if [ $USE_GRID = 'yes' ]; then
 	    CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
-	    CMD+=" --expected-lifetime='short'" # medium=8h, short=3h, long=23h
+	    CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
 	    CMD+=" -L $DIR_WORK/$BASE_NAME/log_gridrun.txt"
 	    CMD+=" -f $DIR_WORK/input.tar.gz"
 	    CMD+=" -f $FN_DST"
@@ -88,7 +88,7 @@ rm -rf   $DIR_WORK
 mkdir -p $DIR_WORK
 
 cd $DIR_BASE
-tar czvf $DIR_WORK/input.tar.gz  ../setup.sh ../inst Fun4AllReco.C geom.root
+tar czvf $DIR_WORK/input.tar.gz  ../setup.sh ../inst Fun4AllReco.C
 
 ITER=1
 while read RUN ; do

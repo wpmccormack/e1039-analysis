@@ -47,6 +47,8 @@ class CalibParam {
   void WriteRTGraph(const std::string dir_name, const std::string fname);
   void ReadTimeWindow(const std::string fname);
 
+  static double ZOfStationID(const int st_id);
+
  private:
 };
 

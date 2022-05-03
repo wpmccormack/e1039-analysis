@@ -29,10 +29,8 @@ class CalibData {
   TH2* h2_y0;
   TH2* h2_tx;
   TH2* h2_ty;
-  TH2* h2_x_d2;
-  TH2* h2_y_d2;
-  TH2* h2_x_d3;
-  TH2* h2_y_d3;
+  TH2* h2_x_st;
+  TH2* h2_y_st;
 
   /// Histograms for R-T
   TH1* h1_time_wide[99];
@@ -53,6 +51,7 @@ class CalibData {
   void Init(CalibParam* ptr);
   void FillEventInfo(const int rec_stat, const std::map<int, int> list_n_trk);
   void FillTracklet(const Tracklet* trk);
+  void FillTrackletHits(const Tracklet* trk);
   void FillHit(const int det_id, const double drift_dist, const double tdc_time, const double track_pos, const double wire_pos);
   void DrawHistEvent(const std::string dir_out);
   void DrawHistHit  (const std::string dir_out);

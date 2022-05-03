@@ -43,10 +43,8 @@ void CalibData::Init(CalibParam* ptr)
   h2_y0    = new TH2D("h2_y0"   ,        ";y_{0} (cm);Station ID;N of tracks",  100,  -500, 500,  id_n, id_l, id_h);
   h2_tx    = new TH2D("h2_tx"   ,             ";t_{x};Station ID;N of tracks",  100,  -1.0, 1.0,  id_n, id_l, id_h);
   h2_ty    = new TH2D("h2_ty"   ,             ";t_{y};Station ID;N of tracks",  100,  -1.0, 1.0,  id_n, id_l, id_h);
-  h2_x_d2  = new TH2D("h2_x_d2" ,       ";x_{D2} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
-  h2_y_d2  = new TH2D("h2_y_d2" ,       ";y_{D2} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
-  h2_x_d3  = new TH2D("h2_x_d3" ,       ";x_{D3} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
-  h2_y_d3  = new TH2D("h2_y_d3" ,       ";y_{D3} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
+  h2_x_st  = new TH2D("h2_x_st" ,       ";x_{St} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
+  h2_y_st  = new TH2D("h2_y_st" ,       ";y_{St} (cm);Station ID;N of tracks",  100,  -250, 250,  id_n, id_l, id_h);
 
   GeomSvc* geom = GeomSvc::instance();
   ostringstream oss;
@@ -120,10 +118,6 @@ void CalibData::FillEventInfo(const int rec_stat, const std::map<int, int> list_
     int n_trk = list_n_trk.find(st_id) != list_n_trk.end()  ?  list_n_trk.at(st_id)  :  0;
     h2_ntrk->Fill(n_trk, st_id);
   }
-
-  //for (std::map<int, int>::const_iterator it = list_n_trk.begin(); it != list_n_trk.end(); it++) {
-  //  h2_ntrk->Fill(it->second, it->first); // (N of tracks, station ID)
-  //}
 }
 
 void CalibData::FillTracklet(const Tracklet* trk)
@@ -133,10 +127,9 @@ void CalibData::FillTracklet(const Tracklet* trk)
   int ndf = n_hit - (st_id == 7  ?  5  :  4); // Incorrect, when KMag is off
   double rchi2 = ndf > 0  ?  trk->chisq / ndf  :  0;
 
-  double x_d2 = trk->x0 + 1345 * trk->tx; // D2
-  double y_d2 = trk->y0 + 1345 * trk->ty; // D2
-  double x_d3 = trk->x0 + 1900 * trk->tx; // D3p/m
-  double y_d3 = trk->y0 + 1900 * trk->ty; // D3p/m
+  double z_st = CalibParam::ZOfStationID(st_id);
+  double x_st = trk->x0 + z_st * trk->tx;
+  double y_st = trk->y0 + z_st * trk->ty;
 
   h1_st_id->Fill(st_id);
   h2_nhit ->Fill(n_hit      , st_id);
@@ -146,10 +139,24 @@ void CalibData::FillTracklet(const Tracklet* trk)
   h2_y0   ->Fill(trk->y0    , st_id);
   h2_tx   ->Fill(trk->tx    , st_id);
   h2_ty   ->Fill(trk->ty    , st_id);
-  h2_x_d2 ->Fill(x_d2       , st_id);
-  h2_y_d2 ->Fill(y_d2       , st_id);
-  h2_x_d3 ->Fill(x_d3       , st_id);
-  h2_y_d3 ->Fill(y_d3       , st_id);
+  h2_x_st ->Fill(x_st       , st_id);
+  h2_y_st ->Fill(y_st       , st_id);
+}
+
+void CalibData::FillTrackletHits(const Tracklet* trk)
+{
+  for(auto it = trk->hits.begin(); it != trk->hits.end(); ++it) {
+    if(it->hit.index < 0) continue; // Probably not necessary.
+    //int sign = it->hit.sign;
+    int    det_id     = it->hit.detectorID;
+    int    ele_id     = it->hit.elementID;
+    double drift_dist = it->hit.driftDistance;
+    double tdc_time   = it->hit.tdcTime;
+    double track_pos  = trk->getExpPositionW(det_id);
+    double wire_pos   = it->hit.pos; // GeomSvc::instance()->getMeasurement(det_id, ele_id);
+    FillHit(det_id, drift_dist, tdc_time, track_pos, wire_pos);
+    //cout << "D " << det_id << " " << it->hit.pos << " " << tdc_time << " " << drift_dist << " " << track_dist << endl;
+  }
 }
 
 /// Fill the hit information.
@@ -187,7 +194,7 @@ void CalibData::DrawHistEvent(const string dir_out)
   oss << dir_out << "/h1_st_id.png";
   c1->SaveAs(oss.str().c_str());
   
-  const int iy_lo = 5; // 4 = D3p, 5 = D3m, 6 = D23
+  const int iy_lo = 1; // 4 = D3p, 5 = D3m, 6 = D23
   const int iy_hi = 5;
   DrawIn1D(h2_ntrk , "ntrk" , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_nhit , "nhit" , dir_out, iy_lo, iy_hi);
@@ -197,10 +204,8 @@ void CalibData::DrawHistEvent(const string dir_out)
   //DrawIn1D(h2_y0   , "y0"   , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_tx   , "tx"   , dir_out, iy_lo, iy_hi);
   DrawIn1D(h2_ty   , "ty"   , dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_x_d2 , "x_d2" , dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_y_d2 , "y_d2" , dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_x_d3 , "x_d3" , dir_out, iy_lo, iy_hi);
-  DrawIn1D(h2_y_d3 , "y_d3" , dir_out, iy_lo, iy_hi);
+  DrawIn1D(h2_x_st , "x_st" , dir_out, iy_lo, iy_hi);
+  DrawIn1D(h2_y_st , "y_st" , dir_out, iy_lo, iy_hi);
 
   delete c1;
 }

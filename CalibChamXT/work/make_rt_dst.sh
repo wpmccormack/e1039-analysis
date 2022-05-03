@@ -16,7 +16,7 @@ RUN1=0 # 1st run number
 while read RUN ; do
     test $RUN1 -eq 0 && RUN1=$RUN
     RUN6=$(printf '%06d' $RUN)
-    find $DIR_DATA/run_$RUN6_* -name DSTreco.root
+    find $DIR_DATA/run_${RUN6}_* -name DSTreco.root
 done <$LIST_RUN >$LIST_DATA
 
 # Use the 1st run number, assuming the condition stays the same.

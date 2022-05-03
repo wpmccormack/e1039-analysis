@@ -1,5 +1,6 @@
 /// Fun4AllReco.C:  Fun4all macro to run the reconstruction.
 // /seaquest/users/apun/abi_project/data_manage/e1039-data-mgt_test/RecoE1039Data.C
+R__LOAD_LIBRARY(libg4detectors)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libCalibChamXT)
 
@@ -29,11 +30,13 @@ int Fun4AllAna(const int run, const int iter, const char* fn_list)
 
   unsigned int n_file = list_fname.size();
   for (unsigned int i_file = 0; i_file < n_file; i_file++) {
-    cout << "Input " << i_file << " / " << n_file << ": " << gSystem->BaseName(fname.c_str()) << endl;
+    fname = list_fname[i_file];
+    cout << "Input " << i_file << " / " << n_file << ": " << fname << endl;
     in->fileopen(fname.c_str());
     se->run();
   }
 
+  gErrorIgnoreLevel = 1111;
   se->End();
   delete se;
   return 0;

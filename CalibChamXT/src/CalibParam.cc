@@ -34,12 +34,12 @@ void CalibParam::SetAnaPlanes(const bool d0, const bool d1, const bool d2, const
 
 void CalibParam::Init(const int n_rt_pt)
 {
-  T_MIN[ 0] = 1700;  T_MAX[ 0] = 1820;
-  T_MIN[ 1] = 1700;  T_MAX[ 1] = 1820;
-  T_MIN[ 2] = 1700;  T_MAX[ 2] = 1820;
-  T_MIN[ 3] = 1720;  T_MAX[ 3] = 1840;
-  T_MIN[ 4] = 1700;  T_MAX[ 4] = 1820;
-  T_MIN[ 5] = 1700;  T_MAX[ 5] = 1820;
+  T_MIN[ 0] = 1200;  T_MAX[ 0] = 1330;
+  T_MIN[ 1] = 1200;  T_MAX[ 1] = 1330;
+  T_MIN[ 2] = 1200;  T_MAX[ 2] = 1330;
+  T_MIN[ 3] = 1200;  T_MAX[ 3] = 1330;
+  T_MIN[ 4] = 1200;  T_MAX[ 4] = 1330;
+  T_MIN[ 5] = 1200;  T_MAX[ 5] = 1330;
 
   T_MIN[ 6] = 1700;  T_MAX[ 6] = 1800;
   T_MIN[ 7] = 1700;  T_MAX[ 7] = 1800;
@@ -77,6 +77,8 @@ void CalibParam::Init(const int n_rt_pt)
   }
 }
 
+/**
+ */
 void CalibParam::ReadRTParam(const string fname)
 {
   cout << "ReadRTParam(): input = " << fname << "." << endl;
@@ -97,8 +99,22 @@ void CalibParam::ReadRTParam(const string fname)
     TGraph* gr = m_gr_t2r_in[det_id - 1];
     gr->SetPoint(gr->GetN(), t, x);
   }
-
   ifs.close();
+
+  // Invert the points if T is in the descending order.
+  for (int ip = 0; ip < N_PL; ip++) {
+    TGraph* gr = m_gr_t2r_in[ip];
+    int n_pt = gr->GetN();
+    if (n_pt > 0 && gr->GetX()[0] > gr->GetX()[n_pt-1]) {
+      for (int i_pt = 0; i_pt < n_pt / 2; i_pt++) {
+        double t1, x1, t2, x2;
+        gr->GetPoint(     i_pt  , t1, x1);
+        gr->GetPoint(n_pt-i_pt-1, t2, x2);
+        gr->SetPoint(     i_pt  , t2, x2);
+        gr->SetPoint(n_pt-i_pt-1, t1, x1);
+      }
+    }
+  }
 }
 
 void CalibParam::WriteRTParam(const string dir_name, const string fname)
@@ -125,11 +141,6 @@ void CalibParam::WriteRTParam(const string dir_name, const string fname)
       n_pt  = m_gr_t2r_in[ip]->GetN();
       t_min = m_gr_t2r_in[ip]->GetX()[0];
       t_max = m_gr_t2r_in[ip]->GetX()[n_pt-1];
-      if (t_min > t_max) {
-        double t_tmp = t_min;
-        t_min = t_max;
-        t_max = t_tmp;
-      }
     }
 
     string det = geom->getDetectorName(ip+1);
@@ -208,4 +219,15 @@ void CalibParam::ReadTimeWindow(const std::string fname)
   }
   ifs.close();
   fix_time_window = true;
+}
+
+double CalibParam::ZOfStationID(const int st_id)
+{
+  if      (st_id == 1) return  620; // D0
+  else if (st_id == 3) return 1345; // D2
+  else if (st_id == 4) return 1900; // D3p
+  else if (st_id == 5) return 1900; // D3m
+
+  cout << "CalibParam::ZOfStationID():  Unsupported station ID (" << st_id << ").  Abort." << endl;
+  exit(1);
 }

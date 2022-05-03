@@ -3,7 +3,6 @@
 #include <TTree.h>
 #include <TH2D.h>
 #include <THStack.h>
-//#include <TEfficiency.h>
 #include <TCanvas.h>
 #include <TSystem.h>
 #include <TStyle.h>
@@ -49,16 +48,17 @@ int SRMakeRTCurve::Init(PHCompositeNode* topNode)
 int SRMakeRTCurve::InitRun(PHCompositeNode* topNode)
 {
   m_evt        = findNode::getClass<SQEvent       >(topNode, "SQEvent");
-  m_hit_vec    = findNode::getClass<SQHitVector   >(topNode, "SQHitVector");
+  //m_hit_vec    = findNode::getClass<SQHitVector   >(topNode, "SQHitVector");
   m_trklet_vec = findNode::getClass<TrackletVector>(topNode, "TrackletVector");
-  if (!m_evt || !m_hit_vec || !m_trklet_vec) return Fun4AllReturnCodes::ABORTEVENT;
+  //if (!m_evt || !m_hit_vec || !m_trklet_vec) return Fun4AllReturnCodes::ABORTEVENT;
+  if (!m_evt || !m_trklet_vec) return Fun4AllReturnCodes::ABORTEVENT;
 
   ostringstream oss;
   oss << "calib/" << m_iter;
   m_dir_name_out = oss.str();
   gSystem->mkdir(m_dir_name_out.c_str(), kTRUE);
 
-  cal_par.SetAnaPlanes(false, false, false, false, true); // (d0, d1, d2, d3p, d3m)
+  cal_par.SetAnaPlanes(true, false, true, true, true); // (d0, d1, d2, d3p, d3m)
   cal_par.Init(N_RT_PT);
 
   oss.str("");
@@ -85,9 +85,9 @@ int SRMakeRTCurve::process_event(PHCompositeNode* topNode)
   m_n_evt_all++;
 
   //bool nim1 = m_evt->get_trigger(SQEvent::NIM1); // H1 && H2 && H3 && H4
-  //bool nim2 = m_evt->get_trigger(SQEvent::NIM2); // H1 && H2
+  bool nim2 = m_evt->get_trigger(SQEvent::NIM2); // H1 && H2
   bool nim4 = m_evt->get_trigger(SQEvent::NIM4); // H2 && H4
-  if (! nim4) return Fun4AllReturnCodes::EVENT_OK;
+  if (! nim2 && ! nim4) return Fun4AllReturnCodes::EVENT_OK;
   m_n_evt_ana++;
 
   int n_trk = m_trklet_vec->size();
@@ -96,65 +96,88 @@ int SRMakeRTCurve::process_event(PHCompositeNode* topNode)
   map<int, int> list_n_trk; // <station ID, N of tracks>
   for (int i_trk = 0; i_trk < n_trk; i_trk++) {
     Tracklet* trk = m_trklet_vec->at(i_trk);
-    //cal_dat.FillTracklet(trk); // Use this to fill all tracklets
+    //cal_dat.FillTracklet(trk); // Call here to fill all tracklets (or call later)
     list_n_trk[trk->stationID]++;
   }
-  if (list_n_trk[ST_ID_D3M] > 64) return Fun4AllReturnCodes::EVENT_OK; // Exclude noisy events
-
   int rec_st = 0; // rec->getRecStatus()
   cal_dat.FillEventInfo(rec_st, list_n_trk);
-    
+  
+  if (nim2) {
+    m_n_trk_ana += AnaForOneStation(m_trklet_vec, ST_ID_D0 , list_n_trk[ST_ID_D0 ]);
+  } else if (nim4) {
+    m_n_trk_ana += AnaForOneStation(m_trklet_vec, ST_ID_D2 , list_n_trk[ST_ID_D2 ]);
+    m_n_trk_ana += AnaForOneStation(m_trklet_vec, ST_ID_D3P, list_n_trk[ST_ID_D3P]);
+    m_n_trk_ana += AnaForOneStation(m_trklet_vec, ST_ID_D3M, list_n_trk[ST_ID_D3M]);
+  }
+
+  return Fun4AllReturnCodes::EVENT_OK;
+}
+
+int SRMakeRTCurve::AnaForOneStation(TrackletVector* trklet_vec, const int st_id, const int n_trklet)
+{
+  if (n_trklet > 128) return 0;
+
+  int i_trk_best = FindBestTracklet(m_trklet_vec, st_id);
+  if (i_trk_best < 0) return 0;
+
+  Tracklet* trk = trklet_vec->at(i_trk_best);
+  cal_dat.FillTracklet(trk); // Call here to fill only good tracklets (or call earlier)
+  cal_dat.FillTrackletHits(trk);
+  return 1;
+}
+
+void SRMakeRTCurve::GetGoodTrackletRange(const int st_id, double& x_lo, double& x_hi, double& y_lo, double& y_hi, double& tx_lo, double& tx_hi, double& ty_lo, double& ty_hi)
+{
+  switch (st_id) {
+  case ST_ID_D0 :  x_lo=-100; x_hi=100; y_lo=-100; y_hi=100; tx_lo=-0.2; tx_hi=0.2; ty_lo=-0.2; ty_hi=0.2; break;
+  case ST_ID_D2 :  x_lo=-120; x_hi=120; y_lo=-120; y_hi=120; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.3; ty_hi=0.3; break;
+  case ST_ID_D3P:  x_lo=-131; x_hi=131; y_lo=   0; y_hi=170; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.4; ty_hi=0.4; break;
+  case ST_ID_D3M:  x_lo=-131; x_hi=131; y_lo=-170; y_hi=  0; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.4; ty_hi=0.4; break;
+  }
+}
+
+/**
+ * Track in the D3m acceptance, page 15 of doc9856.
+ */
+bool SRMakeRTCurve::InAcceptance(const Tracklet* trk)
+{
+  int st_id = trk->stationID;
+  double z_st = CalibParam::ZOfStationID(st_id);
+  double tx = trk->tx;
+  double ty = trk->ty;
+  double x  = trk->x0 + z_st * tx;
+  double y  = trk->y0 + z_st * ty;
+
+  double  x_lo,  x_hi,  y_lo,  y_hi;
+  double tx_lo, tx_hi, ty_lo, ty_hi;
+  GetGoodTrackletRange(st_id, x_lo, x_hi, y_lo, y_hi, tx_lo, tx_hi, ty_lo, ty_hi);
+
+  return  x_lo <  x &&  x <  x_hi &&  y_lo <  y &&  y <  y_hi &&
+         tx_lo < tx && tx < tx_hi && ty_lo < ty && ty < ty_hi   ;
+}
+
+int SRMakeRTCurve::FindBestTracklet(TrackletVector* trklet_vec, const int st_id_tgt)
+{
   int i_trk_best = -1;
   double rchi2_best = 0;
-  for (int i_trk = 0; i_trk < n_trk; i_trk++) {
-    Tracklet* trk = m_trklet_vec->at(i_trk);
+  for (int i_trk = 0; i_trk < m_trklet_vec->size(); i_trk++) {
+    Tracklet* trk = trklet_vec->at(i_trk);
     int st_id = trk->stationID;
-    if (st_id != ST_ID_D3M) continue;
+    if (st_id != st_id_tgt) continue;
     
     int n_hit = trk->getNHits();
     int ndf = n_hit - 4; // Correct only when KMag is off
     double rchi2 = trk->chisq / ndf;
-    if (n_hit != 6) continue;
+    //if (n_hit != 6) continue;
+    if (n_hit < 5) continue;
     if (rchi2 > 3.0) continue;
-    
-    double x_d2, y_d2;
-    double x_d3, y_d3;
-    EvalD2XY(trk, x_d2, y_d2);
-    EvalD3XY(trk, x_d3, y_d3);
-    
-    if (fabs(trk->tx) > 0.3 || fabs(trk->ty) > 0.4 ||
-        fabs(x_d3)    > 131 || fabs(y_d3+85) > 85    ) continue; // Track in the D3m acceptance, page 15 of doc9856.
-    
-    // Cut L1 = st_id & tx & ty & x_d3 & y_d3
-    // Cut L2 = L1 & n_hit & n_trk <= 64
-    // Cut L3 = L2 & rchi2 < 2
-    
+    if (! InAcceptance(trk)) continue;
     if (i_trk_best < 0 || rchi2 < rchi2_best) {
       i_trk_best = i_trk;
       rchi2_best = rchi2;
     }
   }
-  
-  if (i_trk_best >= 0) {
-    Tracklet* trk = m_trklet_vec->at(i_trk_best);
-    cal_dat.FillTracklet(trk); // Use this to fill only good tracklets
-    m_n_trk_ana++;
-    
-    for(std::list<SignedHit>::iterator it = trk->hits.begin(); it != trk->hits.end(); ++it) {
-      if(it->hit.index < 0) continue; // Probably not necessary.
-      //int sign = it->hit.sign;
-      int    det_id     = it->hit.detectorID;
-      int    ele_id     = it->hit.elementID;
-      double drift_dist = it->hit.driftDistance;
-      double tdc_time   = it->hit.tdcTime;
-      double track_pos  = trk->getExpPositionW(det_id);
-      double wire_pos   = it->hit.pos; // GeomSvc::instance()->getMeasurement(det_id, ele_id);
-      cal_dat.FillHit(det_id, drift_dist, tdc_time, track_pos, wire_pos);
-      //cout << "D " << det_id << " " << it->hit.pos << " " << tdc_time << " " << drift_dist << " " << track_dist << endl;
-    }
-  }
-
-  return Fun4AllReturnCodes::EVENT_OK;
+  return i_trk_best;
 }
 
 int SRMakeRTCurve::End(PHCompositeNode* topNode)
@@ -295,22 +318,4 @@ void SRMakeRTCurve::DrawCalibResult()
   //   oss.str(""); oss << m_dir_name_out << "/res_" << NAME_GROUP[ig] <<".png";
   //   c1->SaveAs(oss.str().c_str());
   //}
-}
-
-void SRMakeRTCurve::EvalD0XY(const Tracklet* trk, double& x, double& y)
-{
-  x = trk->x0 + 620 * trk->tx;
-  y = trk->y0 + 620 * trk->ty;
-}
-
-void SRMakeRTCurve::EvalD2XY(const Tracklet* trk, double& x, double& y)
-{
-  x = trk->x0 + 1345 * trk->tx;
-  y = trk->y0 + 1345 * trk->ty;
-}
-
-void SRMakeRTCurve::EvalD3XY(const Tracklet* trk, double& x, double& y)
-{
-  x = trk->x0 + 1900 * trk->tx;
-  y = trk->y0 + 1900 * trk->ty;
 }

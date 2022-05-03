@@ -105,8 +105,8 @@ int FitRTDist::DoFit(const int n_pt, TH2* h2, double r_max, TGraph* gr_init, RTC
     m_mini->SetFixedVariable(0, "T1", t1);
     m_mini->SetFixedVariable(1, "T1", t0);
   } else {
-    t1 = gr_init->GetX()[gr_init->GetN()-1]; // Make sure of "T1 < T0"
-    t0 = gr_init->GetX()[0];
+    t1 = gr_init->GetX()[0];
+    t0 = gr_init->GetX()[gr_init->GetN()-1];
     m_mini->SetLimitedVariable(0, "T1", t1, 0.1, m_t_min, m_t_max);
     m_mini->SetLimitedVariable(1, "T0", t0, 0.1, m_t_min, m_t_max);
   }
