@@ -39,7 +39,7 @@ while true ; do
     N_JOB_HELD=0
     while read ID OWNER DATE TIME RUN ST PRI SIZE CMD ; do
 	case $ST in
-	    I ) (( N_JOB_IDEL++ )) ;;
+	    I ) (( N_JOB_IDLE++ )) ;;
 	    R ) (( N_JOB_RUN++ )) ;;
 	    H ) (( N_JOB_HELD++ )) ;;
 	esac

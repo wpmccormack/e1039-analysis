@@ -61,8 +61,8 @@ cd work
 ./run_reco.sh -d 1 -e 10000 GO
 ```
 
-The main output file is `scratch/main/run_003492_spill_000000000_spin/out/eval.root`.
-The ROOT file (`eval.root`) contains all tracklets.
+The main output file is `scratch/main/run_003492_spill_000000000_spin/out/DSTreco.root`.
+The ROOT file (`DSTreco.root`) contains all tracklets.
 You had better check the number of tree entries is non-zero.
 
 You then execute the following commands to process all events/runs.
@@ -88,15 +88,19 @@ Plots will appear in `calib/1/`.
 
 ```
 cd work
-./make_rt_dst.sh
+./make_rt.sh
 ```
 
-Note that `make_rt.sh` is the previous version of the analysis script that reads the evaluation file (`eval.root`) instead of `DSTreco.root`.
+This script executes an Fun4All macro (`Fun4AllAna.C`), which makes use of a SubsysReco modle (`src/SRMakeRTCurve`) to analyze `DSTreco.root`.
+
+Note that `make_rt.sh` has two commented-out lines that find ana analyze the evaluation file (`eval.root`) using a ROOT macro (`AnaRTCurve.C`).
+This part is kept for backward compatibility for now, but probably be deleted soon.
 
 
 ## To-Do List
 
 1. Clean up old sources/macros/scripts that use the evaluation file.
+1. Implement an iterative extraction of X-T curves.
 
 
 ## Reference

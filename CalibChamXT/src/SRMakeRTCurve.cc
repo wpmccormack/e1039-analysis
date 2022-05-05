@@ -129,10 +129,10 @@ int SRMakeRTCurve::AnaForOneStation(TrackletVector* trklet_vec, const int st_id,
 void SRMakeRTCurve::GetGoodTrackletRange(const int st_id, double& x_lo, double& x_hi, double& y_lo, double& y_hi, double& tx_lo, double& tx_hi, double& ty_lo, double& ty_hi)
 {
   switch (st_id) {
-  case ST_ID_D0 :  x_lo=-100; x_hi=100; y_lo=-100; y_hi=100; tx_lo=-0.2; tx_hi=0.2; ty_lo=-0.2; ty_hi=0.2; break;
-  case ST_ID_D2 :  x_lo=-120; x_hi=120; y_lo=-120; y_hi=120; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.3; ty_hi=0.3; break;
-  case ST_ID_D3P:  x_lo=-131; x_hi=131; y_lo=   0; y_hi=170; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.4; ty_hi=0.4; break;
-  case ST_ID_D3M:  x_lo=-131; x_hi=131; y_lo=-170; y_hi=  0; tx_lo=-0.3; tx_hi=0.3; ty_lo=-0.4; ty_hi=0.4; break;
+  case ST_ID_D0 :  x_lo= -45; x_hi= 45; y_lo= -55; y_hi= 55; tx_lo=-0.20; tx_hi=0.20; ty_lo=-0.25; ty_hi=0.25; break;
+  case ST_ID_D2 :  x_lo= -90; x_hi= 90; y_lo=-120; y_hi=120; tx_lo=-0.25; tx_hi=0.25; ty_lo=-0.35; ty_hi=0.35; break;
+  case ST_ID_D3P:  x_lo=-120; x_hi=120; y_lo=   0; y_hi=150; tx_lo=-0.25; tx_hi=0.25; ty_lo=-0.35; ty_hi=0.35; break;
+  case ST_ID_D3M:  x_lo=-120; x_hi=120; y_lo=-150; y_hi=  0; tx_lo=-0.25; tx_hi=0.25; ty_lo=-0.35; ty_hi=0.35; break;
   }
 }
 
