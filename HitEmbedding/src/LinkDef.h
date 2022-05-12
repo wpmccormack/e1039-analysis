@@ -4,7 +4,6 @@
 #pragma link off all global;
 
 #pragma link C++ class FilterE906Nim3-!;
-#pragma link C++ class CalibXTv2-!;
 #pragma link C++ class GenEmbeddingData-!;
 #pragma link C++ class DoEmbedding-!;
 #pragma link C++ class AnaEmbeddedData-!;
