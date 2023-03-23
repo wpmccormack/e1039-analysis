@@ -340,7 +340,8 @@ int Fun4Sim(const int nevent = 10)
   //  se->registerOutputManager(out);
   //}
 
-  se->run(nevent);
+  const bool count_only_good_events = false;
+  se->run(nevent, count_only_good_events);
 
   PHGeomUtility::ExportGeomtry(se->topNode(),"geom.root");
   
