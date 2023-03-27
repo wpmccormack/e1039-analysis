@@ -3,7 +3,7 @@
 
 LIST_RUN="list_run.txt"
 DIR_SRC=/data2/e1039/dst
-DIR_DEST=/pnfs/e1039/scratch/$USER/CalibChamXT/dst
+DIR_DEST=/pnfs/e1039/scratch/users/$USER/CalibChamXT/dst
 echo "LIST_RUN = $LIST_RUN"
 echo "DIR_SRC  = $DIR_SRC"
 echo "DIR_DEST = $DIR_DEST"

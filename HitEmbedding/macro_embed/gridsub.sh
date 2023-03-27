@@ -52,7 +52,7 @@ echo "N_EMB        = $N_EMB"
 ## Prepare and execute the job submission
 ##
 if [ $USE_GRID == yes ]; then
-    DIR_DATA=/pnfs/e1039/scratch/$USER/HitEmbedding/data_embedded
+    DIR_DATA=/pnfs/e1039/scratch/users/$USER/HitEmbedding/data_embedded
     DIR_WORK=$DIR_DATA/$JOB_NAME
     ln -nfs $DIR_DATA data # for convenience
 else
@@ -92,7 +92,7 @@ for (( JOB_I = $JOB_B; JOB_I <= $JOB_E; JOB_I++ )) ; do
 	CMD+=" -f $FN_EMB"
 	CMD+=" -d OUTPUT $DIR_WORK_JOB/out"
 	CMD+=" file://$DIR_WORK_JOB/gridrun.sh $N_EVT"
-	$CMD |& tee $DIR_WORK_JOB/log_jobsub_submit.txt
+	unbuffer $CMD |& tee $DIR_WORK_JOB/log_jobsub_submit.txt
 	RET_SUB=${PIPESTATUS[0]}
 	test $RET_SUB -ne 0 && exit $RET_SUB
     else

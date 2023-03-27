@@ -8,8 +8,7 @@ RUN_LIST=/data2/production/list/R009/R009_fy2017.list
 RUN_N=$(cat $RUN_LIST | wc -l)
 
 DIR_IN=scratch
-#DIR_OUT=/pnfs/e1039/scratch/$USER/data_emb_e906
-DIR_OUT=/pnfs/e1039/persistent/users/$USER/data_emb_e906
+DIR_OUT=/pnfs/e1039/scratch/users/$USER/data_emb_e906
 
 ##
 ## Function

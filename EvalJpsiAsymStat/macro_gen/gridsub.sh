@@ -30,7 +30,7 @@ echo "USE_GRID     = $USE_GRID"
 echo "JOB_B...E    = $JOB_B...$JOB_E"
 echo "N_EVT        = $N_EVT"
 if [ $USE_GRID == yes ]; then
-    DIR_DATA=/pnfs/e1039/scratch/$USER/EvalJpsiAsymStat
+    DIR_DATA=/pnfs/e1039/scratch/users/$USER/EvalJpsiAsymStat
     DIR_WORK=$DIR_DATA/$JOB_NAME
     ln -nfs $DIR_DATA data # for convenience
 else
@@ -65,7 +65,7 @@ for (( JOB_I = $JOB_B; JOB_I <= $JOB_E; JOB_I++ )) ; do
 	CMD+=" -f $DIR_WORK/input.tar.gz"
 	CMD+=" -d OUTPUT $DIR_WORK_JOB/out"
 	CMD+=" file://$DIR_WORK_JOB/gridrun.sh $JOB_NAME $N_EVT"
-	$CMD |& tee $DIR_WORK_JOB/log_jobsub_submit.txt
+	unbuffer $CMD |& tee $DIR_WORK_JOB/log_jobsub_submit.txt
 	RET_SUB=${PIPESTATUS[0]}
 	test $RET_SUB -ne 0 && exit $RET_SUB
     else

@@ -31,7 +31,7 @@ do
 
   # prepare $workdir
   if [ $do_sub == 1 ]; then
-  local_work_dir=/pnfs/e906/persistent/users/$USER/CODAChainDev/$jobname/$run_num/
+  local_work_dir=/pnfs/e1039/scratch/users/$USER/CODAChainDev/$jobname/$run_num/
   else
   local_work_dir=$macros/scratch/$jobname/$run_num/
   fi

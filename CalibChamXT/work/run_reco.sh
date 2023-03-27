@@ -3,7 +3,7 @@ DIR_BASE=$(dirname $(readlink -f $BASH_SOURCE))
 
 LIST_RUN="list_run.txt"
 VERSION="main"
-DIR_DST=/pnfs/e1039/scratch/$USER/CalibChamXT/dst
+DIR_DST=/pnfs/e1039/scratch/users/$USER/CalibChamXT/dst
 
 USE_GRID=no
 N_DST_ANA=0 # N of DSTs per run to be analyzed
@@ -54,7 +54,7 @@ function ProcessOneRun {
 	    CMD+=" -d OUTPUT $DIR_WORK/$BASE_NAME/out"
 	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $RUN $ITER $(basename $FN_DST) $N_EVT_ANA"
 	    #echo "$CMD"
-	    $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
+	    unbuffer $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
 	    RET_SUB=${PIPESTATUS[0]}
 	    test $RET_SUB -ne 0 && exit $RET_SUB
 	else
@@ -76,7 +76,7 @@ test "X$1" != 'XGO' && echo "Give 'GO' to make a real run." && exit 1
 
 if [ $USE_GRID = 'yes' ]; then
     echo "Grid mode."
-    DIR_DATA=/pnfs/e1039/scratch/$USER/CalibChamXT
+    DIR_DATA=/pnfs/e1039/scratch/users/$USER/CalibChamXT
     DIR_WORK=$DIR_DATA/$VERSION
     ln -nfs $DIR_DATA data # for convenience
 else
