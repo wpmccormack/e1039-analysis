@@ -35,7 +35,7 @@ echo "DO_OVERWRITE = $DO_OVERWRITE"
 echo "USE_GRID     = $USE_GRID"
 
 if [ $USE_GRID == yes ] ; then
-    DIR_WORK=/pnfs/e1039/scratch/$USER/GenRoadset/data_e906_nim3
+    DIR_WORK=/pnfs/e1039/scratch/users/$USER/GenRoadset/data_e906_nim3
     ln -nfs $DIR_WORK data # for convenience
 else
     DIR_WORK=$DIR_MACRO/scratch
@@ -84,7 +84,7 @@ while read DB_SERVER DB_SCHEMA RUN ROADSET ; do
 	CMD+=" -f $DIR_ROOT/$FN_ROOT"
 	CMD+=" -d OUTPUT $DIR_WORK_RUN/out"
 	CMD+=" file://$DIR_WORK_RUN/gridrun.sh $RUN $FN_ROOT $N_EVT"
-	$CMD |& tee $DIR_WORK_RUN/log_jobsub_submit.txt
+	unbuffer $CMD |& tee $DIR_WORK_RUN/log_jobsub_submit.txt
 	RET_SUB=${PIPESTATUS[0]}
 	test $RET_SUB -ne 0 && exit $RET_SUB
     else

@@ -15,14 +15,14 @@ fi
 echo "njobs=$njobs"
 echo "nevents=$nevents"
 
-macros=/e906/app/users/yuhw/e1039-analysis/TargetSim
+macros=/e906/app/users/$USER/e1039-analysis/TargetSim
 
 sed "s/nevents=NAN/nevents=$nevents/"             $macros/gridrun.sh > $macros/gridrun_new.sh 
 #sed -i "s/gap=NAN/gap=$gap/"                      $macros/gridrun_new.sh
 chmod +x $macros/gridrun_new.sh
 
 if [ $do_sub == 1 ]; then
-work=/pnfs/e906/persistent/users/yuhw/TargetSim/$jobname
+work=/pnfs/e1039/scratch/users/$USER/TargetSim/$jobname
 else
 work=$macros/scratch/$jobname
 fi

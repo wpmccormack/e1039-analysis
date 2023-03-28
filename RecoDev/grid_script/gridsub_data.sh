@@ -14,8 +14,8 @@ echo "nevents=$nevents"
  
 if [ $do_sub == 1 ]; then
     echo "Grid mode."
-    work=/pnfs/e906/persistent/users/$USER/RecoDataDev/$jobname
-    ln -nfs /pnfs/e906/persistent/users/$USER/RecoDataDev data
+    work=/pnfs/e1039/scratch/users/$USER/RecoDataDev/$jobname
+    ln -nfs /pnfs/e1039/scratch/users/$USER/RecoDataDev data
 else
     echo "Local mode."
     work=$dir_macros/scratch/$jobname
@@ -29,8 +29,8 @@ tar -czvf $work/input.tar.gz  support RecoE1039Data.C
 cd -
 
 for run_num in $(cat $run_list) ; do  
-  #location of the data in your persistent area
-  data_dir="/pnfs/e906/persistent/users/$USER/DstRun"
+  #location of the data in your area
+  data_dir="/pnfs/e1039/scratch/users/$USER/DstRun"
   declare -a data_path_list=()
   if [ $dst_mode = 'single' ] ; then
       data_path_list=( $data_dir/$(printf 'run_%06d_spin.root' $run_num) )
@@ -56,7 +56,7 @@ for run_num in $(cat $run_list) ; do
       CMD+=" -f $data_path"
       CMD+=" file://$work/$job_name/gridrun_data.sh $nevents $run_num $data_file"
       echo "$CMD"
-      $CMD |& tee $work/$id/log_jobsub_submit.txt
+      unbuffer $CMD |& tee $work/$id/log_jobsub_submit.txt
       RET_SUB=${PIPESTATUS[0]}
       test $RET_SUB -ne 0 && exit $RET_SUB
     else

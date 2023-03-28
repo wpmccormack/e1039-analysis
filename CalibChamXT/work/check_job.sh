@@ -2,7 +2,7 @@
 ## A temporary script to check the status of jobs submitted.
 DIR_BASE=$(dirname $(readlink -f $BASH_SOURCE))
 
-DIR_DATA=/pnfs/e1039/scratch/$USER/CalibChamXT/main
+DIR_DATA=/pnfs/e1039/scratch/users/$USER/CalibChamXT/main
 DIR_TMP=scratch
 LOOP=no
 

@@ -15,8 +15,8 @@ echo "njobs=$njobs"
 echo "nevents=$nevents"
 if [ $do_sub == 1 ]; then
     echo "Grid mode."
-    work=/pnfs/e1039/persistent/users/$USER/$PROJECT_NAME/$jobname
-    ln -nsf /pnfs/e1039/persistent/users/$USER/$PROJECT_NAME data
+    work=/pnfs/e1039/scratch/users/$USER/$PROJECT_NAME/$jobname
+    ln -nsf /pnfs/e1039/scratch/users/$USER/$PROJECT_NAME data
 else
     echo "Local mode."
     work=$dir_macros/scratch/$jobname

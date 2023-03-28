@@ -18,7 +18,7 @@ fi
 echo "njobs=$njobs"
 echo "nevents=$nevents"
 
-macros=/e906/app/users/yuhw/seaquest-analysis/HodoAccGap
+macros=/e906/app/users/$USER/seaquest-analysis/HodoAccGap
 
 sed "s/nevents=NAN/nevents=$nevents/"             $macros/gridrun.sh > $macros/gridrun_new.sh 
 sed -i "s/gap=NAN/gap=$gap/"                      $macros/gridrun_new.sh
@@ -26,7 +26,7 @@ sed -i "s/target_pos=NAN/target_pos=$target_pos/" $macros/gridrun_new.sh
 chmod +x $macros/gridrun_new.sh
 
 if [ $do_sub == 1 ]; then
-work=/pnfs/e906/persistent/users/yuhw/HodoAccGap/$jobname
+work=/pnfs/e1039/scratch/users/$USER/HodoAccGap/$jobname
 else
 work=$macros/scratch/$jobname
 fi

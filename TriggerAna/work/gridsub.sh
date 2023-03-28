@@ -14,7 +14,7 @@ echo "list=$list"
 
 if [ $do_sub == 1 ]; then
     echo "Grid mode."
-    dir_data=/pnfs/e1039/scratch/$USER/TriggerAna
+    dir_data=/pnfs/e1039/scratch/users/$USER/TriggerAna
     work=$dir_data/$jobname
     ln -nfs $dir_data data # for convenience
 else
@@ -43,7 +43,7 @@ do
     CMD+=" -d OUTPUT $work/$id/out"
     CMD+=" file://$work/$id/gridrun.sh $nfile $list $id"
     echo "$CMD"
-    $CMD |& tee $work/$id/log_jobsub_submit.txt
+    unbuffer $CMD |& tee $work/$id/log_jobsub_submit.txt
     RET_SUB=${PIPESTATUS[0]}
     test $RET_SUB -ne 0 && exit $RET_SUB
   else

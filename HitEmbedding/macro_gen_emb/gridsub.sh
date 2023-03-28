@@ -10,7 +10,7 @@ echo "DO_SUB   = $DO_SUB"
 echo "N_JOB    = $N_JOB"
 echo "N_EVT    = $N_EVT"
 if [ $DO_SUB == 1 ]; then
-    DIR_DATA=/pnfs/e1039/scratch/$USER/HitEmbedding/data_emb
+    DIR_DATA=/pnfs/e1039/scratch/users/$USER/HitEmbedding/data_emb
     DIR_WORK=$DIR_DATA/$JOB_NAME
     ln -nfs $DIR_DATA data # for convenience
 else
@@ -36,7 +36,7 @@ for (( I_JOB = 1; I_JOB <= $N_JOB; I_JOB++ )) ; do
 	CMD+=" -f $DIR_WORK/input.tar.gz"
 	CMD+=" -d OUTPUT $DIR_WORK/$I_JOB/out"
 	CMD+=" file://$DIR_WORK/$I_JOB/gridrun.sh $N_EVT $I_JOB"
-	$CMD |& tee $DIR_WORK/$I_JOB/log_jobsub_submit.txt
+	unbuffer $CMD |& tee $DIR_WORK/$I_JOB/log_jobsub_submit.txt
 	RET_SUB=${PIPESTATUS[0]}
 	test $RET_SUB -ne 0 && exit $RET_SUB
     else
