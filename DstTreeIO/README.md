@@ -13,7 +13,7 @@ because I don't find whether/how we apply calibrations/selections, which are imp
 ## Reading DST
 
 ```
-source setup
+source setup.sh
 root -b ReadDstTree.C
 ```
 
@@ -24,7 +24,7 @@ It does not create any output file.
 ## Writing DST
 
 ```
-source setup
+source setup.sh
 root -b WriteDstTree.C
 ```
 
