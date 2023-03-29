@@ -19,7 +19,7 @@ int ReadDstTree(const unsigned int n_evt_max=0)
     exit(1);
   }
   if (tree_run->GetEntries() != 1) {
-    cout << "Find " << tree_run->GetEntries() << " entries (!= 1) in the RUN tree..  Abort." << endl;
+    cout << "Find " << tree_run->GetEntries() << " entries (!= 1) in the RUN tree.  Abort." << endl;
     exit(1);
   }
   SQRun* sq_run = 0;
