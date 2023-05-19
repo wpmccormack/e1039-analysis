@@ -24,12 +24,14 @@ cd work
 root -b AnaTrackQAFile.C
 ```
 
+You will find no track in the output file, because the number of processed events is too few and the configuration of kTracker is not yet optimized.
+
 
 ### Advanced Usage
 
 * Analyse all events by `root -b 'AnaTrackQAFile.C(0)'`.
 * Analyze another file by `root -b 'AnaTrackQAFile.C(10, "/path/to/your/file.root")'`.
-* Analyze a hit-matrix data file by `root -b AnaHitMatrix.C`.
+* Analyze a hit-matrix data file by `root -b AnaHitMatrixFile.C`.
 
 
 ## Author
