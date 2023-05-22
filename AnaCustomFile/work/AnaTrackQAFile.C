@@ -1,17 +1,17 @@
-R__LOAD_LIBRARY(libana_sim_dst)
+R__LOAD_LIBRARY(libAnaCustomFile)
 
+/**
+ * Fun4All macro to analyze a Track-QA v1 file.
+ */
 int AnaTrackQAFile(
   const int n_evt=10,
   const string fn_in="/project/ptgroup/spinquest/MC_merge_files/singMup_x2y2z300_750K/merged_trackQA.root")
 {
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
-
   recoConsts* rc = recoConsts::instance();
   rc->set_IntFlag("RUNNUMBER", 1); // To select the right plane geometry.
-  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
-  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
-  //rc->set_BoolFlag("COARSE_MODE", true);
+  rc->set_DoubleFlag("FMAGSTR", -1.054);
+  rc->set_DoubleFlag("KMAGSTR", -0.951);
+  rc->set_BoolFlag("COARSE_MODE", true);
   rc->Print();
 
   Fun4AllServer* se = Fun4AllServer::instance();
@@ -41,9 +41,6 @@ int AnaTrackQAFile(
   in->Verbosity(0);
   in->fileopen(fn_in);
   se->registerInputManager(in);
-
-  //Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "result.root");
-  //se->registerOutputManager(out);
 
   se->run(n_evt);
 

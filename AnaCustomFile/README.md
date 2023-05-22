@@ -32,6 +32,7 @@ You will find no track in the output file, because the number of processed event
 * Analyse all events by `root -b 'AnaTrackQAFile.C(0)'`.
 * Analyze another file by `root -b 'AnaTrackQAFile.C(10, "/path/to/your/file.root")'`.
 * Analyze a hit-matrix data file by `root -b AnaHitMatrixFile.C`.
+* Convert a hit-matrix data file by `root -b ConvertHitMatrixFile.C`.
 
 
 ## Author

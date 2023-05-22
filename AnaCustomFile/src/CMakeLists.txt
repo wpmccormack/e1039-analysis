@@ -1,6 +1,6 @@
 # Setup the project
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(ana_sim_dst CXX)
+project(AnaCustomFile CXX)
 
 file(GLOB          sources ${PROJECT_SOURCE_DIR}/*.cc)
 file(GLOB     dist_headers ${PROJECT_SOURCE_DIR}/*.h)
@@ -9,9 +9,9 @@ list(REMOVE_ITEM dist_headers ${non_dist_headers})
 
 # ROOT dict generation
 add_custom_command (
-  OUTPUT ana_sim_dst_Dict.cc
+  OUTPUT AnaCustomFile_Dict.cc
   COMMAND rootcint
-  ARGS -f ana_sim_dst_Dict.cc -c
+  ARGS -f AnaCustomFile_Dict.cc -c
     -I$ENV{OFFLINE_MAIN}/include/ -I${ROOT_PREFIX}/include/
     ${dist_headers}
     ${PROJECT_SOURCE_DIR}/LinkDef.h
@@ -34,14 +34,14 @@ execute_process(COMMAND root-config --libs   OUTPUT_VARIABLE ROOT_LINK    OUTPUT
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -I$ENV{OFFLINE_MAIN}/include/ ${ROOT_CFLAGS}")
 
-add_library(ana_sim_dst SHARED ${sources} ana_sim_dst_Dict.cc)
-target_link_libraries(ana_sim_dst  fun4all interface_main geom_svc ktracker phg4hit PHPythia8 g4detectors UtilAna)
-install(TARGETS ana_sim_dst DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+add_library(AnaCustomFile SHARED ${sources} AnaCustomFile_Dict.cc)
+target_link_libraries(AnaCustomFile  fun4all interface_main geom_svc ktracker phg4hit PHPythia8 g4detectors UtilAna)
+install(TARGETS AnaCustomFile DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
 # Install the pcm files in case of ROOT 6.
 execute_process(COMMAND root-config --version OUTPUT_VARIABLE ROOT_VER)
 string(SUBSTRING ${ROOT_VER} 0 1 ROOT_VER)
 if (ROOT_VER GREATER 5)
    add_custom_target(install_pcm ALL COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/lib COMMAND cp -up *_rdict.pcm ${CMAKE_INSTALL_PREFIX}/lib)
-   add_dependencies(install_pcm ana_sim_dst)
+   add_dependencies(install_pcm AnaCustomFile)
 endif()

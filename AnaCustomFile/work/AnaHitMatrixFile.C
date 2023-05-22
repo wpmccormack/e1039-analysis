@@ -1,16 +1,16 @@
-R__LOAD_LIBRARY(libana_sim_dst)
+R__LOAD_LIBRARY(libAnaCustomFile)
 
+/**
+ * Fun4All macro to analyze a hit-matrix file.
+ */
 int AnaHitMatrixFile(
   const int n_evt=10,
   const string fn_in="/project/ptgroup/Kenichi/tmp/2022-03-20/output_merged.root")
 {
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
-
   recoConsts* rc = recoConsts::instance();
   rc->set_IntFlag("RUNNUMBER", 1); // To select the right plane geometry.
-  rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
-  rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->set_DoubleFlag("FMAGSTR", -1.054);
+  rc->set_DoubleFlag("KMAGSTR", -0.951);
   rc->set_BoolFlag("COARSE_MODE", true);
   rc->Print();
 
@@ -43,9 +43,6 @@ int AnaHitMatrixFile(
   in->SetBranchName("hit_matrix");
   in->fileopen(fn_in);
   se->registerInputManager(in);
-
-  //Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "result.root");
-  //se->registerOutputManager(out);
 
   se->run(n_evt);
 
