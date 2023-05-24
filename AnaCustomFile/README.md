@@ -1,7 +1,10 @@
 # e1039-analysis/AnaCustomFile
 
 A compact program to analyze a data file with a custom data format (=structure).
+It can also convert a custom data file into a DST file or a SRawEvent file.
 It should run fine with no modification only on UVA Rivanna.
+
+Temporarily the latest system-wide version of the E1039 core software is used by default.
 
 
 ## Basic Usage
@@ -29,7 +32,7 @@ You will find no track in the output file, because the number of processed event
 
 ### Advanced Usage
 
-* Analyse all events by `root -b 'AnaTrackQAFile.C(0)'`.
+* Analyze all events by `root -b 'AnaTrackQAFile.C(0)'`.
 * Analyze another file by `root -b 'AnaTrackQAFile.C(10, "/path/to/your/file.root")'`.
 * Analyze a hit-matrix data file by `root -b AnaHitMatrixFile.C`.
 * Convert a hit-matrix data file by `root -b ConvertHitMatrixFile.C`.

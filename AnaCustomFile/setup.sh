@@ -2,11 +2,9 @@ DIR_TOP=$(dirname $(readlink -f $BASH_SOURCE))
 DIR_BUILD=$DIR_TOP/build
 DIR_INST=$DIR_TOP/inst
 
-## Using Jay's modified core version at Rivanna.
-E1039_CORE_DIR=/project/ptgroup/Jay/new-core/core-inst
-
-## Using the latest system-wide core version at Rivanna.
-#E1039_CORE_VERSION=pr.133
+## Choose one of e1039-core versions (or add your own one).
+#E1039_CORE_DIR=/project/ptgroup/Jay/new-core/core-inst # Jay's modified ver.
+E1039_CORE_VERSION=pr.133 # Latest system-wide ver.
 
 source /project/ptgroup/spinquest/this-e1039.sh
 #source /e906/app/software/osg/software/e1039/this-e1039.sh
