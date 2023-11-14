@@ -24,16 +24,11 @@ int RecoE906Data(const int nEvents = 1)
   recoConsts* rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
+  rc->set_IntFlag("RUNNUMBER", 6); // To select the plane geometry for E906 Run 6.
   rc->Print();
 
   Fun4AllServer* se = Fun4AllServer::instance();
   se->Verbosity(100);
-
-  //JobOptsSvc* jobopt_svc = JobOptsSvc::instance();
-  //jobopt_svc->init("support/e906_run7.opts");
-
-  GeomSvc::UseDbSvc(false);  //set to true to run E1039 style data
-  GeomSvc* geom_svc = GeomSvc::instance();
 
   SQReco* reco = new SQReco();
   reco->Verbosity(100);
