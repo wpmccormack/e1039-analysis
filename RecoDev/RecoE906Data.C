@@ -25,6 +25,7 @@ int RecoE906Data(const int nEvents = 1)
   rc->set_IntFlag("RUNNUMBER", 6); // To select the plane geometry for E906 Run 6.
   rc->set_DoubleFlag("FMAGSTR", -1.044); // -1.054;
   rc->set_DoubleFlag("KMAGSTR", -1.025); // -0.951;
+  rc->set_CharFlag("TRIGGER_L1", "78");
   rc->set_DoubleFlag("RejectWinDC0" , 0.12);
   rc->set_DoubleFlag("RejectWinDC1" , 0.25);
   rc->set_DoubleFlag("RejectWinDC2" , 0.15);
