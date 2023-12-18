@@ -36,8 +36,8 @@ int Fun4Sim(const int nevent = 10)
   const double target_z = (7.9-target_l)/2.; //cm
   const int use_g4steps = 1;
 
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
+  const double FMAGSTR = -1.044;
+  const double KMAGSTR = -1.025;
 
  //! particle generator flag
   const bool gen_pythia8  = true; // false;
@@ -46,8 +46,8 @@ int Fun4Sim(const int nevent = 10)
   const bool read_hepmc   = false;
   const bool gen_e906legacy = false; // cf. SQPrimaryParticleGen
 
-  //! vtx gen flag
-  const bool legacyVtxGen = true;
+  //! Use SQPrimaryVertexGen or not.
+  const bool SQ_vtx_gen = true;
   
   recoConsts *rc = recoConsts::instance();
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
@@ -60,9 +60,10 @@ int Fun4Sim(const int nevent = 10)
     rc->set_DoubleFlag("KMAGSTR", 0.);
     rc->set_DoubleFlag("FMAGSTR", 0.);
   }
-  if(legacyVtxGen) // cf. SQPrimaryVertexGen
-  {
-    //rc->set_CharFlag("VTX_GEN_MATERIAL_MODE", "Target"); // Target, Dump or TargetDumpGap
+  if(SQ_vtx_gen) { // cf. SQPrimaryVertexGen
+    rc->set_CharFlag("VTX_GEN_MATERIAL_MODE", "Target"); // All, Target, Dump, TargetDumpGap or Manual
+    //rc->set_DoubleFlag("VTX_GEN_Z_START",  50.0); // For "Manual"
+    //rc->set_DoubleFlag("VTX_GEN_Z_STOP" , 100.0); // For "Manual"
   }
   rc->Print();
 
@@ -83,13 +84,13 @@ int Fun4Sim(const int nevent = 10)
   if(gen_pythia8) {    
     PHPythia8 *pythia8 = new PHPythia8();
     //pythia8->Verbosity(99);
-    //pythia8->set_config_file("phpythia8_DY.cfg");
-    pythia8->set_config_file("phpythia8_Jpsi.cfg"); // Jpsi, Jpsi_direct, psip
-    if(legacyVtxGen) pythia8->enableLegacyVtxGen();
+    pythia8->set_config_file("phpythia8_DY.cfg");
+    //pythia8->set_config_file("phpythia8_Jpsi.cfg"); // Jpsi, Jpsi_direct, psip
+    if(SQ_vtx_gen) pythia8->enableLegacyVtxGen();
     else{
       pythia8->set_vertex_distribution_mean(0, 0, target_coil_pos_z, 0);
     } 
-   pythia8->set_embedding_id(1);
+    pythia8->set_embedding_id(1);
     se->registerSubsystem(pythia8);
 
     pythia8->set_trigger_AND();
@@ -122,7 +123,7 @@ int Fun4Sim(const int nevent = 10)
     PHG4SimpleEventGenerator *genp = new PHG4SimpleEventGenerator("MUP");
     //genp->set_seed(123);
     genp->add_particles("mu+", nmu);  // mu+,e+,proton,pi+,Upsilon
-    if (legacyVtxGen) genp->enableLegacyVtxGen();
+    if (SQ_vtx_gen) genp->enableLegacyVtxGen();
     else{
       genp->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
@@ -148,7 +149,7 @@ int Fun4Sim(const int nevent = 10)
     PHG4SimpleEventGenerator *genm = new PHG4SimpleEventGenerator("MUM");
     //genm->set_seed(123);
     genm->add_particles("mu-", nmu);  // mu+,e+,proton,pi+,Upsilon
-    if (legacyVtxGen) genm->enableLegacyVtxGen();
+    if (SQ_vtx_gen) genm->enableLegacyVtxGen();
     else{
       genm->set_vertex_distribution_function(PHG4SimpleEventGenerator::Uniform,
         PHG4SimpleEventGenerator::Uniform,
@@ -210,14 +211,7 @@ int Fun4Sim(const int nevent = 10)
   // Fun4All G4 module
   PHG4Reco *g4Reco = new PHG4Reco();
   //PHG4Reco::G4Seed(123);
-  //g4Reco->set_field(5.);
-  g4Reco->set_field_map(
-      rc->get_CharFlag("fMagFile")+" "+
-      rc->get_CharFlag("kMagFile")+" "+
-      Form("%f",FMAGSTR) + " " +
-      Form("%f",KMAGSTR) + " " +
-      "5.0",
-      PHFieldConfig::RegionalConst);
+  g4Reco->set_field_map();
   // size of the world - every detector has to fit in here
   g4Reco->SetWorldSizeX(1000);
   g4Reco->SetWorldSizeY(1000);
