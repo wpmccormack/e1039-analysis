@@ -10,21 +10,22 @@ R__LOAD_LIBRARY(libktracker)
 /*
 This macro takes severl external input files to run:
 1. geom.root is the standard geometry dump from running the Fun4Sim macro;
-2. data.root should be the DST file generated either by decoder or by 
+2. `DST_in` (data.root) should be the DST file generated either by decoder or by simulation.
 
 This is an example script intended to demonstrate how to run SQReco in a minimalistic fashion, it is NOT
 suitable for production use and users should develop their own reconstruction macro for their own analysis.
 */
 
-int RecoE1039Data(const int nEvents = 1)
+int RecoE1039Data(const int run_id, const std::string DST_in="data.root", const int nEvents = 1)
 {
   const bool cosmic = true;
 
   const bool legacy_rec_container = false;
-  const double FMAGSTR = -1.054;
-  const double KMAGSTR = -0.951;
+  const double FMAGSTR = -1.044;
+  const double KMAGSTR = -1.025;
 
   recoConsts* rc = recoConsts::instance();
+  rc->set_IntFlag("RUNNUMBER", run_id);
   rc->set_DoubleFlag("FMAGSTR", FMAGSTR);
   rc->set_DoubleFlag("KMAGSTR", KMAGSTR);
   if(cosmic)
@@ -59,7 +60,7 @@ int RecoE1039Data(const int nEvents = 1)
 
   Fun4AllInputManager* in = new Fun4AllDstInputManager("DSTIN");
   in->Verbosity(0);
-  in->fileopen("data.root");
+  in->fileopen(DST_in.c_str());
   se->registerInputManager(in);
 
   Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "result.root");
