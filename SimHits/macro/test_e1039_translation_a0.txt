@@ -1,0 +1,2141 @@
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing RecoE906Data.C(10)...
+
+char* Flags:
+AlignmentHodo is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_hodo.txt
+AlignmentMille is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/align_mille.txt
+AlignmentProp is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_prop.txt
+Calibration is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/calibration.txt
+DB_SERVER is DB1
+DB_USER is seaguest
+EventReduceOpts is aoc
+TRIGGER_L1 is 67
+TRIGGER_Repo is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/trigger
+fMagFile is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root
+kMagFile is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root
+
+Float Flags:
+
+Double Flags:
+BAD_HIT_REJECTION is 3
+DEDX_FE_P0 is 7.18274
+DEDX_FE_P1 is 0.0361447
+DEDX_FE_P2 is -0.000718127
+DEDX_FE_P3 is 7.97312e-06
+DEDX_FE_P4 is -3.05481e-08
+ELOSS_ABSORBER is 1.81
+ELOSS_KFMAG is 8.12
+FMAGSTR is -1.054
+FMAG_HOLE_LENGTH is 27.94
+FMAG_HOLE_RADIUS is 1.27
+FMAG_LENGTH is 502.92
+INVP_MAX is 0.2
+INVP_MIN is 0.01
+KMAGSTR is -0.951
+MERGE_THRESH is 0.015
+MUID_EMP_P0 is 0.00643
+MUID_EMP_P1 is -9e-05
+MUID_EMP_P2 is 4.6e-07
+MUID_REJECTION is 4
+MUID_R_CUT is 3
+MUID_THE_P0 is 0.11825
+MUID_Z_REF is 2028.19
+PROB_LOOSE is 0
+PROB_TIGHT is 1e-12
+PT_KICK_FMAG is 2.909
+PT_KICK_KMAG is 0.4016
+RESOLUTION_FACTOR is 1.6
+RX_TARGET is 0.95
+RY_TARGET is 0.95
+RejectWinDC0 is 0.12
+RejectWinDC1 is 0.12
+RejectWinDC2 is 0.15
+RejectWinDC3m is 0.14
+RejectWinDC3p is 0.16
+SAGITTA_DUMP_CENTER is 1.5
+SAGITTA_DUMP_WIDTH is 0.3
+SAGITTA_TARGET_CENTER is 1.85
+SAGITTA_TARGET_WIDTH is 0.25
+SIGX_BEAM is 0.3
+SIGY_BEAM is 0.3
+TDCTimeOffset is 0
+TMAGSTR is 5
+TX_MAX is 0.15
+TY_MAX is 0.1
+X0_MAX is 150
+X0_TARGET is 0
+X_BEAM is 0
+Y0_MAX is 50
+Y0_TARGET is 0
+Y_BEAM is 0
+Z_ABSORBER is 2028.19
+Z_DOWNSTREAM is 500
+Z_DUMP is 42
+Z_FMAG_BEND is 251.4
+Z_KFMAG_BEND is 375
+Z_KMAG_BEND is 1064.26
+Z_REF is 0
+Z_ST1 is 600
+Z_ST2 is 1347.36
+Z_ST3 is 1910
+Z_TARGET is -300
+Z_UPSTREAM is -500
+
+Integer Flags:
+MUID_MINHITS is 1
+MaxHitsDC0 is 100
+MaxHitsDC1 is 100
+MaxHitsDC2 is 100
+MaxHitsDC3m is 100
+MaxHitsDC3p is 100
+NSTEPS_FMAG is 100
+NSTEPS_SHIELDING is 50
+NSTEPS_TARGET is 100
+RUNNUMBER is 6
+
+Boolean Flags:
+COARSE_MODE is FALSE
+COSMIC_MODE is FALSE
+DUMPONLY is FALSE
+IdealGeom is FALSE
+KMAG_ON is TRUE
+MC_MODE is FALSE
+OnlineAlignment is FALSE
+TARGETONLY is FALSE
+USE_TWTDC_HIT is FALSE
+USE_V1495_HIT is TRUE
+GeomSvc:  Load the plane geometry info for run = 6.
+Read channel map from user_e1039_geom_plane.param_G9_run5_2.
+GeomSvc: loaded hodoscope alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_hodo.txt
+GeomSvc: loaded prop. tube alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_prop.txt
+GeomSvc: loaded millepede-based alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/align_mille.txt
+GeomSvc: loaded calibration parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/calibration.txt
+
+*************************************************************
+ Geant4 version Name: geant4-10-01-patch-03    (5-February-2016)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+<<< Geant4 Physics List simulation engine: FTFP_BERT 2.0
+
+Fun4AllServer: Runnumber forced to 6 by RUNNUMBER IntFlag
+Fun4AllServer::setRun(): could not get timestamp for run  6, using tics(0) timestamp: Wed Dec 31 19:00:00 1969
+PHFieldConfig_v3::PHFieldConfig_v3:
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+PHFieldUtility::GetFieldConfigNode - field map with configuration from input default: PHFieldConfig_v3::identify - Field type of [Sea Quest: SeaQuest Field: 2 3D Cartesian]
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+
+
+================ Begin Construct Mag Field =====================
+
+-----------------------------------------------------------
+      Magnetic field Module - Verbosity:
+-----------------------------------------------------------
+SQField3DCartesian: loading field map from ROOT file /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root
+  its demensions and ranges of the field: 1157123
+    X: 131 bins, -330.2 cm -- 330.2 cm, step size = 5.08 cm.
+    Y: 121 bins, -304.8 cm -- 304.8 cm, step size = 5.08 cm.
+    Z: 73 bins, -203.2 cm -- 711.2 cm, step size = 12.7 cm.
+
+================= End Construct Mag Field ======================
+
+
+================ Begin Construct Mag Field =====================
+
+-----------------------------------------------------------
+      Magnetic field Module - Verbosity:
+-----------------------------------------------------------
+SQField3DCartesian: loading field map from ROOT file /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root
+  its demensions and ranges of the field: 146853
+    X: 49 bins, -304.8 cm -- 304.8 cm, step size = 12.7 cm.
+    Y: 37 bins, -228.6 cm -- 228.6 cm, step size = 12.7 cm.
+    Z: 81 bins, -508 cm -- 508 cm, step size = 12.7 cm.
+
+================= End Construct Mag Field ======================
+
+PHFieldRegionalConst::identify: {0, 0, 0}	 {5}
+SQDipoleMagnet - begin construction of fmag from $E1039_RESOURCE/geometry/magnetic_fields/magnet_geom.db
+SQDipoleMagnet - begin construction of kmag from $E1039_RESOURCE/geometry/magnetic_fields/magnet_geom.db
+PHG4Reco::InitRun - export geometry to DST via tmp file /tmp/PHGeomUtility_geom_file_1089094.gdml
+PHG4GDML: Writing '/tmp/PHGeomUtility_geom_file_1089094.gdml'...
+PHG4GDML: Writing definitions...
+G4GDML: Writing materials...
+PHG4GDML: Writing solids...
+PHG4GDML: Writing structure...
+G4GDML: Writing setup...
+PHG4GDML: Writing surfaces...
+PHG4GDML: Writing '/tmp/PHGeomUtility_geom_file_1089094.gdml' done !
+Read channel map from user_e1039_calib_xt_curve.param_e906run6v2.
+PHTFileServer::open - opening file eval.root (RECREATE)
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  544  MakeNodes :::  DST/SRecEvent Added
+SQReco::InitField
+PHFieldConfig_v3::PHFieldConfig_v3:
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+PHField check: -------
+SQReco::InitGeom
+SQReco::InitGeom - use geom from PAR node tree.
+EventReducer: after-pulse removal enabled. 
+EventReducer: out-of-time hits removal enabled. 
+WARNING:: did not find G4TruthInfo.
+WARNING:: DataAna::GetNode No EMcal node
+--------------------------------------
+
+List of Nodes in Fun4AllServer:
+Node Tree under TopNode TOP
+TOP (PHCompositeNode)/
+   DST (PHCompositeNode)/
+      SRawEvent (IO,SRawEvent)
+      SQEvent (IO,SQEvent_v1)
+      SQHitVector (IO,SQHitVector_v1)
+      SQTriggerHitVector (IO,SQHitVector_v1)
+      G4HIT_D0U (IO,PHG4HitContainer)
+      G4HIT_D0Up (IO,PHG4HitContainer)
+      G4HIT_D0X (IO,PHG4HitContainer)
+      G4HIT_D0Xp (IO,PHG4HitContainer)
+      G4HIT_D0V (IO,PHG4HitContainer)
+      G4HIT_D0Vp (IO,PHG4HitContainer)
+      G4HIT_D2V (IO,PHG4HitContainer)
+      G4HIT_D2Vp (IO,PHG4HitContainer)
+      G4HIT_D2Xp (IO,PHG4HitContainer)
+      G4HIT_D2X (IO,PHG4HitContainer)
+      G4HIT_D2U (IO,PHG4HitContainer)
+      G4HIT_D2Up (IO,PHG4HitContainer)
+      G4HIT_D3pVp (IO,PHG4HitContainer)
+      G4HIT_D3pV (IO,PHG4HitContainer)
+      G4HIT_D3pXp (IO,PHG4HitContainer)
+      G4HIT_D3pX (IO,PHG4HitContainer)
+      G4HIT_D3pUp (IO,PHG4HitContainer)
+      G4HIT_D3pU (IO,PHG4HitContainer)
+      G4HIT_D3mVp (IO,PHG4HitContainer)
+      G4HIT_D3mV (IO,PHG4HitContainer)
+      G4HIT_D3mXp (IO,PHG4HitContainer)
+      G4HIT_D3mX (IO,PHG4HitContainer)
+      G4HIT_D3mUp (IO,PHG4HitContainer)
+      G4HIT_D3mU (IO,PHG4HitContainer)
+      G4HIT_H1B (IO,PHG4HitContainer)
+      G4HIT_H1T (IO,PHG4HitContainer)
+      G4HIT_H1L (IO,PHG4HitContainer)
+      G4HIT_H1R (IO,PHG4HitContainer)
+      G4HIT_H2L (IO,PHG4HitContainer)
+      G4HIT_H2R (IO,PHG4HitContainer)
+      G4HIT_H2B (IO,PHG4HitContainer)
+      G4HIT_H2T (IO,PHG4HitContainer)
+      G4HIT_H3B (IO,PHG4HitContainer)
+      G4HIT_H3T (IO,PHG4HitContainer)
+      G4HIT_H4Y1L (IO,PHG4HitContainer)
+      G4HIT_H4Y1R (IO,PHG4HitContainer)
+      G4HIT_H4Y2L (IO,PHG4HitContainer)
+      G4HIT_H4Y2R (IO,PHG4HitContainer)
+      G4HIT_H4B (IO,PHG4HitContainer)
+      G4HIT_H4T (IO,PHG4HitContainer)
+      G4HIT_P1Y1 (IO,PHG4HitContainer)
+      G4HIT_P1Y2 (IO,PHG4HitContainer)
+      G4HIT_P1X1 (IO,PHG4HitContainer)
+      G4HIT_P1X2 (IO,PHG4HitContainer)
+      G4HIT_P2X1 (IO,PHG4HitContainer)
+      G4HIT_P2X2 (IO,PHG4HitContainer)
+      G4HIT_P2Y1 (IO,PHG4HitContainer)
+      G4HIT_P2Y2 (IO,PHG4HitContainer)
+      G4HIT_DP1TL (IO,PHG4HitContainer)
+      G4HIT_DP1TR (IO,PHG4HitContainer)
+      G4HIT_DP1BL (IO,PHG4HitContainer)
+      G4HIT_DP1BR (IO,PHG4HitContainer)
+      G4HIT_DP2TL (IO,PHG4HitContainer)
+      G4HIT_DP2TR (IO,PHG4HitContainer)
+      G4HIT_DP2BL (IO,PHG4HitContainer)
+      G4HIT_DP2BR (IO,PHG4HitContainer)
+      PHG4INEVENT (IO,PHG4InEvent)
+      SRecEvent (IO,SRecEvent)
+   RUN (PHCompositeNode)/
+      SQRun (IO,SQRun_v1)
+      SQSpillMap (IO,SQSpillMap_v1)
+      FIELD_CONFIG (IO,PHFieldConfig_v3)
+      G4GEOPARAM_Shielding1_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_Shielding2_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_Shielding3_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_fmag_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_kmag_0 (IO,PdbParameterMapContainer)
+      MUID_absorber (PHCompositeNode)/
+         G4GEOPARAM_MUID_absorber (IO,PdbParameterMapContainer)
+      D0U (PHCompositeNode)/
+         G4GEOPARAM_D0U (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0U (IO,PHG4BlockGeomContainer)
+      D0Up (PHCompositeNode)/
+         G4GEOPARAM_D0Up (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Up (IO,PHG4BlockGeomContainer)
+      D0X (PHCompositeNode)/
+         G4GEOPARAM_D0X (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0X (IO,PHG4BlockGeomContainer)
+      D0Xp (PHCompositeNode)/
+         G4GEOPARAM_D0Xp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Xp (IO,PHG4BlockGeomContainer)
+      D0V (PHCompositeNode)/
+         G4GEOPARAM_D0V (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0V (IO,PHG4BlockGeomContainer)
+      D0Vp (PHCompositeNode)/
+         G4GEOPARAM_D0Vp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Vp (IO,PHG4BlockGeomContainer)
+      D2V (PHCompositeNode)/
+         G4GEOPARAM_D2V (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2V (IO,PHG4BlockGeomContainer)
+      D2Vp (PHCompositeNode)/
+         G4GEOPARAM_D2Vp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Vp (IO,PHG4BlockGeomContainer)
+      D2Xp (PHCompositeNode)/
+         G4GEOPARAM_D2Xp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Xp (IO,PHG4BlockGeomContainer)
+      D2X (PHCompositeNode)/
+         G4GEOPARAM_D2X (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2X (IO,PHG4BlockGeomContainer)
+      D2U (PHCompositeNode)/
+         G4GEOPARAM_D2U (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2U (IO,PHG4BlockGeomContainer)
+      D2Up (PHCompositeNode)/
+         G4GEOPARAM_D2Up (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Up (IO,PHG4BlockGeomContainer)
+      D3pVp (PHCompositeNode)/
+         G4GEOPARAM_D3pVp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pVp (IO,PHG4BlockGeomContainer)
+      D3pV (PHCompositeNode)/
+         G4GEOPARAM_D3pV (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pV (IO,PHG4BlockGeomContainer)
+      D3pXp (PHCompositeNode)/
+         G4GEOPARAM_D3pXp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pXp (IO,PHG4BlockGeomContainer)
+      D3pX (PHCompositeNode)/
+         G4GEOPARAM_D3pX (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pX (IO,PHG4BlockGeomContainer)
+      D3pUp (PHCompositeNode)/
+         G4GEOPARAM_D3pUp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pUp (IO,PHG4BlockGeomContainer)
+      D3pU (PHCompositeNode)/
+         G4GEOPARAM_D3pU (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pU (IO,PHG4BlockGeomContainer)
+      D3mVp (PHCompositeNode)/
+         G4GEOPARAM_D3mVp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mVp (IO,PHG4BlockGeomContainer)
+      D3mV (PHCompositeNode)/
+         G4GEOPARAM_D3mV (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mV (IO,PHG4BlockGeomContainer)
+      D3mXp (PHCompositeNode)/
+         G4GEOPARAM_D3mXp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mXp (IO,PHG4BlockGeomContainer)
+      D3mX (PHCompositeNode)/
+         G4GEOPARAM_D3mX (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mX (IO,PHG4BlockGeomContainer)
+      D3mUp (PHCompositeNode)/
+         G4GEOPARAM_D3mUp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mUp (IO,PHG4BlockGeomContainer)
+      D3mU (PHCompositeNode)/
+         G4GEOPARAM_D3mU (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mU (IO,PHG4BlockGeomContainer)
+      H1B (PHCompositeNode)/
+         G4GEOPARAM_H1B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1B (IO,PHG4BlockGeomContainer)
+      H1T (PHCompositeNode)/
+         G4GEOPARAM_H1T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1T (IO,PHG4BlockGeomContainer)
+      H1L (PHCompositeNode)/
+         G4GEOPARAM_H1L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1L (IO,PHG4BlockGeomContainer)
+      H1R (PHCompositeNode)/
+         G4GEOPARAM_H1R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1R (IO,PHG4BlockGeomContainer)
+      H2L (PHCompositeNode)/
+         G4GEOPARAM_H2L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2L (IO,PHG4BlockGeomContainer)
+      H2R (PHCompositeNode)/
+         G4GEOPARAM_H2R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2R (IO,PHG4BlockGeomContainer)
+      H2B (PHCompositeNode)/
+         G4GEOPARAM_H2B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2B (IO,PHG4BlockGeomContainer)
+      H2T (PHCompositeNode)/
+         G4GEOPARAM_H2T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2T (IO,PHG4BlockGeomContainer)
+      H3B (PHCompositeNode)/
+         G4GEOPARAM_H3B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H3B (IO,PHG4BlockGeomContainer)
+      H3T (PHCompositeNode)/
+         G4GEOPARAM_H3T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H3T (IO,PHG4BlockGeomContainer)
+      H4Y1L (PHCompositeNode)/
+         G4GEOPARAM_H4Y1L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y1L (IO,PHG4BlockGeomContainer)
+      H4Y1R (PHCompositeNode)/
+         G4GEOPARAM_H4Y1R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y1R (IO,PHG4BlockGeomContainer)
+      H4Y2L (PHCompositeNode)/
+         G4GEOPARAM_H4Y2L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y2L (IO,PHG4BlockGeomContainer)
+      H4Y2R (PHCompositeNode)/
+         G4GEOPARAM_H4Y2R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y2R (IO,PHG4BlockGeomContainer)
+      H4B (PHCompositeNode)/
+         G4GEOPARAM_H4B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4B (IO,PHG4BlockGeomContainer)
+      H4T (PHCompositeNode)/
+         G4GEOPARAM_H4T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4T (IO,PHG4BlockGeomContainer)
+      P1Y1 (PHCompositeNode)/
+         G4GEOPARAM_P1Y1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1Y1 (IO,PHG4BlockGeomContainer)
+      P1Y2 (PHCompositeNode)/
+         G4GEOPARAM_P1Y2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1Y2 (IO,PHG4BlockGeomContainer)
+      P1X1 (PHCompositeNode)/
+         G4GEOPARAM_P1X1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1X1 (IO,PHG4BlockGeomContainer)
+      P1X2 (PHCompositeNode)/
+         G4GEOPARAM_P1X2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1X2 (IO,PHG4BlockGeomContainer)
+      P2X1 (PHCompositeNode)/
+         G4GEOPARAM_P2X1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2X1 (IO,PHG4BlockGeomContainer)
+      P2X2 (PHCompositeNode)/
+         G4GEOPARAM_P2X2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2X2 (IO,PHG4BlockGeomContainer)
+      P2Y1 (PHCompositeNode)/
+         G4GEOPARAM_P2Y1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2Y1 (IO,PHG4BlockGeomContainer)
+      P2Y2 (PHCompositeNode)/
+         G4GEOPARAM_P2Y2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2Y2 (IO,PHG4BlockGeomContainer)
+      DP1TL (PHCompositeNode)/
+         G4GEOPARAM_DP1TL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1TL (IO,PHG4BlockGeomContainer)
+      DP1TR (PHCompositeNode)/
+         G4GEOPARAM_DP1TR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1TR (IO,PHG4BlockGeomContainer)
+      DP1BL (PHCompositeNode)/
+         G4GEOPARAM_DP1BL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1BL (IO,PHG4BlockGeomContainer)
+      DP1BR (PHCompositeNode)/
+         G4GEOPARAM_DP1BR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1BR (IO,PHG4BlockGeomContainer)
+      DP2TL (PHCompositeNode)/
+         G4GEOPARAM_DP2TL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2TL (IO,PHG4BlockGeomContainer)
+      DP2TR (PHCompositeNode)/
+         G4GEOPARAM_DP2TR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2TR (IO,PHG4BlockGeomContainer)
+      DP2BL (PHCompositeNode)/
+         G4GEOPARAM_DP2BL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2BL (IO,PHG4BlockGeomContainer)
+      DP2BR (PHCompositeNode)/
+         G4GEOPARAM_DP2BR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2BR (IO,PHG4BlockGeomContainer)
+      GEOMETRY_IO (IO,PHGeomIOTGeo)
+   PAR (PHCompositeNode)/
+      FIELD_MAP (PHDataNode)
+      G4GEO_Shielding1_0 (PHDataNode)
+      G4GEO_Shielding2_0 (PHDataNode)
+      G4GEO_Shielding3_0 (PHDataNode)
+      G4GEO_fmag_0 (PHDataNode)
+      G4GEO_kmag_0 (PHDataNode)
+      MUID_absorber (PHCompositeNode)/
+         G4GEO_MUID_absorber (PHDataNode)
+      D0U (PHCompositeNode)/
+         G4GEO_D0U (PHDataNode)
+      D0Up (PHCompositeNode)/
+         G4GEO_D0Up (PHDataNode)
+      D0X (PHCompositeNode)/
+         G4GEO_D0X (PHDataNode)
+      D0Xp (PHCompositeNode)/
+         G4GEO_D0Xp (PHDataNode)
+      D0V (PHCompositeNode)/
+         G4GEO_D0V (PHDataNode)
+      D0Vp (PHCompositeNode)/
+         G4GEO_D0Vp (PHDataNode)
+      D2V (PHCompositeNode)/
+         G4GEO_D2V (PHDataNode)
+      D2Vp (PHCompositeNode)/
+         G4GEO_D2Vp (PHDataNode)
+      D2Xp (PHCompositeNode)/
+         G4GEO_D2Xp (PHDataNode)
+      D2X (PHCompositeNode)/
+         G4GEO_D2X (PHDataNode)
+      D2U (PHCompositeNode)/
+         G4GEO_D2U (PHDataNode)
+      D2Up (PHCompositeNode)/
+         G4GEO_D2Up (PHDataNode)
+      D3pVp (PHCompositeNode)/
+         G4GEO_D3pVp (PHDataNode)
+      D3pV (PHCompositeNode)/
+         G4GEO_D3pV (PHDataNode)
+      D3pXp (PHCompositeNode)/
+         G4GEO_D3pXp (PHDataNode)
+      D3pX (PHCompositeNode)/
+         G4GEO_D3pX (PHDataNode)
+      D3pUp (PHCompositeNode)/
+         G4GEO_D3pUp (PHDataNode)
+      D3pU (PHCompositeNode)/
+         G4GEO_D3pU (PHDataNode)
+      D3mVp (PHCompositeNode)/
+         G4GEO_D3mVp (PHDataNode)
+      D3mV (PHCompositeNode)/
+         G4GEO_D3mV (PHDataNode)
+      D3mXp (PHCompositeNode)/
+         G4GEO_D3mXp (PHDataNode)
+      D3mX (PHCompositeNode)/
+         G4GEO_D3mX (PHDataNode)
+      D3mUp (PHCompositeNode)/
+         G4GEO_D3mUp (PHDataNode)
+      D3mU (PHCompositeNode)/
+         G4GEO_D3mU (PHDataNode)
+      H1B (PHCompositeNode)/
+         G4GEO_H1B (PHDataNode)
+      H1T (PHCompositeNode)/
+         G4GEO_H1T (PHDataNode)
+      H1L (PHCompositeNode)/
+         G4GEO_H1L (PHDataNode)
+      H1R (PHCompositeNode)/
+         G4GEO_H1R (PHDataNode)
+      H2L (PHCompositeNode)/
+         G4GEO_H2L (PHDataNode)
+      H2R (PHCompositeNode)/
+         G4GEO_H2R (PHDataNode)
+      H2B (PHCompositeNode)/
+         G4GEO_H2B (PHDataNode)
+      H2T (PHCompositeNode)/
+         G4GEO_H2T (PHDataNode)
+      H3B (PHCompositeNode)/
+         G4GEO_H3B (PHDataNode)
+      H3T (PHCompositeNode)/
+         G4GEO_H3T (PHDataNode)
+      H4Y1L (PHCompositeNode)/
+         G4GEO_H4Y1L (PHDataNode)
+      H4Y1R (PHCompositeNode)/
+         G4GEO_H4Y1R (PHDataNode)
+      H4Y2L (PHCompositeNode)/
+         G4GEO_H4Y2L (PHDataNode)
+      H4Y2R (PHCompositeNode)/
+         G4GEO_H4Y2R (PHDataNode)
+      H4B (PHCompositeNode)/
+         G4GEO_H4B (PHDataNode)
+      H4T (PHCompositeNode)/
+         G4GEO_H4T (PHDataNode)
+      P1Y1 (PHCompositeNode)/
+         G4GEO_P1Y1 (PHDataNode)
+      P1Y2 (PHCompositeNode)/
+         G4GEO_P1Y2 (PHDataNode)
+      P1X1 (PHCompositeNode)/
+         G4GEO_P1X1 (PHDataNode)
+      P1X2 (PHCompositeNode)/
+         G4GEO_P1X2 (PHDataNode)
+      P2X1 (PHCompositeNode)/
+         G4GEO_P2X1 (PHDataNode)
+      P2X2 (PHCompositeNode)/
+         G4GEO_P2X2 (PHDataNode)
+      P2Y1 (PHCompositeNode)/
+         G4GEO_P2Y1 (PHDataNode)
+      P2Y2 (PHCompositeNode)/
+         G4GEO_P2Y2 (PHDataNode)
+      DP1TL (PHCompositeNode)/
+         G4GEO_DP1TL (PHDataNode)
+      DP1TR (PHCompositeNode)/
+         G4GEO_DP1TR (PHDataNode)
+      DP1BL (PHCompositeNode)/
+         G4GEO_DP1BL (PHDataNode)
+      DP1BR (PHCompositeNode)/
+         G4GEO_DP1BR (PHDataNode)
+      DP2TL (PHCompositeNode)/
+         G4GEO_DP2TL (PHDataNode)
+      DP2TR (PHCompositeNode)/
+         G4GEO_DP2TR (PHDataNode)
+      DP2BL (PHCompositeNode)/
+         G4GEO_DP2BL (PHDataNode)
+      DP2BR (PHCompositeNode)/
+         G4GEO_DP2BR (PHDataNode)
+      G4GDML_CONFIG (PHDataNode)
+      GEOMETRY (PHDataNode)
+
+
+DEBUG: process_event: 336: Entering SQReco::process_event: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1676===============
+Layer 1 has 5 hits.
+Layer 2 has 6 hits.
+Layer 3 has 6 hits.
+Layer 4 has 6 hits.
+Layer 5 has 6 hits.
+Layer 6 has 5 hits.
+Layer 7 has 6 hits.
+Layer 8 has 2 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 6 hits.
+Layer 14 has 9 hits.
+Layer 15 has 5 hits.
+Layer 16 has 6 hits.
+Layer 17 has 6 hits.
+Layer 18 has 7 hits.
+Layer 19 has 6 hits.
+Layer 20 has 10 hits.
+Layer 21 has 2 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 7 hits.
+Layer 25 has 7 hits.
+Layer 26 has 4 hits.
+Layer 27 has 2 hits.
+Layer 28 has 2 hits.
+Layer 29 has 2 hits.
+Layer 30 has 2 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1676===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+244 : 31 : 12 : -0.94654 : nan : 1 : 0 : 0
+243 : 32 : 12 : -0.87334 : nan : 1 : 0 : 0
+246 : 34 : 15 : 31.977 : nan : 1 : 0 : 0
+250 : 35 : 16 : 75.168 : nan : 1 : 0 : 0
+249 : 36 : 7 : -39.104 : nan : 1 : 0 : 0
+253 : 36 : 9 : -13.739 : nan : 1 : 0 : 0
+252 : 36 : 10 : -1.0562 : nan : 1 : 0 : 0
+257 : 37 : 6 : -32.347 : nan : 1 : 0 : 0
+258 : 38 : 13 : 56.43 : nan : 1 : 0 : 0
+256 : 38 : 15 : 81.795 : nan : 1 : 0 : 0
+304 : 39 : 4 : -64.008 : nan : 1 : 0 : 0
+303 : 40 : 16 : 107.23 : nan : 1 : 0 : 0
+295 : 41 : 13 : 102.11 : nan : 1 : 0 : 0
+293 : 42 : 6 : -58.252 : nan : 1 : 0 : 0
+301 : 43 : 13 : 103.05 : nan : 1 : 0 : 0
+299 : 44 : 6 : -59.308 : nan : 1 : 0 : 0
+289 : 45 : 5 : -67.429 : nan : 1 : 0 : 0
+286 : 46 : 15 : 125.14 : nan : 1 : 0 : 0
+290 : 46 : 16 : 144.47 : nan : 1 : 0 : 0
+332 : 47 : 26 : -53.194 : 2.3502 : 1 : 0 : 0
+330 : 47 : 38 : 7.8674 : 2.3791 : 1 : 0 : 0
+331 : 48 : 38 : 5.3274 : 2.3502 : 1 : 0 : 0
+310 : 48 : 58 : 107.36 : 2.3446 : 1 : 0 : 0
+385 : 49 : 23 : -69.051 : 2.3715 : 1 : 0 : 0
+396 : 50 : 3 : -173.54 : 2.3811 : 1 : 0 : 0
+395 : 50 : 9 : -142.91 : 2.337 : 1 : 0 : 0
+384 : 50 : 23 : -71.591 : 2.3796 : 1 : 0 : 0
+342 : 50 : 62 : 127.34 : 2.377 : 1 : 0 : 0
+416 : 53 : 61 : 124.06 : 2.3026 : 1 : 0 : 0
+411 : 54 : 33 : -20.465 : 2.3673 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                8.4779e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 0, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 1
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1678===============
+Layer 1 has 10 hits.
+Layer 2 has 9 hits.
+Layer 3 has 7 hits.
+Layer 4 has 7 hits.
+Layer 5 has 10 hits.
+Layer 6 has 8 hits.
+Layer 7 has 4 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 8 hits.
+Layer 15 has 4 hits.
+Layer 16 has 3 hits.
+Layer 17 has 6 hits.
+Layer 18 has 4 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 5 hits.
+Layer 22 has 4 hits.
+Layer 23 has 6 hits.
+Layer 24 has 2 hits.
+Layer 25 has 3 hits.
+Layer 26 has 2 hits.
+Layer 27 has 1 hits.
+Layer 28 has 2 hits.
+Layer 29 has 1 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1678===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+519 : 31 : 13 : 6.056 : nan : 1 : 0 : 0
+520 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+521 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+524 : 35 : 8 : -26.292 : nan : 1 : 0 : 0
+525 : 36 : 13 : 36.991 : nan : 1 : 0 : 0
+529 : 37 : 13 : 56.43 : nan : 1 : 0 : 0
+528 : 37 : 14 : 69.113 : nan : 1 : 0 : 0
+527 : 38 : 4 : -57.712 : nan : 1 : 0 : 0
+561 : 39 : 16 : 107.23 : nan : 1 : 0 : 0
+563 : 40 : 1 : -106.82 : nan : 1 : 0 : 0
+562 : 40 : 2 : -92.548 : nan : 1 : 0 : 0
+555 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+554 : 42 : 11 : 57.548 : nan : 1 : 0 : 0
+559 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+558 : 44 : 11 : 56.492 : nan : 1 : 0 : 0
+550 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+551 : 46 : 2 : -126.15 : nan : 1 : 0 : 0
+576 : 47 : 39 : 12.947 : 2.3783 : 1 : 0 : 0
+577 : 48 : 39 : 10.407 : 2.375 : 1 : 0 : 0
+567 : 48 : 46 : 46.069 : 2.3784 : 1 : 0 : 0
+627 : 49 : 14 : -114.97 : 2.3595 : 1 : 0 : 0
+639 : 52 : 3 : -173.23 : 2.3807 : 1 : 0 : 0
+638 : 52 : 9 : -143.11 : 2.3812 : 1 : 0 : 0
+644 : 54 : 40 : 15.095 : 2.3685 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                8.8732e-06 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 1, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1679===============
+Layer 1 has 23 hits.
+Layer 2 has 27 hits.
+Layer 3 has 32 hits.
+Layer 4 has 26 hits.
+Layer 5 has 39 hits.
+Layer 6 has 35 hits.
+Layer 7 has 17 hits.
+Layer 8 has 12 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 10 hits.
+Layer 14 has 9 hits.
+Layer 15 has 13 hits.
+Layer 16 has 14 hits.
+Layer 17 has 9 hits.
+Layer 18 has 11 hits.
+Layer 19 has 18 hits.
+Layer 20 has 16 hits.
+Layer 21 has 6 hits.
+Layer 22 has 8 hits.
+Layer 23 has 7 hits.
+Layer 24 has 10 hits.
+Layer 25 has 18 hits.
+Layer 26 has 17 hits.
+Layer 27 has 13 hits.
+Layer 28 has 29 hits.
+Layer 29 has 19 hits.
+Layer 30 has 27 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1679===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 10
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 12
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:20
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+798 : 31 : 8 : -28.957 : nan : 1 : 0 : 0
+797 : 31 : 16 : 27.063 : nan : 1 : 0 : 0
+795 : 31 : 17 : 34.066 : nan : 1 : 0 : 0
+804 : 31 : 18 : 41.068 : nan : 1 : 0 : 0
+794 : 32 : 5 : -49.891 : nan : 1 : 0 : 0
+800 : 32 : 15 : 20.134 : nan : 1 : 0 : 0
+793 : 32 : 17 : 34.139 : nan : 1 : 0 : 0
+802 : 32 : 18 : 41.142 : nan : 1 : 0 : 0
+799 : 32 : 19 : 48.144 : nan : 1 : 0 : 0
+796 : 32 : 20 : 55.147 : nan : 1 : 0 : 0
+812 : 33 : 3 : -51.87 : nan : 1 : 0 : 0
+809 : 33 : 8 : -16.858 : nan : 1 : 0 : 0
+806 : 33 : 11 : 4.1497 : nan : 1 : 0 : 0
+815 : 33 : 12 : 11.152 : nan : 1 : 0 : 0
+808 : 33 : 14 : 25.157 : nan : 1 : 0 : 0
+814 : 33 : 16 : 39.162 : nan : 1 : 0 : 0
+810 : 33 : 17 : 46.165 : nan : 1 : 0 : 0
+817 : 34 : 2 : -59.055 : nan : 1 : 0 : 0
+813 : 34 : 3 : -52.053 : nan : 1 : 0 : 0
+807 : 34 : 9 : -10.038 : nan : 1 : 0 : 0
+819 : 35 : 8 : -26.292 : nan : 1 : 0 : 0
+821 : 35 : 11 : 11.756 : nan : 1 : 0 : 0
+820 : 35 : 12 : 24.438 : nan : 1 : 0 : 0
+826 : 37 : 6 : -32.347 : nan : 1 : 0 : 0
+824 : 37 : 11 : 31.065 : nan : 1 : 0 : 0
+825 : 38 : 10 : 18.383 : nan : 1 : 0 : 0
+827 : 38 : 13 : 56.43 : nan : 1 : 0 : 0
+823 : 38 : 16 : 94.478 : nan : 1 : 0 : 0
+928 : 39 : 2 : -92.548 : nan : 1 : 0 : 0
+923 : 39 : 8 : -6.928 : nan : 1 : 0 : 0
+926 : 39 : 11 : 35.882 : nan : 1 : 0 : 0
+922 : 39 : 12 : 50.152 : nan : 1 : 0 : 0
+921 : 39 : 16 : 107.23 : nan : 1 : 0 : 0
+932 : 40 : 1 : -106.82 : nan : 1 : 0 : 0
+925 : 40 : 4 : -64.008 : nan : 1 : 0 : 0
+931 : 40 : 9 : 7.342 : nan : 1 : 0 : 0
+930 : 40 : 10 : 21.612 : nan : 1 : 0 : 0
+929 : 40 : 14 : 78.692 : nan : 1 : 0 : 0
+927 : 40 : 15 : 92.962 : nan : 1 : 0 : 0
+924 : 40 : 16 : 107.23 : nan : 1 : 0 : 0
+917 : 41 : 9 : 9.4668 : nan : 1 : 0 : 0
+919 : 43 : 6 : -59.074 : nan : 1 : 0 : 0
+918 : 43 : 10 : 33.566 : nan : 1 : 0 : 0
+915 : 45 : 11 : 48.551 : nan : 1 : 0 : 0
+913 : 45 : 15 : 125.87 : nan : 1 : 0 : 0
+910 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+912 : 46 : 15 : 125.14 : nan : 1 : 0 : 0
+907 : 46 : 16 : 144.47 : nan : 1 : 0 : 0
+941 : 47 : 21 : -78.797 : 2.3419 : 1 : 0 : 0
+965 : 47 : 29 : -37.954 : 2.3175 : 1 : 0 : 0
+964 : 47 : 32 : -22.714 : 2.3802 : 1 : 0 : 0
+953 : 47 : 36 : -2.2926 : 2.3812 : 1 : 0 : 0
+942 : 48 : 21 : -81.337 : 2.3783 : 1 : 0 : 0
+963 : 48 : 29 : -40.494 : 2.3785 : 1 : 0 : 0
+961 : 48 : 30 : -35.414 : 2.3804 : 1 : 0 : 0
+959 : 48 : 37 : 0.24738 : 2.3497 : 1 : 0 : 0
+955 : 48 : 40 : 15.487 : 2.3743 : 1 : 0 : 0
+1060 : 50 : 22 : -76.671 : 2.3786 : 1 : 0 : 0
+984 : 50 : 72 : 178.3 : 2.3794 : 1 : 0 : 0
+1082 : 51 : 32 : -23.289 : 2.3812 : 1 : 0 : 0
+1083 : 52 : 32 : -25.829 : 2.3803 : 1 : 0 : 0
+1077 : 52 : 57 : 101.75 : 2.3812 : 1 : 0 : 0
+1099 : 53 : 34 : -12.845 : 2.3811 : 1 : 0 : 0
+1103 : 53 : 37 : 2.3949 : 2.3754 : 1 : 0 : 0
+1104 : 53 : 40 : 17.635 : 2.3794 : 1 : 0 : 0
+1118 : 54 : 20 : -87.115 : 2.3777 : 1 : 0 : 0
+1101 : 54 : 35 : -10.305 : 2.3716 : 1 : 0 : 0
+1098 : 54 : 37 : -0.14512 : 2.3665 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.1805e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 2, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1682===============
+Layer 1 has 37 hits.
+Layer 2 has 44 hits.
+Layer 3 has 31 hits.
+Layer 4 has 29 hits.
+Layer 5 has 38 hits.
+Layer 6 has 28 hits.
+Layer 7 has 20 hits.
+Layer 8 has 11 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 3 hits.
+Layer 14 has 4 hits.
+Layer 15 has 2 hits.
+Layer 16 has 2 hits.
+Layer 17 has 10 hits.
+Layer 18 has 5 hits.
+Layer 19 has 7 hits.
+Layer 20 has 9 hits.
+Layer 21 has 5 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 5 hits.
+Layer 25 has 15 hits.
+Layer 26 has 12 hits.
+Layer 27 has 11 hits.
+Layer 28 has 8 hits.
+Layer 29 has 17 hits.
+Layer 30 has 18 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1682===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 10
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:28
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+1477 : 31 : 12 : -0.94654 : nan : 1 : 0 : 0
+1472 : 31 : 13 : 6.056 : nan : 1 : 0 : 0
+1481 : 31 : 15 : 20.061 : nan : 1 : 0 : 0
+1476 : 31 : 16 : 27.063 : nan : 1 : 0 : 0
+1480 : 31 : 19 : 48.071 : nan : 1 : 0 : 0
+1475 : 31 : 20 : 55.073 : nan : 1 : 0 : 0
+1484 : 32 : 8 : -28.883 : nan : 1 : 0 : 0
+1482 : 32 : 10 : -14.878 : nan : 1 : 0 : 0
+1479 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+1478 : 32 : 15 : 20.134 : nan : 1 : 0 : 0
+1473 : 32 : 16 : 27.137 : nan : 1 : 0 : 0
+1492 : 33 : 7 : -23.86 : nan : 1 : 0 : 0
+1488 : 33 : 8 : -16.858 : nan : 1 : 0 : 0
+1486 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+1485 : 33 : 11 : 4.1497 : nan : 1 : 0 : 0
+1487 : 33 : 14 : 25.157 : nan : 1 : 0 : 0
+1489 : 34 : 17 : 45.982 : nan : 1 : 0 : 0
+1495 : 35 : 8 : -26.292 : nan : 1 : 0 : 0
+1494 : 35 : 10 : -0.92673 : nan : 1 : 0 : 0
+1499 : 37 : 11 : 31.065 : nan : 1 : 0 : 0
+1502 : 37 : 14 : 69.113 : nan : 1 : 0 : 0
+1498 : 37 : 15 : 81.795 : nan : 1 : 0 : 0
+1500 : 38 : 6 : -32.347 : nan : 1 : 0 : 0
+1497 : 38 : 11 : 31.065 : nan : 1 : 0 : 0
+1603 : 39 : 5 : -49.738 : nan : 1 : 0 : 0
+1595 : 39 : 8 : -6.928 : nan : 1 : 0 : 0
+1599 : 39 : 11 : 35.882 : nan : 1 : 0 : 0
+1602 : 39 : 13 : 64.422 : nan : 1 : 0 : 0
+1601 : 39 : 14 : 78.692 : nan : 1 : 0 : 0
+1598 : 39 : 15 : 92.962 : nan : 1 : 0 : 0
+1594 : 39 : 16 : 107.23 : nan : 1 : 0 : 0
+1597 : 40 : 12 : 50.152 : nan : 1 : 0 : 0
+1600 : 40 : 15 : 92.962 : nan : 1 : 0 : 0
+1596 : 40 : 16 : 107.23 : nan : 1 : 0 : 0
+1591 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+1593 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+1586 : 45 : 13 : 87.211 : nan : 1 : 0 : 0
+1588 : 46 : 15 : 125.14 : nan : 1 : 0 : 0
+1638 : 47 : 13 : -119.76 : 2.3711 : 1 : 0 : 0
+1636 : 47 : 29 : -37.954 : 2.3795 : 1 : 0 : 0
+1640 : 47 : 31 : -27.794 : 2.3702 : 1 : 0 : 0
+1635 : 47 : 34 : -12.453 : 2.3413 : 1 : 0 : 0
+1614 : 47 : 45 : 43.529 : 2.3341 : 1 : 0 : 0
+1613 : 47 : 46 : 48.609 : 2.3637 : 1 : 0 : 0
+1639 : 48 : 14 : -117.22 : 2.38 : 1 : 0 : 0
+1637 : 48 : 30 : -35.414 : 2.3761 : 1 : 0 : 0
+1641 : 48 : 32 : -25.254 : 2.3692 : 1 : 0 : 0
+1701 : 49 : 19 : -89.371 : 2.3775 : 1 : 0 : 0
+1699 : 49 : 38 : 7.4505 : 2.3384 : 1 : 0 : 0
+1655 : 49 : 54 : 89.141 : 2.3767 : 1 : 0 : 0
+1656 : 49 : 71 : 175.76 : 2.3753 : 1 : 0 : 0
+1717 : 50 : 5 : -163.38 : 2.3748 : 1 : 0 : 0
+1715 : 50 : 12 : -127.67 : 2.3495 : 1 : 0 : 0
+1700 : 50 : 40 : 15.071 : 2.3563 : 1 : 0 : 0
+1742 : 51 : 1 : -180.85 : 2.354 : 1 : 0 : 0
+1748 : 52 : 3 : -173.23 : 2.3283 : 1 : 0 : 0
+1776 : 53 : 11 : -130.37 : 2.3103 : 1 : 0 : 0
+1779 : 53 : 28 : -43.427 : 2.3517 : 1 : 0 : 0
+1768 : 53 : 37 : 2.3949 : 2.3332 : 1 : 0 : 0
+1764 : 53 : 38 : 7.4749 : 2.3668 : 1 : 0 : 0
+1767 : 53 : 53 : 83.675 : 2.2931 : 1 : 0 : 0
+1759 : 53 : 54 : 88.755 : 2.3768 : 1 : 0 : 0
+1765 : 54 : 38 : 4.9349 : 2.3671 : 1 : 0 : 0
+1766 : 54 : 39 : 10.015 : 2.3673 : 1 : 0 : 0
+1763 : 54 : 48 : 55.735 : 2.381 : 1 : 0 : 0
+1747 : 54 : 72 : 176.47 : 2.2849 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.0798e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 3, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1688===============
+Layer 1 has 27 hits.
+Layer 2 has 31 hits.
+Layer 3 has 23 hits.
+Layer 4 has 21 hits.
+Layer 5 has 20 hits.
+Layer 6 has 20 hits.
+Layer 7 has 5 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 11 hits.
+Layer 14 has 17 hits.
+Layer 15 has 10 hits.
+Layer 16 has 8 hits.
+Layer 17 has 9 hits.
+Layer 18 has 10 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 2 hits.
+Layer 22 has 4 hits.
+Layer 23 has 4 hits.
+Layer 24 has 4 hits.
+Layer 25 has 4 hits.
+Layer 26 has 2 hits.
+Layer 27 has 3 hits.
+Layer 28 has 5 hits.
+Layer 29 has 6 hits.
+Layer 30 has 9 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1688===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:32
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+2126 : 31 : 15 : 20.061 : nan : 1 : 0 : 0
+2123 : 31 : 20 : 55.073 : nan : 1 : 0 : 0
+2121 : 32 : 13 : 6.1292 : nan : 1 : 0 : 0
+2127 : 32 : 14 : 13.132 : nan : 1 : 0 : 0
+2128 : 33 : 11 : 4.1497 : nan : 1 : 0 : 0
+2130 : 34 : 14 : 24.975 : nan : 1 : 0 : 0
+2134 : 35 : 9 : -13.609 : nan : 1 : 0 : 0
+2133 : 35 : 11 : 11.756 : nan : 1 : 0 : 0
+2137 : 37 : 13 : 56.43 : nan : 1 : 0 : 0
+2136 : 38 : 11 : 31.065 : nan : 1 : 0 : 0
+2221 : 39 : 13 : 64.422 : nan : 1 : 0 : 0
+2220 : 39 : 14 : 78.692 : nan : 1 : 0 : 0
+2219 : 40 : 12 : 50.152 : nan : 1 : 0 : 0
+2198 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+2194 : 41 : 8 : -13.693 : nan : 1 : 0 : 0
+2202 : 41 : 9 : 9.4668 : nan : 1 : 0 : 0
+2200 : 41 : 10 : 32.627 : nan : 1 : 0 : 0
+2195 : 41 : 11 : 55.787 : nan : 1 : 0 : 0
+2205 : 42 : 7 : -35.092 : nan : 1 : 0 : 0
+2204 : 42 : 13 : 103.87 : nan : 1 : 0 : 0
+2212 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+2210 : 43 : 8 : -12.754 : nan : 1 : 0 : 0
+2218 : 43 : 9 : 10.406 : nan : 1 : 0 : 0
+2214 : 43 : 10 : 33.566 : nan : 1 : 0 : 0
+2215 : 44 : 6 : -59.308 : nan : 1 : 0 : 0
+2185 : 45 : 10 : 29.221 : nan : 1 : 0 : 0
+2181 : 45 : 11 : 48.551 : nan : 1 : 0 : 0
+2188 : 45 : 13 : 87.211 : nan : 1 : 0 : 0
+2184 : 46 : 10 : 28.495 : nan : 1 : 0 : 0
+2180 : 46 : 11 : 47.825 : nan : 1 : 0 : 0
+2178 : 46 : 12 : 67.155 : nan : 1 : 0 : 0
+2192 : 46 : 13 : 86.485 : nan : 1 : 0 : 0
+2277 : 47 : 27 : -48.114 : 2.377 : 1 : 0 : 0
+2274 : 47 : 36 : -2.2926 : 2.292 : 1 : 0 : 0
+2280 : 47 : 37 : 2.7874 : 2.3713 : 1 : 0 : 0
+2244 : 47 : 47 : 53.689 : 2.359 : 1 : 0 : 0
+2243 : 47 : 60 : 120.06 : 2.3795 : 1 : 0 : 0
+2279 : 48 : 30 : -35.414 : 2.3051 : 1 : 0 : 0
+2281 : 48 : 33 : -20.073 : 2.3708 : 1 : 0 : 0
+2242 : 48 : 42 : 25.749 : 2.3784 : 1 : 0 : 0
+2304 : 49 : 64 : 140.04 : 2.377 : 1 : 0 : 0
+2302 : 49 : 65 : 145.28 : 2.3785 : 1 : 0 : 0
+2370 : 50 : 1 : -183.7 : 2.3775 : 1 : 0 : 0
+2373 : 50 : 3 : -173.54 : 2.3775 : 1 : 0 : 0
+2303 : 50 : 67 : 152.9 : 2.3775 : 1 : 0 : 0
+2300 : 50 : 70 : 168.14 : 2.3812 : 1 : 0 : 0
+2401 : 51 : 45 : 42.57 : 2.38 : 1 : 0 : 0
+2376 : 51 : 64 : 139.85 : 2.3776 : 1 : 0 : 0
+2375 : 51 : 67 : 154.78 : 2.3496 : 1 : 0 : 0
+2405 : 52 : 1 : -183.39 : 2.3006 : 1 : 0 : 0
+2372 : 52 : 58 : 106.83 : 2.3812 : 1 : 0 : 0
+2377 : 52 : 61 : 122.07 : 2.3801 : 1 : 0 : 0
+2378 : 52 : 64 : 137.31 : 2.3801 : 1 : 0 : 0
+2439 : 53 : 39 : 12.555 : 2.3722 : 1 : 0 : 0
+2437 : 53 : 40 : 17.635 : 2.3765 : 1 : 0 : 0
+2443 : 53 : 43 : 32.875 : 2.2896 : 1 : 0 : 0
+2431 : 53 : 46 : 48.115 : 2.3673 : 1 : 0 : 0
+2436 : 54 : 39 : 10.015 : 2.3717 : 1 : 0 : 0
+2438 : 54 : 41 : 20.175 : 2.3177 : 1 : 0 : 0
+2440 : 54 : 42 : 25.255 : 2.3475 : 1 : 0 : 0
+2425 : 54 : 48 : 55.735 : 2.3734 : 1 : 0 : 0
+2423 : 54 : 54 : 86.215 : 2.3765 : 1 : 0 : 0
+2408 : 54 : 71 : 171.39 : 2.3695 : 1 : 0 : 0
+2406 : 54 : 72 : 176.47 : 2.3717 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.0318e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 4, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1689===============
+Layer 1 has 35 hits.
+Layer 2 has 28 hits.
+Layer 3 has 28 hits.
+Layer 4 has 33 hits.
+Layer 5 has 31 hits.
+Layer 6 has 28 hits.
+Layer 7 has 7 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 24 hits.
+Layer 14 has 18 hits.
+Layer 15 has 11 hits.
+Layer 16 has 17 hits.
+Layer 17 has 15 hits.
+Layer 18 has 20 hits.
+Layer 19 has 11 hits.
+Layer 20 has 12 hits.
+Layer 21 has 13 hits.
+Layer 22 has 10 hits.
+Layer 23 has 8 hits.
+Layer 24 has 8 hits.
+Layer 25 has 14 hits.
+Layer 26 has 13 hits.
+Layer 27 has 12 hits.
+Layer 28 has 4 hits.
+Layer 29 has 12 hits.
+Layer 30 has 15 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1689===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:40
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+2693 : 31 : 12 : -0.94654 : nan : 1 : 0 : 0
+2695 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+2699 : 32 : 20 : 55.147 : nan : 1 : 0 : 0
+2707 : 33 : 13 : 18.155 : nan : 1 : 0 : 0
+2709 : 34 : 7 : -24.043 : nan : 1 : 0 : 0
+2712 : 34 : 8 : -17.04 : nan : 1 : 0 : 0
+2713 : 34 : 11 : 3.967 : nan : 1 : 0 : 0
+2715 : 35 : 9 : -13.609 : nan : 1 : 0 : 0
+2714 : 36 : 10 : -1.0562 : nan : 1 : 0 : 0
+2717 : 37 : 6 : -32.347 : nan : 1 : 0 : 0
+2716 : 37 : 12 : 43.748 : nan : 1 : 0 : 0
+2718 : 38 : 5 : -45.03 : nan : 1 : 0 : 0
+2809 : 39 : 13 : 64.422 : nan : 1 : 0 : 0
+2808 : 40 : 3 : -78.278 : nan : 1 : 0 : 0
+2801 : 41 : 8 : -13.693 : nan : 1 : 0 : 0
+2802 : 42 : 9 : 11.228 : nan : 1 : 0 : 0
+2805 : 43 : 8 : -12.754 : nan : 1 : 0 : 0
+2806 : 44 : 9 : 10.172 : nan : 1 : 0 : 0
+2799 : 45 : 13 : 87.211 : nan : 1 : 0 : 0
+2796 : 46 : 3 : -106.82 : nan : 1 : 0 : 0
+2858 : 47 : 26 : -53.194 : 2.3651 : 1 : 0 : 0
+2854 : 47 : 27 : -48.114 : 2.3744 : 1 : 0 : 0
+2848 : 47 : 31 : -27.794 : 2.3795 : 1 : 0 : 0
+2816 : 47 : 43 : 33.369 : 2.3673 : 1 : 0 : 0
+2815 : 47 : 49 : 63.951 : 2.3796 : 1 : 0 : 0
+2857 : 48 : 19 : -91.497 : 2.3795 : 1 : 0 : 0
+2855 : 48 : 26 : -55.734 : 2.3795 : 1 : 0 : 0
+2845 : 48 : 34 : -14.993 : 2.3806 : 1 : 0 : 0
+2820 : 48 : 41 : 20.669 : 2.3489 : 1 : 0 : 0
+2818 : 48 : 45 : 40.989 : 2.3785 : 1 : 0 : 0
+2821 : 48 : 47 : 51.149 : 2.3745 : 1 : 0 : 0
+3015 : 49 : 8 : -145.6 : 2.3721 : 1 : 0 : 0
+3013 : 49 : 14 : -114.97 : 2.3607 : 1 : 0 : 0
+3022 : 49 : 15 : -109.89 : 2.3377 : 1 : 0 : 0
+3020 : 49 : 16 : -104.81 : 2.3692 : 1 : 0 : 0
+2985 : 49 : 22 : -74.131 : 2.3784 : 1 : 0 : 0
+2978 : 49 : 25 : -58.687 : 2.3724 : 1 : 0 : 0
+2885 : 49 : 68 : 160.52 : 2.3604 : 1 : 0 : 0
+3021 : 50 : 1 : -183.7 : 2.3629 : 1 : 0 : 0
+3016 : 50 : 3 : -173.54 : 2.3775 : 1 : 0 : 0
+3017 : 50 : 8 : -148.14 : 2.3501 : 1 : 0 : 0
+3014 : 50 : 14 : -117.51 : 2.3813 : 1 : 0 : 0
+2981 : 50 : 22 : -76.671 : 2.3784 : 1 : 0 : 0
+2887 : 50 : 70 : 168.14 : 2.3769 : 1 : 0 : 0
+3057 : 51 : 1 : -180.85 : 2.3812 : 1 : 0 : 0
+3055 : 51 : 5 : -160.53 : 2.3777 : 1 : 0 : 0
+3035 : 51 : 17 : -99.727 : 2.3802 : 1 : 0 : 0
+3029 : 51 : 39 : 11.669 : 2.3812 : 1 : 0 : 0
+3019 : 51 : 62 : 129.69 : 2.3812 : 1 : 0 : 0
+3056 : 52 : 5 : -163.07 : 2.3801 : 1 : 0 : 0
+3040 : 52 : 13 : -122.79 : 2.38 : 1 : 0 : 0
+3049 : 52 : 16 : -107.55 : 2.3801 : 1 : 0 : 0
+3036 : 52 : 18 : -97.187 : 2.3573 : 1 : 0 : 0
+3027 : 52 : 46 : 45.11 : 2.3812 : 1 : 0 : 0
+3079 : 53 : 34 : -12.845 : 2.3812 : 1 : 0 : 0
+3078 : 53 : 41 : 22.715 : 2.3772 : 1 : 0 : 0
+3083 : 53 : 46 : 48.115 : 2.3695 : 1 : 0 : 0
+3081 : 53 : 52 : 78.595 : 2.3812 : 1 : 0 : 0
+3080 : 54 : 47 : 50.655 : 2.3798 : 1 : 0 : 0
+3082 : 54 : 49 : 60.815 : 2.3096 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.076e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 5, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1694===============
+Layer 1 has 19 hits.
+Layer 2 has 22 hits.
+Layer 3 has 21 hits.
+Layer 4 has 17 hits.
+Layer 5 has 17 hits.
+Layer 6 has 18 hits.
+Layer 7 has 6 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 7 hits.
+Layer 14 has 5 hits.
+Layer 15 has 8 hits.
+Layer 16 has 10 hits.
+Layer 17 has 7 hits.
+Layer 18 has 5 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 7 hits.
+Layer 22 has 5 hits.
+Layer 23 has 5 hits.
+Layer 24 has 8 hits.
+Layer 25 has 5 hits.
+Layer 26 has 3 hits.
+Layer 27 has 4 hits.
+Layer 28 has 3 hits.
+Layer 29 has 2 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1694===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:67
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+3353 : 31 : 13 : 6.056 : nan : 1 : 0 : 0
+3355 : 31 : 19 : 48.071 : nan : 1 : 0 : 0
+3354 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+3356 : 32 : 18 : 41.142 : nan : 1 : 0 : 0
+3362 : 33 : 13 : 18.155 : nan : 1 : 0 : 0
+3361 : 33 : 20 : 67.172 : nan : 1 : 0 : 0
+3359 : 34 : 14 : 24.975 : nan : 1 : 0 : 0
+3357 : 34 : 16 : 38.98 : nan : 1 : 0 : 0
+3365 : 35 : 9 : -13.609 : nan : 1 : 0 : 0
+3364 : 36 : 15 : 62.356 : nan : 1 : 0 : 0
+3369 : 37 : 11 : 31.065 : nan : 1 : 0 : 0
+3368 : 37 : 12 : 43.748 : nan : 1 : 0 : 0
+3367 : 38 : 4 : -57.712 : nan : 1 : 0 : 0
+3417 : 39 : 13 : 64.422 : nan : 1 : 0 : 0
+3416 : 40 : 2 : -92.548 : nan : 1 : 0 : 0
+3408 : 41 : 8 : -13.693 : nan : 1 : 0 : 0
+3410 : 42 : 13 : 103.87 : nan : 1 : 0 : 0
+3411 : 43 : 8 : -12.754 : nan : 1 : 0 : 0
+3412 : 44 : 13 : 102.81 : nan : 1 : 0 : 0
+3402 : 45 : 12 : 67.881 : nan : 1 : 0 : 0
+3405 : 46 : 3 : -106.82 : nan : 1 : 0 : 0
+3456 : 47 : 20 : -83.877 : 2.3081 : 1 : 0 : 0
+3466 : 47 : 29 : -37.954 : 2.31 : 1 : 0 : 0
+3461 : 47 : 30 : -32.874 : 2.3743 : 1 : 0 : 0
+3470 : 47 : 31 : -27.794 : 2.3651 : 1 : 0 : 0
+3448 : 47 : 35 : -7.3726 : 2.29 : 1 : 0 : 0
+3465 : 47 : 39 : 12.947 : 2.3758 : 1 : 0 : 0
+3432 : 47 : 43 : 33.369 : 2.3795 : 1 : 0 : 0
+3431 : 47 : 46 : 48.609 : 2.3795 : 1 : 0 : 0
+3434 : 47 : 64 : 140.38 : 2.2604 : 1 : 0 : 0
+3433 : 47 : 65 : 145.69 : 2.2812 : 1 : 0 : 0
+3464 : 48 : 21 : -81.337 : 2.3795 : 1 : 0 : 0
+3468 : 48 : 24 : -66.097 : 2.3795 : 1 : 0 : 0
+3462 : 48 : 25 : -60.814 : 2.3761 : 1 : 0 : 0
+3454 : 48 : 27 : -50.654 : 2.3795 : 1 : 0 : 0
+3467 : 48 : 29 : -40.494 : 2.2618 : 1 : 0 : 0
+3463 : 48 : 30 : -35.414 : 2.3698 : 1 : 0 : 0
+3459 : 48 : 36 : -4.8326 : 2.3798 : 1 : 0 : 0
+3451 : 48 : 37 : 0.24738 : 2.3795 : 1 : 0 : 0
+3460 : 48 : 40 : 15.487 : 2.3658 : 1 : 0 : 0
+3435 : 48 : 54 : 86.811 : 2.373 : 1 : 0 : 0
+3437 : 48 : 56 : 96.971 : 2.3643 : 1 : 0 : 0
+3430 : 48 : 66 : 148.23 : 2.3795 : 1 : 0 : 0
+3552 : 49 : 2 : -176.08 : 2.3764 : 1 : 0 : 0
+3557 : 49 : 4 : -165.92 : 2.3725 : 1 : 0 : 0
+3556 : 49 : 12 : -125.13 : 2.3709 : 1 : 0 : 0
+3482 : 49 : 62 : 129.88 : 2.3726 : 1 : 0 : 0
+3481 : 49 : 69 : 165.6 : 2.3694 : 1 : 0 : 0
+3484 : 49 : 70 : 170.68 : 2.2852 : 1 : 0 : 0
+3479 : 49 : 72 : 180.84 : 2.3813 : 1 : 0 : 0
+3555 : 50 : 15 : -112.43 : 2.3734 : 1 : 0 : 0
+3536 : 50 : 18 : -96.991 : 2.3045 : 1 : 0 : 0
+3537 : 50 : 21 : -81.751 : 2.3647 : 1 : 0 : 0
+3483 : 50 : 55 : 91.681 : 2.3761 : 1 : 0 : 0
+3596 : 51 : 1 : -180.85 : 2.3801 : 1 : 0 : 0
+3597 : 51 : 2 : -175.77 : 2.3796 : 1 : 0 : 0
+3589 : 51 : 5 : -160.53 : 2.3772 : 1 : 0 : 0
+3574 : 51 : 17 : -99.727 : 2.3268 : 1 : 0 : 0
+3553 : 51 : 69 : 164.94 : 2.3791 : 1 : 0 : 0
+3558 : 51 : 72 : 180.18 : 2.3773 : 1 : 0 : 0
+3590 : 52 : 1 : -183.39 : 2.3774 : 1 : 0 : 0
+3591 : 52 : 8 : -147.83 : 2.3813 : 1 : 0 : 0
+3578 : 52 : 9 : -143.11 : 2.3749 : 1 : 0 : 0
+3579 : 52 : 16 : -107.55 : 2.3168 : 1 : 0 : 0
+3575 : 52 : 19 : -92.107 : 2.3812 : 1 : 0 : 0
+3576 : 52 : 21 : -81.947 : 2.3795 : 1 : 0 : 0
+3565 : 52 : 54 : 86.099 : 2.3777 : 1 : 0 : 0
+3554 : 52 : 57 : 101.75 : 2.3795 : 1 : 0 : 0
+3632 : 53 : 22 : -74.415 : 2.3765 : 1 : 0 : 0
+3640 : 53 : 28 : -43.427 : 2.3706 : 1 : 0 : 0
+3620 : 53 : 35 : -7.7651 : 2.3501 : 1 : 0 : 0
+3617 : 53 : 36 : -2.6851 : 2.369 : 1 : 0 : 0
+3611 : 53 : 38 : 7.4749 : 2.377 : 1 : 0 : 0
+3618 : 53 : 41 : 22.715 : 2.3487 : 1 : 0 : 0
+3612 : 53 : 44 : 37.955 : 2.3723 : 1 : 0 : 0
+3609 : 53 : 45 : 43.035 : 2.3736 : 1 : 0 : 0
+3585 : 53 : 65 : 143.45 : 2.3766 : 1 : 0 : 0
+3646 : 54 : 6 : -157.66 : 2.3423 : 1 : 0 : 0
+3644 : 54 : 26 : -56.127 : 2.3668 : 1 : 0 : 0
+3626 : 54 : 29 : -40.887 : 2.3777 : 1 : 0 : 0
+3619 : 54 : 34 : -15.385 : 2.2719 : 1 : 0 : 0
+3621 : 54 : 39 : 10.015 : 2.3096 : 1 : 0 : 0
+3615 : 54 : 42 : 25.255 : 2.3638 : 1 : 0 : 0
+3622 : 54 : 44 : 35.415 : 2.3523 : 1 : 0 : 0
+3613 : 54 : 50 : 65.895 : 2.3538 : 1 : 0 : 0
+3614 : 54 : 54 : 86.215 : 2.361 : 1 : 0 : 0
+3610 : 54 : 58 : 106.28 : 2.3731 : 1 : 0 : 0
+3587 : 54 : 65 : 140.91 : 2.266 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.1753e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 6, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1698===============
+Layer 1 has 29 hits.
+Layer 2 has 31 hits.
+Layer 3 has 27 hits.
+Layer 4 has 33 hits.
+Layer 5 has 22 hits.
+Layer 6 has 19 hits.
+Layer 7 has 4 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 11 hits.
+Layer 15 has 12 hits.
+Layer 16 has 11 hits.
+Layer 17 has 10 hits.
+Layer 18 has 15 hits.
+Layer 19 has 15 hits.
+Layer 20 has 16 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 15 hits.
+Layer 24 has 21 hits.
+Layer 25 has 13 hits.
+Layer 26 has 9 hits.
+Layer 27 has 11 hits.
+Layer 28 has 13 hits.
+Layer 29 has 9 hits.
+Layer 30 has 12 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1698===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:33
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+3828 : 31 : 12 : -0.94654 : nan : 1 : 0 : 0
+3830 : 31 : 15 : 20.061 : nan : 1 : 0 : 0
+3829 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+3831 : 32 : 15 : 20.134 : nan : 1 : 0 : 0
+3834 : 33 : 8 : -16.858 : nan : 1 : 0 : 0
+3833 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+3836 : 33 : 11 : 4.1497 : nan : 1 : 0 : 0
+3835 : 34 : 13 : 17.972 : nan : 1 : 0 : 0
+3838 : 35 : 7 : -38.974 : nan : 1 : 0 : 0
+3840 : 35 : 9 : -13.609 : nan : 1 : 0 : 0
+3837 : 36 : 13 : 36.991 : nan : 1 : 0 : 0
+3843 : 36 : 19 : 113.09 : nan : 1 : 0 : 0
+3849 : 37 : 13 : 56.43 : nan : 1 : 0 : 0
+3846 : 37 : 15 : 81.795 : nan : 1 : 0 : 0
+3845 : 38 : 4 : -57.712 : nan : 1 : 0 : 0
+3848 : 38 : 9 : 5.7004 : nan : 1 : 0 : 0
+3847 : 38 : 13 : 56.43 : nan : 1 : 0 : 0
+3946 : 39 : 15 : 92.962 : nan : 1 : 0 : 0
+3949 : 40 : 1 : -106.82 : nan : 1 : 0 : 0
+3947 : 40 : 15 : 92.962 : nan : 1 : 0 : 0
+3935 : 41 : 6 : -60.013 : nan : 1 : 0 : 0
+3930 : 41 : 8 : -13.693 : nan : 1 : 0 : 0
+3937 : 41 : 9 : 9.4668 : nan : 1 : 0 : 0
+3933 : 42 : 11 : 57.548 : nan : 1 : 0 : 0
+3942 : 43 : 6 : -59.074 : nan : 1 : 0 : 0
+3941 : 43 : 8 : -12.754 : nan : 1 : 0 : 0
+3945 : 43 : 9 : 10.406 : nan : 1 : 0 : 0
+3939 : 44 : 12 : 79.652 : nan : 1 : 0 : 0
+3928 : 45 : 14 : 106.54 : nan : 1 : 0 : 0
+3923 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+3926 : 46 : 2 : -126.15 : nan : 1 : 0 : 0
+3925 : 46 : 14 : 105.81 : nan : 1 : 0 : 0
+3984 : 47 : 20 : -83.877 : 2.3686 : 1 : 0 : 0
+3976 : 47 : 26 : -53.194 : 2.3243 : 1 : 0 : 0
+3972 : 47 : 33 : -17.533 : 2.3746 : 1 : 0 : 0
+3959 : 47 : 47 : 53.689 : 2.3594 : 1 : 0 : 0
+3956 : 47 : 49 : 63.951 : 2.3806 : 1 : 0 : 0
+3978 : 48 : 20 : -86.417 : 2.3744 : 1 : 0 : 0
+3979 : 48 : 24 : -66.097 : 2.2759 : 1 : 0 : 0
+3960 : 48 : 42 : 25.749 : 2.3795 : 1 : 0 : 0
+3961 : 48 : 47 : 51.149 : 2.3505 : 1 : 0 : 0
+4123 : 49 : 14 : -114.97 : 2.326 : 1 : 0 : 0
+4003 : 49 : 64 : 140.04 : 2.3726 : 1 : 0 : 0
+4001 : 49 : 67 : 155.44 : 2.3585 : 1 : 0 : 0
+4124 : 50 : 14 : -117.51 : 2.373 : 1 : 0 : 0
+4005 : 50 : 50 : 66.281 : 2.3724 : 1 : 0 : 0
+4153 : 51 : 2 : -175.77 : 2.3813 : 1 : 0 : 0
+4149 : 51 : 8 : -145.29 : 2.3326 : 1 : 0 : 0
+4145 : 51 : 14 : -115.17 : 2.3764 : 1 : 0 : 0
+4133 : 51 : 50 : 68.319 : 2.3174 : 1 : 0 : 0
+4127 : 51 : 59 : 114.45 : 2.3006 : 1 : 0 : 0
+4128 : 51 : 61 : 124.61 : 2.3496 : 1 : 0 : 0
+4131 : 51 : 63 : 134.77 : 2.3089 : 1 : 0 : 0
+4150 : 52 : 2 : -178.31 : 2.274 : 1 : 0 : 0
+4152 : 52 : 14 : -117.71 : 2.3801 : 1 : 0 : 0
+4154 : 52 : 15 : -112.63 : 2.3261 : 1 : 0 : 0
+4136 : 52 : 36 : -6.1106 : 2.3336 : 1 : 0 : 0
+4129 : 52 : 66 : 147.16 : 2.3597 : 1 : 0 : 0
+4125 : 52 : 68 : 157.32 : 2.3801 : 1 : 0 : 0
+4126 : 52 : 71 : 172.56 : 2.3781 : 1 : 0 : 0
+4132 : 52 : 72 : 177.64 : 2.3622 : 1 : 0 : 0
+4188 : 53 : 22 : -74.415 : 2.3759 : 1 : 0 : 0
+4169 : 53 : 42 : 27.795 : 2.3665 : 1 : 0 : 0
+4170 : 54 : 43 : 30.335 : 2.3668 : 1 : 0 : 0
+4171 : 54 : 48 : 55.735 : 2.3712 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 2, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.1087e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 7, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 8
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1703===============
+Layer 1 has 48 hits.
+Layer 2 has 47 hits.
+Layer 3 has 40 hits.
+Layer 4 has 39 hits.
+Layer 5 has 46 hits.
+Layer 6 has 43 hits.
+Layer 7 has 14 hits.
+Layer 8 has 6 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 17 hits.
+Layer 14 has 18 hits.
+Layer 15 has 19 hits.
+Layer 16 has 12 hits.
+Layer 17 has 13 hits.
+Layer 18 has 20 hits.
+Layer 19 has 21 hits.
+Layer 20 has 20 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 17 hits.
+Layer 24 has 13 hits.
+Layer 25 has 22 hits.
+Layer 26 has 24 hits.
+Layer 27 has 14 hits.
+Layer 28 has 20 hits.
+Layer 29 has 27 hits.
+Layer 30 has 25 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1703===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:59
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+4497 : 31 : 11 : -7.949 : nan : 1 : 0 : 0
+4500 : 32 : 6 : -42.888 : nan : 1 : 0 : 0
+4495 : 32 : 19 : 48.144 : nan : 1 : 0 : 0
+4507 : 33 : 4 : -44.868 : nan : 1 : 0 : 0
+4513 : 33 : 8 : -16.858 : nan : 1 : 0 : 0
+4511 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+4510 : 34 : 10 : -3.0355 : nan : 1 : 0 : 0
+4502 : 34 : 11 : 3.967 : nan : 1 : 0 : 0
+4514 : 36 : 6 : -51.786 : nan : 1 : 0 : 0
+4515 : 36 : 9 : -13.739 : nan : 1 : 0 : 0
+4518 : 37 : 6 : -32.347 : nan : 1 : 0 : 0
+4516 : 38 : 4 : -57.712 : nan : 1 : 0 : 0
+4640 : 39 : 4 : -64.008 : nan : 1 : 0 : 0
+4643 : 40 : 4 : -64.008 : nan : 1 : 0 : 0
+4635 : 41 : 13 : 102.11 : nan : 1 : 0 : 0
+4632 : 42 : 8 : -11.932 : nan : 1 : 0 : 0
+4637 : 44 : 8 : -12.988 : nan : 1 : 0 : 0
+4636 : 44 : 16 : 172.29 : nan : 1 : 0 : 0
+4630 : 45 : 5 : -67.429 : nan : 1 : 0 : 0
+4629 : 46 : 5 : -68.155 : nan : 1 : 0 : 0
+4682 : 47 : 21 : -78.797 : 2.3795 : 1 : 0 : 0
+4679 : 47 : 26 : -53.194 : 2.3793 : 1 : 0 : 0
+4687 : 47 : 30 : -32.874 : 2.3702 : 1 : 0 : 0
+4677 : 47 : 38 : 7.8674 : 2.3692 : 1 : 0 : 0
+4685 : 47 : 39 : 12.947 : 2.2682 : 1 : 0 : 0
+4663 : 47 : 42 : 28.289 : 2.2752 : 1 : 0 : 0
+4661 : 47 : 53 : 84.271 : 2.2765 : 1 : 0 : 0
+4660 : 47 : 69 : 166.01 : 2.3676 : 1 : 0 : 0
+4683 : 48 : 18 : -96.577 : 2.339 : 1 : 0 : 0
+4684 : 48 : 24 : -66.097 : 2.2759 : 1 : 0 : 0
+4686 : 48 : 37 : 0.24738 : 2.3563 : 1 : 0 : 0
+4662 : 48 : 51 : 71.571 : 2.292 : 1 : 0 : 0
+4832 : 49 : 12 : -125.13 : 2.3695 : 1 : 0 : 0
+4833 : 49 : 13 : -120.05 : 2.3692 : 1 : 0 : 0
+4843 : 49 : 15 : -109.89 : 2.3716 : 1 : 0 : 0
+4815 : 49 : 24 : -63.971 : 2.3793 : 1 : 0 : 0
+4817 : 49 : 44 : 37.981 : 2.3741 : 1 : 0 : 0
+4713 : 49 : 61 : 124.8 : 2.3588 : 1 : 0 : 0
+4710 : 49 : 67 : 155.44 : 2.3731 : 1 : 0 : 0
+4714 : 49 : 69 : 165.6 : 2.3692 : 1 : 0 : 0
+4711 : 49 : 70 : 170.68 : 2.373 : 1 : 0 : 0
+4849 : 50 : 4 : -168.46 : 2.3771 : 1 : 0 : 0
+4846 : 50 : 5 : -163.38 : 2.3495 : 1 : 0 : 0
+4837 : 50 : 7 : -153.22 : 2.3765 : 1 : 0 : 0
+4834 : 50 : 13 : -122.59 : 2.3724 : 1 : 0 : 0
+4818 : 50 : 45 : 40.521 : 2.3813 : 1 : 0 : 0
+4715 : 50 : 67 : 152.9 : 2.3714 : 1 : 0 : 0
+4712 : 50 : 68 : 157.98 : 2.3775 : 1 : 0 : 0
+4886 : 51 : 1 : -180.85 : 2.3812 : 1 : 0 : 0
+4890 : 51 : 3 : -170.69 : 2.3795 : 1 : 0 : 0
+4877 : 51 : 5 : -160.53 : 2.3799 : 1 : 0 : 0
+4855 : 51 : 33 : -18.811 : 2.3496 : 1 : 0 : 0
+4860 : 51 : 38 : 6.5894 : 2.3813 : 1 : 0 : 0
+4857 : 51 : 54 : 88.639 : 2.3018 : 1 : 0 : 0
+4830 : 51 : 57 : 104.29 : 2.3772 : 1 : 0 : 0
+4841 : 51 : 59 : 114.45 : 2.36 : 1 : 0 : 0
+4839 : 51 : 71 : 175.1 : 2.3812 : 1 : 0 : 0
+4883 : 52 : 1 : -183.39 : 2.3778 : 1 : 0 : 0
+4879 : 52 : 6 : -157.99 : 2.3813 : 1 : 0 : 0
+4866 : 52 : 14 : -117.71 : 2.2629 : 1 : 0 : 0
+4864 : 52 : 23 : -71.787 : 2.3812 : 1 : 0 : 0
+4842 : 52 : 60 : 116.99 : 2.3777 : 1 : 0 : 0
+4828 : 52 : 66 : 147.16 : 2.3807 : 1 : 0 : 0
+4848 : 52 : 70 : 167.48 : 2.2773 : 1 : 0 : 0
+4840 : 52 : 71 : 172.56 : 2.3801 : 1 : 0 : 0
+4919 : 53 : 9 : -140.53 : 2.2569 : 1 : 0 : 0
+4922 : 53 : 29 : -38.347 : 2.3667 : 1 : 0 : 0
+4928 : 53 : 30 : -33.267 : 2.3612 : 1 : 0 : 0
+4906 : 53 : 47 : 53.195 : 2.3679 : 1 : 0 : 0
+4907 : 53 : 52 : 78.595 : 2.3659 : 1 : 0 : 0
+4905 : 53 : 54 : 88.755 : 2.3716 : 1 : 0 : 0
+4880 : 53 : 66 : 148.53 : 2.3716 : 1 : 0 : 0
+4924 : 54 : 30 : -35.807 : 2.3773 : 1 : 0 : 0
+4929 : 54 : 32 : -25.647 : 2.3621 : 1 : 0 : 0
+4911 : 54 : 36 : -5.2251 : 2.3507 : 1 : 0 : 0
+4909 : 54 : 45 : 40.495 : 2.3616 : 1 : 0 : 0
+4910 : 54 : 48 : 55.735 : 2.361 : 1 : 0 : 0
+4908 : 54 : 53 : 81.135 : 2.3205 : 1 : 0 : 0
+4889 : 54 : 72 : 176.47 : 2.3374 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 1, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                1.1179e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 8, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 9
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1707===============
+Layer 1 has 39 hits.
+Layer 2 has 38 hits.
+Layer 3 has 44 hits.
+Layer 4 has 35 hits.
+Layer 5 has 38 hits.
+Layer 6 has 41 hits.
+Layer 7 has 10 hits.
+Layer 8 has 14 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 5 hits.
+Layer 12 has 12 hits.
+Layer 13 has 25 hits.
+Layer 14 has 19 hits.
+Layer 15 has 34 hits.
+Layer 16 has 24 hits.
+Layer 17 has 21 hits.
+Layer 18 has 20 hits.
+Layer 19 has 10 hits.
+Layer 20 has 13 hits.
+Layer 21 has 9 hits.
+Layer 22 has 8 hits.
+Layer 23 has 13 hits.
+Layer 24 has 9 hits.
+Layer 25 has 15 hits.
+Layer 26 has 20 hits.
+Layer 27 has 13 hits.
+Layer 28 has 10 hits.
+Layer 29 has 18 hits.
+Layer 30 has 21 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1707===============
+Layer 1 has 0 hits.
+Layer 2 has 0 hits.
+Layer 3 has 0 hits.
+Layer 4 has 0 hits.
+Layer 5 has 0 hits.
+Layer 6 has 0 hits.
+Layer 7 has 0 hits.
+Layer 8 has 0 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 0 hits.
+Layer 14 has 0 hits.
+Layer 15 has 0 hits.
+Layer 16 has 0 hits.
+Layer 17 has 0 hits.
+Layer 18 has 0 hits.
+Layer 19 has 0 hits.
+Layer 20 has 0 hits.
+Layer 21 has 0 hits.
+Layer 22 has 0 hits.
+Layer 23 has 0 hits.
+Layer 24 has 0 hits.
+Layer 25 has 0 hits.
+Layer 26 has 0 hits.
+Layer 27 has 0 hits.
+Layer 28 has 0 hits.
+Layer 29 has 0 hits.
+Layer 30 has 0 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:52
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+5386 : 31 : 14 : 13.058 : nan : 1 : 0 : 0
+5384 : 31 : 20 : 55.073 : nan : 1 : 0 : 0
+5385 : 32 : 10 : -14.878 : nan : 1 : 0 : 0
+5390 : 33 : 8 : -16.858 : nan : 1 : 0 : 0
+5388 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+5393 : 34 : 10 : -3.0355 : nan : 1 : 0 : 0
+5394 : 34 : 11 : 3.967 : nan : 1 : 0 : 0
+5400 : 35 : 9 : -13.609 : nan : 1 : 0 : 0
+5399 : 35 : 11 : 11.756 : nan : 1 : 0 : 0
+5398 : 36 : 2 : -102.52 : nan : 1 : 0 : 0
+5402 : 37 : 13 : 56.43 : nan : 1 : 0 : 0
+5404 : 37 : 15 : 81.795 : nan : 1 : 0 : 0
+5401 : 38 : 11 : 31.065 : nan : 1 : 0 : 0
+5524 : 39 : 15 : 92.962 : nan : 1 : 0 : 0
+5525 : 40 : 14 : 78.692 : nan : 1 : 0 : 0
+5510 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+5515 : 41 : 9 : 9.4668 : nan : 1 : 0 : 0
+5519 : 43 : 6 : -59.074 : nan : 1 : 0 : 0
+5518 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+5522 : 43 : 9 : 10.406 : nan : 1 : 0 : 0
+5508 : 45 : 14 : 106.54 : nan : 1 : 0 : 0
+5504 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+5505 : 46 : 14 : 105.81 : nan : 1 : 0 : 0
+5602 : 47 : 28 : -43.034 : 2.3781 : 1 : 0 : 0
+5605 : 47 : 32 : -22.714 : 2.3807 : 1 : 0 : 0
+5607 : 47 : 40 : 18.027 : 2.3698 : 1 : 0 : 0
+5544 : 47 : 45 : 43.529 : 2.3764 : 1 : 0 : 0
+5533 : 47 : 66 : 150.77 : 2.3806 : 1 : 0 : 0
+5546 : 47 : 70 : 171.09 : 2.3769 : 1 : 0 : 0
+5556 : 47 : 72 : 181.25 : 2.3184 : 1 : 0 : 0
+5608 : 48 : 17 : -101.66 : 2.3175 : 1 : 0 : 0
+5590 : 48 : 29 : -40.494 : 2.3807 : 1 : 0 : 0
+5609 : 48 : 32 : -25.254 : 2.2644 : 1 : 0 : 0
+5606 : 48 : 34 : -14.993 : 2.3484 : 1 : 0 : 0
+5555 : 48 : 44 : 35.909 : 2.3795 : 1 : 0 : 0
+5550 : 48 : 64 : 137.84 : 2.3656 : 1 : 0 : 0
+5553 : 48 : 70 : 168.55 : 2.2759 : 1 : 0 : 0
+5838 : 49 : 4 : -165.92 : 2.3174 : 1 : 0 : 0
+5828 : 49 : 6 : -155.76 : 2.3779 : 1 : 0 : 0
+5825 : 49 : 15 : -109.89 : 2.2984 : 1 : 0 : 0
+5792 : 49 : 20 : -84.291 : 2.2984 : 1 : 0 : 0
+5789 : 49 : 40 : 17.611 : 2.326 : 1 : 0 : 0
+5788 : 49 : 46 : 48.141 : 2.3767 : 1 : 0 : 0
+5637 : 49 : 57 : 104.48 : 2.3813 : 1 : 0 : 0
+5837 : 50 : 9 : -142.91 : 2.3793 : 1 : 0 : 0
+5790 : 50 : 26 : -56.147 : 2.3576 : 1 : 0 : 0
+5641 : 50 : 64 : 137.5 : 2.3787 : 1 : 0 : 0
+5891 : 51 : 5 : -160.53 : 2.3778 : 1 : 0 : 0
+5884 : 51 : 6 : -155.45 : 2.3812 : 1 : 0 : 0
+5889 : 51 : 14 : -115.17 : 2.3801 : 1 : 0 : 0
+5892 : 51 : 15 : -110.09 : 2.3659 : 1 : 0 : 0
+5881 : 51 : 21 : -79.407 : 2.3777 : 1 : 0 : 0
+5854 : 51 : 38 : 6.5894 : 2.3405 : 1 : 0 : 0
+5841 : 51 : 64 : 139.85 : 2.2751 : 1 : 0 : 0
+5885 : 52 : 1 : -183.39 : 2.2887 : 1 : 0 : 0
+5886 : 52 : 7 : -152.91 : 2.349 : 1 : 0 : 0
+5883 : 52 : 14 : -117.71 : 2.3812 : 1 : 0 : 0
+5890 : 52 : 15 : -112.63 : 2.3812 : 1 : 0 : 0
+5870 : 52 : 23 : -71.787 : 2.3738 : 1 : 0 : 0
+5842 : 52 : 58 : 106.83 : 2.3813 : 1 : 0 : 0
+5840 : 52 : 69 : 162.4 : 2.3796 : 1 : 0 : 0
+5944 : 53 : 21 : -79.495 : 2.3265 : 1 : 0 : 0
+5943 : 53 : 32 : -23.107 : 2.3717 : 1 : 0 : 0
+5924 : 53 : 39 : 12.555 : 2.3668 : 1 : 0 : 0
+5909 : 53 : 48 : 58.275 : 2.2964 : 1 : 0 : 0
+5879 : 53 : 68 : 158.69 : 2.3771 : 1 : 0 : 0
+5887 : 53 : 69 : 163.77 : 2.3604 : 1 : 0 : 0
+5946 : 54 : 11 : -132.91 : 2.3666 : 1 : 0 : 0
+5947 : 54 : 16 : -107.51 : 2.3137 : 1 : 0 : 0
+5917 : 54 : 34 : -15.385 : 2.3741 : 1 : 0 : 0
+5901 : 54 : 41 : 20.175 : 2.3064 : 1 : 0 : 0
+5923 : 54 : 45 : 40.495 : 2.3748 : 1 : 0 : 0
+5925 : 54 : 48 : 55.735 : 2.3722 : 1 : 0 : 0
+5897 : 54 : 50 : 65.895 : 2.2637 : 1 : 0 : 0
+5888 : 54 : 72 : 176.47 : 2.351 : 1 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  506  setRawEvent :::  Failed in tracklet build at station 2
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                2.1841e-05 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 9, finder status -3, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+SQReco::End
+Deleting SQReco

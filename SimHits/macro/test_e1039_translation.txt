@@ -1,0 +1,2771 @@
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing RecoE906Data.C(10)...
+
+char* Flags:
+AlignmentHodo is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_hodo.txt
+AlignmentMille is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/align_mille.txt
+AlignmentProp is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_prop.txt
+Calibration is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/calibration.txt
+DB_SERVER is DB1
+DB_USER is seaguest
+EventReduceOpts is aoc
+TRIGGER_L1 is 67
+TRIGGER_Repo is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/trigger
+fMagFile is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root
+kMagFile is /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root
+
+Float Flags:
+
+Double Flags:
+BAD_HIT_REJECTION is 3
+DEDX_FE_P0 is 7.18274
+DEDX_FE_P1 is 0.0361447
+DEDX_FE_P2 is -0.000718127
+DEDX_FE_P3 is 7.97312e-06
+DEDX_FE_P4 is -3.05481e-08
+ELOSS_ABSORBER is 1.81
+ELOSS_KFMAG is 8.12
+FMAGSTR is -1.054
+FMAG_HOLE_LENGTH is 27.94
+FMAG_HOLE_RADIUS is 1.27
+FMAG_LENGTH is 502.92
+INVP_MAX is 0.2
+INVP_MIN is 0.01
+KMAGSTR is -0.951
+MERGE_THRESH is 0.015
+MUID_EMP_P0 is 0.00643
+MUID_EMP_P1 is -9e-05
+MUID_EMP_P2 is 4.6e-07
+MUID_REJECTION is 4
+MUID_R_CUT is 3
+MUID_THE_P0 is 0.11825
+MUID_Z_REF is 2028.19
+PROB_LOOSE is 0
+PROB_TIGHT is 1e-12
+PT_KICK_FMAG is 2.909
+PT_KICK_KMAG is 0.4016
+RESOLUTION_FACTOR is 1.6
+RX_TARGET is 0.95
+RY_TARGET is 0.95
+RejectWinDC0 is 0.12
+RejectWinDC1 is 0.12
+RejectWinDC2 is 0.15
+RejectWinDC3m is 0.14
+RejectWinDC3p is 0.16
+SAGITTA_DUMP_CENTER is 1.5
+SAGITTA_DUMP_WIDTH is 0.3
+SAGITTA_TARGET_CENTER is 1.85
+SAGITTA_TARGET_WIDTH is 0.25
+SIGX_BEAM is 0.3
+SIGY_BEAM is 0.3
+TDCTimeOffset is 0
+TMAGSTR is 5
+TX_MAX is 0.15
+TY_MAX is 0.1
+X0_MAX is 150
+X0_TARGET is 0
+X_BEAM is 0
+Y0_MAX is 50
+Y0_TARGET is 0
+Y_BEAM is 0
+Z_ABSORBER is 2028.19
+Z_DOWNSTREAM is 500
+Z_DUMP is 42
+Z_FMAG_BEND is 251.4
+Z_KFMAG_BEND is 375
+Z_KMAG_BEND is 1064.26
+Z_REF is 0
+Z_ST1 is 600
+Z_ST2 is 1347.36
+Z_ST3 is 1910
+Z_TARGET is -300
+Z_UPSTREAM is -500
+
+Integer Flags:
+MUID_MINHITS is 1
+MaxHitsDC0 is 100
+MaxHitsDC1 is 100
+MaxHitsDC2 is 100
+MaxHitsDC3m is 100
+MaxHitsDC3p is 100
+NSTEPS_FMAG is 100
+NSTEPS_SHIELDING is 50
+NSTEPS_TARGET is 100
+RUNNUMBER is 6
+
+Boolean Flags:
+COARSE_MODE is FALSE
+COSMIC_MODE is FALSE
+DUMPONLY is FALSE
+IdealGeom is FALSE
+KMAG_ON is TRUE
+MC_MODE is FALSE
+OnlineAlignment is FALSE
+TARGETONLY is FALSE
+USE_TWTDC_HIT is FALSE
+USE_V1495_HIT is TRUE
+GeomSvc:  Load the plane geometry info for run = 6.
+Read channel map from user_e1039_geom_plane.param_G9_run5_2.
+GeomSvc: loaded hodoscope alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_hodo.txt
+GeomSvc: loaded prop. tube alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/alignment_prop.txt
+GeomSvc: loaded millepede-based alignment parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/align_mille.txt
+GeomSvc: loaded calibration parameters from /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/alignment/run6/calibration.txt
+
+*************************************************************
+ Geant4 version Name: geant4-10-01-patch-03    (5-February-2016)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+<<< Geant4 Physics List simulation engine: FTFP_BERT 2.0
+
+Fun4AllServer: Runnumber forced to 6 by RUNNUMBER IntFlag
+Fun4AllServer::setRun(): could not get timestamp for run  6, using tics(0) timestamp: Wed Dec 31 19:00:00 1969
+PHFieldConfig_v3::PHFieldConfig_v3:
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+PHFieldUtility::GetFieldConfigNode - field map with configuration from input default: PHFieldConfig_v3::identify - Field type of [Sea Quest: SeaQuest Field: 2 3D Cartesian]
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+
+
+================ Begin Construct Mag Field =====================
+
+-----------------------------------------------------------
+      Magnetic field Module - Verbosity:
+-----------------------------------------------------------
+SQField3DCartesian: loading field map from ROOT file /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root
+  its demensions and ranges of the field: 1157123
+    X: 131 bins, -330.2 cm -- 330.2 cm, step size = 5.08 cm.
+    Y: 121 bins, -304.8 cm -- 304.8 cm, step size = 5.08 cm.
+    Z: 73 bins, -203.2 cm -- 711.2 cm, step size = 12.7 cm.
+
+================= End Construct Mag Field ======================
+
+
+================ Begin Construct Mag Field =====================
+
+-----------------------------------------------------------
+      Magnetic field Module - Verbosity:
+-----------------------------------------------------------
+SQField3DCartesian: loading field map from ROOT file /cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root
+  its demensions and ranges of the field: 146853
+    X: 49 bins, -304.8 cm -- 304.8 cm, step size = 12.7 cm.
+    Y: 37 bins, -228.6 cm -- 228.6 cm, step size = 12.7 cm.
+    Z: 81 bins, -508 cm -- 508 cm, step size = 12.7 cm.
+
+================= End Construct Mag Field ======================
+
+PHFieldRegionalConst::identify: {0, 0, 0}	 {5}
+SQDipoleMagnet - begin construction of fmag from $E1039_RESOURCE/geometry/magnetic_fields/magnet_geom.db
+SQDipoleMagnet - begin construction of kmag from $E1039_RESOURCE/geometry/magnetic_fields/magnet_geom.db
+PHG4Reco::InitRun - export geometry to DST via tmp file /tmp/PHGeomUtility_geom_file_1085753.gdml
+PHG4GDML: Writing '/tmp/PHGeomUtility_geom_file_1085753.gdml'...
+PHG4GDML: Writing definitions...
+G4GDML: Writing materials...
+PHG4GDML: Writing solids...
+PHG4GDML: Writing structure...
+G4GDML: Writing setup...
+PHG4GDML: Writing surfaces...
+PHG4GDML: Writing '/tmp/PHGeomUtility_geom_file_1085753.gdml' done !
+Read channel map from user_e1039_calib_xt_curve.param_e906run6v2.
+PHTFileServer::open - opening file eval.root (RECREATE)
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  544  MakeNodes :::  DST/SRecEvent Added
+SQReco::InitField
+PHFieldConfig_v3::PHFieldConfig_v3:
+ from file1 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Fmag.root]
+  and file2 [/cvmfs/seaquest.opensciencegrid.org/seaquest/software/e1039/resource/geometry/magnetic_fields/Kmag.root]
+scale1: -1.054, scale2: -0.951, targetmag_y: 5
+PHField check: -------
+SQReco::InitGeom
+SQReco::InitGeom - use geom from PAR node tree.
+WARNING:: did not find G4TruthInfo.
+WARNING:: DataAna::GetNode No EMcal node
+--------------------------------------
+
+List of Nodes in Fun4AllServer:
+Node Tree under TopNode TOP
+TOP (PHCompositeNode)/
+   DST (PHCompositeNode)/
+      SRawEvent (IO,SRawEvent)
+      SQEvent (IO,SQEvent_v1)
+      SQHitVector (IO,SQHitVector_v1)
+      SQTriggerHitVector (IO,SQHitVector_v1)
+      G4HIT_D0U (IO,PHG4HitContainer)
+      G4HIT_D0Up (IO,PHG4HitContainer)
+      G4HIT_D0X (IO,PHG4HitContainer)
+      G4HIT_D0Xp (IO,PHG4HitContainer)
+      G4HIT_D0V (IO,PHG4HitContainer)
+      G4HIT_D0Vp (IO,PHG4HitContainer)
+      G4HIT_D2V (IO,PHG4HitContainer)
+      G4HIT_D2Vp (IO,PHG4HitContainer)
+      G4HIT_D2Xp (IO,PHG4HitContainer)
+      G4HIT_D2X (IO,PHG4HitContainer)
+      G4HIT_D2U (IO,PHG4HitContainer)
+      G4HIT_D2Up (IO,PHG4HitContainer)
+      G4HIT_D3pVp (IO,PHG4HitContainer)
+      G4HIT_D3pV (IO,PHG4HitContainer)
+      G4HIT_D3pXp (IO,PHG4HitContainer)
+      G4HIT_D3pX (IO,PHG4HitContainer)
+      G4HIT_D3pUp (IO,PHG4HitContainer)
+      G4HIT_D3pU (IO,PHG4HitContainer)
+      G4HIT_D3mVp (IO,PHG4HitContainer)
+      G4HIT_D3mV (IO,PHG4HitContainer)
+      G4HIT_D3mXp (IO,PHG4HitContainer)
+      G4HIT_D3mX (IO,PHG4HitContainer)
+      G4HIT_D3mUp (IO,PHG4HitContainer)
+      G4HIT_D3mU (IO,PHG4HitContainer)
+      G4HIT_H1B (IO,PHG4HitContainer)
+      G4HIT_H1T (IO,PHG4HitContainer)
+      G4HIT_H1L (IO,PHG4HitContainer)
+      G4HIT_H1R (IO,PHG4HitContainer)
+      G4HIT_H2L (IO,PHG4HitContainer)
+      G4HIT_H2R (IO,PHG4HitContainer)
+      G4HIT_H2B (IO,PHG4HitContainer)
+      G4HIT_H2T (IO,PHG4HitContainer)
+      G4HIT_H3B (IO,PHG4HitContainer)
+      G4HIT_H3T (IO,PHG4HitContainer)
+      G4HIT_H4Y1L (IO,PHG4HitContainer)
+      G4HIT_H4Y1R (IO,PHG4HitContainer)
+      G4HIT_H4Y2L (IO,PHG4HitContainer)
+      G4HIT_H4Y2R (IO,PHG4HitContainer)
+      G4HIT_H4B (IO,PHG4HitContainer)
+      G4HIT_H4T (IO,PHG4HitContainer)
+      G4HIT_P1Y1 (IO,PHG4HitContainer)
+      G4HIT_P1Y2 (IO,PHG4HitContainer)
+      G4HIT_P1X1 (IO,PHG4HitContainer)
+      G4HIT_P1X2 (IO,PHG4HitContainer)
+      G4HIT_P2X1 (IO,PHG4HitContainer)
+      G4HIT_P2X2 (IO,PHG4HitContainer)
+      G4HIT_P2Y1 (IO,PHG4HitContainer)
+      G4HIT_P2Y2 (IO,PHG4HitContainer)
+      G4HIT_DP1TL (IO,PHG4HitContainer)
+      G4HIT_DP1TR (IO,PHG4HitContainer)
+      G4HIT_DP1BL (IO,PHG4HitContainer)
+      G4HIT_DP1BR (IO,PHG4HitContainer)
+      G4HIT_DP2TL (IO,PHG4HitContainer)
+      G4HIT_DP2TR (IO,PHG4HitContainer)
+      G4HIT_DP2BL (IO,PHG4HitContainer)
+      G4HIT_DP2BR (IO,PHG4HitContainer)
+      PHG4INEVENT (IO,PHG4InEvent)
+      SRecEvent (IO,SRecEvent)
+   RUN (PHCompositeNode)/
+      SQRun (IO,SQRun_v1)
+      SQSpillMap (IO,SQSpillMap_v1)
+      FIELD_CONFIG (IO,PHFieldConfig_v3)
+      G4GEOPARAM_Shielding1_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_Shielding2_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_Shielding3_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_fmag_0 (IO,PdbParameterMapContainer)
+      G4GEOPARAM_kmag_0 (IO,PdbParameterMapContainer)
+      MUID_absorber (PHCompositeNode)/
+         G4GEOPARAM_MUID_absorber (IO,PdbParameterMapContainer)
+      D0U (PHCompositeNode)/
+         G4GEOPARAM_D0U (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0U (IO,PHG4BlockGeomContainer)
+      D0Up (PHCompositeNode)/
+         G4GEOPARAM_D0Up (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Up (IO,PHG4BlockGeomContainer)
+      D0X (PHCompositeNode)/
+         G4GEOPARAM_D0X (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0X (IO,PHG4BlockGeomContainer)
+      D0Xp (PHCompositeNode)/
+         G4GEOPARAM_D0Xp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Xp (IO,PHG4BlockGeomContainer)
+      D0V (PHCompositeNode)/
+         G4GEOPARAM_D0V (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0V (IO,PHG4BlockGeomContainer)
+      D0Vp (PHCompositeNode)/
+         G4GEOPARAM_D0Vp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D0Vp (IO,PHG4BlockGeomContainer)
+      D2V (PHCompositeNode)/
+         G4GEOPARAM_D2V (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2V (IO,PHG4BlockGeomContainer)
+      D2Vp (PHCompositeNode)/
+         G4GEOPARAM_D2Vp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Vp (IO,PHG4BlockGeomContainer)
+      D2Xp (PHCompositeNode)/
+         G4GEOPARAM_D2Xp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Xp (IO,PHG4BlockGeomContainer)
+      D2X (PHCompositeNode)/
+         G4GEOPARAM_D2X (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2X (IO,PHG4BlockGeomContainer)
+      D2U (PHCompositeNode)/
+         G4GEOPARAM_D2U (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2U (IO,PHG4BlockGeomContainer)
+      D2Up (PHCompositeNode)/
+         G4GEOPARAM_D2Up (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D2Up (IO,PHG4BlockGeomContainer)
+      D3pVp (PHCompositeNode)/
+         G4GEOPARAM_D3pVp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pVp (IO,PHG4BlockGeomContainer)
+      D3pV (PHCompositeNode)/
+         G4GEOPARAM_D3pV (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pV (IO,PHG4BlockGeomContainer)
+      D3pXp (PHCompositeNode)/
+         G4GEOPARAM_D3pXp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pXp (IO,PHG4BlockGeomContainer)
+      D3pX (PHCompositeNode)/
+         G4GEOPARAM_D3pX (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pX (IO,PHG4BlockGeomContainer)
+      D3pUp (PHCompositeNode)/
+         G4GEOPARAM_D3pUp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pUp (IO,PHG4BlockGeomContainer)
+      D3pU (PHCompositeNode)/
+         G4GEOPARAM_D3pU (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3pU (IO,PHG4BlockGeomContainer)
+      D3mVp (PHCompositeNode)/
+         G4GEOPARAM_D3mVp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mVp (IO,PHG4BlockGeomContainer)
+      D3mV (PHCompositeNode)/
+         G4GEOPARAM_D3mV (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mV (IO,PHG4BlockGeomContainer)
+      D3mXp (PHCompositeNode)/
+         G4GEOPARAM_D3mXp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mXp (IO,PHG4BlockGeomContainer)
+      D3mX (PHCompositeNode)/
+         G4GEOPARAM_D3mX (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mX (IO,PHG4BlockGeomContainer)
+      D3mUp (PHCompositeNode)/
+         G4GEOPARAM_D3mUp (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mUp (IO,PHG4BlockGeomContainer)
+      D3mU (PHCompositeNode)/
+         G4GEOPARAM_D3mU (IO,PdbParameterMapContainer)
+      BLOCKGEOM_D3mU (IO,PHG4BlockGeomContainer)
+      H1B (PHCompositeNode)/
+         G4GEOPARAM_H1B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1B (IO,PHG4BlockGeomContainer)
+      H1T (PHCompositeNode)/
+         G4GEOPARAM_H1T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1T (IO,PHG4BlockGeomContainer)
+      H1L (PHCompositeNode)/
+         G4GEOPARAM_H1L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1L (IO,PHG4BlockGeomContainer)
+      H1R (PHCompositeNode)/
+         G4GEOPARAM_H1R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H1R (IO,PHG4BlockGeomContainer)
+      H2L (PHCompositeNode)/
+         G4GEOPARAM_H2L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2L (IO,PHG4BlockGeomContainer)
+      H2R (PHCompositeNode)/
+         G4GEOPARAM_H2R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2R (IO,PHG4BlockGeomContainer)
+      H2B (PHCompositeNode)/
+         G4GEOPARAM_H2B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2B (IO,PHG4BlockGeomContainer)
+      H2T (PHCompositeNode)/
+         G4GEOPARAM_H2T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H2T (IO,PHG4BlockGeomContainer)
+      H3B (PHCompositeNode)/
+         G4GEOPARAM_H3B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H3B (IO,PHG4BlockGeomContainer)
+      H3T (PHCompositeNode)/
+         G4GEOPARAM_H3T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H3T (IO,PHG4BlockGeomContainer)
+      H4Y1L (PHCompositeNode)/
+         G4GEOPARAM_H4Y1L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y1L (IO,PHG4BlockGeomContainer)
+      H4Y1R (PHCompositeNode)/
+         G4GEOPARAM_H4Y1R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y1R (IO,PHG4BlockGeomContainer)
+      H4Y2L (PHCompositeNode)/
+         G4GEOPARAM_H4Y2L (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y2L (IO,PHG4BlockGeomContainer)
+      H4Y2R (PHCompositeNode)/
+         G4GEOPARAM_H4Y2R (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4Y2R (IO,PHG4BlockGeomContainer)
+      H4B (PHCompositeNode)/
+         G4GEOPARAM_H4B (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4B (IO,PHG4BlockGeomContainer)
+      H4T (PHCompositeNode)/
+         G4GEOPARAM_H4T (IO,PdbParameterMapContainer)
+      BLOCKGEOM_H4T (IO,PHG4BlockGeomContainer)
+      P1Y1 (PHCompositeNode)/
+         G4GEOPARAM_P1Y1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1Y1 (IO,PHG4BlockGeomContainer)
+      P1Y2 (PHCompositeNode)/
+         G4GEOPARAM_P1Y2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1Y2 (IO,PHG4BlockGeomContainer)
+      P1X1 (PHCompositeNode)/
+         G4GEOPARAM_P1X1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1X1 (IO,PHG4BlockGeomContainer)
+      P1X2 (PHCompositeNode)/
+         G4GEOPARAM_P1X2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P1X2 (IO,PHG4BlockGeomContainer)
+      P2X1 (PHCompositeNode)/
+         G4GEOPARAM_P2X1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2X1 (IO,PHG4BlockGeomContainer)
+      P2X2 (PHCompositeNode)/
+         G4GEOPARAM_P2X2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2X2 (IO,PHG4BlockGeomContainer)
+      P2Y1 (PHCompositeNode)/
+         G4GEOPARAM_P2Y1 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2Y1 (IO,PHG4BlockGeomContainer)
+      P2Y2 (PHCompositeNode)/
+         G4GEOPARAM_P2Y2 (IO,PdbParameterMapContainer)
+      BLOCKGEOM_P2Y2 (IO,PHG4BlockGeomContainer)
+      DP1TL (PHCompositeNode)/
+         G4GEOPARAM_DP1TL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1TL (IO,PHG4BlockGeomContainer)
+      DP1TR (PHCompositeNode)/
+         G4GEOPARAM_DP1TR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1TR (IO,PHG4BlockGeomContainer)
+      DP1BL (PHCompositeNode)/
+         G4GEOPARAM_DP1BL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1BL (IO,PHG4BlockGeomContainer)
+      DP1BR (PHCompositeNode)/
+         G4GEOPARAM_DP1BR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP1BR (IO,PHG4BlockGeomContainer)
+      DP2TL (PHCompositeNode)/
+         G4GEOPARAM_DP2TL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2TL (IO,PHG4BlockGeomContainer)
+      DP2TR (PHCompositeNode)/
+         G4GEOPARAM_DP2TR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2TR (IO,PHG4BlockGeomContainer)
+      DP2BL (PHCompositeNode)/
+         G4GEOPARAM_DP2BL (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2BL (IO,PHG4BlockGeomContainer)
+      DP2BR (PHCompositeNode)/
+         G4GEOPARAM_DP2BR (IO,PdbParameterMapContainer)
+      BLOCKGEOM_DP2BR (IO,PHG4BlockGeomContainer)
+      GEOMETRY_IO (IO,PHGeomIOTGeo)
+   PAR (PHCompositeNode)/
+      FIELD_MAP (PHDataNode)
+      G4GEO_Shielding1_0 (PHDataNode)
+      G4GEO_Shielding2_0 (PHDataNode)
+      G4GEO_Shielding3_0 (PHDataNode)
+      G4GEO_fmag_0 (PHDataNode)
+      G4GEO_kmag_0 (PHDataNode)
+      MUID_absorber (PHCompositeNode)/
+         G4GEO_MUID_absorber (PHDataNode)
+      D0U (PHCompositeNode)/
+         G4GEO_D0U (PHDataNode)
+      D0Up (PHCompositeNode)/
+         G4GEO_D0Up (PHDataNode)
+      D0X (PHCompositeNode)/
+         G4GEO_D0X (PHDataNode)
+      D0Xp (PHCompositeNode)/
+         G4GEO_D0Xp (PHDataNode)
+      D0V (PHCompositeNode)/
+         G4GEO_D0V (PHDataNode)
+      D0Vp (PHCompositeNode)/
+         G4GEO_D0Vp (PHDataNode)
+      D2V (PHCompositeNode)/
+         G4GEO_D2V (PHDataNode)
+      D2Vp (PHCompositeNode)/
+         G4GEO_D2Vp (PHDataNode)
+      D2Xp (PHCompositeNode)/
+         G4GEO_D2Xp (PHDataNode)
+      D2X (PHCompositeNode)/
+         G4GEO_D2X (PHDataNode)
+      D2U (PHCompositeNode)/
+         G4GEO_D2U (PHDataNode)
+      D2Up (PHCompositeNode)/
+         G4GEO_D2Up (PHDataNode)
+      D3pVp (PHCompositeNode)/
+         G4GEO_D3pVp (PHDataNode)
+      D3pV (PHCompositeNode)/
+         G4GEO_D3pV (PHDataNode)
+      D3pXp (PHCompositeNode)/
+         G4GEO_D3pXp (PHDataNode)
+      D3pX (PHCompositeNode)/
+         G4GEO_D3pX (PHDataNode)
+      D3pUp (PHCompositeNode)/
+         G4GEO_D3pUp (PHDataNode)
+      D3pU (PHCompositeNode)/
+         G4GEO_D3pU (PHDataNode)
+      D3mVp (PHCompositeNode)/
+         G4GEO_D3mVp (PHDataNode)
+      D3mV (PHCompositeNode)/
+         G4GEO_D3mV (PHDataNode)
+      D3mXp (PHCompositeNode)/
+         G4GEO_D3mXp (PHDataNode)
+      D3mX (PHCompositeNode)/
+         G4GEO_D3mX (PHDataNode)
+      D3mUp (PHCompositeNode)/
+         G4GEO_D3mUp (PHDataNode)
+      D3mU (PHCompositeNode)/
+         G4GEO_D3mU (PHDataNode)
+      H1B (PHCompositeNode)/
+         G4GEO_H1B (PHDataNode)
+      H1T (PHCompositeNode)/
+         G4GEO_H1T (PHDataNode)
+      H1L (PHCompositeNode)/
+         G4GEO_H1L (PHDataNode)
+      H1R (PHCompositeNode)/
+         G4GEO_H1R (PHDataNode)
+      H2L (PHCompositeNode)/
+         G4GEO_H2L (PHDataNode)
+      H2R (PHCompositeNode)/
+         G4GEO_H2R (PHDataNode)
+      H2B (PHCompositeNode)/
+         G4GEO_H2B (PHDataNode)
+      H2T (PHCompositeNode)/
+         G4GEO_H2T (PHDataNode)
+      H3B (PHCompositeNode)/
+         G4GEO_H3B (PHDataNode)
+      H3T (PHCompositeNode)/
+         G4GEO_H3T (PHDataNode)
+      H4Y1L (PHCompositeNode)/
+         G4GEO_H4Y1L (PHDataNode)
+      H4Y1R (PHCompositeNode)/
+         G4GEO_H4Y1R (PHDataNode)
+      H4Y2L (PHCompositeNode)/
+         G4GEO_H4Y2L (PHDataNode)
+      H4Y2R (PHCompositeNode)/
+         G4GEO_H4Y2R (PHDataNode)
+      H4B (PHCompositeNode)/
+         G4GEO_H4B (PHDataNode)
+      H4T (PHCompositeNode)/
+         G4GEO_H4T (PHDataNode)
+      P1Y1 (PHCompositeNode)/
+         G4GEO_P1Y1 (PHDataNode)
+      P1Y2 (PHCompositeNode)/
+         G4GEO_P1Y2 (PHDataNode)
+      P1X1 (PHCompositeNode)/
+         G4GEO_P1X1 (PHDataNode)
+      P1X2 (PHCompositeNode)/
+         G4GEO_P1X2 (PHDataNode)
+      P2X1 (PHCompositeNode)/
+         G4GEO_P2X1 (PHDataNode)
+      P2X2 (PHCompositeNode)/
+         G4GEO_P2X2 (PHDataNode)
+      P2Y1 (PHCompositeNode)/
+         G4GEO_P2Y1 (PHDataNode)
+      P2Y2 (PHCompositeNode)/
+         G4GEO_P2Y2 (PHDataNode)
+      DP1TL (PHCompositeNode)/
+         G4GEO_DP1TL (PHDataNode)
+      DP1TR (PHCompositeNode)/
+         G4GEO_DP1TR (PHDataNode)
+      DP1BL (PHCompositeNode)/
+         G4GEO_DP1BL (PHDataNode)
+      DP1BR (PHCompositeNode)/
+         G4GEO_DP1BR (PHDataNode)
+      DP2TL (PHCompositeNode)/
+         G4GEO_DP2TL (PHDataNode)
+      DP2TR (PHCompositeNode)/
+         G4GEO_DP2TR (PHDataNode)
+      DP2BL (PHCompositeNode)/
+         G4GEO_DP2BL (PHDataNode)
+      DP2BR (PHCompositeNode)/
+         G4GEO_DP2BR (PHDataNode)
+      G4GDML_CONFIG (PHDataNode)
+      GEOMETRY (PHDataNode)
+
+
+DEBUG: process_event: 336: Entering SQReco::process_event: 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1676===============
+Layer 1 has 5 hits.
+Layer 2 has 6 hits.
+Layer 3 has 6 hits.
+Layer 4 has 6 hits.
+Layer 5 has 6 hits.
+Layer 6 has 5 hits.
+Layer 7 has 6 hits.
+Layer 8 has 2 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 6 hits.
+Layer 14 has 9 hits.
+Layer 15 has 5 hits.
+Layer 16 has 6 hits.
+Layer 17 has 6 hits.
+Layer 18 has 7 hits.
+Layer 19 has 6 hits.
+Layer 20 has 10 hits.
+Layer 21 has 2 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 7 hits.
+Layer 25 has 7 hits.
+Layer 26 has 4 hits.
+Layer 27 has 2 hits.
+Layer 28 has 2 hits.
+Layer 29 has 2 hits.
+Layer 30 has 2 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1676===============
+Layer 1 has 5 hits.
+Layer 2 has 6 hits.
+Layer 3 has 6 hits.
+Layer 4 has 6 hits.
+Layer 5 has 6 hits.
+Layer 6 has 5 hits.
+Layer 7 has 6 hits.
+Layer 8 has 2 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 6 hits.
+Layer 14 has 9 hits.
+Layer 15 has 5 hits.
+Layer 16 has 6 hits.
+Layer 17 has 6 hits.
+Layer 18 has 7 hits.
+Layer 19 has 6 hits.
+Layer 20 has 10 hits.
+Layer 21 has 2 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 7 hits.
+Layer 25 has 7 hits.
+Layer 26 has 4 hits.
+Layer 27 has 2 hits.
+Layer 28 has 2 hits.
+Layer 29 has 2 hits.
+Layer 30 has 2 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 34
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 8
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 39
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 32
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 19
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:76
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+457 : 1 : 60 : -26.051 : 0.72299 : 0 : 0 : 0
+470 : 1 : 100 : -0.65094 : 0.71734 : 0 : 0 : 0
+454 : 1 : 104 : 1.8891 : 0.71542 : 0 : 0 : 0
+456 : 1 : 126 : 15.859 : 0.69995 : 0 : 0 : 0
+455 : 1 : 132 : 19.669 : 0.72161 : 0 : 0 : 0
+448 : 2 : 60 : -26.325 : 0.45117 : 0 : 0 : 0
+447 : 2 : 61 : -25.69 : 0.44911 : 0 : 0 : 0
+277 : 2 : 100 : -0.92536 : 0.45014 : 0 : 0 : 0
+445 : 2 : 104 : 1.6146 : 0.44964 : 0 : 0 : 0
+446 : 2 : 127 : 16.22 : 0.44545 : 0 : 0 : 0
+444 : 2 : 133 : 20.03 : 0.44858 : 0 : 0 : 0
+475 : 3 : 37 : -28.215 : 0.3175 : 0 : 0 : 0
+476 : 3 : 38 : -27.58 : 0.3175 : 0 : 0 : 0
+474 : 3 : 76 : -3.4503 : 0.3175 : 0 : 0 : 0
+473 : 3 : 84 : 1.6297 : 0.3175 : 0 : 0 : 0
+471 : 3 : 107 : 16.235 : 0.3175 : 0 : 0 : 0
+472 : 3 : 110 : 18.14 : 0.3175 : 0 : 0 : 0
+281 : 4 : 34 : -30.517 : 0.73465 : 0 : 0 : 0
+282 : 4 : 38 : -27.977 : 0.72259 : 0 : 0 : 0
+283 : 4 : 38 : -27.977 : 0.71331 : 0 : 0 : 0
+278 : 4 : 76 : -3.8468 : 0.71683 : 0 : 0 : 0
+279 : 4 : 84 : 1.2332 : 0.71662 : 0 : 0 : 0
+280 : 4 : 110 : 17.743 : 0.70499 : 0 : 0 : 0
+458 : 5 : 59 : -27.971 : 0.3175 : 0 : 0 : 0
+459 : 5 : 88 : -9.5563 : 0.3175 : 0 : 0 : 0
+460 : 5 : 109 : 3.7787 : 0.3175 : 0 : 0 : 0
+463 : 5 : 109 : 3.7787 : 0.3175 : 0 : 0 : 0
+461 : 5 : 122 : 12.034 : 0.3175 : 0 : 0 : 0
+462 : 5 : 133 : 19.019 : 0.3175 : 0 : 0 : 0
+449 : 6 : 59 : -28.314 : 0.65106 : 0 : 0 : 0
+450 : 6 : 89 : -9.2638 : 0.65159 : 0 : 0 : 0
+453 : 6 : 110 : 4.0712 : 0.64626 : 0 : 0 : 0
+451 : 6 : 122 : 11.691 : 0.65079 : 0 : 0 : 0
+452 : 6 : 134 : 19.311 : 0.64634 : 0 : 0 : 0
+379 : 7 : 13 : -89.37 : 0.44579 : 0 : 0 : 0
+378 : 7 : 96 : -47.87 : 0.44152 : 0 : 0 : 0
+466 : 7 : 262 : 35.13 : 0.44797 : 0 : 0 : 0
+467 : 7 : 263 : 35.63 : 0.44872 : 0 : 0 : 0
+468 : 7 : 271 : 39.63 : 0.44643 : 0 : 0 : 0
+469 : 7 : 273 : 40.63 : 0.43944 : 0 : 0 : 0
+464 : 8 : 345 : 76.38 : 0.44632 : 0 : 0 : 0
+465 : 8 : 355 : 81.38 : 0.44253 : 0 : 0 : 0
+358 : 13 : 20 : -92.688 : 1.1271 : 0 : 0 : 0
+357 : 13 : 23 : -86.625 : 1.1253 : 0 : 0 : 0
+359 : 13 : 57 : -17.911 : 1.1143 : 0 : 0 : 0
+222 : 13 : 80 : 28.572 : 1.1186 : 0 : 0 : 0
+223 : 13 : 93 : 54.845 : 1.1173 : 0 : 0 : 0
+224 : 13 : 96 : 60.908 : 1.1088 : 0 : 0 : 0
+364 : 14 : 4 : -124.01 : 1.0605 : 0 : 0 : 0
+361 : 14 : 19 : -93.697 : 1.0668 : 0 : 0 : 0
+363 : 14 : 19 : -93.697 : 1.0638 : 0 : 0 : 0
+362 : 14 : 22 : -87.634 : 1.0658 : 0 : 0 : 0
+360 : 14 : 56 : -18.92 : 1.0667 : 0 : 0 : 0
+225 : 14 : 80 : 29.584 : 1.067 : 0 : 0 : 0
+226 : 14 : 92 : 53.836 : 1.0649 : 0 : 0 : 0
+228 : 14 : 92 : 53.836 : 1.0612 : 0 : 0 : 0
+227 : 14 : 96 : 61.92 : 1.0638 : 0 : 0 : 0
+229 : 15 : 12 : -93.886 : 1.1531 : 0 : 0 : 0
+230 : 15 : 43 : -29.313 : 1.1511 : 0 : 0 : 0
+366 : 15 : 81 : 49.841 : 1.1453 : 0 : 0 : 0
+367 : 15 : 88 : 64.422 : 1.1448 : 0 : 0 : 0
+365 : 15 : 91 : 70.671 : 1.1512 : 0 : 0 : 0
+231 : 16 : 11 : -94.9 : 1.2038 : 0 : 0 : 0
+232 : 16 : 42 : -30.327 : 1.1946 : 0 : 0 : 0
+368 : 16 : 80 : 48.827 : 1.1992 : 0 : 0 : 0
+369 : 16 : 87 : 63.408 : 1.1955 : 0 : 0 : 0
+370 : 16 : 87 : 63.408 : 1.1884 : 0 : 0 : 0
+371 : 16 : 90 : 69.657 : 1.1866 : 0 : 0 : 0
+234 : 17 : 18 : -95.133 : 1.1221 : 0 : 0 : 0
+233 : 17 : 19 : -93.112 : 1.1252 : 0 : 0 : 0
+235 : 17 : 46 : -38.545 : 1.1147 : 0 : 0 : 0
+374 : 17 : 95 : 60.484 : 1.1075 : 0 : 0 : 0
+372 : 17 : 98 : 66.547 : 1.121 : 0 : 0 : 0
+373 : 17 : 106 : 82.715 : 1.1206 : 0 : 0 : 0
+237 : 18 : 17 : -96.155 : 1.1192 : 0 : 0 : 0
+236 : 18 : 18 : -94.134 : 1.1282 : 0 : 0 : 0
+238 : 18 : 18 : -94.134 : 1.1143 : 0 : 0 : 0
+239 : 18 : 46 : -37.546 : 1.1189 : 0 : 0 : 0
+376 : 18 : 95 : 61.483 : 1.1165 : 0 : 0 : 0
+375 : 18 : 98 : 67.546 : 1.118 : 0 : 0 : 0
+377 : 18 : 106 : 83.714 : 1.1163 : 0 : 0 : 0
+429 : 19 : 1 : -114.66 : 1 : 0 : 0 : 0
+427 : 19 : 2 : -112.66 : 1 : 0 : 0 : 0
+434 : 19 : 2 : -112.66 : 1 : 0 : 0 : 0
+432 : 19 : 3 : -110.66 : 1 : 0 : 0 : 0
+425 : 19 : 119 : 121.34 : 1 : 0 : 0 : 0
+424 : 19 : 124 : 131.34 : 1 : 0 : 0 : 0
+431 : 20 : 4 : -109.66 : 1 : 0 : 0 : 0
+430 : 20 : 5 : -107.66 : 1 : 0 : 0 : 0
+435 : 20 : 5 : -107.66 : 1 : 0 : 0 : 0
+428 : 20 : 6 : -105.66 : 1 : 0 : 0 : 0
+426 : 20 : 7 : -103.66 : 1 : 0 : 0 : 0
+433 : 20 : 8 : -101.66 : 1 : 0 : 0 : 0
+436 : 20 : 8 : -101.66 : 1 : 0 : 0 : 0
+421 : 20 : 120 : 122.34 : 1 : 0 : 0 : 0
+422 : 20 : 120 : 122.34 : 1 : 0 : 0 : 0
+423 : 20 : 125 : 132.34 : 1 : 0 : 0 : 0
+347 : 21 : 31 : -55.445 : 1 : 0 : 0 : 0
+346 : 21 : 110 : 102.56 : 1 : 0 : 0 : 0
+343 : 22 : 59 : -0.44659 : 1 : 0 : 0 : 0
+344 : 22 : 111 : 103.55 : 1 : 0 : 0 : 0
+345 : 22 : 111 : 103.55 : 1 : 0 : 0 : 0
+420 : 23 : 12 : -130.16 : 1 : 0 : 0 : 0
+419 : 23 : 13 : -128.16 : 1 : 0 : 0 : 0
+356 : 23 : 115 : 75.84 : 1 : 0 : 0 : 0
+355 : 23 : 126 : 97.84 : 1 : 0 : 0 : 0
+351 : 24 : 12 : -131.16 : 1 : 0 : 0 : 0
+352 : 24 : 12 : -131.16 : 1 : 0 : 0 : 0
+354 : 24 : 12 : -131.16 : 1 : 0 : 0 : 0
+353 : 24 : 13 : -129.16 : 1 : 0 : 0 : 0
+348 : 24 : 116 : 76.84 : 1 : 0 : 0 : 0
+350 : 24 : 116 : 76.84 : 1 : 0 : 0 : 0
+349 : 24 : 127 : 98.84 : 1 : 0 : 0 : 0
+273 : 25 : 6 : -145.47 : 1 : 0 : 0 : 0
+275 : 25 : 6 : -145.47 : 1 : 0 : 0 : 0
+276 : 25 : 6 : -145.47 : 1 : 0 : 0 : 0
+269 : 25 : 41 : -75.473 : 1 : 0 : 0 : 0
+270 : 25 : 45 : -67.473 : 1 : 0 : 0 : 0
+271 : 25 : 45 : -67.473 : 1 : 0 : 0 : 0
+268 : 25 : 126 : 94.527 : 1 : 0 : 0 : 0
+272 : 26 : 5 : -146.47 : 1 : 0 : 0 : 0
+266 : 26 : 41 : -74.467 : 1 : 0 : 0 : 0
+267 : 26 : 45 : -66.467 : 1 : 0 : 0 : 0
+265 : 26 : 126 : 95.533 : 1 : 0 : 0 : 0
+440 : 27 : 31 : -58.013 : 1.055 : 0 : 0 : 0
+439 : 27 : 111 : 101.99 : 1.0549 : 0 : 0 : 0
+438 : 28 : 31 : -57.007 : 1.0559 : 0 : 0 : 0
+437 : 28 : 110 : 100.99 : 1.053 : 0 : 0 : 0
+264 : 29 : 37 : -44.428 : 1 : 0 : 0 : 0
+443 : 29 : 110 : 101.57 : 1 : 0 : 0 : 0
+442 : 30 : 37 : -43.421 : 1.0545 : 0 : 0 : 0
+441 : 30 : 110 : 102.58 : 1.0544 : 0 : 0 : 0
+242 : 31 : 7 : -35.959 : nan : 0 : 0 : 0
+240 : 31 : 8 : -28.957 : nan : 0 : 0 : 0
+244 : 31 : 12 : -0.94654 : nan : 1 : 0 : 0
+243 : 32 : 12 : -0.87334 : nan : 1 : 0 : 0
+241 : 32 : 15 : 20.134 : nan : 0 : 0 : 0
+245 : 34 : 9 : -10.038 : nan : 0 : 0 : 0
+246 : 34 : 15 : 31.977 : nan : 1 : 0 : 0
+247 : 35 : 14 : 49.803 : nan : 0 : 0 : 0
+250 : 35 : 16 : 75.168 : nan : 1 : 0 : 0
+249 : 36 : 7 : -39.104 : nan : 1 : 0 : 0
+251 : 36 : 9 : -13.739 : nan : 0 : 0 : 0
+253 : 36 : 9 : -13.739 : nan : 1 : 0 : 0
+248 : 36 : 10 : -1.0562 : nan : 0 : 0 : 0
+252 : 36 : 10 : -1.0562 : nan : 1 : 0 : 0
+255 : 37 : 1 : -95.76 : nan : 0 : 0 : 0
+257 : 37 : 6 : -32.347 : nan : 1 : 0 : 0
+258 : 38 : 13 : 56.43 : nan : 1 : 0 : 0
+254 : 38 : 15 : 81.795 : nan : 0 : 0 : 0
+256 : 38 : 15 : 81.795 : nan : 1 : 0 : 0
+304 : 39 : 4 : -64.008 : nan : 1 : 0 : 0
+303 : 40 : 16 : 107.23 : nan : 1 : 0 : 0
+305 : 40 : 16 : 107.23 : nan : 1 : 0 : 0
+292 : 41 : 8 : -13.693 : nan : 0 : 0 : 0
+291 : 41 : 12 : 78.947 : nan : 0 : 0 : 0
+295 : 41 : 13 : 102.11 : nan : 1 : 0 : 0
+296 : 41 : 13 : 102.11 : nan : 1 : 0 : 0
+293 : 42 : 6 : -58.252 : nan : 1 : 0 : 0
+294 : 42 : 6 : -58.252 : nan : 1 : 0 : 0
+297 : 43 : 12 : 79.886 : nan : 0 : 0 : 0
+298 : 43 : 12 : 79.886 : nan : 0 : 0 : 0
+301 : 43 : 13 : 103.05 : nan : 1 : 0 : 0
+302 : 43 : 13 : 103.05 : nan : 1 : 0 : 0
+299 : 44 : 6 : -59.308 : nan : 1 : 0 : 0
+300 : 44 : 6 : -59.308 : nan : 1 : 0 : 0
+289 : 45 : 5 : -67.429 : nan : 1 : 0 : 0
+288 : 45 : 5 : -67.429 : nan : 1 : 0 : 0
+286 : 46 : 15 : 125.14 : nan : 1 : 0 : 0
+287 : 46 : 15 : 125.14 : nan : 1 : 0 : 0
+284 : 46 : 16 : 144.47 : nan : 0 : 0 : 0
+285 : 46 : 16 : 144.47 : nan : 0 : 0 : 0
+290 : 46 : 16 : 144.47 : nan : 1 : 0 : 0
+315 : 47 : 19 : -88.957 : 2.4038 : 0 : 0 : 0
+316 : 47 : 22 : -73.717 : 2.4091 : 0 : 0 : 0
+320 : 47 : 25 : -58.274 : 2.3969 : 0 : 0 : 0
+314 : 47 : 26 : -53.194 : 2.4149 : 0 : 0 : 0
+332 : 47 : 26 : -53.194 : 2.3502 : 1 : 0 : 0
+311 : 47 : 34 : -12.453 : 2.419 : 0 : 0 : 0
+317 : 47 : 38 : 7.8674 : 2.4151 : 0 : 0 : 0
+323 : 47 : 38 : 7.8674 : 2.3983 : 0 : 0 : 0
+330 : 47 : 38 : 7.8674 : 2.3791 : 1 : 0 : 0
+309 : 47 : 47 : 53.689 : 2.4278 : 0 : 0 : 0
+307 : 47 : 52 : 79.191 : 2.3842 : 0 : 0 : 0
+321 : 48 : 20 : -86.417 : 2.4054 : 0 : 0 : 0
+322 : 48 : 23 : -71.177 : 2.4302 : 0 : 0 : 0
+325 : 48 : 23 : -71.177 : 2.4202 : 0 : 0 : 0
+327 : 48 : 25 : -60.814 : 2.4131 : 0 : 0 : 0
+326 : 48 : 26 : -55.734 : 2.4309 : 0 : 0 : 0
+328 : 48 : 26 : -55.734 : 2.4019 : 0 : 0 : 0
+318 : 48 : 34 : -14.993 : 2.4175 : 0 : 0 : 0
+324 : 48 : 34 : -14.993 : 2.399 : 0 : 0 : 0
+312 : 48 : 35 : -9.9126 : 2.4242 : 0 : 0 : 0
+329 : 48 : 35 : -9.9126 : 2.3881 : 0 : 0 : 0
+331 : 48 : 38 : 5.3274 : 2.3502 : 1 : 0 : 0
+313 : 48 : 39 : 10.407 : 2.4185 : 0 : 0 : 0
+319 : 48 : 39 : 10.407 : 2.4037 : 0 : 0 : 0
+308 : 48 : 52 : 76.651 : 2.4221 : 0 : 0 : 0
+306 : 48 : 58 : 107.36 : 2.4062 : 0 : 0 : 0
+310 : 48 : 58 : 107.36 : 2.3446 : 1 : 0 : 0
+389 : 49 : 2 : -176.08 : 2.3828 : 0 : 0 : 0
+380 : 49 : 23 : -69.051 : 2.3824 : 0 : 0 : 0
+385 : 49 : 23 : -69.051 : 2.3715 : 1 : 0 : 0
+333 : 49 : 60 : 119.72 : 2.3824 : 0 : 0 : 0
+334 : 49 : 61 : 124.8 : 2.3831 : 0 : 0 : 0
+341 : 49 : 64 : 140.04 : 2.3816 : 0 : 0 : 0
+338 : 49 : 71 : 175.76 : 2.3834 : 0 : 0 : 0
+340 : 49 : 71 : 175.76 : 2.3826 : 0 : 0 : 0
+390 : 50 : 2 : -178.62 : 2.3832 : 0 : 0 : 0
+392 : 50 : 2 : -178.62 : 2.382 : 0 : 0 : 0
+396 : 50 : 3 : -173.54 : 2.3811 : 1 : 0 : 0
+395 : 50 : 9 : -142.91 : 2.337 : 1 : 0 : 0
+381 : 50 : 23 : -71.591 : 2.3828 : 0 : 0 : 0
+382 : 50 : 23 : -71.591 : 2.3822 : 0 : 0 : 0
+383 : 50 : 23 : -71.591 : 2.3815 : 0 : 0 : 0
+384 : 50 : 23 : -71.591 : 2.3796 : 1 : 0 : 0
+337 : 50 : 61 : 122.26 : 2.3825 : 0 : 0 : 0
+339 : 50 : 62 : 127.34 : 2.3819 : 0 : 0 : 0
+342 : 50 : 62 : 127.34 : 2.377 : 1 : 0 : 0
+335 : 50 : 64 : 137.5 : 2.3829 : 0 : 0 : 0
+336 : 50 : 72 : 178.3 : 2.3833 : 0 : 0 : 0
+405 : 51 : 6 : -155.45 : 2.3812 : 0 : 0 : 0
+406 : 51 : 6 : -155.45 : 2.3812 : 0 : 0 : 0
+400 : 51 : 21 : -79.407 : 2.3812 : 0 : 0 : 0
+403 : 51 : 22 : -74.327 : 2.3812 : 0 : 0 : 0
+399 : 51 : 47 : 52.73 : 2.3812 : 0 : 0 : 0
+388 : 51 : 63 : 134.77 : 2.3812 : 0 : 0 : 0
+397 : 51 : 65 : 144.62 : 2.3812 : 0 : 0 : 0
+393 : 51 : 66 : 149.7 : 2.3812 : 0 : 0 : 0
+386 : 51 : 70 : 170.02 : 2.3812 : 0 : 0 : 0
+394 : 51 : 72 : 180.18 : 2.3812 : 0 : 0 : 0
+402 : 52 : 6 : -157.99 : 2.3812 : 0 : 0 : 0
+401 : 52 : 22 : -76.867 : 2.3812 : 0 : 0 : 0
+404 : 52 : 22 : -76.867 : 2.3812 : 0 : 0 : 0
+391 : 52 : 65 : 142.08 : 2.3812 : 0 : 0 : 0
+387 : 52 : 67 : 152.24 : 2.3812 : 0 : 0 : 0
+398 : 52 : 72 : 177.64 : 2.3812 : 0 : 0 : 0
+418 : 53 : 24 : -64.255 : 2.3883 : 0 : 0 : 0
+414 : 53 : 38 : 7.4749 : 2.3851 : 0 : 0 : 0
+415 : 53 : 38 : 7.4749 : 2.3819 : 0 : 0 : 0
+412 : 53 : 39 : 12.555 : 2.3898 : 0 : 0 : 0
+409 : 53 : 54 : 88.755 : 2.3951 : 0 : 0 : 0
+407 : 53 : 61 : 124.06 : 2.3916 : 0 : 0 : 0
+416 : 53 : 61 : 124.06 : 2.3026 : 1 : 0 : 0
+417 : 54 : 25 : -61.207 : 2.395 : 0 : 0 : 0
+411 : 54 : 33 : -20.465 : 2.3673 : 1 : 0 : 0
+413 : 54 : 39 : 10.015 : 2.3941 : 0 : 0 : 0
+410 : 54 : 55 : 91.295 : 2.3863 : 0 : 0 : 0
+408 : 54 : 62 : 126.6 : 2.3833 : 0 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 28
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  515  setRawEvent :::  NTracklets in St3: 11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  529  setRawEvent :::  NTracklets St2+St3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  544  setRawEvent :::  NTracklets Global: 0
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  550  setRawEvent :::  Prop tube segments in X-Z
+nHits: 4, nPlanes: 2
+a = -0.04052, b = 17.866, chisq = 4.9776
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 381  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.04052, b = 17.866, chisq = 4.9776
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 381  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040549, b = 17.935, chisq = 4.9515
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 381  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040549, b = 17.935, chisq = 4.9515
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 381  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040518, b = 17.863, chisq = 4.9761
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 382  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040518, b = 17.863, chisq = 4.9761
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 382  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040547, b = 17.931, chisq = 4.9501
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 382  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040547, b = 17.931, chisq = 4.9501
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 382  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040517, b = 17.859, chisq = 4.9746
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 383  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040517, b = 17.859, chisq = 4.9746
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 383  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040546, b = 17.927, chisq = 4.9485
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 383  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040546, b = 17.927, chisq = 4.9485
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 383  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040512, b = 17.848, chisq = 4.97
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 384  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040512, b = 17.848, chisq = 4.97
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 380  49  23 === L: 384  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040541, b = 17.916, chisq = 4.944
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 384  50  23 === L: 400  51  21 === R: 401  52  22 === 
+nHits: 4, nPlanes: 2
+a = -0.040541, b = 17.916, chisq = 4.944
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 385  49  23 === L: 384  50  23 === L: 400  51  21 === R: 404  52  22 === 
+nHits: 4, nPlanes: 2
+a = 0.103, b = -100.66, chisq = 3.1376
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 334  49  61 === L: 337  50  61 === R: 397  51  65 === L: 391  52  65 === 
+nHits: 4, nPlanes: 2
+a = 0.023994, b = 86.527, chisq = 4.488
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 341  49  64 === L: 335  50  64 === R: 397  51  65 === L: 391  52  65 === 
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  550  setRawEvent :::  Prop tube segments in Y-Z
+nHits: 4, nPlanes: 2
+a = 0.0074639, b = -9.1113, chisq = 4.9846
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 317  47  38 === L: 331  48  38 === L: 414  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.0074584, b = -9.0998, chisq = 4.9772
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 317  47  38 === L: 331  48  38 === L: 415  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.016318, b = -27.724, chisq = 4.679
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 317  47  38 === L: 331  48  38 === R: 412  53  39 === L: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.0074346, b = -9.0414, chisq = 4.9479
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 323  47  38 === L: 331  48  38 === L: 414  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.0074291, b = -9.0298, chisq = 4.9405
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 323  47  38 === L: 331  48  38 === L: 415  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.016289, b = -27.654, chisq = 4.6435
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 323  47  38 === L: 331  48  38 === R: 412  53  39 === L: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.0074012, b = -8.9615, chisq = 4.9063
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 330  47  38 === L: 331  48  38 === L: 414  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.0073957, b = -8.95, chisq = 4.8989
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 330  47  38 === L: 331  48  38 === L: 415  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = 0.016255, b = -27.574, chisq = 4.6033
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 330  47  38 === L: 331  48  38 === R: 412  53  39 === L: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = -0.001436, b = 12.158, chisq = 4.9949
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+L: 330  47  38 === R: 319  48  39 === L: 414  53  38 === R: 413  54  39 === 
+nHits: 4, nPlanes: 2
+a = -0.0014415, b = 12.17, chisq = 4.9875
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+L: 330  47  38 === R: 319  48  39 === L: 415  53  38 === R: 413  54  39 === 
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 1 is 0
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 2 is 28
+Tracklet in station 3
+6 hits in this station with chisq = 31.089
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.49845 = U: 361 D2Vp(14) 19  -1.3256 = U: 229 D2Xp(15) 12  2.2333 = U: 231 D2X(16) 11  1.4761 = U: 234 D2U(17) 18  -0.53593 = U: 237 D2Up(18) 17  -1.2421 = 
+X-Z: (-0.036614 +/- 0.00035926)*z + (-47.04 +/- 0.51782)
+Y-Z: (-0.038353 +/- 0.00088109)*z + (50 +/- 9.3221)
+KMAG projection: X =  -86.008 +/- 0.90017
+KMAG projection: Y =  9.1826 +/- 10.26
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 31.089
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.49845 = U: 363 D2Vp(14) 19  -1.3256 = U: 229 D2Xp(15) 12  2.2333 = U: 231 D2X(16) 11  1.4761 = U: 234 D2U(17) 18  -0.53593 = U: 237 D2Up(18) 17  -1.2421 = 
+X-Z: (-0.036614 +/- 0.00035926)*z + (-47.04 +/- 0.51782)
+Y-Z: (-0.038353 +/- 0.00088109)*z + (50 +/- 9.3221)
+KMAG projection: X =  -86.008 +/- 0.90017
+KMAG projection: Y =  9.1826 +/- 10.26
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 2.6393
+Momentum in z @st1: 9.9731 +/- -99.731
+Momentum in z @st3: 9.9938 +/- -99.938
+Charge: 1
+U: 357 D2V(13) 23  0.43107 = U: 362 D2Vp(14) 22  -0.35049 = U: 229 D2Xp(15) 12  0.30259 = U: 231 D2X(16) 11  -0.46475 = U: 234 D2U(17) 18  0.4252 = U: 237 D2Up(18) 17  -0.34547 = 
+X-Z: (-0.035263 +/- 0)*z + (-46.887 +/- 0)
+Y-Z: (-0.0064353 +/- 0)*z + (-5.2917 +/- 0)
+KMAG projection: X =  -84.416 +/- 0
+KMAG projection: Y =  -12.141 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 23.299
+Momentum in z @st1: 9.9727 +/- -99.727
+Momentum in z @st3: 9.9936 +/- -99.936
+Charge: 1
+U: 358 D2V(13) 20  -0.32785 = U: 361 D2Vp(14) 19  -1.1573 = U: 229 D2Xp(15) 12  1.8932 = U: 231 D2X(16) 11  1.1309 = U: 234 D2U(17) 18  -1.3785 = U: 236 D2Up(18) 18  -0.072868 = 
+X-Z: (-0.035895 +/- 0.00015828)*z + (-47.67 +/- 0.20625)
+Y-Z: (-0.036869 +/- 0.00091593)*z + (50 +/- 13.114)
+KMAG projection: X =  -85.871 +/- 0.37471
+KMAG projection: Y =  10.762 +/- 14.088
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 23.299
+Momentum in z @st1: 9.9727 +/- -99.727
+Momentum in z @st3: 9.9936 +/- -99.936
+Charge: 1
+U: 358 D2V(13) 20  -0.32785 = U: 363 D2Vp(14) 19  -1.1573 = U: 229 D2Xp(15) 12  1.8932 = U: 231 D2X(16) 11  1.1309 = U: 234 D2U(17) 18  -1.3785 = U: 236 D2Up(18) 18  -0.072868 = 
+X-Z: (-0.035895 +/- 0.00015828)*z + (-47.67 +/- 0.20625)
+Y-Z: (-0.036869 +/- 0.00091593)*z + (50 +/- 13.114)
+KMAG projection: X =  -85.871 +/- 0.37471
+KMAG projection: Y =  10.762 +/- 14.088
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 4.3234
+Momentum in z @st1: 9.9729 +/- -99.729
+Momentum in z @st3: 9.9937 +/- -99.937
+Charge: 1
+U: 357 D2V(13) 23  0.50102 = U: 362 D2Vp(14) 22  -0.21875 = U: 229 D2Xp(15) 12  0.099866 = U: 231 D2X(16) 11  -0.66601 = U: 234 D2U(17) 18  -0.4613 = U: 236 D2Up(18) 18  0.73003 = 
+X-Z: (-0.035564 +/- 0)*z + (-46.286 +/- 0)
+Y-Z: (0.028393 +/- 0)*z + (-50 +/- 0)
+KMAG projection: X =  -84.135 +/- 0
+KMAG projection: Y =  -19.782 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 13.888
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.16347 = U: 361 D2Vp(14) 19  -0.98515 = U: 229 D2Xp(15) 12  1.5492 = U: 231 D2X(16) 11  0.79199 = U: 233 D2U(17) 19  -0.20436 = U: 236 D2Up(18) 18  -0.91564 = 
+X-Z: (-0.03664 +/- 0.00065093)*z + (-46.332 +/- 0.83328)
+Y-Z: (-0.035281 +/- 0.00089927)*z + (49.998 +/- 14.773)
+KMAG projection: X =  -85.327 +/- 1.526
+KMAG projection: Y =  12.45 +/- 15.73
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 13.888
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.16347 = U: 363 D2Vp(14) 19  -0.98515 = U: 229 D2Xp(15) 12  1.5492 = U: 231 D2X(16) 11  0.79199 = U: 233 D2U(17) 19  -0.20436 = U: 236 D2Up(18) 18  -0.91564 = 
+X-Z: (-0.03664 +/- 0.00065093)*z + (-46.332 +/- 0.83328)
+Y-Z: (-0.035281 +/- 0.00089927)*z + (49.998 +/- 14.773)
+KMAG projection: X =  -85.327 +/- 1.526
+KMAG projection: Y =  12.45 +/- 15.73
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 2.8194
+Momentum in z @st1: 9.9382 +/- -99.382
+Momentum in z @st3: 9.8895 +/- -98.895
+Charge: -1
+U: 357 D2V(13) 23  0.25059 = U: 362 D2Vp(14) 22  0.32021 = U: 229 D2Xp(15) 12  -0.5976 = U: 231 D2X(16) 11  -0.56641 = U: 233 D2U(17) 19  0.31301 = U: 236 D2Up(18) 18  0.24113 = 
+X-Z: (-0.14988 +/- 0)*z + (107.61 +/- 0)
+Y-Z: (0.038299 +/- 0)*z + (-50 +/- 0)
+KMAG projection: X =  -51.901 +/- 0
+KMAG projection: Y =  -9.2396 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 23.299
+Momentum in z @st1: 9.9727 +/- -99.727
+Momentum in z @st3: 9.9936 +/- -99.936
+Charge: 1
+U: 358 D2V(13) 20  -0.32785 = U: 361 D2Vp(14) 19  -1.1573 = U: 229 D2Xp(15) 12  1.8932 = U: 231 D2X(16) 11  1.1309 = U: 234 D2U(17) 18  -1.3785 = U: 238 D2Up(18) 18  -0.072868 = 
+X-Z: (-0.035895 +/- 0.00015828)*z + (-47.67 +/- 0.20625)
+Y-Z: (-0.036869 +/- 0.00091593)*z + (50 +/- 13.114)
+KMAG projection: X =  -85.871 +/- 0.37471
+KMAG projection: Y =  10.762 +/- 14.088
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 23.299
+Momentum in z @st1: 9.9727 +/- -99.727
+Momentum in z @st3: 9.9936 +/- -99.936
+Charge: 1
+U: 358 D2V(13) 20  -0.32785 = U: 363 D2Vp(14) 19  -1.1573 = U: 229 D2Xp(15) 12  1.8932 = U: 231 D2X(16) 11  1.1309 = U: 234 D2U(17) 18  -1.3785 = U: 238 D2Up(18) 18  -0.072868 = 
+X-Z: (-0.035895 +/- 0.00015828)*z + (-47.67 +/- 0.20625)
+Y-Z: (-0.036869 +/- 0.00091593)*z + (50 +/- 13.114)
+KMAG projection: X =  -85.871 +/- 0.37471
+KMAG projection: Y =  10.762 +/- 14.088
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 4.3234
+Momentum in z @st1: 9.9729 +/- -99.729
+Momentum in z @st3: 9.9937 +/- -99.937
+Charge: 1
+U: 357 D2V(13) 23  0.50102 = U: 362 D2Vp(14) 22  -0.21875 = U: 229 D2Xp(15) 12  0.099866 = U: 231 D2X(16) 11  -0.66601 = U: 234 D2U(17) 18  -0.4613 = U: 238 D2Up(18) 18  0.73003 = 
+X-Z: (-0.035564 +/- 0)*z + (-46.286 +/- 0)
+Y-Z: (0.028393 +/- 0)*z + (-50 +/- 0)
+KMAG projection: X =  -84.135 +/- 0
+KMAG projection: Y =  -19.782 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 13.888
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.16347 = U: 361 D2Vp(14) 19  -0.98515 = U: 229 D2Xp(15) 12  1.5492 = U: 231 D2X(16) 11  0.79199 = U: 233 D2U(17) 19  -0.20436 = U: 238 D2Up(18) 18  -0.91564 = 
+X-Z: (-0.03664 +/- 0.00065093)*z + (-46.332 +/- 0.83328)
+Y-Z: (-0.035281 +/- 0.00089927)*z + (49.998 +/- 14.773)
+KMAG projection: X =  -85.327 +/- 1.526
+KMAG projection: Y =  12.45 +/- 15.73
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 13.888
+Momentum in z @st1: 9.9721 +/- -99.721
+Momentum in z @st3: 9.9933 +/- -99.933
+Charge: 1
+U: 358 D2V(13) 20  -0.16347 = U: 363 D2Vp(14) 19  -0.98515 = U: 229 D2Xp(15) 12  1.5492 = U: 231 D2X(16) 11  0.79199 = U: 233 D2U(17) 19  -0.20436 = U: 238 D2Up(18) 18  -0.91564 = 
+X-Z: (-0.03664 +/- 0.00065093)*z + (-46.332 +/- 0.83328)
+Y-Z: (-0.035281 +/- 0.00089927)*z + (49.998 +/- 14.773)
+KMAG projection: X =  -85.327 +/- 1.526
+KMAG projection: Y =  12.45 +/- 15.73
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 2.8194
+Momentum in z @st1: 9.9382 +/- -99.382
+Momentum in z @st3: 9.8895 +/- -98.895
+Charge: -1
+U: 357 D2V(13) 23  0.25059 = U: 362 D2Vp(14) 22  0.32021 = U: 229 D2Xp(15) 12  -0.5976 = U: 231 D2X(16) 11  -0.56641 = U: 233 D2U(17) 19  0.31301 = U: 238 D2Up(18) 18  0.24113 = 
+X-Z: (-0.14988 +/- 0)*z + (107.61 +/- 0)
+Y-Z: (0.038299 +/- 0)*z + (-50 +/- 0)
+KMAG projection: X =  -51.901 +/- 0
+KMAG projection: Y =  -9.2396 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 5.3509
+Momentum in z @st1: 9.9876 +/- -99.876
+Momentum in z @st3: 9.9993 +/- -99.993
+Charge: 1
+U: 359 D2V(13) 57  0.65069 = U: 360 D2Vp(14) 56  -0.26618 = U: 230 D2Xp(15) 43  0.078521 = U: 232 D2X(16) 42  -0.85479 = U: 235 D2U(17) 46  -0.3483 = U: 239 D2Up(18) 46  0.71562 = 
+X-Z: (-0.011586 +/- 0)*z + (-13.758 +/- 0)
+Y-Z: (0.0083694 +/- 0)*z + (-49.999 +/- 0)
+KMAG projection: X =  -26.089 +/- 0
+KMAG projection: Y =  -41.092 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 33.765
+Momentum in z @st1: 9.9843 +/- -99.843
+Momentum in z @st3: 9.9984 +/- -99.984
+Charge: -1
+U: 222 D2V(13) 80  -1.3839 = U: 225 D2Vp(14) 80  -0.47724 = U: 366 D2Xp(15) 81  2.4591 = U: 368 D2X(16) 80  1.32 = U: 374 D2U(17) 95  -1.3379 = U: 376 D2Up(18) 95  -0.47621 = 
+X-Z: (0.017901 +/- 0.00026515)*z + (23.215 +/- 0.32715)
+Y-Z: (0.0097139 +/- 0.00087891)*z + (50 +/- 7.591)
+KMAG projection: X =  42.267 +/- 0.60934
+KMAG projection: Y =  60.338 +/- 8.5263
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 4.2146
+Momentum in z @st1: 9.984 +/- -99.84
+Momentum in z @st3: 9.9983 +/- -99.983
+Charge: -1
+U: 222 D2V(13) 80  -0.4095 = U: 225 D2Vp(14) 80  0.5281 = U: 366 D2Xp(15) 81  0.45158 = U: 368 D2X(16) 80  -0.69131 = U: 372 D2U(17) 98  -0.35327 = U: 375 D2Up(18) 98  0.4704 = 
+X-Z: (0.018395 +/- 0)*z + (24.527 +/- 0)
+Y-Z: (0.029728 +/- 0)*z + (35.427 +/- 0)
+KMAG projection: X =  44.104 +/- 0
+KMAG projection: Y =  67.065 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 5.0327
+Momentum in z @st1: 9.9804 +/- -99.804
+Momentum in z @st3: 9.997 +/- -99.97
+Charge: -1
+U: 224 D2V(13) 96  -0.56072 = U: 227 D2Vp(14) 96  0.21683 = U: 367 D2Xp(15) 88  0.94038 = U: 369 D2X(16) 87  -0.24347 = U: 374 D2U(17) 95  -0.6186 = U: 376 D2Up(18) 95  0.28393 = 
+X-Z: (0.024478 +/- 0)*z + (30.683 +/- 0)
+Y-Z: (-0.039626 +/- 0)*z + (49.999 +/- 0)
+KMAG projection: X =  56.734 +/- 0
+KMAG projection: Y =  7.8265 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 9.8542
+Momentum in z @st1: 9.9816 +/- -99.816
+Momentum in z @st3: 9.9974 +/- -99.974
+Charge: -1
+U: 223 D2V(13) 93  0.22814 = U: 226 D2Vp(14) 92  -0.96763 = U: 367 D2Xp(15) 88  1.3394 = U: 369 D2X(16) 87  0.16829 = U: 372 D2U(17) 98  -0.8026 = U: 375 D2Up(18) 98  0.078089 = 
+X-Z: (0.022592 +/- 0)*z + (32.738 +/- 0)
+Y-Z: (-0.019626 +/- 0)*z + (49.996 +/- 0)
+KMAG projection: X =  56.781 +/- 0
+KMAG projection: Y =  29.109 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 9.8542
+Momentum in z @st1: 9.9816 +/- -99.816
+Momentum in z @st3: 9.9974 +/- -99.974
+Charge: -1
+U: 223 D2V(13) 93  0.22814 = U: 228 D2Vp(14) 92  -0.96763 = U: 367 D2Xp(15) 88  1.3394 = U: 369 D2X(16) 87  0.16829 = U: 372 D2U(17) 98  -0.8026 = U: 375 D2Up(18) 98  0.078089 = 
+X-Z: (0.022592 +/- 0)*z + (32.738 +/- 0)
+Y-Z: (-0.019626 +/- 0)*z + (49.996 +/- 0)
+KMAG projection: X =  56.781 +/- 0
+KMAG projection: Y =  29.109 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 20.044
+Momentum in z @st1: 9.9804 +/- -99.804
+Momentum in z @st3: 9.997 +/- -99.97
+Charge: -1
+U: 224 D2V(13) 96  0.22305 = U: 227 D2Vp(14) 96  1.1435 = U: 367 D2Xp(15) 88  -0.79612 = U: 369 D2X(16) 87  -1.9819 = U: 372 D2U(17) 98  0.28618 = U: 375 D2Up(18) 98  1.0435 = 
+X-Z: (0.024521 +/- 0.00016765)*z + (32.329 +/- 0.22334)
+Y-Z: (0.043987 +/- 0.0008825)*z + (-50 +/- 12.568)
+KMAG projection: X =  58.426 +/- 0.40176
+KMAG projection: Y =  -3.186 +/- 13.507
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 5.0327
+Momentum in z @st1: 9.9804 +/- -99.804
+Momentum in z @st3: 9.997 +/- -99.97
+Charge: -1
+U: 224 D2V(13) 96  -0.56072 = U: 227 D2Vp(14) 96  0.21683 = U: 367 D2Xp(15) 88  0.94038 = U: 370 D2X(16) 87  -0.24347 = U: 374 D2U(17) 95  -0.6186 = U: 376 D2Up(18) 95  0.28393 = 
+X-Z: (0.024478 +/- 0)*z + (30.683 +/- 0)
+Y-Z: (-0.039626 +/- 0)*z + (49.999 +/- 0)
+KMAG projection: X =  56.734 +/- 0
+KMAG projection: Y =  7.8265 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 9.8542
+Momentum in z @st1: 9.9816 +/- -99.816
+Momentum in z @st3: 9.9974 +/- -99.974
+Charge: -1
+U: 223 D2V(13) 93  0.22814 = U: 226 D2Vp(14) 92  -0.96763 = U: 367 D2Xp(15) 88  1.3394 = U: 370 D2X(16) 87  0.16829 = U: 372 D2U(17) 98  -0.8026 = U: 375 D2Up(18) 98  0.078089 = 
+X-Z: (0.022592 +/- 0)*z + (32.738 +/- 0)
+Y-Z: (-0.019626 +/- 0)*z + (49.996 +/- 0)
+KMAG projection: X =  56.781 +/- 0
+KMAG projection: Y =  29.109 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 9.8542
+Momentum in z @st1: 9.9816 +/- -99.816
+Momentum in z @st3: 9.9974 +/- -99.974
+Charge: -1
+U: 223 D2V(13) 93  0.22814 = U: 228 D2Vp(14) 92  -0.96763 = U: 367 D2Xp(15) 88  1.3394 = U: 370 D2X(16) 87  0.16829 = U: 372 D2U(17) 98  -0.8026 = U: 375 D2Up(18) 98  0.078089 = 
+X-Z: (0.022592 +/- 0)*z + (32.738 +/- 0)
+Y-Z: (-0.019626 +/- 0)*z + (49.996 +/- 0)
+KMAG projection: X =  56.781 +/- 0
+KMAG projection: Y =  29.109 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 20.044
+Momentum in z @st1: 9.9804 +/- -99.804
+Momentum in z @st3: 9.997 +/- -99.97
+Charge: -1
+U: 224 D2V(13) 96  0.22305 = U: 227 D2Vp(14) 96  1.1435 = U: 367 D2Xp(15) 88  -0.79612 = U: 370 D2X(16) 87  -1.9819 = U: 372 D2U(17) 98  0.28618 = U: 375 D2Up(18) 98  1.0435 = 
+X-Z: (0.024521 +/- 0.00016765)*z + (32.329 +/- 0.22334)
+Y-Z: (0.043987 +/- 0.0008825)*z + (-50 +/- 12.568)
+KMAG projection: X =  58.426 +/- 0.40176
+KMAG projection: Y =  -3.186 +/- 13.507
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 4.745
+Momentum in z @st1: 9.9809 +/- -99.809
+Momentum in z @st3: 9.9972 +/- -99.972
+Charge: -1
+U: 223 D2V(13) 93  0.64139 = U: 226 D2Vp(14) 92  -0.39313 = U: 365 D2Xp(15) 91  0.34025 = U: 371 D2X(16) 90  -0.84021 = U: 373 D2U(17) 106  -0.23061 = U: 377 D2Up(18) 106  0.47161 = 
+X-Z: (0.023661 +/- 0)*z + (38.463 +/- 0)
+Y-Z: (0.079147 +/- 0)*z + (-49.959 +/- 0)
+KMAG projection: X =  63.645 +/- 0
+KMAG projection: Y =  34.274 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+6 hits in this station with chisq = 4.745
+Momentum in z @st1: 9.9809 +/- -99.809
+Momentum in z @st3: 9.9972 +/- -99.972
+Charge: -1
+U: 223 D2V(13) 93  0.64139 = U: 228 D2Vp(14) 92  -0.39313 = U: 365 D2Xp(15) 91  0.34025 = U: 371 D2X(16) 90  -0.84021 = U: 373 D2U(17) 106  -0.23061 = U: 377 D2Up(18) 106  0.47161 = 
+X-Z: (0.023661 +/- 0)*z + (38.463 +/- 0)
+Y-Z: (0.079147 +/- 0)*z + (-49.959 +/- 0)
+KMAG projection: X =  63.645 +/- 0
+KMAG projection: Y =  34.274 +/- 0
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 3 is 11
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 421 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 344 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 348 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 422 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 344 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 348 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 421 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 344 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 350 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 422 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 344 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 350 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 421 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 345 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 348 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 422 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 345 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 348 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 421 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 345 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 350 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 7.1254
+Momentum in z @st1: 9.979 +/- -99.79
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 425 D3pVp(19) 119  -0.76583 = U: 422 D3pV(20) 120  0.16352 = U: 346 D3pXp(21) 110  0.1093 = U: 345 D3pX(22) 111  1.0538 = U: 356 D3pUp(23) 115  -0.77886 = U: 350 D3pU(24) 116  0.18129 = 
+X-Z: (0.026716 +/- 0)*z + (50.876 +/- 0)
+Y-Z: (0.026576 +/- 0)*z + (43.263 +/- 0)
+KMAG projection: X =  79.309 +/- 0
+KMAG projection: Y =  71.546 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 5.3043
+Momentum in z @st1: 9.9858 +/- -99.858
+Momentum in z @st3: 9.9988 +/- -99.988
+Charge: 1
+U: 270 D3mVp(25) 45  -0.40383 = U: 267 D3mV(26) 45  0.63812 = U: 440 D3mXp(27) 31  -0.74535 = U: 438 D3mX(28) 31  0.29064 = U: 264 D3mUp(29) 37  -0.39808 = U: 442 D3mU(30) 37  0.63193 = 
+X-Z: (-0.01518 +/- 0)*z + (-28.605 +/- 0)
+Y-Z: (-0.012809 +/- 0)*z + (-23.594 +/- 0)
+KMAG projection: X =  -44.761 +/- 0
+KMAG projection: Y =  -37.226 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 5.3043
+Momentum in z @st1: 9.9858 +/- -99.858
+Momentum in z @st3: 9.9988 +/- -99.988
+Charge: 1
+U: 271 D3mVp(25) 45  -0.40383 = U: 267 D3mV(26) 45  0.63812 = U: 440 D3mXp(27) 31  -0.74535 = U: 438 D3mX(28) 31  0.29064 = U: 264 D3mUp(29) 37  -0.39808 = U: 442 D3mU(30) 37  0.63193 = 
+X-Z: (-0.01518 +/- 0)*z + (-28.605 +/- 0)
+Y-Z: (-0.012809 +/- 0)*z + (-23.594 +/- 0)
+KMAG projection: X =  -44.761 +/- 0
+KMAG projection: Y =  -37.226 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 4.4032
+Momentum in z @st1: 9.9788 +/- -99.788
+Momentum in z @st3: 9.9964 +/- -99.964
+Charge: -1
+U: 268 D3mVp(25) 126  -0.45104 = U: 265 D3mV(26) 126  0.50467 = U: 439 D3mXp(27) 111  0.47051 = U: 437 D3mX(28) 110  -0.57737 = U: 443 D3mUp(29) 110  -0.44974 = U: 441 D3mU(30) 110  0.50258 = 
+X-Z: (0.02701 +/- 0)*z + (50.413 +/- 0)
+Y-Z: (-0.0038616 +/- 0)*z + (-6.6818 +/- 0)
+KMAG projection: X =  79.159 +/- 0
+KMAG projection: Y =  -10.792 +/- 0
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 4 is 3
+Tracklet in station 6
+12 hits in this station with chisq = 27.367
+Momentum in z @st1: 49.946 +/- 12.487
+Momentum in z @st3: 49.927 +/- 12.482
+Charge: 1
+U: 223 D2V(13) 93  1.0031 = U: 226 D2Vp(14) 92  -0.2573 = U: 365 D2Xp(15) 91  -0.14469 = U: 371 D2X(16) 90  -1.535 = L: 373 D2U(17) 106  -0.24043 = L: 377 D2Up(18) 106  0.2731 = U: 425 D3pVp(19) 119  -0.76832 = U: 421 D3pV(20) 120  0.087099 = U: 346 D3pXp(21) 110  0.088358 = U: 344 D3pX(22) 111  0.97724 = U: 356 D3pUp(23) 115  -0.70699 = U: 348 D3pU(24) 116  0.21916 = 
+X-Z: (0.053989 +/- 0.00028809)*z + (-1.7031 +/- 0.40875)
+Y-Z: (0.066617 +/- 0.0016847)*z + (-33.15 +/- 2.3488)
+KMAG projection: X =  55.755 +/- 0.71536
+KMAG projection: Y =  37.748 +/- 4.1417
+KMAGSTR =  -0.951
+Tracklet in station 6
+12 hits in this station with chisq = 33.66
+Momentum in z @st1: 49.954 +/- 12.488
+Momentum in z @st3: 49.936 +/- 12.484
+Charge: -1
+R: 359 D2V(13) 57  0.33391 = R: 360 D2Vp(14) 56  -0.3329 = U: 230 D2Xp(15) 43  0.12372 = U: 232 D2X(16) 42  -0.53499 = U: 235 D2U(17) 46  -0.5865 = U: 239 D2Up(18) 46  0.80405 = U: 270 D3mVp(25) 45  -0.46725 = U: 267 D3mV(26) 45  0.64954 = U: 440 D3mXp(27) 31  -0.74865 = U: 438 D3mX(28) 31  0.35699 = U: 264 D3mUp(29) 37  -0.36966 = U: 442 D3mU(30) 37  0.72069 = 
+X-Z: (-0.050716 +/- 0.00057061)*z + (38.624 +/- 0.90691)
+Y-Z: (-0.028456 +/- 0.0026022)*z + (5.3493 +/- 3.9876)
+KMAG projection: X =  -15.351 +/- 1.5142
+KMAG projection: Y =  -24.936 +/- 6.757
+KMAGSTR =  -0.951
+Tracklet in station 6
+12 hits in this station with chisq = 35.149
+Momentum in z @st1: 49.903 +/- 12.476
+Momentum in z @st3: 49.878 +/- 12.47
+Charge: 1
+L: 224 D2V(13) 96  -0.25302 = L: 227 D2Vp(14) 96  0.2362 = U: 367 D2Xp(15) 88  1.5338 = U: 369 D2X(16) 87  0.034927 = R: 374 D2U(17) 95  -0.27118 = R: 376 D2Up(18) 95  0.24687 = U: 268 D3mVp(25) 126  -0.42242 = U: 265 D3mV(26) 126  0.44714 = U: 439 D3mXp(27) 111  0.48519 = U: 437 D3mX(28) 110  -0.64634 = U: 443 D3mUp(29) 110  -0.46066 = U: 441 D3mU(30) 110  0.40793 = 
+X-Z: (0.069976 +/- 0.00045183)*z + (-30.867 +/- 0.62229)
+Y-Z: (-0.0014204 +/- 0.0022179)*z + (-10.351 +/- 3.0282)
+KMAG projection: X =  43.607 +/- 1.1032
+KMAG projection: Y =  -11.863 +/- 5.3886
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 5 is 0
+=======================================================================================
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0.13198 sec
+Tracklet St3                0.013232 sec
+Tracklet St23               0.52839 sec
+Tracklet Global             0.061107 sec
+  Global St1                0.0057778 sec
+  Global Link               0.055164 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 0, finder status -6, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 1
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1678===============
+Layer 1 has 10 hits.
+Layer 2 has 9 hits.
+Layer 3 has 7 hits.
+Layer 4 has 7 hits.
+Layer 5 has 10 hits.
+Layer 6 has 8 hits.
+Layer 7 has 4 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 8 hits.
+Layer 15 has 4 hits.
+Layer 16 has 3 hits.
+Layer 17 has 6 hits.
+Layer 18 has 4 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 5 hits.
+Layer 22 has 4 hits.
+Layer 23 has 6 hits.
+Layer 24 has 2 hits.
+Layer 25 has 3 hits.
+Layer 26 has 2 hits.
+Layer 27 has 1 hits.
+Layer 28 has 2 hits.
+Layer 29 has 1 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1678===============
+Layer 1 has 10 hits.
+Layer 2 has 9 hits.
+Layer 3 has 7 hits.
+Layer 4 has 7 hits.
+Layer 5 has 10 hits.
+Layer 6 has 8 hits.
+Layer 7 has 4 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 8 hits.
+Layer 15 has 4 hits.
+Layer 16 has 3 hits.
+Layer 17 has 6 hits.
+Layer 18 has 4 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 5 hits.
+Layer 22 has 4 hits.
+Layer 23 has 6 hits.
+Layer 24 has 2 hits.
+Layer 25 has 3 hits.
+Layer 26 has 2 hits.
+Layer 27 has 1 hits.
+Layer 28 has 2 hits.
+Layer 29 has 1 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 51
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 9
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 33
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 23
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 12
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:49
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+685 : 1 : 31 : -44.466 : 0.70838 : 0 : 0 : 0
+686 : 1 : 32 : -43.831 : 0.69238 : 0 : 0 : 0
+687 : 1 : 63 : -24.146 : 0.68001 : 0 : 0 : 0
+701 : 1 : 100 : -0.65094 : 0.72075 : 0 : 0 : 0
+702 : 1 : 100 : -0.65094 : 0.70945 : 0 : 0 : 0
+680 : 1 : 102 : 0.61906 : 0.71702 : 0 : 0 : 0
+682 : 1 : 142 : 26.019 : 0.69675 : 0 : 0 : 0
+683 : 1 : 147 : 29.194 : 0.69142 : 0 : 0 : 0
+681 : 1 : 160 : 37.449 : 0.70379 : 0 : 0 : 0
+684 : 1 : 160 : 37.449 : 0.69846 : 0 : 0 : 0
+669 : 2 : 31 : -44.74 : 0.44637 : 0 : 0 : 0
+670 : 2 : 32 : -44.105 : 0.44737 : 0 : 0 : 0
+671 : 2 : 63 : -24.42 : 0.43844 : 0 : 0 : 0
+542 : 2 : 100 : -0.92536 : 0.44954 : 0 : 0 : 0
+664 : 2 : 102 : 0.34464 : 0.44961 : 0 : 0 : 0
+667 : 2 : 142 : 25.745 : 0.4468 : 0 : 0 : 0
+666 : 2 : 147 : 28.92 : 0.44491 : 0 : 0 : 0
+668 : 2 : 147 : 28.92 : 0.44218 : 0 : 0 : 0
+665 : 2 : 161 : 37.81 : 0.44815 : 0 : 0 : 0
+708 : 3 : 7 : -47.265 : 0.3175 : 0 : 0 : 0
+709 : 3 : 40 : -26.31 : 0.3175 : 0 : 0 : 0
+705 : 3 : 74 : -4.7203 : 0.3175 : 0 : 0 : 0
+706 : 3 : 87 : 3.5347 : 0.3175 : 0 : 0 : 0
+707 : 3 : 119 : 23.855 : 0.3175 : 0 : 0 : 0
+703 : 3 : 130 : 30.84 : 0.3175 : 0 : 0 : 0
+704 : 3 : 147 : 41.635 : 0.3175 : 0 : 0 : 0
+547 : 4 : 8 : -47.027 : 0.71075 : 0 : 0 : 0
+548 : 4 : 40 : -26.707 : 0.68291 : 0 : 0 : 0
+546 : 4 : 73 : -5.7518 : 0.70009 : 0 : 0 : 0
+544 : 4 : 74 : -5.1168 : 0.71587 : 0 : 0 : 0
+543 : 4 : 88 : 3.7732 : 0.72142 : 0 : 0 : 0
+545 : 4 : 119 : 23.458 : 0.70499 : 0 : 0 : 0
+541 : 4 : 131 : 31.078 : 0.70307 : 0 : 0 : 0
+688 : 5 : 29 : -47.021 : 0.3175 : 0 : 0 : 0
+689 : 5 : 30 : -46.386 : 0.3175 : 0 : 0 : 0
+690 : 5 : 60 : -27.336 : 0.3175 : 0 : 0 : 0
+691 : 5 : 89 : -8.9213 : 0.3175 : 0 : 0 : 0
+693 : 5 : 89 : -8.9213 : 0.3175 : 0 : 0 : 0
+694 : 5 : 114 : 6.9537 : 0.3175 : 0 : 0 : 0
+696 : 5 : 135 : 20.289 : 0.3175 : 0 : 0 : 0
+695 : 5 : 152 : 31.084 : 0.3175 : 0 : 0 : 0
+697 : 5 : 153 : 31.719 : 0.3175 : 0 : 0 : 0
+692 : 5 : 172 : 43.784 : 0.3175 : 0 : 0 : 0
+672 : 6 : 30 : -46.729 : 0.64359 : 0 : 0 : 0
+673 : 6 : 61 : -27.044 : 0.61861 : 0 : 0 : 0
+674 : 6 : 89 : -9.2638 : 0.6571 : 0 : 0 : 0
+676 : 6 : 115 : 7.2462 : 0.6483 : 0 : 0 : 0
+677 : 6 : 135 : 19.946 : 0.63799 : 0 : 0 : 0
+678 : 6 : 153 : 31.376 : 0.63817 : 0 : 0 : 0
+679 : 6 : 153 : 31.376 : 0.63417 : 0 : 0 : 0
+675 : 6 : 173 : 44.076 : 0.63728 : 0 : 0 : 0
+612 : 7 : 13 : -89.37 : 0.44163 : 0 : 0 : 0
+699 : 7 : 265 : 36.63 : 0.44013 : 0 : 0 : 0
+698 : 7 : 283 : 45.63 : 0.44381 : 0 : 0 : 0
+700 : 7 : 328 : 68.13 : 0.44637 : 0 : 0 : 0
+608 : 8 : 14 : -89.12 : 0.44301 : 0 : 0 : 0
+607 : 8 : 17 : -87.62 : 0.44296 : 0 : 0 : 0
+610 : 8 : 17 : -87.62 : 0.442 : 0 : 0 : 0
+611 : 8 : 17 : -87.62 : 0.43192 : 0 : 0 : 0
+609 : 8 : 59 : -66.62 : 0.44525 : 0 : 0 : 0
+592 : 13 : 16 : -100.77 : 1.1182 : 0 : 0 : 0
+594 : 13 : 16 : -100.77 : 1.1116 : 0 : 0 : 0
+596 : 13 : 16 : -100.77 : 1.1088 : 0 : 0 : 0
+595 : 13 : 24 : -84.604 : 1.1111 : 0 : 0 : 0
+597 : 13 : 24 : -84.604 : 1.1085 : 0 : 0 : 0
+593 : 13 : 39 : -54.289 : 1.1144 : 0 : 0 : 0
+502 : 13 : 94 : 56.866 : 1.117 : 0 : 0 : 0
+501 : 13 : 119 : 107.39 : 1.1145 : 0 : 0 : 0
+600 : 14 : 16 : -99.76 : 1.0595 : 0 : 0 : 0
+599 : 14 : 23 : -85.613 : 1.0618 : 0 : 0 : 0
+601 : 14 : 23 : -85.613 : 1.0589 : 0 : 0 : 0
+598 : 14 : 38 : -55.298 : 1.0651 : 0 : 0 : 0
+503 : 14 : 94 : 57.878 : 1.0657 : 0 : 0 : 0
+504 : 14 : 119 : 108.4 : 1.0637 : 0 : 0 : 0
+505 : 14 : 119 : 108.4 : 1.0626 : 0 : 0 : 0
+506 : 14 : 119 : 108.4 : 1.0608 : 0 : 0 : 0
+507 : 15 : 12 : -93.886 : 1.1489 : 0 : 0 : 0
+509 : 15 : 12 : -93.886 : 1.1466 : 0 : 0 : 0
+508 : 15 : 32 : -52.226 : 1.1469 : 0 : 0 : 0
+602 : 15 : 84 : 56.09 : 1.1487 : 0 : 0 : 0
+511 : 16 : 12 : -92.817 : 1.1867 : 0 : 0 : 0
+510 : 16 : 32 : -51.157 : 1.1981 : 0 : 0 : 0
+603 : 16 : 83 : 55.076 : 1.1934 : 0 : 0 : 0
+514 : 17 : 20 : -91.091 : 1.1119 : 0 : 0 : 0
+513 : 17 : 25 : -80.986 : 1.1167 : 0 : 0 : 0
+515 : 17 : 25 : -80.986 : 1.1114 : 0 : 0 : 0
+512 : 17 : 43 : -44.608 : 1.1203 : 0 : 0 : 0
+604 : 17 : 90 : 50.379 : 1.1163 : 0 : 0 : 0
+605 : 17 : 123 : 117.07 : 1.1077 : 0 : 0 : 0
+517 : 18 : 19 : -92.113 : 1.1122 : 0 : 0 : 0
+518 : 18 : 25 : -79.987 : 1.107 : 0 : 0 : 0
+516 : 18 : 42 : -45.63 : 1.1155 : 0 : 0 : 0
+606 : 18 : 123 : 118.07 : 1.1091 : 0 : 0 : 0
+654 : 19 : 17 : -82.658 : 1 : 0 : 0 : 0
+655 : 19 : 26 : -64.658 : 1 : 0 : 0 : 0
+653 : 19 : 86 : 55.342 : 1 : 0 : 0 : 0
+651 : 20 : 17 : -83.664 : 1 : 0 : 0 : 0
+652 : 20 : 27 : -63.664 : 1 : 0 : 0 : 0
+650 : 20 : 87 : 56.336 : 1 : 0 : 0 : 0
+587 : 21 : 10 : -97.445 : 1 : 0 : 0 : 0
+588 : 21 : 20 : -77.445 : 1 : 0 : 0 : 0
+584 : 21 : 79 : 40.555 : 1 : 0 : 0 : 0
+585 : 21 : 79 : 40.555 : 1 : 0 : 0 : 0
+586 : 21 : 79 : 40.555 : 1 : 0 : 0 : 0
+583 : 22 : 10 : -98.447 : 1 : 0 : 0 : 0
+582 : 22 : 11 : -96.447 : 1 : 0 : 0 : 0
+581 : 22 : 20 : -78.447 : 1 : 0 : 0 : 0
+580 : 22 : 79 : 39.553 : 1 : 0 : 0 : 0
+656 : 23 : 5 : -144.16 : 1 : 0 : 0 : 0
+646 : 23 : 24 : -106.16 : 1 : 0 : 0 : 0
+647 : 23 : 24 : -106.16 : 1 : 0 : 0 : 0
+649 : 23 : 24 : -106.16 : 1 : 0 : 0 : 0
+648 : 23 : 33 : -88.16 : 1 : 0 : 0 : 0
+591 : 23 : 88 : 21.84 : 1 : 0 : 0 : 0
+590 : 24 : 25 : -105.16 : 1 : 0 : 0 : 0
+589 : 24 : 89 : 22.84 : 1 : 0 : 0 : 0
+539 : 25 : 8 : -141.47 : 1 : 0 : 0 : 0
+540 : 25 : 8 : -141.47 : 1 : 0 : 0 : 0
+538 : 25 : 125 : 92.527 : 1 : 0 : 0 : 0
+537 : 26 : 7 : -142.47 : 1 : 0 : 0 : 0
+536 : 26 : 124 : 91.533 : 1 : 0 : 0 : 0
+659 : 27 : 112 : 103.99 : 1.0547 : 0 : 0 : 0
+657 : 28 : 112 : 104.99 : 1.0581 : 0 : 0 : 0
+658 : 28 : 112 : 104.99 : 1.0554 : 0 : 0 : 0
+663 : 29 : 115 : 111.57 : 1 : 0 : 0 : 0
+660 : 30 : 114 : 110.58 : 1.0529 : 0 : 0 : 0
+662 : 30 : 114 : 110.58 : 1.0496 : 0 : 0 : 0
+661 : 30 : 115 : 112.58 : 1.0505 : 0 : 0 : 0
+519 : 31 : 13 : 6.056 : nan : 1 : 0 : 0
+520 : 32 : 11 : -7.8758 : nan : 1 : 0 : 0
+521 : 33 : 9 : -9.8553 : nan : 1 : 0 : 0
+523 : 33 : 16 : 39.162 : nan : 0 : 0 : 0
+522 : 33 : 17 : 46.165 : nan : 0 : 0 : 0
+524 : 35 : 8 : -26.292 : nan : 1 : 0 : 0
+526 : 35 : 8 : -26.292 : nan : 0 : 0 : 0
+525 : 36 : 13 : 36.991 : nan : 1 : 0 : 0
+529 : 37 : 13 : 56.43 : nan : 1 : 0 : 0
+528 : 37 : 14 : 69.113 : nan : 1 : 0 : 0
+530 : 37 : 14 : 69.113 : nan : 0 : 0 : 0
+527 : 38 : 4 : -57.712 : nan : 1 : 0 : 0
+561 : 39 : 16 : 107.23 : nan : 1 : 0 : 0
+563 : 40 : 1 : -106.82 : nan : 1 : 0 : 0
+562 : 40 : 2 : -92.548 : nan : 1 : 0 : 0
+555 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+556 : 41 : 7 : -36.853 : nan : 1 : 0 : 0
+554 : 42 : 11 : 57.548 : nan : 1 : 0 : 0
+553 : 42 : 11 : 57.548 : nan : 1 : 0 : 0
+559 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+560 : 43 : 7 : -35.914 : nan : 1 : 0 : 0
+558 : 44 : 11 : 56.492 : nan : 1 : 0 : 0
+557 : 44 : 11 : 56.492 : nan : 1 : 0 : 0
+550 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+549 : 45 : 16 : 145.2 : nan : 1 : 0 : 0
+551 : 46 : 2 : -126.15 : nan : 1 : 0 : 0
+552 : 46 : 2 : -126.15 : nan : 1 : 0 : 0
+571 : 47 : 28 : -43.034 : 2.4242 : 0 : 0 : 0
+573 : 47 : 35 : -7.3726 : 2.4102 : 0 : 0 : 0
+575 : 47 : 35 : -7.3726 : 2.3889 : 0 : 0 : 0
+574 : 47 : 39 : 12.947 : 2.401 : 0 : 0 : 0
+576 : 47 : 39 : 12.947 : 2.3783 : 1 : 0 : 0
+564 : 47 : 46 : 48.609 : 2.4184 : 0 : 0 : 0
+566 : 47 : 46 : 48.609 : 2.4101 : 0 : 0 : 0
+568 : 47 : 46 : 48.609 : 2.4012 : 0 : 0 : 0
+569 : 47 : 47 : 53.689 : 2.4018 : 0 : 0 : 0
+572 : 48 : 29 : -40.494 : 2.4163 : 0 : 0 : 0
+570 : 48 : 36 : -4.8326 : 2.4172 : 0 : 0 : 0
+577 : 48 : 39 : 10.407 : 2.375 : 1 : 0 : 0
+567 : 48 : 46 : 46.069 : 2.3784 : 1 : 0 : 0
+565 : 48 : 47 : 51.149 : 2.3892 : 0 : 0 : 0
+618 : 49 : 3 : -171 : 2.3824 : 0 : 0 : 0
+619 : 49 : 5 : -160.84 : 2.3818 : 0 : 0 : 0
+615 : 49 : 9 : -140.37 : 2.3827 : 0 : 0 : 0
+623 : 49 : 9 : -140.37 : 2.3814 : 0 : 0 : 0
+625 : 49 : 9 : -140.37 : 2.3813 : 0 : 0 : 0
+616 : 49 : 14 : -114.97 : 2.3829 : 0 : 0 : 0
+624 : 49 : 14 : -114.97 : 2.3814 : 0 : 0 : 0
+627 : 49 : 14 : -114.97 : 2.3595 : 1 : 0 : 0
+613 : 49 : 23 : -69.051 : 2.382 : 0 : 0 : 0
+578 : 49 : 62 : 129.88 : 2.3828 : 0 : 0 : 0
+626 : 50 : 3 : -173.54 : 2.3813 : 0 : 0 : 0
+620 : 50 : 5 : -163.38 : 2.3813 : 0 : 0 : 0
+617 : 50 : 14 : -117.51 : 2.3822 : 0 : 0 : 0
+614 : 50 : 23 : -71.591 : 2.3817 : 0 : 0 : 0
+579 : 50 : 63 : 132.42 : 2.3824 : 0 : 0 : 0
+631 : 51 : 9 : -140.57 : 2.3812 : 0 : 0 : 0
+632 : 51 : 9 : -140.57 : 2.3812 : 0 : 0 : 0
+637 : 51 : 9 : -140.57 : 2.3812 : 0 : 0 : 0
+628 : 51 : 11 : -130.41 : 2.3812 : 0 : 0 : 0
+634 : 51 : 11 : -130.41 : 2.3812 : 0 : 0 : 0
+630 : 51 : 24 : -64.167 : 2.3812 : 0 : 0 : 0
+636 : 51 : 24 : -64.167 : 2.3812 : 0 : 0 : 0
+621 : 51 : 66 : 149.7 : 2.3812 : 0 : 0 : 0
+633 : 52 : 2 : -178.31 : 2.3812 : 0 : 0 : 0
+635 : 52 : 3 : -173.23 : 2.3812 : 0 : 0 : 0
+639 : 52 : 3 : -173.23 : 2.3807 : 1 : 0 : 0
+629 : 52 : 9 : -143.11 : 2.3812 : 0 : 0 : 0
+638 : 52 : 9 : -143.11 : 2.3812 : 1 : 0 : 0
+622 : 52 : 66 : 147.16 : 2.3812 : 0 : 0 : 0
+640 : 53 : 41 : 22.715 : 2.386 : 0 : 0 : 0
+645 : 54 : 27 : -51.047 : 2.3948 : 0 : 0 : 0
+644 : 54 : 40 : 15.095 : 2.3685 : 1 : 0 : 0
+643 : 54 : 41 : 20.175 : 2.382 : 0 : 0 : 0
+641 : 54 : 42 : 25.255 : 2.3861 : 0 : 0 : 0
+642 : 54 : 48 : 55.735 : 2.3952 : 0 : 0 : 0
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  484  setRawEventPrep :::  Failed in prop tube segment building: 0, 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  501  setRawEvent :::  NTracklets in St2: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  515  setRawEvent :::  NTracklets in St3: 13
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  529  setRawEvent :::  NTracklets St2+St3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  544  setRawEvent :::  NTracklets Global: 0
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  550  setRawEvent :::  Prop tube segments in X-Z
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  550  setRawEvent :::  Prop tube segments in Y-Z
+nHits: 4, nPlanes: 2
+a = 0.033667, b = -59.064, chisq = 4.3435
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 574  47  39 === L: 577  48  39 === R: 640  53  41 === L: 643  54  41 === 
+nHits: 4, nPlanes: 2
+a = 0.033628, b = -58.97, chisq = 4.2971
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 576  47  39 === L: 577  48  39 === R: 640  53  41 === L: 643  54  41 === 
+nHits: 4, nPlanes: 2
+a = 0.042234, b = -77.028, chisq = 4.9785
+TX_MAX = 0.15, X0_MAX = 150, chisq max = 5
+R: 576  47  39 === L: 577  48  39 === L: 640  53  41 === R: 641  54  42 === 
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 1 is 0
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 2 is 2
+Tracklet in station 3
+6 hits in this station with chisq = 4.3668
+Momentum in z @st1: 9.9835 +/- -99.835
+Momentum in z @st3: 9.9981 +/- -99.981
+Charge: 1
+U: 593 D2V(13) 39  0.47627 = U: 598 D2Vp(14) 38  -0.39044 = U: 508 D2Xp(15) 32  -0.68902 = U: 510 D2X(16) 32  0.51379 = U: 512 D2U(17) 43  0.49425 = U: 516 D2Up(18) 42  -0.4091 = 
+X-Z: (-0.019239 +/- 0)*z + (-25.808 +/- 0)
+Y-Z: (0.0073448 +/- 0)*z + (11.624 +/- 0)
+KMAG projection: X =  -46.283 +/- 0
+KMAG projection: Y =  19.441 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 3
+5 hits in this station with chisq = 2.9663
+Momentum in z @st1: 9.9826 +/- -99.826
+Momentum in z @st3: 9.9978 +/- -99.978
+Charge: -1
+U: 502 D2V(13) 94  -0.42834 = U: 503 D2Vp(14) 94  0.43967 = U: 602 D2Xp(15) 84  0.5674 = U: 603 D2X(16) 83  -0.59177 = U: 604 D2U(17) 90  0.012391 = U: -1 D2Up(18) 0  999 = 
+X-Z: (0.020821 +/- 0.00017357)*z + (27.662 +/- 0.23448)
+Y-Z: (-0.0013213 +/- 0.00087762)*z + (-14.318 +/- 1.1928)
+KMAG projection: X =  49.821 +/- 0.41921
+KMAG projection: Y =  -15.724 +/- 2.1268
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 3 is 13
+Tracklet in station 4
+6 hits in this station with chisq = 6.0707
+Momentum in z @st1: 9.9798 +/- -99.798
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.70058 = U: 651 D3pV(20) 17  -0.26114 = U: 587 D3pXp(21) 10  0.050308 = U: 583 D3pX(22) 10  -0.90024 = U: 646 D3pUp(23) 24  -0.30826 = U: 590 D3pU(24) 25  0.74603 = 
+X-Z: (-0.025445 +/- 0)*z + (-48.449 +/- 0)
+Y-Z: (0.01218 +/- 0)*z + (22.226 +/- 0)
+KMAG projection: X =  -75.53 +/- 0
+KMAG projection: Y =  35.188 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 6.0707
+Momentum in z @st1: 9.9798 +/- -99.798
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.70058 = U: 651 D3pV(20) 17  -0.26114 = U: 587 D3pXp(21) 10  0.050308 = U: 583 D3pX(22) 10  -0.90024 = U: 647 D3pUp(23) 24  -0.30826 = U: 590 D3pU(24) 25  0.74603 = 
+X-Z: (-0.025445 +/- 0)*z + (-48.449 +/- 0)
+Y-Z: (0.01218 +/- 0)*z + (22.226 +/- 0)
+KMAG projection: X =  -75.53 +/- 0
+KMAG projection: Y =  35.188 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 6.0707
+Momentum in z @st1: 9.9798 +/- -99.798
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.70058 = U: 651 D3pV(20) 17  -0.26114 = U: 587 D3pXp(21) 10  0.050308 = U: 583 D3pX(22) 10  -0.90024 = U: 649 D3pUp(23) 24  -0.30826 = U: 590 D3pU(24) 25  0.74603 = 
+X-Z: (-0.025445 +/- 0)*z + (-48.449 +/- 0)
+Y-Z: (0.01218 +/- 0)*z + (22.226 +/- 0)
+KMAG projection: X =  -75.53 +/- 0
+KMAG projection: Y =  35.188 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 5.1808
+Momentum in z @st1: 9.9799 +/- -99.799
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.36353 = U: 651 D3pV(20) 17  -0.59838 = U: 587 D3pXp(21) 10  -0.29665 = U: 582 D3pX(22) 11  0.75206 = U: 646 D3pUp(23) 24  -0.64446 = U: 590 D3pU(24) 25  0.40965 = 
+X-Z: (-0.025353 +/- 0)*z + (-48.279 +/- 0)
+Y-Z: (0.012184 +/- 0)*z + (22.222 +/- 0)
+KMAG projection: X =  -75.262 +/- 0
+KMAG projection: Y =  35.189 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 5.1808
+Momentum in z @st1: 9.9799 +/- -99.799
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.36353 = U: 651 D3pV(20) 17  -0.59838 = U: 587 D3pXp(21) 10  -0.29665 = U: 582 D3pX(22) 11  0.75206 = U: 647 D3pUp(23) 24  -0.64446 = U: 590 D3pU(24) 25  0.40965 = 
+X-Z: (-0.025353 +/- 0)*z + (-48.279 +/- 0)
+Y-Z: (0.012184 +/- 0)*z + (22.222 +/- 0)
+KMAG projection: X =  -75.262 +/- 0
+KMAG projection: Y =  35.189 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+6 hits in this station with chisq = 5.1808
+Momentum in z @st1: 9.9799 +/- -99.799
+Momentum in z @st3: 9.9968 +/- -99.968
+Charge: 1
+U: 654 D3pVp(19) 17  0.36353 = U: 651 D3pV(20) 17  -0.59838 = U: 587 D3pXp(21) 10  -0.29665 = U: 582 D3pX(22) 11  0.75206 = U: 649 D3pUp(23) 24  -0.64446 = U: 590 D3pU(24) 25  0.40965 = 
+X-Z: (-0.025353 +/- 0)*z + (-48.279 +/- 0)
+Y-Z: (0.012184 +/- 0)*z + (22.222 +/- 0)
+KMAG projection: X =  -75.262 +/- 0
+KMAG projection: Y =  35.189 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 4
+5 hits in this station with chisq = 3.9632
+Momentum in z @st1: 9.9829 +/- -99.829
+Momentum in z @st3: 9.9979 +/- -99.979
+Charge: 1
+U: 655 D3pVp(19) 26  -0.66999 = U: 652 D3pV(20) 27  0.35684 = U: 588 D3pXp(21) 20  0.78476 = U: 581 D3pX(22) 20  -0.17598 = U: 648 D3pUp(23) 33  -0.3131 = U: -1 D3pU(24) 0  999 = 
+X-Z: (-0.020399 +/- 0)*z + (-38.916 +/- 0)
+Y-Z: (0.014938 +/- 0)*z + (19.857 +/- 0)
+KMAG projection: X =  -60.625 +/- 0
+KMAG projection: Y =  35.755 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 4.7492
+Momentum in z @st1: 9.9783 +/- -99.783
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.57696 = U: 536 D3mV(26) 124  -0.46523 = U: 659 D3mXp(27) 112  -0.5829 = U: 657 D3mX(28) 112  0.36694 = U: 663 D3mUp(29) 115  0.58159 = U: 660 D3mU(30) 114  -0.47018 = 
+X-Z: (0.027826 +/- 0)*z + (51.895 +/- 0)
+Y-Z: (-0.010443 +/- 0)*z + (-18.962 +/- 0)
+KMAG projection: X =  81.51 +/- 0
+KMAG projection: Y =  -30.076 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 4.7492
+Momentum in z @st1: 9.9783 +/- -99.783
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.57696 = U: 536 D3mV(26) 124  -0.46523 = U: 659 D3mXp(27) 112  -0.5829 = U: 657 D3mX(28) 112  0.36694 = U: 663 D3mUp(29) 115  0.58159 = U: 662 D3mU(30) 114  -0.47018 = 
+X-Z: (0.027826 +/- 0)*z + (51.895 +/- 0)
+Y-Z: (-0.010443 +/- 0)*z + (-18.962 +/- 0)
+KMAG projection: X =  81.51 +/- 0
+KMAG projection: Y =  -30.076 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 6.1391
+Momentum in z @st1: 9.9782 +/- -99.782
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.75043 = U: 536 D3mV(26) 124  -0.29167 = U: 659 D3mXp(27) 112  -0.91889 = U: 657 D3mX(28) 112  0.030766 = U: 663 D3mUp(29) 115  -0.24502 = U: 661 D3mU(30) 115  0.702 = 
+X-Z: (0.027917 +/- 0)*z + (52.059 +/- 0)
+Y-Z: (-0.011002 +/- 0)*z + (-19.966 +/- 0)
+KMAG projection: X =  81.769 +/- 0
+KMAG projection: Y =  -31.675 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 4.7492
+Momentum in z @st1: 9.9783 +/- -99.783
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.57696 = U: 536 D3mV(26) 124  -0.46523 = U: 659 D3mXp(27) 112  -0.5829 = U: 658 D3mX(28) 112  0.36694 = U: 663 D3mUp(29) 115  0.58159 = U: 660 D3mU(30) 114  -0.47018 = 
+X-Z: (0.027826 +/- 0)*z + (51.895 +/- 0)
+Y-Z: (-0.010443 +/- 0)*z + (-18.962 +/- 0)
+KMAG projection: X =  81.51 +/- 0
+KMAG projection: Y =  -30.076 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 4.7492
+Momentum in z @st1: 9.9783 +/- -99.783
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.57696 = U: 536 D3mV(26) 124  -0.46523 = U: 659 D3mXp(27) 112  -0.5829 = U: 658 D3mX(28) 112  0.36694 = U: 663 D3mUp(29) 115  0.58159 = U: 662 D3mU(30) 114  -0.47018 = 
+X-Z: (0.027826 +/- 0)*z + (51.895 +/- 0)
+Y-Z: (-0.010443 +/- 0)*z + (-18.962 +/- 0)
+KMAG projection: X =  81.51 +/- 0
+KMAG projection: Y =  -30.076 +/- 0
+KMAGSTR =  -0.951
+Tracklet in station 5
+6 hits in this station with chisq = 6.1391
+Momentum in z @st1: 9.9782 +/- -99.782
+Momentum in z @st3: 9.9961 +/- -99.961
+Charge: -1
+U: 538 D3mVp(25) 125  0.75043 = U: 536 D3mV(26) 124  -0.29167 = U: 659 D3mXp(27) 112  -0.91889 = U: 658 D3mX(28) 112  0.030766 = U: 663 D3mUp(29) 115  -0.24502 = U: 661 D3mU(30) 115  0.702 = 
+X-Z: (0.027917 +/- 0)*z + (52.059 +/- 0)
+Y-Z: (-0.011002 +/- 0)*z + (-19.966 +/- 0)
+KMAG projection: X =  81.769 +/- 0
+KMAG projection: Y =  -31.675 +/- 0
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 4 is 2
+Tracklet in station 6
+11 hits in this station with chisq = 16.874
+Momentum in z @st1: 49.839 +/- 12.46
+Momentum in z @st3: 49.807 +/- 12.452
+Charge: 1
+L: 502 D2V(13) 94  -0.15544 = L: 503 D2Vp(14) 94  0.17053 = U: 602 D2Xp(15) 84  0.28452 = U: 603 D2X(16) 83  -1.3382 = U: 604 D2U(17) 90  0.52914 = U: -1 D2Up(18) 0  999 = U: 538 D3mVp(25) 125  0.61836 = U: 536 D3mV(26) 124  -0.53242 = U: 659 D3mXp(27) 112  -0.51019 = U: 657 D3mX(28) 112  0.3163 = U: 663 D3mUp(29) 115  0.61279 = U: 660 D3mU(30) 114  -0.55704 = 
+X-Z: (0.088143 +/- 0.00063893)*z + (-62.255 +/- 1.056)
+Y-Z: (-0.021215 +/- 0.0028458)*z + (2.8419 +/- 4.5365)
+KMAG projection: X =  31.552 +/- 1.736
+KMAG projection: Y =  -19.737 +/- 7.5651
+KMAGSTR =  -0.951
+Tracklet in station 6
+12 hits in this station with chisq = 37.845
+Momentum in z @st1: 49.885 +/- 12.471
+Momentum in z @st3: 49.857 +/- 12.464
+Charge: -1
+R: 593 D2V(13) 39  0.18258 = R: 598 D2Vp(14) 38  -0.21336 = U: 508 D2Xp(15) 32  0.33871 = U: 510 D2X(16) 32  1.9306 = R: 512 D2U(17) 43  0.25548 = R: 516 D2Up(18) 42  -0.29852 = U: 654 D3pVp(19) 17  0.38717 = U: 651 D3pV(20) 17  -0.48401 = U: 587 D3pXp(21) 10  -0.34019 = U: 582 D3pX(22) 11  0.80626 = U: 646 D3pUp(23) 24  -0.68308 = U: 590 D3pU(24) 25  0.47386 = 
+X-Z: (-0.075664 +/- 0.00042362)*z + (48.782 +/- 0.58436)
+Y-Z: (0.029656 +/- 0.0020723)*z + (-12.832 +/- 2.8306)
+KMAG projection: X =  -31.744 +/- 1.0352
+KMAG projection: Y =  18.73 +/- 5.0361
+KMAGSTR =  -0.951
+=======================================================================================
+=======================================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  561  setRawEvent :::  Final tracklets in station: 5 is 0
+=======================================================================================
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0.079692 sec
+Tracklet St3                0.0069386 sec
+Tracklet St23               0.050744 sec
+Tracklet Global             0.23583 sec
+  Global St1                0.022817 sec
+  Global Link               0.21293 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 1, finder status -6, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1679===============
+Layer 1 has 23 hits.
+Layer 2 has 27 hits.
+Layer 3 has 32 hits.
+Layer 4 has 26 hits.
+Layer 5 has 39 hits.
+Layer 6 has 35 hits.
+Layer 7 has 17 hits.
+Layer 8 has 12 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 10 hits.
+Layer 14 has 9 hits.
+Layer 15 has 13 hits.
+Layer 16 has 14 hits.
+Layer 17 has 9 hits.
+Layer 18 has 11 hits.
+Layer 19 has 18 hits.
+Layer 20 has 16 hits.
+Layer 21 has 6 hits.
+Layer 22 has 8 hits.
+Layer 23 has 7 hits.
+Layer 24 has 10 hits.
+Layer 25 has 18 hits.
+Layer 26 has 17 hits.
+Layer 27 has 13 hits.
+Layer 28 has 29 hits.
+Layer 29 has 19 hits.
+Layer 30 has 27 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1679===============
+Layer 1 has 23 hits.
+Layer 2 has 27 hits.
+Layer 3 has 32 hits.
+Layer 4 has 26 hits.
+Layer 5 has 39 hits.
+Layer 6 has 35 hits.
+Layer 7 has 17 hits.
+Layer 8 has 12 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 10 hits.
+Layer 14 has 9 hits.
+Layer 15 has 13 hits.
+Layer 16 has 14 hits.
+Layer 17 has 9 hits.
+Layer 18 has 11 hits.
+Layer 19 has 18 hits.
+Layer 20 has 16 hits.
+Layer 21 has 6 hits.
+Layer 22 has 8 hits.
+Layer 23 has 7 hits.
+Layer 24 has 10 hits.
+Layer 25 has 18 hits.
+Layer 26 has 17 hits.
+Layer 27 has 13 hits.
+Layer 28 has 29 hits.
+Layer 29 has 19 hits.
+Layer 30 has 27 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 182
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 29
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 66
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 65
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 123
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 14
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 13
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 10
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:114
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 2, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1682===============
+Layer 1 has 37 hits.
+Layer 2 has 44 hits.
+Layer 3 has 31 hits.
+Layer 4 has 29 hits.
+Layer 5 has 38 hits.
+Layer 6 has 28 hits.
+Layer 7 has 20 hits.
+Layer 8 has 11 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 3 hits.
+Layer 14 has 4 hits.
+Layer 15 has 2 hits.
+Layer 16 has 2 hits.
+Layer 17 has 10 hits.
+Layer 18 has 5 hits.
+Layer 19 has 7 hits.
+Layer 20 has 9 hits.
+Layer 21 has 5 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 5 hits.
+Layer 25 has 15 hits.
+Layer 26 has 12 hits.
+Layer 27 has 11 hits.
+Layer 28 has 8 hits.
+Layer 29 has 17 hits.
+Layer 30 has 18 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1682===============
+Layer 1 has 37 hits.
+Layer 2 has 44 hits.
+Layer 3 has 31 hits.
+Layer 4 has 29 hits.
+Layer 5 has 38 hits.
+Layer 6 has 28 hits.
+Layer 7 has 20 hits.
+Layer 8 has 11 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 3 hits.
+Layer 14 has 4 hits.
+Layer 15 has 2 hits.
+Layer 16 has 2 hits.
+Layer 17 has 10 hits.
+Layer 18 has 5 hits.
+Layer 19 has 7 hits.
+Layer 20 has 9 hits.
+Layer 21 has 5 hits.
+Layer 22 has 3 hits.
+Layer 23 has 4 hits.
+Layer 24 has 5 hits.
+Layer 25 has 15 hits.
+Layer 26 has 12 hits.
+Layer 27 has 11 hits.
+Layer 28 has 8 hits.
+Layer 29 has 17 hits.
+Layer 30 has 18 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 207
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 31
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 26
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 33
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 81
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 13
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:138
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 3, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1688===============
+Layer 1 has 27 hits.
+Layer 2 has 31 hits.
+Layer 3 has 23 hits.
+Layer 4 has 21 hits.
+Layer 5 has 20 hits.
+Layer 6 has 20 hits.
+Layer 7 has 5 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 11 hits.
+Layer 14 has 17 hits.
+Layer 15 has 10 hits.
+Layer 16 has 8 hits.
+Layer 17 has 9 hits.
+Layer 18 has 10 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 2 hits.
+Layer 22 has 4 hits.
+Layer 23 has 4 hits.
+Layer 24 has 4 hits.
+Layer 25 has 4 hits.
+Layer 26 has 2 hits.
+Layer 27 has 3 hits.
+Layer 28 has 5 hits.
+Layer 29 has 6 hits.
+Layer 30 has 9 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1688===============
+Layer 1 has 27 hits.
+Layer 2 has 31 hits.
+Layer 3 has 23 hits.
+Layer 4 has 21 hits.
+Layer 5 has 20 hits.
+Layer 6 has 20 hits.
+Layer 7 has 5 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 11 hits.
+Layer 14 has 17 hits.
+Layer 15 has 10 hits.
+Layer 16 has 8 hits.
+Layer 17 has 9 hits.
+Layer 18 has 10 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 2 hits.
+Layer 22 has 4 hits.
+Layer 23 has 4 hits.
+Layer 24 has 4 hits.
+Layer 25 has 4 hits.
+Layer 26 has 2 hits.
+Layer 27 has 3 hits.
+Layer 28 has 5 hits.
+Layer 29 has 6 hits.
+Layer 30 has 9 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 142
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 10
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 65
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 20
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 29
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 16
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:186
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 4, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1689===============
+Layer 1 has 35 hits.
+Layer 2 has 28 hits.
+Layer 3 has 28 hits.
+Layer 4 has 33 hits.
+Layer 5 has 31 hits.
+Layer 6 has 28 hits.
+Layer 7 has 7 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 24 hits.
+Layer 14 has 18 hits.
+Layer 15 has 11 hits.
+Layer 16 has 17 hits.
+Layer 17 has 15 hits.
+Layer 18 has 20 hits.
+Layer 19 has 11 hits.
+Layer 20 has 12 hits.
+Layer 21 has 13 hits.
+Layer 22 has 10 hits.
+Layer 23 has 8 hits.
+Layer 24 has 8 hits.
+Layer 25 has 14 hits.
+Layer 26 has 13 hits.
+Layer 27 has 12 hits.
+Layer 28 has 4 hits.
+Layer 29 has 12 hits.
+Layer 30 has 15 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1689===============
+Layer 1 has 35 hits.
+Layer 2 has 28 hits.
+Layer 3 has 28 hits.
+Layer 4 has 33 hits.
+Layer 5 has 31 hits.
+Layer 6 has 28 hits.
+Layer 7 has 7 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 24 hits.
+Layer 14 has 18 hits.
+Layer 15 has 11 hits.
+Layer 16 has 17 hits.
+Layer 17 has 15 hits.
+Layer 18 has 20 hits.
+Layer 19 has 11 hits.
+Layer 20 has 12 hits.
+Layer 21 has 13 hits.
+Layer 22 has 10 hits.
+Layer 23 has 8 hits.
+Layer 24 has 8 hits.
+Layer 25 has 14 hits.
+Layer 26 has 13 hits.
+Layer 27 has 12 hits.
+Layer 28 has 4 hits.
+Layer 29 has 12 hits.
+Layer 30 has 15 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 183
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 105
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 62
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 70
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 9
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:190
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 5, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1694===============
+Layer 1 has 19 hits.
+Layer 2 has 22 hits.
+Layer 3 has 21 hits.
+Layer 4 has 17 hits.
+Layer 5 has 17 hits.
+Layer 6 has 18 hits.
+Layer 7 has 6 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 7 hits.
+Layer 14 has 5 hits.
+Layer 15 has 8 hits.
+Layer 16 has 10 hits.
+Layer 17 has 7 hits.
+Layer 18 has 5 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 7 hits.
+Layer 22 has 5 hits.
+Layer 23 has 5 hits.
+Layer 24 has 8 hits.
+Layer 25 has 5 hits.
+Layer 26 has 3 hits.
+Layer 27 has 4 hits.
+Layer 28 has 3 hits.
+Layer 29 has 2 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1694===============
+Layer 1 has 19 hits.
+Layer 2 has 22 hits.
+Layer 3 has 21 hits.
+Layer 4 has 17 hits.
+Layer 5 has 17 hits.
+Layer 6 has 18 hits.
+Layer 7 has 6 hits.
+Layer 8 has 5 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 7 hits.
+Layer 14 has 5 hits.
+Layer 15 has 8 hits.
+Layer 16 has 10 hits.
+Layer 17 has 7 hits.
+Layer 18 has 5 hits.
+Layer 19 has 3 hits.
+Layer 20 has 3 hits.
+Layer 21 has 7 hits.
+Layer 22 has 5 hits.
+Layer 23 has 5 hits.
+Layer 24 has 8 hits.
+Layer 25 has 5 hits.
+Layer 26 has 3 hits.
+Layer 27 has 4 hits.
+Layer 28 has 3 hits.
+Layer 29 has 2 hits.
+Layer 30 has 3 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 114
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 11
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 42
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 31
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 20
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 2
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:180
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 6, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1698===============
+Layer 1 has 29 hits.
+Layer 2 has 31 hits.
+Layer 3 has 27 hits.
+Layer 4 has 33 hits.
+Layer 5 has 22 hits.
+Layer 6 has 19 hits.
+Layer 7 has 4 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 11 hits.
+Layer 15 has 12 hits.
+Layer 16 has 11 hits.
+Layer 17 has 10 hits.
+Layer 18 has 15 hits.
+Layer 19 has 15 hits.
+Layer 20 has 16 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 15 hits.
+Layer 24 has 21 hits.
+Layer 25 has 13 hits.
+Layer 26 has 9 hits.
+Layer 27 has 11 hits.
+Layer 28 has 13 hits.
+Layer 29 has 9 hits.
+Layer 30 has 12 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1698===============
+Layer 1 has 29 hits.
+Layer 2 has 31 hits.
+Layer 3 has 27 hits.
+Layer 4 has 33 hits.
+Layer 5 has 22 hits.
+Layer 6 has 19 hits.
+Layer 7 has 4 hits.
+Layer 8 has 4 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 8 hits.
+Layer 14 has 11 hits.
+Layer 15 has 12 hits.
+Layer 16 has 11 hits.
+Layer 17 has 10 hits.
+Layer 18 has 15 hits.
+Layer 19 has 15 hits.
+Layer 20 has 16 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 15 hits.
+Layer 24 has 21 hits.
+Layer 25 has 13 hits.
+Layer 26 has 9 hits.
+Layer 27 has 11 hits.
+Layer 28 has 13 hits.
+Layer 29 has 9 hits.
+Layer 30 has 12 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 161
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 8
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 67
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 92
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 67
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 8
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:141
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 7, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 8
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1703===============
+Layer 1 has 48 hits.
+Layer 2 has 47 hits.
+Layer 3 has 40 hits.
+Layer 4 has 39 hits.
+Layer 5 has 46 hits.
+Layer 6 has 43 hits.
+Layer 7 has 14 hits.
+Layer 8 has 6 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 17 hits.
+Layer 14 has 18 hits.
+Layer 15 has 19 hits.
+Layer 16 has 12 hits.
+Layer 17 has 13 hits.
+Layer 18 has 20 hits.
+Layer 19 has 21 hits.
+Layer 20 has 20 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 17 hits.
+Layer 24 has 13 hits.
+Layer 25 has 22 hits.
+Layer 26 has 24 hits.
+Layer 27 has 14 hits.
+Layer 28 has 20 hits.
+Layer 29 has 27 hits.
+Layer 30 has 25 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1703===============
+Layer 1 has 48 hits.
+Layer 2 has 47 hits.
+Layer 3 has 40 hits.
+Layer 4 has 39 hits.
+Layer 5 has 46 hits.
+Layer 6 has 43 hits.
+Layer 7 has 14 hits.
+Layer 8 has 6 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 0 hits.
+Layer 12 has 0 hits.
+Layer 13 has 17 hits.
+Layer 14 has 18 hits.
+Layer 15 has 19 hits.
+Layer 16 has 12 hits.
+Layer 17 has 13 hits.
+Layer 18 has 20 hits.
+Layer 19 has 21 hits.
+Layer 20 has 20 hits.
+Layer 21 has 12 hits.
+Layer 22 has 13 hits.
+Layer 23 has 17 hits.
+Layer 24 has 13 hits.
+Layer 25 has 22 hits.
+Layer 26 has 24 hits.
+Layer 27 has 14 hits.
+Layer 28 has 20 hits.
+Layer 29 has 27 hits.
+Layer 30 has 25 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 263
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 20
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 99
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 96
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 132
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 7
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 5
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:194
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 8, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+DEBUG: process_event: 336: Entering SQReco::process_event: 9
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  262  ProcessEventPrep :::  SRawEvent before the Reducer
+RunID: 28692, EventID: 1707===============
+Layer 1 has 39 hits.
+Layer 2 has 38 hits.
+Layer 3 has 44 hits.
+Layer 4 has 35 hits.
+Layer 5 has 38 hits.
+Layer 6 has 41 hits.
+Layer 7 has 10 hits.
+Layer 8 has 14 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 5 hits.
+Layer 12 has 12 hits.
+Layer 13 has 25 hits.
+Layer 14 has 19 hits.
+Layer 15 has 34 hits.
+Layer 16 has 24 hits.
+Layer 17 has 21 hits.
+Layer 18 has 20 hits.
+Layer 19 has 10 hits.
+Layer 20 has 13 hits.
+Layer 21 has 9 hits.
+Layer 22 has 8 hits.
+Layer 23 has 13 hits.
+Layer 24 has 9 hits.
+Layer 25 has 15 hits.
+Layer 26 has 20 hits.
+Layer 27 has 13 hits.
+Layer 28 has 10 hits.
+Layer 29 has 18 hits.
+Layer 30 has 21 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/SQReco.cxx  274  ProcessEventPrep :::  SRawEvent after the Reducer
+RunID: 28692, EventID: 1707===============
+Layer 1 has 39 hits.
+Layer 2 has 38 hits.
+Layer 3 has 44 hits.
+Layer 4 has 35 hits.
+Layer 5 has 38 hits.
+Layer 6 has 41 hits.
+Layer 7 has 10 hits.
+Layer 8 has 14 hits.
+Layer 9 has 0 hits.
+Layer 10 has 0 hits.
+Layer 11 has 5 hits.
+Layer 12 has 12 hits.
+Layer 13 has 25 hits.
+Layer 14 has 19 hits.
+Layer 15 has 34 hits.
+Layer 16 has 24 hits.
+Layer 17 has 21 hits.
+Layer 18 has 20 hits.
+Layer 19 has 10 hits.
+Layer 20 has 13 hits.
+Layer 21 has 9 hits.
+Layer 22 has 8 hits.
+Layer 23 has 13 hits.
+Layer 24 has 9 hits.
+Layer 25 has 15 hits.
+Layer 26 has 20 hits.
+Layer 27 has 13 hits.
+Layer 28 has 10 hits.
+Layer 29 has 18 hits.
+Layer 30 has 21 hits.
+===================================================================
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  597  acceptEvent :::  D0: 235
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  598  acceptEvent :::  D1: 41
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  599  acceptEvent :::  D2: 143
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  600  acceptEvent :::  D3p: 62
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  601  acceptEvent :::  D3m: 97
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  602  acceptEvent :::  H1: 3
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  603  acceptEvent :::  H2: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  604  acceptEvent :::  H3: 4
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  605  acceptEvent :::  H4: 6
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  606  acceptEvent :::  Prop:283
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  607  acceptEvent :::  NRoadsPos: -52430
+INFO: /work/submit/wmccorma/SQ_CODE/e1039-core/packages/reco/ktracker/KalmanFastTracking.cxx  608  acceptEvent :::  NRoadsNeg: -52430
+KalmanFastTracking::printTimers: 
+================================================================
+Tracklet St2                0 sec
+Tracklet St3                0 sec
+Tracklet St23               0 sec
+Tracklet Global             0 sec
+  Global St1                0 sec
+  Global Link               0 sec
+  Global Kalman             0 sec
+Tracklet Kalman             0 sec
+================================================================
+DEBUG: process_event: 381: Leaving SQReco::process_event: 9, finder status -1, 0 track candidates, 0 fitted tracks
+DEBUG: process_event: 406: actually finishing event
+SQReco::End
+Deleting SQReco
