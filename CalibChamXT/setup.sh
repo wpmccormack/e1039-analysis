@@ -2,11 +2,23 @@ DIR_TOP=$(dirname $(readlink -f $BASH_SOURCE))
 DIR_BUILD=$DIR_TOP/build
 DIR_INST=$DIR_TOP/inst
 
-#source /e906/app/software/osg/software/e1039/this-e1039.sh
-source /e906/app/software/osg/users/kenichi/e1039/core/this-e1039.sh
+#FN_SETUP=/e906/app/software/osg/software/e1039/this-e1039.sh
+FN_SETUP=/e906/app/software/osg/users/kenichi/e1039/core-20220404/this-e1039.sh
+if [ ! -e $FN_SETUP ] ; then # On grid
+    FN_SETUP=/cvmfs/seaquest.opensciencegrid.org/seaquest/${FN_SETUP#/e906/app/software/osg/}
+fi
+if [ ! -e $FN_SETUP ] ; then
+    echo "Cannot find a proper setup script."
+    return 1
+fi
+
+source $FN_SETUP
 export   LD_LIBRARY_PATH=$DIR_INST/lib:$LD_LIBRARY_PATH
 export ROOT_INCLUDE_PATH=$DIR_INST/include:$ROOT_INCLUDE_PATH
 
+##
+## Functions for source build
+##
 function cmake-this {
     if [ -e $DIR_BUILD ] ; then
 	echo "Clean up the build directory..."
@@ -36,23 +48,3 @@ function make-this {
     ( cd $DIR_BUILD && make install )
     return $?
 }
-
-##
-## Main
-##
-if [ ${HOSTNAME:0:13} != 'spinquestgpvm' ] ; then
-    echo "!!CAUTION!!"
-    echo "This package might not run properly on your computer ($HOSTNAME)."
-    echo "You are recommended to use 'spinquestgpvm'."
-    echo
-fi
-
-echo "Two commands for source build:"
-echo "  cmake-this"
-echo "  make-this"
-echo
-echo "These commands can be executed in any directory."
-echo "All built files are always created under $DIR_BUILD."
-echo
-echo "You need execute 'make-this'  when you modify source files."
-echo "You need execute 'cmake-this' when you add/delete source files."

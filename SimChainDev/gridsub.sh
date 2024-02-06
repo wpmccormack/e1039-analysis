@@ -11,7 +11,7 @@ echo "njobs=$njobs"
 echo "nevents=$nevents"
 if [ $do_sub == 1 ]; then
     echo "Grid mode."
-    dir_data=/pnfs/e1039/scratch/$USER/SimChainDev
+    dir_data=/pnfs/e1039/scratch/users/$USER/SimChainDev
     work=$dir_data/$jobname
     ln -nfs $dir_data data # for convenience
 else
@@ -39,7 +39,7 @@ for (( id=1; id<=$njobs; id++ )) ; do
     CMD+=" -d OUTPUT $work/$id/out"
     CMD+=" file://$work/$id/gridrun.sh $nevents $id"
     echo "$CMD"
-    $CMD |& tee $work/$id/log_jobsub_submit.txt
+    unbuffer $CMD |& tee $work/$id/log_jobsub_submit.txt
     RET_SUB=${PIPESTATUS[0]}
     test $RET_SUB -ne 0 && exit $RET_SUB
   else

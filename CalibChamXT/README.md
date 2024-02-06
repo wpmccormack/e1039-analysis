@@ -61,8 +61,8 @@ cd work
 ./run_reco.sh -d 1 -e 10000 GO
 ```
 
-The main output file is `scratch/main/run_003492_spill_000000000_spin/out/eval.root`.
-The ROOT file (`eval.root`) contains all tracklets.
+The main output file is `scratch/main/run_003492_spill_000000000_spin/out/DSTreco.root`.
+The ROOT file (`DSTreco.root`) contains all tracklets.
 You had better check the number of tree entries is non-zero.
 
 You then execute the following commands to process all events/runs.
@@ -91,16 +91,32 @@ cd work
 ./make_rt.sh
 ```
 
+This script executes an Fun4All macro (`Fun4AllAna.C`), which makes use of a SubsysReco modle (`src/SRMakeRTCurve`) to analyze `DSTreco.root`.
+
+Note that `make_rt.sh` has two commented-out lines that find ana analyze the evaluation file (`eval.root`) using a ROOT macro (`AnaRTCurve.C`).
+This part is kept for backward compatibility for now, but probably be deleted soon.
+
 
 ## To-Do List
 
-1. n/a
+1. Clean up old sources/macros/scripts that use the evaluation file.
+1. Implement an iterative extraction of X-T curves.
 
 
 ## Reference
 
 Station ID:  https://github.com/E1039-Collaboration/e1039-wiki/wiki/event-reconstruction
 
+Trigger bits:
+* FPGA1: Any ST2 and Any ST4
+* FPGA2: Top ST2 and Top ST4
+* FPGA3: Top ST2 and Bottom ST4
+* FPGA4: Bottom ST2 and Top ST4
+* FPGA5: ((H1X||H1Y)&&(H2X||H2Y)) || ((H2X||H2Y)&&(H4X||H4Y2))
+* NIM1: (H1X||H1Y)&&(H2X||H2Y)&&(H3X||H4Y1)&&(H4X||H4Y2)
+* NIM2: (H1X||H1Y)&&(H2X||H2Y)
+* NIM3: Random
+* NIM4: (H2X||H2Y)&&(H4X||H4Y2)
 
 ## Author
 

@@ -4,7 +4,7 @@ DIR_MACRO=$(dirname $(readlink -f $BASH_SOURCE))
 
 RUN_LIST=/data2/production/list/R009/R009_fy2017.list
 DIR_IN=$DIR_MACRO/scratch
-DIR_OUT=/pnfs/e1039/persistent/users/$USER/GenRoadsetCommon
+DIR_OUT=/pnfs/e1039/scratch/users/$USER/GenRoadsetCommon
 FN_OUT=bg_data.root
 
 if [ -e $DIR_OUT ] ; then

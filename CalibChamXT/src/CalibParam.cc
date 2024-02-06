@@ -12,13 +12,9 @@ using namespace std;
 const double CalibParam::DT_RT = 2.5;
 
 CalibParam::CalibParam()
-  : m_ana_d0 (false)
-  , m_ana_d1 (false)
-  , m_ana_d2 (false)
-  , m_ana_d3p(false)
-  , m_ana_d3m(true ) // hard-coded for now
-  , fix_time_window(false)
+  : fix_time_window(false)
 {
+  memset(m_ana_pl, 0, sizeof(m_ana_pl));
   memset(m_rtc, 0, sizeof(m_rtc));
 }
 
@@ -27,14 +23,23 @@ CalibParam::~CalibParam()
   ;
 }
 
+void CalibParam::SetAnaPlanes(const bool d0, const bool d1, const bool d2, const bool d3p, const bool d3m)
+{
+  for (int ip =  0; ip <  6; ip++) m_ana_pl[ip] = d0;
+  for (int ip =  6; ip < 12; ip++) m_ana_pl[ip] = d1;
+  for (int ip = 12; ip < 18; ip++) m_ana_pl[ip] = d2;
+  for (int ip = 18; ip < 24; ip++) m_ana_pl[ip] = d3p;
+  for (int ip = 24; ip < 30; ip++) m_ana_pl[ip] = d3m;
+}
+
 void CalibParam::Init(const int n_rt_pt)
 {
-  T_MIN[ 0] = 1700;  T_MAX[ 0] = 1820;
-  T_MIN[ 1] = 1700;  T_MAX[ 1] = 1820;
-  T_MIN[ 2] = 1700;  T_MAX[ 2] = 1820;
-  T_MIN[ 3] = 1720;  T_MAX[ 3] = 1840;
-  T_MIN[ 4] = 1700;  T_MAX[ 4] = 1820;
-  T_MIN[ 5] = 1700;  T_MAX[ 5] = 1820;
+  T_MIN[ 0] = 1200;  T_MAX[ 0] = 1330;
+  T_MIN[ 1] = 1200;  T_MAX[ 1] = 1330;
+  T_MIN[ 2] = 1200;  T_MAX[ 2] = 1330;
+  T_MIN[ 3] = 1200;  T_MAX[ 3] = 1330;
+  T_MIN[ 4] = 1200;  T_MAX[ 4] = 1330;
+  T_MIN[ 5] = 1200;  T_MAX[ 5] = 1330;
 
   T_MIN[ 6] = 1700;  T_MAX[ 6] = 1800;
   T_MIN[ 7] = 1700;  T_MAX[ 7] = 1800;
@@ -72,55 +77,59 @@ void CalibParam::Init(const int n_rt_pt)
   }
 }
 
+/**
+ */
 void CalibParam::ReadRTParam(const string fname)
 {
-  cout << "ReadRT(): input = " << fname << "." << endl;
+  cout << "ReadRTParam(): input = " << fname << "." << endl;
   ifstream ifs(fname.c_str());
   if (! ifs) {
     cerr << "ERROR:  Cannot open the input file.  Abort." << endl;
     exit(1);
   }
+
   char buf[300];
   while (ifs.getline(buf, 300)) {
-    istringstream detector_info(buf);
-    int det_id, n_bin;
-    double tmin_temp, tmax_temp;
-    string det_name;
-    detector_info >> det_id >> n_bin >> tmin_temp >> tmax_temp >> det_name;
-    if (det_id > N_PL) break;
-    
-    for (int ii = 0; ii < n_bin; ii++) {
-      int i_bin;
-      double R, T;
-      ifs.getline(buf, 100);
-      istringstream cali_line(buf);
-      cali_line >> i_bin >> T >> R;
-      m_gr_t2r_in[det_id - 1]->SetPoint(ii, T, R);
-    }
+    if (buf[0] != 'D') continue; // comment or PT lines
+    istringstream iss(buf);
+    string det;
+    double t, x, dt, dx;
+    iss >> det >> t >> x >> dt >> dx;
+    int det_id = GeomSvc::instance()->getDetectorID(det);
+    TGraph* gr = m_gr_t2r_in[det_id - 1];
+    gr->SetPoint(gr->GetN(), t, x);
   }
   ifs.close();
+
+  // Invert the points if T is in the descending order.
+  for (int ip = 0; ip < N_PL; ip++) {
+    TGraph* gr = m_gr_t2r_in[ip];
+    int n_pt = gr->GetN();
+    if (n_pt > 0 && gr->GetX()[0] > gr->GetX()[n_pt-1]) {
+      for (int i_pt = 0; i_pt < n_pt / 2; i_pt++) {
+        double t1, x1, t2, x2;
+        gr->GetPoint(     i_pt  , t1, x1);
+        gr->GetPoint(n_pt-i_pt-1, t2, x2);
+        gr->SetPoint(     i_pt  , t2, x2);
+        gr->SetPoint(n_pt-i_pt-1, t1, x1);
+      }
+    }
+  }
 }
 
-void CalibParam::WriteRTParam(const string dir_name)
+void CalibParam::WriteRTParam(const string dir_name, const string fname)
 {
-  cout << "WriteRT(): output = " << dir_name << "." << endl;
+  cout << "WriteRTParam(): output = " << dir_name << "." << endl;
   ostringstream oss;
-  oss << dir_name << "/calibration_cham.txt";
+  oss << dir_name << "/" << fname;
   ofstream ofs1(oss.str().c_str()); 
   ofs1.setf(ios_base::fixed, ios_base::floatfield);
 
-  oss.str("");
-  oss << dir_name << "/calibration_cham_res.txt";
-  ofstream ofs2(oss.str().c_str());
-  ofs2.setf(ios_base::fixed, ios_base::floatfield);
+  ofs1 << "#det\tt\tx\tdt\tdx\n";
 
   GeomSvc* geom = GeomSvc::instance();
   for (int ip = 0; ip < N_PL; ip++) {
-    if      (ip <  6) { if (! m_ana_d0 ) continue; }
-    else if (ip < 12) { if (! m_ana_d1 ) continue; }
-    else if (ip < 18) { if (! m_ana_d2 ) continue; }
-    else if (ip < 24) { if (! m_ana_d3p) continue; }
-    else              { if (! m_ana_d3m) continue; }
+    if (! m_ana_pl[ip]) continue;
 
     int n_pt;
     double t_min, t_max;
@@ -133,14 +142,20 @@ void CalibParam::WriteRTParam(const string dir_name)
       t_min = m_gr_t2r_in[ip]->GetX()[0];
       t_max = m_gr_t2r_in[ip]->GetX()[n_pt-1];
     }
-    ofs1 << ip+1 << "  " << n_pt << "  " << fixed << setprecision(1) << t_min << " " << t_max << " " << geom->getDetectorName(ip+1) << "\n";
+
+    string det = geom->getDetectorName(ip+1);
+    double dx  = m_rtc[ip]->GetRWidth();
+    double dt  = dx * (t_max - t_min) / R_MAX[ip];
+
     for (int i_pt = 0; i_pt < n_pt; i_pt++) {
       double t = t_min + DT_RT * i_pt;
-      double r = m_rtc[ip]->EvalR(t);
-      ofs1 <<"0   "<< setprecision(1) << t << "  " << setprecision(4) << r << "\n";
+      double x = m_rtc[ip]->EvalR(t);
+      ofs1 << det << "\t"
+           << setprecision(1) << t  << "\t"
+           << setprecision(4) << x  << "\t"
+           << setprecision(3) << dt << "\t"
+           << setprecision(3) << dx << "\n";
     }
-
-    ofs2 << ip+1 << "\t" << setprecision(3) << m_rtc[ip]->GetRWidth() << "\n";
   }
 
   //ifstream ifs( "calibration_prop.txt" );
@@ -152,22 +167,17 @@ void CalibParam::WriteRTParam(const string dir_name)
   //while (getline(ifs, buffer)) ofs1 << buffer << endl;
   //ifs .close();
   ofs1.close();
-  ofs2.close();
 }
 
-void CalibParam::WriteRTGraph(const string dir_name)
+void CalibParam::WriteRTGraph(const string dir_name, const string fname)
 {
   ostringstream oss;
-  oss << dir_name << "/rt_graph.root";
+  oss << dir_name << "/" << fname;
   TFile* file = new TFile(oss.str().c_str(), "RECREATE");
 
   GeomSvc* geom = GeomSvc::instance();
   for(int ip = 0; ip < N_PL; ip++){
-    if      (ip <  6) { if (! m_ana_d0 ) continue; }
-    else if (ip < 12) { if (! m_ana_d1 ) continue; }
-    else if (ip < 18) { if (! m_ana_d2 ) continue; }
-    else if (ip < 24) { if (! m_ana_d3p) continue; }
-    else              { if (! m_ana_d3m) continue; }
+    if (! m_ana_pl[ip]) continue;
 
     oss.str(""); 
     oss << "gr_t2r_in_" << geom->getDetectorName(ip+1);
@@ -209,4 +219,15 @@ void CalibParam::ReadTimeWindow(const std::string fname)
   }
   ifs.close();
   fix_time_window = true;
+}
+
+double CalibParam::ZOfStationID(const int st_id)
+{
+  if      (st_id == 1) return  620; // D0
+  else if (st_id == 3) return 1345; // D2
+  else if (st_id == 4) return 1900; // D3p
+  else if (st_id == 5) return 1900; // D3m
+
+  cout << "CalibParam::ZOfStationID():  Unsupported station ID (" << st_id << ").  Abort." << endl;
+  exit(1);
 }

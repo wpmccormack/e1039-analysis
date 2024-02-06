@@ -9,6 +9,10 @@
 #pragma link C++ class TrackList+;
 #pragma link C++ class DimuonList+;
 
+#pragma link C++ class SQTrackVec+;
+#pragma link C++ class SQDimuonVec+;
+#pragma link C++ class MakeMyTree-!;
+
 #pragma link C++ class FilterSimEvent-!;
 #pragma link C++ class AnaSimRunInfo-!;
 #pragma link C++ class AnaSimDst-!;

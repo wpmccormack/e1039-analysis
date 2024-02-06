@@ -16,6 +16,7 @@
 #include "AnaTriggerHit.h"
 using namespace std;
 
+/// List of detectors that you want to analyze
 const vector<string> AnaTriggerHit::m_list_det_name = {
   "H1T", "H1B", "H2T", "H2B", "H3T", "H3B", "H4T", "H4B"
 };

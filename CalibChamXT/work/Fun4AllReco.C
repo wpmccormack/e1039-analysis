@@ -1,30 +1,56 @@
 /// Fun4AllReco.C:  Fun4all macro to run the reconstruction.
 // /seaquest/users/apun/abi_project/data_manage/e1039-data-mgt_test/RecoE1039Data.C
+#include <top/G4_InsensitiveVolumes.C>
+#include <top/G4_SensitiveDetectors.C>
+R__LOAD_LIBRARY(libg4detectors)
+R__LOAD_LIBRARY(libphg4hit) // Need be included in libevt_filter
+R__LOAD_LIBRARY(libevt_filter)
 R__LOAD_LIBRARY(libcalibrator)
 R__LOAD_LIBRARY(libktracker)
 R__LOAD_LIBRARY(libCalibChamXT)
 
-int Fun4AllReco(const int iter, const char* fn_dst, const int n_evt)
+int Fun4AllReco(const int run, const int iter, const char* fn_dst, const int n_evt)
 {
   recoConsts* rc = recoConsts::instance();
   rc->init("cosmic");
+  rc->set_IntFlag("RUNNUMBER", run);
   rc->set_BoolFlag("COARSE_MODE", false);
   rc->set_DoubleFlag("KMAGSTR", 0.);
   rc->set_DoubleFlag("FMAGSTR", 0.);
-  rc->Print();
+  rc->set_IntFlag("MaxHitsDC0" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC1" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC2" , 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC3p", 12); // default = 100
+  rc->set_IntFlag("MaxHitsDC3m", 12); // default = 100
+  //rc->Print();
 
   Fun4AllServer* se = Fun4AllServer::instance();
   //se->Verbosity(1);
 
+  PHG4Reco* g4reco = new PHG4Reco();
+  g4reco->set_field_map();
+  g4reco->SetWorldSizeX(1000);
+  g4reco->SetWorldSizeY(1000);
+  g4reco->SetWorldSizeZ(5000);
+  g4reco->SetWorldShape("G4BOX");
+  g4reco->SetWorldMaterial("G4_AIR"); //G4_Galactic, G4_AIR
+  g4reco->SetPhysicsList("FTFP_BERT");
+  SetupInsensitiveVolumes(g4reco);
+  SetupSensitiveDetectors(g4reco);
+  se->registerSubsystem(g4reco);
+
   FilterByTrigger* fbt = new FilterByTrigger();
-  fbt->SetTriggerBits( (0x1<<SQEvent::NIM4) );
-  fbt->EnableOutput("event_count.root");
+  fbt->SetNimBits(1,1,0,1,0);
+  fbt->EnableOutput();
   se->registerSubsystem(fbt);
 
   CalibDriftDist* cal_dd = new CalibDriftDist();
-  //if (iter > 1) {
-  //  cal_dd->ReadParamFromFile(fn_in_time, fn_xt_curve);
-  //}
+  cal_dd->Verbosity(1);
+  if (iter == 1) {
+    cal_dd->SetResolution(0.03, 0.03, 0.03, 0.03, 0.03); // (D0, D1, D2, D3p, D3m) in cm.
+  //} else {
+  //cal_dd->ReadParamFromFile(fn_in_time, fn_xt_curve);
+  }
   se->registerSubsystem(cal_dd);
 
   if (iter == 1) {
@@ -50,23 +76,19 @@ int Fun4AllReco(const int iter, const char* fn_dst, const int n_evt)
     se->registerSubsystem(new AnaChamPlane("D3mUp"));
   }
 
-  const bool legacy_rec_container = false;
-  SQReco* reco = new SQReco();
-  reco->Verbosity(0);
-  reco->set_legacy_rec_container(legacy_rec_container);
-  reco->set_geom_file_name("geom.root");
-  reco->set_enable_KF(true);
-  reco->setInputTy(SQReco::E1039);
-  reco->setFitterTy(SQReco::KFREF);
+  auto reco = new SQTrackletReco();
+  //reco->Verbosity(9);
+  reco->set_legacy_rec_container(false);
+  reco->set_enable_KF(false); // default = true
   reco->set_evt_reducer_opt("none"); // was "e", default = aoc, "" = aoc
   reco->set_enable_eval(true);
   reco->set_enable_eval_dst(true);
-  reco->set_eval_file_name("eval.root");
   reco->add_eval_list(0); // D0, D1
   reco->add_eval_list(1); // D2
   reco->add_eval_list(2); // D3p, D3m
   reco->add_eval_list(3); // D2+3, back-partial tracklets
   reco->add_eval_list(4); // D1+2+3
+  reco->drop_empty_event(true);
   se->registerSubsystem(reco);
 
   Fun4AllInputManager *in = new Fun4AllDstInputManager("DSTIN");
@@ -76,6 +98,8 @@ int Fun4AllReco(const int iter, const char* fn_dst, const int n_evt)
 
   Fun4AllDstOutputManager* out = new Fun4AllDstOutputManager("DSTOUT", "DSTreco.root");
   se->registerOutputManager(out);
+  out->AddNode("SQEvent");
+  out->AddNode("TrackletVector");
 
   se->run(n_evt);
   se->End();

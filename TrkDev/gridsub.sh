@@ -17,14 +17,14 @@ fi
 echo "njobs=$njobs"
 echo "nevents=$nevents"
 
-macros=/e906/app/users/yuhw/e1039-analysis/PrgTrkDev
+macros=/e906/app/users/$USER/e1039-analysis/PrgTrkDev
 
 sed "s/nevents=NAN/nevents=$nevents/"             $macros/gridrun.sh > $macros/gridrun_new.sh 
 sed -i "s/nmu=NAN/nmu=$nmu/"                      $macros/gridrun_new.sh
 chmod +x $macros/gridrun_new.sh
 
 if [ $do_sub == 1 ]; then
-work=/pnfs/e906/persistent/users/yuhw/PrgTrkDev/$jobname
+work=/pnfs/e1039/scratch/users/$USER/PrgTrkDev/$jobname
 else
 work=$macros/scratch/$jobname
 fi

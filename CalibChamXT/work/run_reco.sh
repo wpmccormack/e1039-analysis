@@ -3,7 +3,7 @@ DIR_BASE=$(dirname $(readlink -f $BASH_SOURCE))
 
 LIST_RUN="list_run.txt"
 VERSION="main"
-DIR_DST=/pnfs/e1039/scratch/$USER/CalibChamXT/dst
+DIR_DST=/pnfs/e1039/scratch/users/$USER/CalibChamXT/dst
 
 USE_GRID=no
 N_DST_ANA=0 # N of DSTs per run to be analyzed
@@ -47,14 +47,14 @@ function ProcessOneRun {
 
 	if [ $USE_GRID = 'yes' ]; then
 	    CMD="/e906/app/software/script/jobsub_submit_spinquest.sh"
-	    CMD+=" --expected-lifetime='short'" # medium=8h, short=3h, long=23h
+	    CMD+=" --expected-lifetime='medium'" # medium=8h, short=3h, long=23h
 	    CMD+=" -L $DIR_WORK/$BASE_NAME/log_gridrun.txt"
 	    CMD+=" -f $DIR_WORK/input.tar.gz"
 	    CMD+=" -f $FN_DST"
 	    CMD+=" -d OUTPUT $DIR_WORK/$BASE_NAME/out"
-	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $ITER $(basename $FN_DST) $N_EVT_ANA"
+	    CMD+=" file://$DIR_WORK/$BASE_NAME/gridrun.sh $RUN $ITER $(basename $FN_DST) $N_EVT_ANA"
 	    #echo "$CMD"
-	    $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
+	    unbuffer $CMD |& tee $DIR_WORK/$BASE_NAME/log_jobsub_submit.txt
 	    RET_SUB=${PIPESTATUS[0]}
 	    test $RET_SUB -ne 0 && exit $RET_SUB
 	else
@@ -64,7 +64,7 @@ function ProcessOneRun {
 	    cp -p $DIR_WORK/input.tar.gz $DIR_WORK/$BASE_NAME/in
 	    mkdir -p $DIR_WORK/$BASE_NAME/exe
 	    cd       $DIR_WORK/$BASE_NAME/exe
-	    $DIR_WORK/$BASE_NAME/gridrun.sh $ITER $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
+	    $DIR_WORK/$BASE_NAME/gridrun.sh $RUN $ITER $FN_DST $N_EVT_ANA |& tee $DIR_WORK/$BASE_NAME/log_gridrun.txt
 	fi
     done
 }
@@ -76,7 +76,7 @@ test "X$1" != 'XGO' && echo "Give 'GO' to make a real run." && exit 1
 
 if [ $USE_GRID = 'yes' ]; then
     echo "Grid mode."
-    DIR_DATA=/pnfs/e1039/scratch/$USER/CalibChamXT
+    DIR_DATA=/pnfs/e1039/scratch/users/$USER/CalibChamXT
     DIR_WORK=$DIR_DATA/$VERSION
     ln -nfs $DIR_DATA data # for convenience
 else
@@ -88,7 +88,7 @@ rm -rf   $DIR_WORK
 mkdir -p $DIR_WORK
 
 cd $DIR_BASE
-tar czvf $DIR_WORK/input.tar.gz  ../inst Fun4AllReco.C geom.root
+tar czvf $DIR_WORK/input.tar.gz  ../setup.sh ../inst Fun4AllReco.C
 
 ITER=1
 while read RUN ; do
